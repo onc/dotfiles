@@ -19,7 +19,7 @@ source $ZSH/oh-my-zsh.sh
 #########################################
 export PATH="/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin"
 export PATH=${PATH}:~/Applications/adt-bundle-linux-x86_64-20140321/sdk/platform-tools
-export PATH=${PATH}:~/Applications/adt-bundle-linux-x86_64-20140321/sdk/tools
+export PATH=${PATH}P:~/Applications/adt-bundle-linux-x86_64-20140321/sdk/tools
 # export MANPATH="/usr/local/man:$MANPATH"
 
 # Preferred editor for local and remote sessions
@@ -37,7 +37,7 @@ set guifont=Droid\ Sans\ Mono\ for\ Powerline\ 8
 source ~/.shell-prompt.sh
 
 # tmux on start
-if [ "$TMUX" = "" ]; then tmux; fi
+# if [ "$TMUX" = "" ]; then tmux; fi
 
 # fuzzy-finder
 source ~/.fzf.zsh
@@ -76,8 +76,8 @@ alias redshift-onze="redshift -t 6500:4400 &"
 alias redshift-dark="redshift -t 4400:4000 &"
 
 # Xetex
-alias xetexmk-pdf="latexmk -pdf -gg -silent -xelatex -pvc"
-alias latexmk-pdf="latexmk -pdf -gg -silent -pvc"
+alias xetexmk-pdf="latexmk -c -pdf -gg -silent -xelatex -pvc"
+alias latexmk-pdf="latexmk -c -pdf -gg -silent -pvc"
 
 # Apache
 alias apache-restart="sudo service apache2 restart"
@@ -88,6 +88,9 @@ alias youtube-dl-mp3="youtube-dl -x --audio-format mp3"
 # DPKG
 alias package-info='dpkg -s'
 alias package-list-files='dpkg-query -L'
+
+# apt
+alias search="apt-cache search"
 
 #########################################
 # Functions
@@ -132,5 +135,12 @@ function mk() {
     cd $1
 }
 
+function o() {
+    xdg-open $1 > /dev/null 2>&1 &
+}
+
 # gitignore io
 function gi() { curl http://www.gitignore.io/api/$@ ;}
+
+# blur konsole
+# xprop -f _KDE_NET_WM_BLUR_BEHIND_REGION 32c -set _KDE_NET_WM_BLUR_BEHIND_REGION 0 -id $(xprop -root | awk '/_NET_ACTIVE_WINDOW\(WINDOW\)/{print $NF}')
