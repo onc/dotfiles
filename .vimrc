@@ -45,9 +45,7 @@ set fillchars+=stl:\ ,stlnc:\
 " dont syntax highlight extrem long lines...
 set synmaxcol=300
 
-" set font
-" set guifont=Droid\ Sans\ Mono\ for\ Powerline\ 8
-set guifont=Monaco\ for\ Powerline\ 9
+" set antialias
 set antialias
 
 " wrapping words
@@ -94,7 +92,7 @@ set smartindent
 set scrolloff=5
 
 " Line numbers
-set relativenumber
+" set relativenumber
 set number
 
 " ==================================================
@@ -105,13 +103,23 @@ set number
 map j gj
 map k gk
 
+" save on double esc
+map <Esc><Esc> :w<CR>
+
+" Y for yank until last non whitespace char, like D
+nnoremap Y yg_
+
+" Create newlines without entering insert mode
+nnoremap go o<Esc>k
+nnoremap gO O<Esc>j
+
 command! Dodaline silent :%s/\. [^$]/\.\r/g
 nnoremap <leader>ddl :Dodaline<Cr>
 
 nnoremap <leader>js :JSHint<Cr>
 nnoremap <leader>p :CtrlPMixed<Cr>
-nnoremap <leader>f gg=G``
-nnoremap <leader>n :NERDTreeTabsToggle<Cr>
+nnoremap <silent> <leader>f gg=G``
+nnoremap <silent> <leader>n :NERDTreeTabsToggle<Cr>
 nnoremap <leader>under :set syntax=underscore_template<Cr>
 
 " navigate throw tabs
@@ -126,9 +134,17 @@ cabbrev w!! w !sudo tee % > /dev/null %
 
 cabbrev so :source ~/.vimrc
 
+" toggle starting case of last word
+nnoremap <leader>u b~w 
+
 " smooth scroll
 noremap <silent> <c-u> :call smooth_scroll#up(&scroll, 10, 2)<CR>
 noremap <silent> <c-d> :call smooth_scroll#down(&scroll, 10, 2)<CR>
+
+" Split line (sister to [J]oin lines)
+" The normal use of S is covered by cc, so don't worry about shadowing it.
+nnoremap S i<cr><esc>mwgk:silent! s/\v +$//<cr>:noh<cr>`w
+nnoremap gS a<cr><esc>mwgk:silent! s/\v +$//<cr>:noh<cr>`w
 
 " ==================================================
 " COLORSCHEME
@@ -155,7 +171,7 @@ Plugin 'tpope/vim-fugitive'
 Plugin 'Lokaltog/vim-easymotion'
 Plugin 'rstacruz/sparkup', {'rtp': 'vim/'}
 Plugin 'tpope/vim-rails.git'
-" vim-scripts repos
+" Vim-scripts repos
 Plugin 'L9'
 
 " ==================================================
@@ -177,6 +193,8 @@ Plugin 'scrooloose/nerdtree'
 Plugin 'jistr/vim-nerdtree-tabs'
 " ctrlp
 Plugin 'kien/ctrlp.vim'
+" improved sessions for vim
+Plugin 'manuel-colmenero/vim-simple-session'
 " Autocomplete
 Plugin 'Valloric/YouCompleteMe'
 " Tern for Vim - JS
@@ -215,6 +233,8 @@ let g:airline#extensions#tabline#enabled=1
 let g:airline_powerline_fonts=1
 let g:solarized_termcolors=256
 let g:airline_theme='bubblegum'
+" let airline present current session
+let g:airline_section_b='%{session#statusline()}'
 let g:tmuxline_preset={
             \'a'    : '#S',
             \'b'    : ['#(whoami)', '#(uptime | cut -d " " -f 3,4,5 | cut -d "," -f 1)'],
@@ -251,6 +271,9 @@ if has("gui_running")
     set guioptions-=r
     set guioptions-=L
 
+    " set guifont=Droid\ Sans\ Mono\ for\ Powerline\ 8
+    set guifont=Monaco\ for\ Powerline\ 9
+
     " Colorscheme
     "let g:solarized_termtrans=0
     "let g:solarized_termcolors=256
@@ -275,7 +298,7 @@ else
 endif
 
 " =================================================
-" FileType Settings
+" FILETYPE SETTINGS
 " ==================================================
 autocmd FileType tex source ~/.vim/fileTypeSettings/tex.vim
 
@@ -297,7 +320,6 @@ function! g:UltiSnips_Complete()
             return "\<TAB>"
         endif
     endif
-
     return ""
 endfunction
 
@@ -306,8 +328,15 @@ function! g:UltiSnips_Reverse()
     if g:ulti_jump_backwards_res == 0
         return "\<C-P>"
     endif
-
     return ""
 endfunction 
 
 au BufEnter * exec "inoremap <silent> " . g:UltiSnipsJumpBackwardTrigger . " <C-R>=g:UltiSnips_Reverse()<cr>"
+
+" ==================================================
+" ULTISNIPS CONFIG
+" ==================================================
+let g:nerdtree_tabs_open_on_gui_startup=0
+let g:nerdtree_open_open_on_console_startup=0
+
+let g:nerdtree_tabs_open_on_new_tab=0
