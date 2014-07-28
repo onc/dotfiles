@@ -275,26 +275,19 @@ let g:tmuxline_preset={
             \'cwin' : ['#I #W'],
             \'y'    : ['%R', '%a', '%Y'],
             \'z'    : '#H'}
+let g:tmuxline_powerline_separators=1
 
 " ==================================================
 " {{{PROMPTLINE CONF
 " ==================================================
 let g:promptline_theme='airline'
-let g:promptline_preset = {
+let g:promptline_preset={
             \'a' : [ promptline#slices#jobs() ],
             \'b' : [ '%T' ],
             \'c' : [ promptline#slices#cwd({ 'dir_limit': 2 }) ],
             \'z' : [ promptline#slices#git_status(), promptline#slices#vcs_branch()],
             \'warn' : [ promptline#slices#last_exit_code(), promptline#slices#battery() ]}
 let g:promptline_powerline_symbols=1
-" let g:promptline_symbols={
-            " \ 'left'       : '',
-            " \ 'left_alt'   : '',
-            " \ 'dir_sep'    : '/',
-            " \ 'truncation' : '..',
-            " \ 'vcs_branch' : '',
-            " \ 'space'      : ' '}
-" }}}
 
 " ==================================================
 " {{{COLORSCHEME
