@@ -17,10 +17,6 @@ source $ZSH/oh-my-zsh.sh
 #########################################
 # USER CONFIGURATION
 #########################################
-export PATH="/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin"
-export PATH=${PATH}:~/Applications/adt-bundle-linux-x86_64-20140321/sdk/platform-tools
-export PATH=${PATH}P:~/Applications/adt-bundle-linux-x86_64-20140321/sdk/tools
-# export MANPATH="/usr/local/man:$MANPATH"
 
 # Preferred editor for local and remote sessions
 if [[ -n $SSH_CONNECTION ]]; then
@@ -48,12 +44,8 @@ source ~/.fzf.zsh
 alias screen-off="xset dpms force off"
 
 alias v="vim"
-alias sv="sudo vim"
 alias vimrc="vim ~/.vimrc"
 alias zshrc="vim ~/.zshrc"
-alias agi="sudo apt-get install"
-alias agud="sudo apt-get update"
-alias agug="sudo apt-get upgrade"
 hash -d h=/mnt/hdd/
 
 # Open in google-chrome
@@ -66,9 +58,6 @@ alias sst="svn status"
 alias sad="svn add"
 alias scom="svn commit -m"
 
-# turn bluetooth on/off
-alias bluetooth-off="sudo rfkill block bluetooth"
-alias bluetooth-on="sudo rfkill unblock bluetooth"
 
 # Redshift
 alias redshift-standart="redshift &"
@@ -79,18 +68,8 @@ alias redshift-dark="redshift -t 4400:4000 &"
 alias xetexmk-pdf="latexmk -c -pdf -gg -silent -xelatex -pvc"
 alias latexmk-pdf="latexmk -c -pdf -gg -silent -pvc"
 
-# Apache
-alias apache-restart="sudo service apache2 restart"
-
 # Youtube-dl
 alias youtube-dl-mp3="youtube-dl -x --audio-format mp3"
-
-# DPKG
-alias package-info='dpkg -s'
-alias package-list-files='dpkg-query -L'
-
-# apt
-alias search="apt-cache search"
 
 #########################################
 # Functions
@@ -120,14 +99,6 @@ function set-lockscreen() {
     sudo cp temp_2560x1600.png /usr/share/wallpapers/Elarun/contents/images/2560x1600.png
     rm temp_2560x1600.png
     echo "changed lockscreen"
-}
-
-function upgrade() {
-    sudo apt-get clean
-    sudo apt-get update
-    sudo apt-get dist-upgrade
-    sudo apt-get --purge autoremove
-    sudo apt-get autoclean
 }
 
 function mk() {
