@@ -10,7 +10,7 @@ COMPLETION_WAITING_DOTS="true"
 # Which plugins would you like to load? (plugins can be found in ~/.oh-my-zsh/plugins/*)
 # Custom plugins may be added to ~/.oh-my-zsh/custom/plugins/
 # Example format: plugins=(rails git textmate ruby lighthouse)
-plugins=(git svn tmux colored-man colorize themes autojump)
+plugins=(git svn tmux colored-man colorize themes autojump sudo zsh-syntax-highlighting)
 
 source $ZSH/oh-my-zsh.sh
 
@@ -41,6 +41,8 @@ source ~/.fzf.zsh
 #########################################
 # ALIASES
 #########################################
+alias yi="yaourt"
+
 alias screen-off="xset dpms force off"
 
 alias v="vim"
@@ -49,7 +51,7 @@ alias zshrc="vim ~/.zshrc"
 hash -d h=/mnt/hdd/
 
 # Open in google-chrome
-alias gchrome-open='google-chrome $(xclip -selection "clipboard" -o) &'
+alias gchrome-open='google-chrome-stable $(xclip -selection "clipboard" -o) &'
 
 alias so="source ~/.zshrc"
 
@@ -58,6 +60,8 @@ alias sst="svn status"
 alias sad="svn add"
 alias scom="svn commit -m"
 
+# Git
+alias gpatch="git add -p"
 
 # Redshift
 alias redshift-standart="redshift &"
@@ -112,6 +116,11 @@ function o() {
 
 # gitignore io
 function gi() { curl http://www.gitignore.io/api/$@ ;}
+
+# copy files from uni
+function cp_uni() {
+    scp co5@login.informatik.uni-ulm.de:/home/co5/.win7_profile/$1 $2
+}
 
 # blur konsole
 # xprop -f _KDE_NET_WM_BLUR_BEHIND_REGION 32c -set _KDE_NET_WM_BLUR_BEHIND_REGION 0 -id $(xprop -root | awk '/_NET_ACTIVE_WINDOW\(WINDOW\)/{print $NF}')
