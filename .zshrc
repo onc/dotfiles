@@ -17,6 +17,10 @@ source $ZSH/oh-my-zsh.sh
 #########################################
 # USER CONFIGURATION
 #########################################
+export JAVA_HOME=/usr/lib/jvm/java-7-openjdk
+export LC_ALL=en_US.UTF-8 
+export LC_CTYPE=en_US.UTF-8 
+export LANG=en_US.UTF-8
 
 # Preferred editor for local and remote sessions
 if [[ -n $SSH_CONNECTION ]]; then
@@ -25,12 +29,12 @@ else
   export EDITOR='gvim'
 fi
 
-export TERM=xterm-256color
+export TERM=screen-256color
 
 set guifont=Droid\ Sans\ Mono\ for\ Powerline\ 8
 
 # load vim Promptline
-source ~/.shell-prompt.sh
+source ~/.promptline.sh
 
 # tmux on start
 # if [ "$TMUX" = "" ]; then tmux; fi
