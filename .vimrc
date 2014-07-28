@@ -23,10 +23,13 @@ set nobackup
 " show matching brackets
 set showmatch
 
+" folding
+set foldmethod=marker
+
 set undofile
-"maximum number of changes that can be undone
+" maximum number of changes that can be undone
 set undolevels=1000 
-"maximum number lines to save for undo on a buffer reload
+" maximum number lines to save for undo on a buffer reload
 set undoreload=10000 
 
 set undodir=~/.vim/undodir
@@ -39,6 +42,7 @@ set magic
 
 " Use 256 colours (Use this setting only if your terminal supports 256 colours)
 set t_Co=256
+set t_ut=
 
 set fillchars+=stl:\ ,stlnc:\
 
@@ -125,6 +129,9 @@ endfunction
 map j gj
 map k gk
 
+nnoremap <leader>dark :call DarkColorscheme()<Cr>
+nnoremap <leader>light :call LightColorscheme()<Cr>
+
 " save on double esc
 map <Esc><Esc> :w<CR>
 
@@ -167,24 +174,18 @@ noremap <silent> <c-d> :call smooth_scroll#down(&scroll, 10, 2)<CR>
 " The normal use of S is covered by cc, so don't worry about shadowing it.
 nnoremap S i<cr><esc>mwgk:silent! s/\v +$//<cr>:noh<cr>`w
 nnoremap gS a<cr><esc>mwgk:silent! s/\v +$//<cr>:noh<cr>`w
+" }}}
 
 " ==================================================
-" COLORSCHEME
-" ==================================================
-" SyntaxHighlight
-syntax enable
-set background=dark
-
-" ==================================================
-" VUNDLE
+" {{{VUNDLE
 " ==================================================
 filetype off
-set rtp+=~/.vim/bundle/vundle/
+set rtp+=~/.vim/bundle/Vundle.vim
 call vundle#begin()
 
 " let Vundle manage Vundle
 " required! 
-Plugin 'gmarik/vundle'
+Plugin 'gmarik/Vundle.vim'
 
 " My bundles here:
 "
@@ -202,6 +203,8 @@ Plugin 'L9'
 " ==================================================
 " get ALL the colorschemes
 Plugin 'flazz/vim-colorschemes'
+" toggle Cursor
+Plugin 'jszakmeister/vim-togglecursor'
 " Vim airline
 Plugin 'bling/vim-airline'
 " Tmuxline
@@ -306,9 +309,6 @@ set background=dark
 " {{{SETTINGS FOR GVIM/VIM
 " ==================================================
 if has("gui_running")
-    " Cursor in gvim
-    let &t_SI = "\<Esc>]50;CursorShape=1\x7"
-    let &t_EI = "\<Esc>]50;CursorShape=0\x7"
 
     " Disable Toolbar in gvim
     set guioptions-=T
@@ -319,29 +319,22 @@ if has("gui_running")
     set guioptions-=L
 
     " set guifont=Droid\ Sans\ Mono\ for\ Powerline\ 8
-    set guifont=Monaco\ for\ Powerline\ 9
+    set guifont=Monaco\ for\ Powerline\ 8
 
     " Colorscheme
-    "let g:solarized_termtrans=0
-    "let g:solarized_termcolors=256
-    "let g:solarized_contrast="high"
-    "let g:solarized_visibility="normal"
-    colorscheme Tomorrow-Night
+    " let g:solarized_termtrans=0
+    " let g:solarized_termcolors=256
+    " let g:solarized_contrast="high"
+    " let g:solarized_visibility="normal"
+    " colorscheme Tomorrow-Night
 else
-    " 256 Colors in terminal
-    set term=screen-256color
-    set term=xterm-256color
-
-    " Cursor in tmux
-    let &t_SI = "\<Esc>Ptmux;\<Esc>\<Esc>]50;CursorShape=1\x7\<Esc>\\"
-    let &t_EI = "\<Esc>Ptmux;\<Esc>\<Esc>]50;CursorShape=0\x7\<Esc>\\"
 
     " Colorscheme
-    "let g:solarized_termtrans=0
-    "let g:solarized_termcolors=256
-    "let g:solarized_contrast="high"
-    "let g:solarized_visibility="normal"
-    colorscheme Tomorrow-Night
+    " let g:solarized_termtrans=0
+    " let g:solarized_termcolors=256
+    " let g:solarized_contrast="high"
+    " let g:solarized_visibility="normal"
+    " colorscheme Tomorrow-Night
 endif
 " }}}
 
