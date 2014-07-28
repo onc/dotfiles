@@ -1,0 +1,7 @@
+xset r rate 400 75
+
+# make caps an additional esc
+xmodmap ~/.Xmodmap
+
+# using xcape tool for ( and ) when shift right or left is pressed
+xcape -e 'Shift_L=Shift_L|parenleft;Shift_R=Shift_R|parenright'
