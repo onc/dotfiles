@@ -1,5 +1,5 @@
 " ==================================================
-" UTIL
+" {{{UTIL
 " ==================================================
 set nocompatible
 
@@ -95,8 +95,30 @@ set scrolloff=5
 " set relativenumber
 set number
 
+" dont conceal latex commands like textit
+let g:tex_conceal=""
+" }}}
+
 " ==================================================
-" KEY BINDINGS AND COMMANDS
+" {{{FUNCTIONS
+" ==================================================
+function! LightColorscheme()
+    colorscheme solarized
+    let g:solarized_termtrans=0
+    let g:solarized_termcolors=256
+    let g:solarized_contrast="high"
+    let g:solarized_visibility="normal"
+    set background=light
+endfunction
+
+function! DarkColorscheme()
+    colorscheme Tomorrow-Night
+    set background=dark
+endfunction
+" }}}
+
+" ==================================================
+" {{{KEY BINDINGS AND COMMANDS
 " ==================================================
 
 " Treat long lines as break lines (useful when moving around in them)
@@ -173,9 +195,10 @@ Plugin 'rstacruz/sparkup', {'rtp': 'vim/'}
 Plugin 'tpope/vim-rails.git'
 " Vim-scripts repos
 Plugin 'L9'
+" }}}
 
 " ==================================================
-" MEINE BUNDELS 
+" {{{MEINE BUNDELS 
 " ==================================================
 " get ALL the colorschemes
 Plugin 'flazz/vim-colorschemes'
@@ -224,9 +247,10 @@ Plugin 'tyok/js-mask'
 
 call vundle#end()
 filetype plugin indent on
+" }}}
 
 " ==================================================
-" AIRLINE CONF
+" {{{AIRLINE CONF
 " ==================================================
 set laststatus=2
 let g:airline#extensions#tabline#enabled=1
@@ -235,6 +259,11 @@ let g:solarized_termcolors=256
 let g:airline_theme='bubblegum'
 " let airline present current session
 let g:airline_section_b='%{session#statusline()}'
+" }}}
+
+" ==================================================
+" {{{TMUXLINE CONF
+" ==================================================
 let g:tmuxline_preset={
             \'a'    : '#S',
             \'b'    : ['#(whoami)', '#(uptime | cut -d " " -f 3,4,5 | cut -d "," -f 1)'],
@@ -245,7 +274,7 @@ let g:tmuxline_preset={
             \'z'    : '#H'}
 
 " ==================================================
-" PROMPTLINE CONF
+" {{{PROMPTLINE CONF
 " ==================================================
 let g:promptline_theme='airline'
 let g:promptline_preset = {
@@ -254,9 +283,27 @@ let g:promptline_preset = {
             \'c' : [ promptline#slices#cwd({ 'dir_limit': 2 }) ],
             \'z' : [ promptline#slices#git_status(), promptline#slices#vcs_branch()],
             \'warn' : [ promptline#slices#last_exit_code(), promptline#slices#battery() ]}
+let g:promptline_powerline_symbols=1
+" let g:promptline_symbols={
+            " \ 'left'       : '',
+            " \ 'left_alt'   : '',
+            " \ 'dir_sep'    : '/',
+            " \ 'truncation' : '..',
+            " \ 'vcs_branch' : '',
+            " \ 'space'      : ' '}
+" }}}
 
 " ==================================================
-" SETTINGS FOR GVIM/VIM
+" {{{COLORSCHEME
+" ==================================================
+" SyntaxHighlight
+syntax enable
+colorscheme Tomorrow-Night
+set background=dark
+" }}}
+
+" ==================================================
+" {{{SETTINGS FOR GVIM/VIM
 " ==================================================
 if has("gui_running")
     " Cursor in gvim
@@ -296,17 +343,19 @@ else
     "let g:solarized_visibility="normal"
     colorscheme Tomorrow-Night
 endif
+" }}}
 
 " =================================================
-" FILETYPE SETTINGS
+" {{{FILETYPE SETTINGS
 " ==================================================
 autocmd FileType tex source ~/.vim/fileTypeSettings/tex.vim
 
 autocmd FileType scss source ~/.vim/fileTypeSettings/css.vim
 autocmd FileType css source ~/.vim/fileTypeSettings/css.vim
+" }}}
 
 " ==================================================
-" ULTISNIPS CONFIG
+" {{{ULTISNIPS CONFIG
 " ==================================================
 let g:UltiSnipsSnippetDirectories=["~/.vim/bundle/vim-snippets/UltiSnips"]
 let g:UltiSnipsJumpBackwardTrigger="<s-tab>"
@@ -332,11 +381,13 @@ function! g:UltiSnips_Reverse()
 endfunction 
 
 au BufEnter * exec "inoremap <silent> " . g:UltiSnipsJumpBackwardTrigger . " <C-R>=g:UltiSnips_Reverse()<cr>"
+" }}}
 
 " ==================================================
-" ULTISNIPS CONFIG
+" {{{NERDTREE CONFIG
 " ==================================================
 let g:nerdtree_tabs_open_on_gui_startup=0
 let g:nerdtree_open_open_on_console_startup=0
 
 let g:nerdtree_tabs_open_on_new_tab=0
+" }}}
