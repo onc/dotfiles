@@ -276,6 +276,7 @@ let g:tmuxline_preset={
             \'y'    : ['%R', '%a', '%Y'],
             \'z'    : '#H'}
 let g:tmuxline_powerline_separators=1
+" }}}
 
 " ==================================================
 " {{{PROMPTLINE CONF
@@ -288,6 +289,7 @@ let g:promptline_preset={
             \'z' : [ promptline#slices#git_status(), promptline#slices#vcs_branch()],
             \'warn' : [ promptline#slices#last_exit_code(), promptline#slices#battery() ]}
 let g:promptline_powerline_symbols=1
+" }}}
 
 " ==================================================
 " {{{COLORSCHEME
