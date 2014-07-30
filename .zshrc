@@ -12,6 +12,9 @@ COMPLETION_WAITING_DOTS="true"
 # Example format: plugins=(rails git textmate ruby lighthouse)
 plugins=(git svn tmux colored-man colorize themes autojump sudo zsh-syntax-highlighting)
 
+# Disable repeating command before result of command
+DISABLE_AUTO_TITLE="true"
+
 source $ZSH/oh-my-zsh.sh
 
 #########################################
