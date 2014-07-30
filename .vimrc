@@ -255,6 +255,8 @@ Plugin 'terryma/vim-smooth-scroll'
 Plugin 'nathanaelkane/vim-indent-guides'
 " conceal javascript
 Plugin 'tyok/js-mask'
+" show colors
+Plugin 'ap/vim-css-color'
 
 call vundle#end()
 filetype plugin indent on
@@ -322,7 +324,7 @@ if has("gui_running")
     set guioptions-=L
 
     " set guifont=Droid\ Sans\ Mono\ for\ Powerline\ 8
-    set guifont=Monaco\ for\ Powerline\ 8
+    set guifont=Monaco\ for\ Powerline\ 9
 
     " Colorscheme
     " let g:solarized_termtrans=0
