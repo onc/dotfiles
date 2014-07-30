@@ -39,6 +39,9 @@ source ~/.promptline.sh
 # tmux on start
 # if [ "$TMUX" = "" ]; then tmux; fi
 
+# faster scrolling etc
+xset r rate 400 75
+
 # fuzzy-finder
 source ~/.fzf.zsh
 
