@@ -32,7 +32,7 @@ set undolevels=1000
 " maximum number lines to save for undo on a buffer reload
 set undoreload=10000 
 
-set undodir=~/.vim/undodir
+set undodir=~/.vim/undodir//
 
 " cursor-zeile markieren
 set cursorline
@@ -56,6 +56,7 @@ set antialias
 set formatoptions+=t
 " set textwidth=80
 set linebreak
+set nowrap
 
 " auto read file when a file is changed from outside
 set autoread
@@ -98,6 +99,9 @@ set scrolloff=5
 " Line numbers
 " set relativenumber
 set number
+
+" Resize splits when the window is resized
+au VimResized * :wincmd =
 
 " dont conceal latex commands like textit
 let g:tex_conceal=""
@@ -169,6 +173,10 @@ nnoremap <leader>u b~w
 " smooth scroll
 noremap <silent> <c-u> :call smooth_scroll#up(&scroll, 10, 2)<CR>
 noremap <silent> <c-d> :call smooth_scroll#down(&scroll, 10, 2)<CR>
+
+" emacs keybindings for command mode
+cnoremap <c-a> <home>
+cnoremap <c-e> <end>
 
 " Split line (sister to [J]oin lines)
 " The normal use of S is covered by cc, so don't worry about shadowing it.
