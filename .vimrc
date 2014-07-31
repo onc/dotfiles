@@ -3,6 +3,9 @@
 " ==================================================
 set nocompatible
 
+" stfu vim
+set noeb vb t_vb=
+
 filetype plugin indent on     " required!
 
 " fixing delay on leaving insert-mode
@@ -60,6 +63,9 @@ set nowrap
 
 " auto read file when a file is changed from outside
 set autoread
+
+" use tabs
+set switchbuf=usetab
 
 " utf-8
 set encoding=utf8
