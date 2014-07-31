@@ -88,6 +88,12 @@ alias youtube-dl-mp3="youtube-dl -x --audio-format mp3"
 # 7z with all cores, arguments: output-file input-dir/file
 alias 7z8core="7za a -r -t7z -m0=LZMA2 -mmt=8"
 
+# monitor-stuff
+alias sdo="xrandr --output LVDS-0 --auto --primary --rotate normal --pos 0x0 --output DP-0 --off --output VGA-0 --off"
+alias sda="xrandr --output LVDS-0 --auto --primary --rotate normal --pos 0x0 --output DP-0 --auto --above LVDS-0 --output VGA-0 --auto --above LVDS-0"
+alias sdr="xrandr --output LVDS-0 --auto --primary --rotate normal --pos 0x0 --output DP-0 --auto --right-of LVDS-0 --output VGA-0 --auto --right-of LVDS-0"
+alias sdl="xrandr --output LVDS-0 --auto --primary --rotate normal --pos 0x0 --output DP-0 --auto --left-of LVDS-0 --output VGA-0 --auto --left-of LVDS-0"
+
 #########################################
 # Functions
 #########################################
