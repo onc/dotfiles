@@ -275,7 +275,7 @@ set laststatus=2
 let g:airline#extensions#tabline#enabled=1
 let g:airline_powerline_fonts=1
 let g:solarized_termcolors=256
-let g:airline_theme='bubblegum'
+let g:airline_theme='tomorrow'
 " let airline present current session
 let g:airline_section_b='%{session#statusline()}'
 " }}}
@@ -283,10 +283,11 @@ let g:airline_section_b='%{session#statusline()}'
 " ==================================================
 " {{{TMUXLINE CONF
 " ==================================================
+let g:tmuxline_theme='airline'
 let g:tmuxline_preset={
             \'a'    : '#S',
             \'b'    : ['#(whoami)', '#(uptime | cut -d " " -f 3,4,5 | cut -d "," -f 1)'],
-            \'c'    : '#(echo `cat /sys/devices/platform/smapi/BAT0/remaining_percent`%)', 
+            \'c'    : '#(echo  `cat /sys/devices/platform/smapi/BAT0/remaining_percent`%)', 
             \'win'  : ['#I #W'],
             \'cwin' : ['#I #W'],
             \'y'    : ['%R', '%a', '%Y'],
@@ -312,8 +313,17 @@ let g:promptline_powerline_symbols=1
 " ==================================================
 " SyntaxHighlight
 syntax enable
+
 colorscheme Tomorrow-Night
 set background=dark
+
+" colorscheme solarized
+" let g:solarized_termtrans=0
+" let g:solarized_termcolors=256
+" let g:solarized_contrast="high"
+" let g:solarized_visibility="normal"
+" set background=light
+ 
 " }}}
 
 " ==================================================
