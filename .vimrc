@@ -67,7 +67,7 @@ set antialias
 set formatoptions+=t
 " set textwidth=80
 set linebreak
-set nowrap
+set wrap
 
 " auto read file when a file is changed from outside
 set autoread
@@ -119,6 +119,8 @@ au VimResized * :wincmd =
 
 " dont conceal latex commands like textit
 let g:tex_conceal=""
+
+set spelllang=de,en
 " }}}
 
 " ==================================================
@@ -146,6 +148,8 @@ endfunction
 " Treat long lines as break lines (useful when moving around in them)
 map j gj
 map k gk
+
+nnoremap <leader>vim :tabnew ~/.vimrc<cr>
 
 nnoremap <leader>dark :call DarkColorscheme()<Cr>
 nnoremap <leader>light :call LightColorscheme()<Cr>
@@ -196,6 +200,13 @@ cnoremap <c-e> <end>
 " The normal use of S is covered by cc, so don't worry about shadowing it.
 nnoremap S i<cr><esc>mwgk:silent! s/\v +$//<cr>:noh<cr>`w
 nnoremap gS a<cr><esc>mwgk:silent! s/\v +$//<cr>:noh<cr>`w
+
+" Bring the content of the current braces in the form: 
+" brace ( || { || [
+"   content
+" brace
+command! SplitBrace :norm cij<cr><cr><esc>==kp==
+nnoremap <leader>sb :SplitBrace<cr>
 " }}}
 
 " ==================================================
@@ -267,10 +278,13 @@ Plugin 'aaronj1335/underscore-templates.vim'
 Plugin 'terryma/vim-smooth-scroll'
 " show indentions
 Plugin 'nathanaelkane/vim-indent-guides'
-" conceal javascript
-Plugin 'tyok/js-mask'
 " show colors
 Plugin 'ap/vim-css-color'
+" text-objects-user
+Plugin 'kana/vim-textobj-user'
+Plugin 'Julian/vim-textobj-brace'
+" seoul256
+Plugin 'junegunn/seoul256.vim'
 
 call vundle#end()
 filetype plugin indent on
@@ -411,7 +425,8 @@ au BufEnter * exec "inoremap <silent> " . g:UltiSnipsJumpBackwardTrigger . " <C-
 let g:nerdtree_tabs_open_on_gui_startup=0
 let g:nerdtree_open_open_on_console_startup=0
 
-let g:nerdtree_tabs_open_on_new_tab=0
+let g:nerdtree_tabs_open_on_new_tab=1
+" }}}
  
 " ==================================================
 " {{{INTERESTING WORD
