@@ -20,6 +20,13 @@ set lazyredraw
 " instant regex preview
 set incsearch
 
+" show line-endings
+" set list
+" set showbreak=↪
+set listchars=eol:¬
+" set listchars=eol:↪
+" set listchars=tab:▸\ ,eol:¬,extends:❯,precedes:❮
+
 " fu swapfiles
 set noswapfile
 set nobackup
