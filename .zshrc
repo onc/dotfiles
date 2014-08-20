@@ -19,9 +19,9 @@ DISABLE_AUTO_TITLE="true"
 
 source $ZSH/oh-my-zsh.sh
 
-#########################################
-# USER CONFIGURATION
-#########################################
+#======================================================================================
+# USER CONFIGURATION {{{
+#======================================================================================
 export JAVA_HOME=/usr/lib/jvm/java-7-openjdk
 export LC_ALL=en_US.UTF-8 
 export LC_CTYPE=en_US.UTF-8 
@@ -49,10 +49,11 @@ xset r rate 400 75
 
 # fuzzy-finder
 source ~/.fzf.zsh
+# }}}
 
-#########################################
-# ALIASES
-#########################################
+#======================================================================================
+# ALIASES {{{
+#======================================================================================
 alias yi="yaourt"
 
 alias screen-off="xset dpms force off"
@@ -95,10 +96,11 @@ alias sdo="xrandr --output LVDS-0 --auto --primary --rotate normal --pos 0x0 --o
 alias sda="xrandr --output LVDS-0 --auto --primary --rotate normal --pos 0x0 --output DP-0 --auto --above LVDS-0 --output VGA-0 --auto --above LVDS-0"
 alias sdr="xrandr --output LVDS-0 --auto --primary --rotate normal --pos 0x0 --output DP-0 --auto --right-of LVDS-0 --output VGA-0 --auto --right-of LVDS-0"
 alias sdl="xrandr --output LVDS-0 --auto --primary --rotate normal --pos 0x0 --output DP-0 --auto --left-of LVDS-0 --output VGA-0 --auto --left-of LVDS-0"
+# }}}
 
-#########################################
-# Functions
-#########################################
+#======================================================================================
+# FUNCTIONS {{{
+#======================================================================================
 # ls after every cd
 function chpwd() {
     emulate -L zsh
@@ -145,3 +147,4 @@ function cp_uni() {
 
 # blur konsole
 # xprop -f _KDE_NET_WM_BLUR_BEHIND_REGION 32c -set _KDE_NET_WM_BLUR_BEHIND_REGION 0 -id $(xprop -root | awk '/_NET_ACTIVE_WINDOW\(WINDOW\)/{print $NF}')
+# }}}
