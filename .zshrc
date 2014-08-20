@@ -55,12 +55,31 @@ source ~/.fzf.zsh
 # ALIASES {{{
 #======================================================================================
 alias yi="yaourt"
+# remove ALL orphaned packages
+alias yro="yaourt -Qdt"
+# clean package
+alias yc="yaourt -Scc"
+# update all packages
+alias yu="yaourt -Syua"
+
+# List all files installed by a given package
+alias paclf="yaourt -Ql"		
+# Mark one or more installed packages as explicitly installed 
+alias pacexpl="pacman -D --asexp"	
+# Mark one or more installed packages as non explicitly installed
+alias pacimpl="pacman -D --asdep"	
 
 alias screen-off="xset dpms force off"
+alias touch-off="synclient TouchpadOff=1"
+alias touch-on="synclient TouchpadOff=0"
+alias cpu-performance="sudo cpupower frequency-set -g performance"
+alias cpu-powersave="sudo cpupower frequency-set -g powersave"
 
 alias v="vim"
 alias vimrc="vim ~/.vimrc"
 alias zshrc="vim ~/.zshrc"
+alias i3conf="vim ~/.i3/config"
+alias i3status="vim ~/.i3/i3status.py"
 hash -d h=/mnt/hdd/
 
 # Open in google-chrome
@@ -90,6 +109,9 @@ alias youtube-dl-mp3="youtube-dl -x --audio-format mp3"
 
 # 7z with all cores, arguments: output-file input-dir/file
 alias 7z8core="7za a -r -t7z -m0=LZMA2 -mmt=8"
+
+# restart some stuff
+alias re-httpd="sudo systemctl restart httpd"
 
 # monitor-stuff
 alias sdo="xrandr --output LVDS-0 --auto --primary --rotate normal --pos 0x0 --output DP-0 --off --output VGA-0 --off"
