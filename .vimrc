@@ -363,10 +363,10 @@ endif
 " =================================================
 " {{{FILETYPE SETTINGS
 " ==================================================
-autocmd FileType tex source ~/.vim/fileTypeSettings/tex.vim
+autocmd BufNewFile,BufRead *.tex set filetype=tex
 
-autocmd FileType scss source ~/.vim/fileTypeSettings/css.vim
-autocmd FileType css source ~/.vim/fileTypeSettings/css.vim
+autocmd FileType tex setlocal spell
+autocmd BufNewFile,BufRead *.tex setlocal spell
 " }}}
 
 " ==================================================
