@@ -404,4 +404,41 @@ let g:nerdtree_tabs_open_on_gui_startup=0
 let g:nerdtree_open_open_on_console_startup=0
 
 let g:nerdtree_tabs_open_on_new_tab=0
+ 
+" ==================================================
+" {{{INTERESTING WORD
+" ==================================================
+function! HiInterestingWord(n)
+    " Save our location.
+    normal! mz
+    " Yank the current word into the z register.
+    normal! "zyiw
+    " Calculate an arbitrary match ID.  Hopefully nothing else is using it.
+    let mid = 86750 + a:n
+    " Clear existing matches, but don't worry if they don't exist.
+    silent! call matchdelete(mid)
+    " Construct a literal pattern that has to match at boundaries.
+    let pat = '\V\<' . escape(@z, '\') . '\>'
+    " Actually match the words.
+    call matchadd("InterestingWord" . a:n, pat, 1, mid)
+    " Move back to our original location.
+    normal! `z
+endfunction "
+
+" Mappings
+nnoremap <silent> <leader>1 :call HiInterestingWord(1)<cr>
+nnoremap <silent> <leader>2 :call HiInterestingWord(2)<cr>
+nnoremap <silent> <leader>3 :call HiInterestingWord(3)<cr>
+nnoremap <silent> <leader>4 :call HiInterestingWord(4)<cr>
+nnoremap <silent> <leader>5 :call HiInterestingWord(5)<cr>
+nnoremap <silent> <leader>6 :call HiInterestingWord(6)<cr>
+nnoremap <silent> <leader>0 :call clearmatches()<cr>
+
+" Default Highlights
+hi def InterestingWord1 term=standout ctermfg=15 ctermbg=1 guifg=White guibg=Red
+hi def InterestingWord2 term=reverse cterm=reverse gui=reverse 
+hi def InterestingWord3 term=reverse ctermfg=235 ctermbg=222 guifg=#303030 guibg=#f0c674
+hi def InterestingWord4 term=standout ctermfg=0 ctermbg=11 guifg=Black guibg=Yellow
+hi def InterestingWord5 term=bold,reverse cterm=reverse ctermfg=240 ctermbg=222 gui=reverse guifg=#5e5e5e guibg=#f0c674
+hi def InterestingWord6 term=reverse cterm=reverse ctermfg=240 ctermbg=250 gui=reverse guifg=#5e5e5e guibg=#c5c8c6
 " }}}
