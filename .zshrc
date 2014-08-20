@@ -31,7 +31,7 @@ export LANG=en_US.UTF-8
 if [[ -n $SSH_CONNECTION ]]; then
   export EDITOR='vim'
 else
-  export EDITOR='gvim'
+  export EDITOR='vim'
 fi
 
 export TERM=screen-256color
@@ -165,6 +165,15 @@ function gi() { curl http://www.gitignore.io/api/$@ ;}
 # copy files from uni
 function cp_uni() {
     scp co5@login.informatik.uni-ulm.de:/home/co5/.win7_profile/$1 $2
+}
+
+fe() {
+  local file
+  cd ~/.notes
+  file=$(fzf --query="$1" --print-query)
+  file=$(echo "$file" | tail -1)
+  ${EDITOR:-vim} "$file"
+  cd -
 }
 
 # blur konsole
