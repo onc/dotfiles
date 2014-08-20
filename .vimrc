@@ -4,7 +4,8 @@
 set nocompatible
 
 " stfu vim
-set noeb vb t_vb=
+set noerrorbells visualbell t_vb=
+autocmd GUIEnter * set visualbell t_vb=
 
 filetype plugin indent on     " required!
 
