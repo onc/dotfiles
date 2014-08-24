@@ -84,7 +84,7 @@ set fileencoding=utf-8
 set gcr=n:blinkon0
 
 " normal OS clipboard interaction
-set clipboard=unnamed           
+set clipboard=unnamedplus
 
 " make Vim run moar smooth
 set ttyfast
