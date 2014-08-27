@@ -458,10 +458,10 @@ nnoremap <silent> <leader>6 :call HiInterestingWord(6)<cr>
 nnoremap <silent> <leader>0 :call clearmatches()<cr>
 
 " Default Highlights
-hi def InterestingWord1 term=standout ctermfg=15 ctermbg=1 guifg=White guibg=Red
-hi def InterestingWord2 term=reverse cterm=reverse gui=reverse 
-hi def InterestingWord3 term=reverse ctermfg=235 ctermbg=222 guifg=#303030 guibg=#f0c674
-hi def InterestingWord4 term=standout ctermfg=0 ctermbg=11 guifg=Black guibg=Yellow
-hi def InterestingWord5 term=bold,reverse cterm=reverse ctermfg=240 ctermbg=222 gui=reverse guifg=#5e5e5e guibg=#f0c674
-hi def InterestingWord6 term=reverse cterm=reverse ctermfg=240 ctermbg=250 gui=reverse guifg=#5e5e5e guibg=#c5c8c6
+hi link InterestingWord1 Error
+hi link InterestingWord2 WildMenu
+hi link InterestingWord3 PmenuSbar
+hi link InterestingWord4 FoldColumn
+hi link InterestingWord5 TablineSel
+hi link InterestingWord6 Pmenu
 " }}}
