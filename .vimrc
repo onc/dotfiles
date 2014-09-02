@@ -187,8 +187,6 @@ cabbrev w!! w !sudo tee % > /dev/null %
 
 cabbrev so :source ~/.vimrc
 
-" toggle starting case of last word
-nnoremap <leader>u b~w 
 
 " smooth scroll
 noremap <silent> <c-u> :call smooth_scroll#up(&scroll, 10, 2)<CR>
