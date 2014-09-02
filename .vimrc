@@ -19,6 +19,8 @@ set lazyredraw
 
 " instant regex preview
 set incsearch
+" show all search results
+set hlsearch
 
 " show line-endings
 " set list
