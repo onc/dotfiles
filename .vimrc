@@ -207,6 +207,10 @@ nnoremap gS a<cr><esc>mwgk:silent! s/\v +$//<cr>:noh<cr>`w
 " brace
 command! SplitBrace :norm cij<cr><cr><esc>==kp==
 nnoremap <leader>sb :SplitBrace<cr>
+
+" Source
+vnoremap <leader>S y:execute @@<cr>:echo 'Sourced selection.'<cr>
+nnoremap <leader>S ^vg_y:execute @@<cr>:echo 'Sourced line.'<cr>
 " }}}
 
 " ==================================================
