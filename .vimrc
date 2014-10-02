@@ -23,7 +23,7 @@ set incsearch
 set hlsearch
 
 " show line-endings
-" set list
+set list
 " set showbreak=↪
 set listchars=eol:¬
 " set listchars=eol:↪
@@ -104,6 +104,7 @@ set mouse=a
 " 1 tab == 4 spaces
 set shiftwidth=4
 set tabstop=4
+set softtabstop=4 
 " copy the indention from prev line
 set autoindent
 " auto indent in some files e.g. C-like
@@ -117,10 +118,13 @@ set scrolloff=5
 set number
 
 " Resize splits when the window is resized
-au VimResized * :wincmd =
+autocmd VimResized * :wincmd =
 
 " dont conceal latex commands like textit
 let g:tex_conceal=""
+
+" graphical menu for command mode autocomplete
+set wildmenu
 
 set spelllang=de,en
 " }}}
@@ -128,18 +132,26 @@ set spelllang=de,en
 " ==================================================
 " {{{FUNCTIONS
 " ==================================================
+" Default Highlights
+function! HiInterestingWordGroups()
+    hi def InterestingWord1 term=standout ctermfg=15 ctermbg=1 guifg=White guibg=Red
+    hi def InterestingWord2 term=reverse cterm=reverse gui=reverse 
+    hi def InterestingWord3 term=reverse ctermfg=235 ctermbg=222 guifg=#303030 guibg=#f0c674
+    hi def InterestingWord4 term=standout ctermfg=0 ctermbg=11 guifg=Black guibg=Yellow
+    hi def InterestingWord5 term=bold,reverse cterm=reverse ctermfg=240 ctermbg=222 gui=reverse guifg=#5e5e5e guibg=#f0c674
+    hi def InterestingWord6 term=reverse cterm=reverse ctermfg=240 ctermbg=250 gui=reverse guifg=#5e5e5e guibg=#c5c8c6
+endfunction
+
 function! LightColorscheme()
     colorscheme solarized
-    let g:solarized_termtrans=0
-    let g:solarized_termcolors=256
-    let g:solarized_contrast="high"
-    let g:solarized_visibility="normal"
     set background=light
+    call HiInterestingWordGroups()
 endfunction
 
 function! DarkColorscheme()
-    colorscheme Tomorrow-Night
+    colorscheme base16-default
     set background=dark
+    call HiInterestingWordGroups()
 endfunction
 " }}}
 
@@ -151,10 +163,14 @@ endfunction
 map j gj
 map k gk
 
+" jump emacs sytle while in insert mode
+inoremap <C-e> <esc> :startinsert!<cr>
+inoremap <C-a> <esc>g^i
+
 nnoremap <leader>vim :tabnew ~/.vimrc<cr>
 
-nnoremap <leader>dark :call DarkColorscheme()<Cr>
-nnoremap <leader>light :call LightColorscheme()<Cr>
+nnoremap <leader>dark :silent :call DarkColorscheme()<Cr>
+nnoremap <leader>light :silent :call LightColorscheme()<Cr>
 
 " save on double esc
 map <Esc><Esc> :w<CR>
@@ -187,7 +203,6 @@ cabbrev w!! w !sudo tee % > /dev/null %
 
 cabbrev so :source ~/.vimrc
 
-
 " smooth scroll
 noremap <silent> <c-u> :call smooth_scroll#up(&scroll, 10, 2)<CR>
 noremap <silent> <c-d> :call smooth_scroll#down(&scroll, 10, 2)<CR>
@@ -211,6 +226,13 @@ nnoremap <leader>sb :SplitBrace<cr>
 " Source
 vnoremap <leader>S y:execute @@<cr>:echo 'Sourced selection.'<cr>
 nnoremap <leader>S ^vg_y:execute @@<cr>:echo 'Sourced line.'<cr>
+
+" Show hightlight group of char under cursor
+nnoremap <leader>H :echo "hi<" . synIDattr(synID(line("."),col("."),1),"name") . '> trans<'
+                    \ . synIDattr(synID(line("."),col("."),0),"name") . "> lo<"
+                    \ . synIDattr(synIDtrans(synID(line("."),col("."),1)),"name") . ">"<CR>
+
+nnoremap <bs> :nohl<cr>
 " }}}
 
 " ==================================================
@@ -223,23 +245,13 @@ call vundle#begin()
 " let Vundle manage Vundle
 " required! 
 Plugin 'gmarik/Vundle.vim'
-
-" My bundles here:
-"
-" original repos on GitHub
-Plugin 'tpope/vim-fugitive'
-Plugin 'Lokaltog/vim-easymotion'
-Plugin 'rstacruz/sparkup', {'rtp': 'vim/'}
-Plugin 'tpope/vim-rails.git'
-" Vim-scripts repos
-Plugin 'L9'
 " }}}
 
 " ==================================================
 " {{{MEINE BUNDELS 
 " ==================================================
-" get ALL the colorschemes
-Plugin 'flazz/vim-colorschemes'
+" git for vim
+Plugin 'tpope/vim-fugitive'
 " toggle Cursor
 Plugin 'jszakmeister/vim-togglecursor'
 " Vim airline
@@ -287,8 +299,17 @@ Plugin 'ap/vim-css-color'
 " text-objects-user
 Plugin 'kana/vim-textobj-user'
 Plugin 'Julian/vim-textobj-brace'
-" seoul256
-Plugin 'junegunn/seoul256.vim'
+" javascript
+Plugin 'einars/js-beautify'
+Plugin 'maksimr/vim-jsbeautify'
+
+" COLORSCHEMES
+" base 16 colorscheme
+Plugin 'chriskempson/base16-vim'
+" Tomorrow
+Plugin 'chriskempson/vim-tomorrow-theme'
+" solarized
+Plugin 'altercation/vim-colors-solarized'
 
 call vundle#end()
 filetype plugin indent on
@@ -302,8 +323,6 @@ let g:airline#extensions#tabline#enabled=1
 let g:airline_powerline_fonts=1
 let g:solarized_termcolors=256
 let g:airline_theme='tomorrow'
-" let airline present current session
-let g:airline_section_b='%{session#statusline()}'
 " }}}
 
 " ==================================================
@@ -340,16 +359,12 @@ let g:promptline_powerline_symbols=1
 " SyntaxHighlight
 syntax enable
 
-colorscheme Tomorrow-Night
 set background=dark
 
-" colorscheme solarized
-" let g:solarized_termtrans=0
-" let g:solarized_termcolors=256
-" let g:solarized_contrast="high"
-" let g:solarized_visibility="normal"
-" set background=light
- 
+let g:solarized_termtrans=0
+let g:solarized_termcolors=256
+let g:solarized_contrast="high"
+let g:solarized_visibility="normal"
 " }}}
 
 " ==================================================
@@ -368,30 +383,30 @@ if has("gui_running")
     " set guifont=Droid\ Sans\ Mono\ for\ Powerline\ 8
     set guifont=Monaco\ for\ Powerline\ 9
 
-    " Colorscheme
-    " let g:solarized_termtrans=0
-    " let g:solarized_termcolors=256
-    " let g:solarized_contrast="high"
-    " let g:solarized_visibility="normal"
-    " colorscheme Tomorrow-Night
+    colorscheme base16-default
 else
 
-    " Colorscheme
-    " let g:solarized_termtrans=0
-    " let g:solarized_termcolors=256
-    " let g:solarized_contrast="high"
-    " let g:solarized_visibility="normal"
-    " colorscheme Tomorrow-Night
+    colorscheme Tomorrow-Night
 endif
 " }}}
 
 " =================================================
 " {{{FILETYPE SETTINGS
 " ==================================================
-autocmd BufNewFile,BufRead *.tex set filetype=tex
+autocmd Bufread,BufNewFile *.tex set filetype=tex
+" Vim interprets .md as 'modula2'
+autocmd Bufread,BufNewFile *.md set filetype=markdown 
 
+" spell in tex
 autocmd FileType tex setlocal spell
 autocmd BufNewFile,BufRead *.tex setlocal spell
+
+" javascript
+autocmd FileType javascript nnoremap <buffer> <leader>jb :call JsBeautify()<cr>
+" for html
+autocmd FileType html nnoremap <buffer> <leader>jb :call HtmlBeautify()<cr>
+" for css or scss
+autocmd FileType css nnoremap <buffer> <leader>jb :call CSSBeautify()<cr>
 " }}}
 
 " ==================================================
@@ -461,11 +476,5 @@ nnoremap <silent> <leader>5 :call HiInterestingWord(5)<cr>
 nnoremap <silent> <leader>6 :call HiInterestingWord(6)<cr>
 nnoremap <silent> <leader>0 :call clearmatches()<cr>
 
-" Default Highlights
-hi link InterestingWord1 Error
-hi link InterestingWord2 WildMenu
-hi link InterestingWord3 PmenuSbar
-hi link InterestingWord4 FoldColumn
-hi link InterestingWord5 TablineSel
-hi link InterestingWord6 Pmenu
+call HiInterestingWordGroups()
 " }}}

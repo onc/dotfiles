@@ -2,7 +2,7 @@
 ZSH=$HOME/.oh-my-zsh
 
 # Set name of the theme to load.
-ZSH_THEME="agnoster"
+ZSH_THEME="onze"
 
 # Uncomment following line if you want red dots to be displayed while waiting for completion
 COMPLETION_WAITING_DOTS="true"
@@ -27,6 +27,8 @@ export LC_ALL=en_US.UTF-8
 export LC_CTYPE=en_US.UTF-8 
 export LANG=en_US.UTF-8
 
+export PATH="${PATH}:/home/onze/Applications"
+
 # Preferred editor for local and remote sessions
 if [[ -n $SSH_CONNECTION ]]; then
   export EDITOR='vim'
@@ -39,7 +41,7 @@ export TERM=screen-256color
 set guifont=Droid\ Sans\ Mono\ for\ Powerline\ 8
 
 # load vim Promptline
-source ~/.promptline.sh
+# source ~/.promptline.sh
 
 # tmux on start
 # if [ "$TMUX" = "" ]; then tmux; fi
@@ -80,12 +82,14 @@ alias vimrc="vim ~/.vimrc"
 alias zshrc="vim ~/.zshrc"
 alias i3conf="vim ~/.i3/config"
 alias i3status="vim ~/.i3/i3status.py"
+
 hash -d h=/mnt/hdd/
 
 # Open in google-chrome
 alias gchrome-open='google-chrome-stable $(xclip -selection "clipboard" -o) &'
 
 alias so="source ~/.zshrc"
+alias t="tmux"
 
 # SVN aliases
 alias sst="svn status"
@@ -101,8 +105,8 @@ alias redshift-onze="redshift -t 6500:4400 &"
 alias redshift-dark="redshift -t 4400:4000 &"
 
 # Xetex
-alias xetexmk-pdf="latexmk -c -pdf -gg -silent -xelatex -pvc"
-alias latexmk-pdf="latexmk -c -pdf -gg -silent -pvc"
+alias xetexmk-pdf="latexmk -c -pdf -gg -xelatex -pvc -bibtex"
+alias latexmk-pdf="latexmk -c -pdf -gg -pvc -bibtex"
 
 # Youtube-dl
 alias youtube-dl-mp3="youtube-dl -x --audio-format mp3"
@@ -112,6 +116,7 @@ alias 7z8core="7za a -r -t7z -m0=LZMA2 -mmt=8"
 
 # restart some stuff
 alias re-httpd="sudo systemctl restart httpd"
+alias re-mysql="sudo systemctl restart mysqld"
 
 # monitor-stuff
 alias sdo="xrandr --output LVDS-0 --auto --primary --rotate normal --pos 0x0 --output DP-0 --off --output VGA-0 --off"
@@ -129,25 +134,32 @@ function chpwd() {
     ls
 }
 
-# ls on enter
-auto-ls() {
-    if [[ $#BUFFER -eq 0 ]]; then
-        echo ""
-        ls
-        zle redisplay
-    else
-        zle accept-line
-    fi
+auto-ls () {
+   if [[ $#BUFFER -eq 0 ]]; then
+       echo ""
+       ls
+       echo -e "\n"
+       zle redisplay
+   else
+       zle .$WIDGET
+   fi
 }
-zle -N auto-ls
-bindkey '^M' auto-ls
+zle -N accept-line auto-ls
+zle -N other-widget auto-ls
 
 # change kde lockscreen image
-function set-lockscreen() {
-    convert $1 temp_2560x1600.png
-    sudo cp temp_2560x1600.png /usr/share/wallpapers/Elarun/contents/images/2560x1600.png
-    rm temp_2560x1600.png
-    echo "changed lockscreen"
+# function set-lockscreen() {
+#     convert $1 temp_2560x1600.png
+#     sudo cp temp_2560x1600.png /usr/share/wallpapers/Elarun/contents/images/2560x1600.png
+#     rm temp_2560x1600.png
+#     echo "changed lockscreen"
+# }
+
+function set-backnlock() {
+    convert $1 temp_image_back_n_lock.png
+    cp temp_image_back_n_lock.png ~/.i3/back.png
+    rm temp_image_back_n_lock.png
+    echo "lockscreen and background changed"
 }
 
 function mk() {
@@ -175,7 +187,4 @@ fe() {
   ${EDITOR:-vim} "$file"
   cd -
 }
-
-# blur konsole
-# xprop -f _KDE_NET_WM_BLUR_BEHIND_REGION 32c -set _KDE_NET_WM_BLUR_BEHIND_REGION 0 -id $(xprop -root | awk '/_NET_ACTIVE_WINDOW\(WINDOW\)/{print $NF}')
 # }}}

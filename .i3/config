@@ -6,26 +6,32 @@
 set $mod Mod4
 set $alt Mod1
 
-set $w1 1 term
-set $w2 2 vim
-set $w3 3 www
-set $w4 4 music
-set $w5 5 mail
+set $w1 1   term
+set $w2 2   vim
+set $w3 3   www
+set $w4 4   music
+set $w5 5   mail
 # }}}
 
 # ===========================================================================================
 # KEYBINDINGS FOR PROGRAMMS {{{
 # ===========================================================================================
-# konsole
-bindsym $mod+Return exec konsole
-# lockscreen
-bindsym $alt+ctrl+l exec i3lock -i ~/.i3/back.png
+# terminal
+bindsym $mod+t exec konsole
+# bindsym $mod+t exec xfce4-terminal
+# launcher
+# bindsym $mod+space exec --no-startup-id kupfer
+# gvim
+bindsym $mod+v exec --no-startup-id gvim
+# dolphin
+bindsym $mod+e exec --no-startup-id dolphin
+# chromium
+bindsym $mod+c exec --no-startup-id chromium
 # close window
 bindsym $mod+q kill
-# app launcher
-bindsym $mod+space exec --no-startup-id synapse
-# gvim
-bindsym $mod+v exec gvim
+# lock screen and mute sound
+# bindsym $alt+ctrl+l exec amixer -q sset Master mute; exec i3lock -u -i ~/.i3/back.png;
+bindsym $alt+ctrl+l exec amixer -q sset Master mute; exec slimlock;
 
 # Volume
 bindsym XF86AudioRaiseVolume exec amixer -q sset Master 5%+ unmute
@@ -36,6 +42,7 @@ bindsym Print exec scrot '%Y-%m-%d-%T_$wx$h_scrot.png' -e 'mv $f ~/Pictures/scre
 
 # reload the configuration file
 bindsym $mod+Shift+c reload
+# exit i3
 bindsym $mod+Shift+e exec --no-startup-id "i3-nagbar -t warning -m 'You pressed the exit shortcut. Do you really want to exit i3? This will end your X session.' -b 'Yes, exit i3' 'i3-msg exit'"
 # }}}
 
@@ -43,10 +50,10 @@ bindsym $mod+Shift+e exec --no-startup-id "i3-nagbar -t warning -m 'You pressed 
 # NAVIGATION AND WINDOW MOVEMENT {{{
 # ===========================================================================================
 # change focus
-bindsym $mod+l focus left
+bindsym $mod+h focus left
 bindsym $mod+j focus down
 bindsym $mod+k focus up
-bindsym $mod+h focus right
+bindsym $mod+l focus right
 
 # alternatively, you can use the cursor keys:
 bindsym $mod+Left focus left
@@ -60,7 +67,7 @@ bindsym $mod+Shift+j move down
 bindsym $mod+Shift+k move up
 bindsym $mod+Shift+l move right
 
-bindsym $mod+c move position center
+bindsym $alt+Shift+c move position center
 
 # alternatively, you can use the cursor keys:
 bindsym $mod+Shift+Left move left
@@ -69,24 +76,24 @@ bindsym $mod+Shift+Up move up
 bindsym $mod+Shift+Right move right
 
 # split in horizontal orientation
-# bindsym $mod+Shift+% split h
+bindsym $alt+Shift+5 split h
 
 # split in vertical orientation
-# bindsym $mod+v split v
+bindsym $alt+Shift+2 split v
 
 # enter fullscreen mode for the focused container
 bindsym $mod+f fullscreen
 
 # change container layout (stacked, tabbed, toggle split)
-bindsym $mod+s layout stacking
-bindsym $mod+t layout tabbed
-bindsym $mod+e layout toggle split
+bindsym $alt+s layout stacking
+bindsym $alt+t layout tabbed
+bindsym $alt+e layout toggle split
 
 # toggle tiling / floating
-bindsym $mod+Shift+space floating toggle
+bindsym $alt+f floating toggle
 
 # change focus between tiling / floating windows
-# bindsym $mod+space focus mode_toggle
+bindsym $mod+Shift+f focus mode_toggle
 
 # focus the parent container
 bindsym $mod+a focus parent
@@ -121,6 +128,11 @@ bindsym $mod+Shift+7 move container to workspace 7
 bindsym $mod+Shift+8 move container to workspace 8
 bindsym $mod+Shift+9 move container to workspace 9
 bindsym $mod+Shift+0 move container to workspace 10
+
+bindsym $alt+Shift+j move workspace to output down
+bindsym $alt+Shift+k move workspace to output up
+bindsym $alt+Shift+h move workspace to output left
+bindsym $alt+Shift+l move workspace to output right
 # }}}
 
 # ===========================================================================================
@@ -153,10 +165,16 @@ bindsym $mod+r mode "resize"
 # STARTUP {{{
 # ===========================================================================================
 # exec xcompmgr -c -f -n
-exec --no-startup-id xcompmgr -n
+exec --no-startup-id compton --config ~/.i3/compton.conf -b
+# exec --no-startup-id compton -cb
 exec --no-startup-id feh --bg-fill ~/.i3/back.png
 exec --no-startup-id nm-applet
 exec --no-startup-id dropboxd
+exec --no-startup-id clipit
+exec --no-startup-id unclutter
+exec --no-startup-id conky
+exec --no-startup-id kupfer
+exec --no-startup-id sleep 3 && xfce4-power-manager
 # }}}
 
 # ===========================================================================================
@@ -168,16 +186,15 @@ bar {
   font pango:Roboto-Light, Font Awesome 8
   workspace_buttons yes
   # hide workspace number if workspace is named
-  strip_workspace_numbers yes
-
+  # strip_workspace_numbers yes
   colors {
-    separator #515151
-    background #2d2d2d
-    statusline #cccccc
-    focused_workspace #515151 #515151 #66cccc
-    active_workspace #393939 #393939 #999999
-    inactive_workspace #2d2d2d #2d2d2d #999999
-    urgent_workspace #f2777a #f2777a #cccccc
+    separator #505050
+    background #151515
+    statusline #E0E0E0
+    focused_workspace #505050 #505050 #90A959
+    active_workspace #303030 #303030 #AA759F
+    inactive_workspace #151515 #151515 #B0B0B0
+    urgent_workspace #AC4142 #AC4142 #E0E0E0
   }
 }
 # }}}
@@ -187,6 +204,8 @@ bar {
 # ===========================================================================================
 for_window [class="(?i)keepassx"] floating enable
 for_window [class="(?i)dolphin"] floating enable
+for_window [class="(?i)pidgin"] floating enable
+for_window [class="(?i)ksysguard"] floating enable
 # }}}
 
 # ===========================================================================================
@@ -200,12 +219,17 @@ floating_modifier $alt
 # Display-Settings
 hide_edge_borders both
 
-# Font
-font pango:Roboto-Light 8
+new_window normal
+new_float none
 
-# Colors
-client.focused #515151 #515151 #66cccc #99cc99
-client.focused_inactive #2d2d2d #2d2d2d #999999 #cc99cc
-client.unfocused #2d2d2d #2d2d2d #999999 #6699cc
-client.urgent #f2777a #f2777a #cccccc #f2777a
+# Font
+font pango:Roboto-Light, Font Awesome 8
+
+# ===========================================================================================
+# COLORS
+# ===========================================================================================
+client.focused #505050 #505050 #90A959 #90A959
+client.focused_inactive #151515 #151515 #AA759F #AA759F
+client.unfocused #151515 #151515 #B0B0B0 #B0B0B0
+client.urgent #AC4142 #AC4142 #E0E0E0 #E0E0E0
 # }}}

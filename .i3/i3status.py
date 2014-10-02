@@ -1,5 +1,12 @@
 # -*- coding: utf-8 -*-
 
+# Colors - base16:
+white = "#E0E0E0"
+gray = "#303030"
+green = "#90A959"
+orange = "#D28445"
+red = "#AC4142"
+
 import subprocess
 
 from i3pystatus import Status
@@ -8,16 +15,33 @@ from i3pystatus.mail import imap
 status = Status(standalone=True)
 
 status.register("clock",
-        format="%a %-d %b %H:%M")
+        format="%a %-d %b %H:%M",
+        color=white)
 
 status.register("load",
-        critical_color="#f2777a")
+        critical_color=red,
+        color=white,
+        critical_limit=2,
+        interval=5)
+
+status.register("shell",
+        color=white,
+        command="cat /sys/devices/system/cpu/cpu0/cpufreq/scaling_governor",
+        interval=5)
+
+status.register("mem",
+        format="{used_mem:.0f}/{total_mem:.0f} MiB",
+        round_size=0,
+        color=white,
+        warn_color=orange,
+        alert_color=red)
 
 status.register("temp",
-    format="{temp:.0f}°C",)
+    format="{temp:.0f}°C",
+    color=white)
 
 status.register("battery",
-    format="{status} {consumption:.2f}W {percentage:.2f}% {remaining:%E%hh:%Mm}",
+    format="{status} {consumption:.0f}W {percentage:.0f}% {remaining:%E%hh:%Mm}",
     alert=True,
     alert_percentage=5,
     status={
@@ -25,41 +49,39 @@ status.register("battery",
         "CHR": "",
         "FULL": "",
     },
-    color="#cccccc",
-    full_color="#99cc99",
-    charging_color="#f99157",
-    critical_color="#f2777a")
+    color=orange,
+    full_color=white,
+    charging_color=green,
+    critical_color=red)
 
 status.register("network",
     interface="enp0s25",
     format_up="{v4cidr}",
-    color_up="#99cc99",
-    color_down="#999999")
+    color_up=white,
+    color_down=gray)
 
 status.register("wireless",
     interface="wlp3s0",
-    format_up="{essid}/{v4} {quality:03.0f}%",
-    color_up="#99cc99",
-    color_down="#999999")
+    format_up=" {essid}/{v4} {quality:03.0f}%",
+    color_up=white,
+    color_down=gray)
 
 status.register("alsa",
-    format=" {volume}%",)
+    format=" {volume}%",
+    color=white,
+    color_muted=gray)
 
 status.register("backlight",
     format=" {brightness}/{max_brightness}",
-    interval=1)
+    interval=1,
+    color=white)
 
-status.register("uptime")
+status.register("uptime",
+        color=white)
 
-# status.register("mail",
-#        backends=[
-#            imap.IMAP(
-#                host="imap.googlemail.com",
-#                username="", 
-#                password=""
-#            )
-#        ],
-#        email_client="thunderbird",
-#        hide_if_null=False)
+status.register("shell",
+        color=white,
+        command="/mnt/hdd/dotfiles/yaUpdates.sh",
+        interval=600)
 
 status.run()
