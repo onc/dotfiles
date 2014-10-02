@@ -81,7 +81,7 @@ status.register("uptime",
 
 status.register("shell",
         color=white,
-        command="/mnt/hdd/dotfiles/yaUpdates.sh",
+        command="/mnt/hdd/dotfiles/pacUpdates.sh",
         interval=600)
 
 status.run()
