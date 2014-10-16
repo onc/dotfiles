@@ -101,8 +101,8 @@ alias gpatch="git add -p"
 
 # Redshift
 alias redshift-standart="redshift &"
-alias redshift-onze="redshift -t 6500:4400 &"
-alias redshift-dark="redshift -t 4400:4000 &"
+alias redshift-onze="redshift -l 48.2:10.0 -t 6500:4400 &"
+alias redshift-dark="redshift -l 48.2:10.0 -t 4400:4000 &"
 
 # Xetex
 alias xetexmk-pdf="latexmk -c -pdf -gg -xelatex -pvc -bibtex"
@@ -120,6 +120,7 @@ alias re-mysql="sudo systemctl restart mysqld"
 
 # monitor-stuff
 alias sdo="xrandr --output LVDS-0 --auto --primary --rotate normal --pos 0x0 --output DP-0 --off --output VGA-0 --off"
+alias sd-only="xrandr --output DP-0 --auto --primary --rotate normal --pos 0x0 --output VGA-0 --auto --above LVDS-0 --output LVDS-0 --off"
 alias sda="xrandr --output LVDS-0 --auto --primary --rotate normal --pos 0x0 --output DP-0 --auto --above LVDS-0 --output VGA-0 --auto --above LVDS-0"
 alias sdr="xrandr --output LVDS-0 --auto --primary --rotate normal --pos 0x0 --output DP-0 --auto --right-of LVDS-0 --output VGA-0 --auto --right-of LVDS-0"
 alias sdl="xrandr --output LVDS-0 --auto --primary --rotate normal --pos 0x0 --output DP-0 --auto --left-of LVDS-0 --output VGA-0 --auto --left-of LVDS-0"
