@@ -22,8 +22,11 @@ set incsearch
 " show all search results
 set hlsearch
 
+" turn off wrapping while searching
+set nowrapscan
+
 " show line-endings
-set list
+" set list
 " set showbreak=↪
 set listchars=eol:¬
 " set listchars=eol:↪
@@ -127,21 +130,14 @@ let g:tex_conceal=""
 set wildmenu
 
 set spelllang=de,en
+
+set colorcolumn=80
+" let &colorcolumn="80,".join(range(120,9999),",")
 " }}}
 
 " ==================================================
 " {{{FUNCTIONS
 " ==================================================
-" Default Highlights
-function! HiInterestingWordGroups()
-    hi def InterestingWord1 term=standout ctermfg=15 ctermbg=1 guifg=White guibg=Red
-    hi def InterestingWord2 term=reverse cterm=reverse gui=reverse 
-    hi def InterestingWord3 term=reverse ctermfg=235 ctermbg=222 guifg=#303030 guibg=#f0c674
-    hi def InterestingWord4 term=standout ctermfg=0 ctermbg=11 guifg=Black guibg=Yellow
-    hi def InterestingWord5 term=bold,reverse cterm=reverse ctermfg=240 ctermbg=222 gui=reverse guifg=#5e5e5e guibg=#f0c674
-    hi def InterestingWord6 term=reverse cterm=reverse ctermfg=240 ctermbg=250 gui=reverse guifg=#5e5e5e guibg=#c5c8c6
-endfunction
-
 function! LightColorscheme()
     colorscheme solarized
     set background=light
@@ -232,7 +228,7 @@ nnoremap <leader>H :echo "hi<" . synIDattr(synID(line("."),col("."),1),"name") .
                     \ . synIDattr(synID(line("."),col("."),0),"name") . "> lo<"
                     \ . synIDattr(synIDtrans(synID(line("."),col("."),1)),"name") . ">"<CR>
 
-nnoremap <bs> :nohl<cr>
+nnoremap <silent> <bs> :nohl<cr>
 " }}}
 
 " ==================================================
@@ -365,6 +361,9 @@ let g:solarized_termtrans=0
 let g:solarized_termcolors=256
 let g:solarized_contrast="high"
 let g:solarized_visibility="normal"
+
+"Access colors present in 256 colorspace
+let base16colorspace=256  
 " }}}
 
 " ==================================================
@@ -380,10 +379,11 @@ if has("gui_running")
     set guioptions-=r
     set guioptions-=L
 
-    " set guifont=Droid\ Sans\ Mono\ for\ Powerline\ 8
-    set guifont=Monaco\ for\ Powerline\ 9
+    set guifont=Droid\ Sans\ Mono\ for\ Powerline\ 9
+    " set guifont=Monaco\ for\ Powerline\ 9
 
-    colorscheme base16-default
+    " colorscheme base16-default
+    colorscheme base16-monokai
 else
 
     colorscheme Tomorrow-Night
@@ -466,6 +466,16 @@ function! HiInterestingWord(n)
     " Move back to our original location.
     normal! `z
 endfunction "
+
+" Default Highlights
+function! HiInterestingWordGroups()
+    hi def InterestingWord1 term=standout ctermfg=15 ctermbg=1 guifg=White guibg=Red
+    hi def InterestingWord2 term=reverse cterm=reverse gui=reverse 
+    hi def InterestingWord3 term=reverse ctermfg=235 ctermbg=222 guifg=#303030 guibg=#f0c674
+    hi def InterestingWord4 term=standout ctermfg=0 ctermbg=11 guifg=Black guibg=Yellow
+    hi def InterestingWord5 term=bold,reverse cterm=reverse ctermfg=240 ctermbg=222 gui=reverse guifg=#5e5e5e guibg=#f0c674
+    hi def InterestingWord6 term=reverse cterm=reverse ctermfg=240 ctermbg=250 gui=reverse guifg=#5e5e5e guibg=#c5c8c6
+endfunction
 
 " Mappings
 nnoremap <silent> <leader>1 :call HiInterestingWord(1)<cr>
