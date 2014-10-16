@@ -15,8 +15,15 @@ from i3pystatus.mail import imap
 status = Status(standalone=True)
 
 status.register("clock",
-        format="%a %-d %b %H:%M",
+        format=" %a %-d %b %H:%M",
         color=white)
+
+status.register("mem",
+        format="{used_mem:.0f}/{total_mem:.0f} MiB",
+        round_size=0,
+        color=white,
+        warn_color=orange,
+        alert_color=red)
 
 status.register("load",
         critical_color=red,
@@ -26,22 +33,15 @@ status.register("load",
 
 status.register("shell",
         color=white,
-        command="cat /sys/devices/system/cpu/cpu0/cpufreq/scaling_governor",
+        command="echo ; cat /sys/devices/system/cpu/cpu0/cpufreq/scaling_governor",
         interval=5)
-
-status.register("mem",
-        format="{used_mem:.0f}/{total_mem:.0f} MiB",
-        round_size=0,
-        color=white,
-        warn_color=orange,
-        alert_color=red)
 
 status.register("temp",
     format="{temp:.0f}°C",
     color=white)
 
 status.register("battery",
-    format="{status} {consumption:.0f}W {percentage:.0f}% {remaining:%E%hh:%Mm}",
+    format=" {status} {consumption:.0f}W {percentage:.0f}% {remaining:%E%hh:%Mm}",
     alert=True,
     alert_percentage=5,
     status={
@@ -81,7 +81,12 @@ status.register("uptime",
 
 status.register("shell",
         color=white,
-        command="/mnt/hdd/dotfiles/pacUpdates.sh",
+        command="echo ; /mnt/hdd/dotfiles/pacUpdates.sh",
         interval=600)
+
+status.register("text",
+        text="  ",
+        color=white,
+        cmd_leftclick="/mnt/hdd/dotfiles/touch-toggle.sh")
 
 status.run()
