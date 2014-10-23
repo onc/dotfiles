@@ -1,109 +1,27 @@
-" ==================================================
-" {{{UTIL
-" ==================================================
+" =============================================================================
+" {{{ BASIC SETTINGS
+" =============================================================================
 set nocompatible
 
-" stfu vim
-set noerrorbells visualbell t_vb=
-autocmd GUIEnter * set visualbell t_vb=
+filetype on
+filetype plugin on
+filetype indent on 
 
-filetype plugin indent on     " required!
+" ######## SYNTAX #############################################################
+syntax enable
+set background=dark
 
-" fixing delay on leaving insert-mode
-set notimeout
-set ttimeout
-set ttimeoutlen=10
-
-" Don't redraw while executing macros (good performance config)
-set lazyredraw
-
-" instant regex preview
-set incsearch
-" show all search results
-set hlsearch
-
-" turn off wrapping while searching
-set nowrapscan
-
-" show line-endings
-" set list
-" set showbreak=↪
-set listchars=eol:¬
-" set listchars=eol:↪
-" set listchars=tab:▸\ ,eol:¬,extends:❯,precedes:❮
-
-" fu swapfiles
-set noswapfile
-set nobackup
-
-" show matching brackets
-set showmatch
-
-" folding
-set foldmethod=marker
-
-set undofile
-" maximum number of changes that can be undone
-set undolevels=1000 
-" maximum number lines to save for undo on a buffer reload
-set undoreload=10000 
-
-set undodir=~/.vim/undodir//
-
-" cursor-zeile markieren
-set cursorline
-
-" tolle regex
-set magic
-
-" Use 256 colours (Use this setting only if your terminal supports 256 colours)
-set t_Co=256
-set t_ut=
-
-set fillchars+=stl:\ ,stlnc:\
-
-" dont syntax highlight extrem long lines...
-set synmaxcol=300
-
-" set antialias
-set antialias
-
-" wrapping words
-set formatoptions+=t
-" set textwidth=80
-set linebreak
-set wrap
-
-" auto read file when a file is changed from outside
-set autoread
-
-" use tabs
-set switchbuf=usetab
-
-" utf-8
+" ######## ENCODING ###########################################################
 set encoding=utf8
 set termencoding=utf-8
 set fileencoding=utf-8
 
-" turn off cursor blink in normal mode
-set gcr=n:blinkon0
+" ######## LINE NUMBERS #######################################################
+" Line numbers
+" set relativenumber
+set number
 
-" normal OS clipboard interaction
-set clipboard=unnamedplus
-
-" make Vim run moar smooth
-set ttyfast
-
-" smart backspace
-set backspace=indent,eol,start
-
-" Tab-stuff
-set expandtab
-set smarttab
-
-" mouse in all modes
-set mouse=a
-
+" ######## FORMAT #############################################################
 " 1 tab == 4 spaces
 set shiftwidth=4
 set tabstop=4
@@ -112,140 +30,225 @@ set softtabstop=4
 set autoindent
 " auto indent in some files e.g. C-like
 set smartindent
+" wrapping words
+set formatoptions+=t
+" no new line after 80 chars
+set textwidth=0
+" wrap long lines - only for display, no new lines!
+set linebreak
+set wrap
+" wrap 5 chars before right window border
+set wrapmargin=5
+" Tab-stuff
+set expandtab
+set smarttab
+" smart backspace
+set backspace=indent,eol,start
 
+" ######## SEARCH #############################################################
+" instant regex preview
+set incsearch
+" show all search results
+set hlsearch
+" turn off wrapping while searching
+set nowrapscan
+" tolle regex
+set magic
+
+" ######## VISUAL #############################################################
+" Don't redraw while executing macros (good performance config)
+set lazyredraw
+" show matching brackets
+set showmatch
+" graphical menu for command mode autocomplete
+set wildmenu
 " min 5 zeilen unten und oben platz
 set scrolloff=5
+" folding
+set foldmethod=marker
+" set antialias
+set antialias
+" use tabs
+set switchbuf=usetab
+" make Vim run moar smooth
+set ttyfast
+" mouse in all modes
+set mouse=a
+" cursor-zeile markieren
+set cursorline
+" fixing delay on leaving insert-mode
+set notimeout
+set ttimeout
+set ttimeoutlen=10
+" show column number 80
+set colorcolumn=80
 
-" Line numbers
-" set relativenumber
-set number
+" ######## LANG ###############################################################
+set spelllang=de,en
 
+" ######## FILESYSTEM #########################################################
+" fu swapfiles
+set noswapfile
+set nobackup
+" auto read file when a file is changed from outside
+set autoread
+" normal OS clipboard interaction
+set clipboard=unnamedplus
+
+" ######## KEYBINDINGS ########################################################
+" Treat long lines as break lines (useful when moving around in them)
+map j gj
+map k gk
+" save on double esc
+map <Esc><Esc> :w<CR>
+" Y for yank until last non whitespace char, like D
+nnoremap Y yg_
+" Create newlines without entering insert mode
+nnoremap go o<Esc>k
+nnoremap gO O<Esc>j
+" navigate throw tabs
+nnoremap <S-h> gT
+nnoremap <S-l> gt
+" space fuer comandmode
+nnoremap <space> :
+" save as sudo
+cabbrev w!! w !sudo tee % > /dev/null %
+" source vimrc
+cabbrev so :source ~/.vimrc
+" emacs keybindings for command mode
+cnoremap <c-a> <home>
+cnoremap <c-e> <end>
+" turn off hightlighting on backspace
+nnoremap <silent> <bs> :nohl<cr>
+" open vimrc
+nnoremap <leader>vim :tabnew ~/.vimrc<cr>
+
+" ######## FILETYPE SETTINGS ##################################################
+autocmd Bufread,BufNewFile *.tex set filetype=tex
+" Vim interprets .md as 'modula2'
+autocmd Bufread,BufNewFile *.md set filetype=markdown 
+"
+" spell in tex
+autocmd FileType tex setlocal spell
+autocmd BufNewFile,BufRead *.tex setlocal spell
+
+" javascript
+autocmd FileType javascript setlocal shiftwidth=2 tabstop=2 expandtab
+" }}}
+
+" =============================================================================
+" {{{ EXTENDED SETTINGS
+" =============================================================================
+
+" ######## COLORSCHEMES #######################################################
+let g:gui_dark_colorscheme = "base16-monokai"
+let g:gui_light_colorscheme = "solarized"
+
+let g:term_dark_colorscheme = "Tomorrow-Night"
+let g:term_light_colorscheme = "solarized"
+
+" ######## MUTE VIM ###########################################################
+" stfu vim
+set noerrorbells visualbell t_vb=
+autocmd GUIEnter * set visualbell t_vb=
+
+" ######## VISUAL #############################################################
+" show line-endings
+" set list
+" set showbreak=↪
+set listchars=eol:¬
+" set listchars=eol:↪
+" set listchars=tab:▸\ ,eol:¬,extends:❯,precedes:❮
+set fillchars+=stl:\ ,stlnc:\
+" dont syntax highlight extrem long lines...
+set synmaxcol=300
+" turn off cursor blink in normal mode
+set gcr=n:blinkon0
+" Use 256 colours (Use this setting only if your terminal supports 256 colours)
+set t_Co=256
+set t_ut=
 " Resize splits when the window is resized
 autocmd VimResized * :wincmd =
 
+" ######## FILESYSTEM #########################################################
+set undofile
+" maximum number of changes that can be undone
+set undolevels=1000 
+" maximum number lines to save for undo on a buffer reload
+set undoreload=10000 
+set undodir=~/.vim/undodir//
+
+" ######## FILETYPE SETTINGS ##################################################
 " dont conceal latex commands like textit
 let g:tex_conceal=""
 
-" graphical menu for command mode autocomplete
-set wildmenu
-
-set spelllang=de,en
-
-set colorcolumn=80
-" let &colorcolumn="80,".join(range(120,9999),",")
-" }}}
-
-" ==================================================
-" {{{FUNCTIONS
-" ==================================================
+" ######## FUNCTIONS ##########################################################
 function! LightColorscheme()
-    colorscheme solarized
+    if has("gui_running")
+        execute "colorscheme ".g:gui_light_colorscheme
+    else 
+        execute "colorscheme ".g:term_light_colorscheme
+    endif
+
     set background=light
     call HiInterestingWordGroups()
 endfunction
 
 function! DarkColorscheme()
-    colorscheme base16-default
+    if has("gui_running")
+        execute "colorscheme ".g:gui_dark_colorscheme
+    else
+        execute "colorscheme ".g:term_dark_colorscheme
+    endif
+
     set background=dark
     call HiInterestingWordGroups()
 endfunction
-" }}}
 
-" ==================================================
-" {{{KEY BINDINGS AND COMMANDS
-" ==================================================
-
-" Treat long lines as break lines (useful when moving around in them)
-map j gj
-map k gk
-
-" jump emacs sytle while in insert mode
-inoremap <C-e> <esc> :startinsert!<cr>
-inoremap <C-a> <esc>g^i
-
-nnoremap <leader>vim :tabnew ~/.vimrc<cr>
-
+" ######## KEYBINDINGS ########################################################
+" switch between colorschemes
 nnoremap <leader>dark :silent :call DarkColorscheme()<Cr>
 nnoremap <leader>light :silent :call LightColorscheme()<Cr>
-
-" save on double esc
-map <Esc><Esc> :w<CR>
-
-" Y for yank until last non whitespace char, like D
-nnoremap Y yg_
-
-" Create newlines without entering insert mode
-nnoremap go o<Esc>k
-nnoremap gO O<Esc>j
-
-command! Dodaline silent :%s/\. [^$]/\.\r/g
-nnoremap <leader>ddl :Dodaline<Cr>
-
-nnoremap <leader>js :JSHint<Cr>
-nnoremap <leader>p :CtrlPMixed<Cr>
+" Format
 nnoremap <silent> <leader>f gg=G``
-nnoremap <silent> <leader>n :NERDTreeTabsToggle<Cr>
-nnoremap <leader>under :set syntax=underscore_template<Cr>
-
-" navigate throw tabs
-nnoremap <S-h> gT
-nnoremap <S-l> gt
-
-" space fuer comandmode
-nnoremap <space> :
-
-" save as sudo
-cabbrev w!! w !sudo tee % > /dev/null %
-
-cabbrev so :source ~/.vimrc
-
-" smooth scroll
-noremap <silent> <c-u> :call smooth_scroll#up(&scroll, 10, 2)<CR>
-noremap <silent> <c-d> :call smooth_scroll#down(&scroll, 10, 2)<CR>
-
-" emacs keybindings for command mode
-cnoremap <c-a> <home>
-cnoremap <c-e> <end>
-
 " Split line (sister to [J]oin lines)
 " The normal use of S is covered by cc, so don't worry about shadowing it.
 nnoremap S i<cr><esc>mwgk:silent! s/\v +$//<cr>:noh<cr>`w
 nnoremap gS a<cr><esc>mwgk:silent! s/\v +$//<cr>:noh<cr>`w
-
-" Bring the content of the current braces in the form: 
-" brace ( || { || [
-"   content
-" brace
-command! SplitBrace :norm cij<cr><cr><esc>==kp==
-nnoremap <leader>sb :SplitBrace<cr>
-
 " Source
 vnoremap <leader>S y:execute @@<cr>:echo 'Sourced selection.'<cr>
 nnoremap <leader>S ^vg_y:execute @@<cr>:echo 'Sourced line.'<cr>
-
 " Show hightlight group of char under cursor
 nnoremap <leader>H :echo "hi<" . synIDattr(synID(line("."),col("."),1),"name") . '> trans<'
-                    \ . synIDattr(synID(line("."),col("."),0),"name") . "> lo<"
-                    \ . synIDattr(synIDtrans(synID(line("."),col("."),1)),"name") . ">"<CR>
+            \ . synIDattr(synID(line("."),col("."),0),"name") . "> lo<"
+            \ . synIDattr(synIDtrans(synID(line("."),col("."),1)),"name") . ">"<CR>
+" set filetype to undescore_template
+nnoremap <leader>under :set syntax=underscore_template<Cr>
 
-nnoremap <silent> <bs> :nohl<cr>
+" ######## COLORSCHEME SETTINGS ###############################################
+" solarized
+let g:solarized_termtrans=0
+let g:solarized_termcolors=256
+let g:solarized_contrast="high"
+let g:solarized_visibility="normal"
+
+"Access colors present in 256 colorspace
+let g:base16colorspace=256  
 " }}}
 
-" ==================================================
-" {{{VUNDLE
-" ==================================================
+" =============================================================================
+" {{{ VUNDLE
+" =============================================================================
 filetype off
 set rtp+=~/.vim/bundle/Vundle.vim
 call vundle#begin()
-
-" let Vundle manage Vundle
 " required! 
 Plugin 'gmarik/Vundle.vim'
 " }}}
 
-" ==================================================
-" {{{MEINE BUNDELS 
-" ==================================================
+" =============================================================================
+" {{{ MY BUNDELS 
+" =============================================================================
 " git for vim
 Plugin 'tpope/vim-fugitive'
 " toggle Cursor
@@ -286,8 +289,6 @@ Plugin 'raimondi/delimitmate'
 Plugin 'Shutnik/jshint2.vim'
 " underscore template highlight
 Plugin 'aaronj1335/underscore-templates.vim'
-" scroll smooth
-Plugin 'terryma/vim-smooth-scroll'
 " show indentions
 Plugin 'nathanaelkane/vim-indent-guides'
 " show colors
@@ -298,6 +299,8 @@ Plugin 'Julian/vim-textobj-brace'
 " javascript
 Plugin 'einars/js-beautify'
 Plugin 'maksimr/vim-jsbeautify'
+" ruby
+Plugin 'vim-ruby/vim-ruby'
 
 " COLORSCHEMES
 " base 16 colorscheme
@@ -308,22 +311,23 @@ Plugin 'chriskempson/vim-tomorrow-theme'
 Plugin 'altercation/vim-colors-solarized'
 
 call vundle#end()
-filetype plugin indent on
+filetype on
+filetype plugin on
+filetype indent on 
 " }}}
 
-" ==================================================
-" {{{AIRLINE CONF
-" ==================================================
+" =============================================================================
+" {{{ PLUGIN SETTINGS
+" =============================================================================
+
+" ######## AIRLINE ############################################################
 set laststatus=2
 let g:airline#extensions#tabline#enabled=1
 let g:airline_powerline_fonts=1
 let g:solarized_termcolors=256
 let g:airline_theme='tomorrow'
-" }}}
 
-" ==================================================
-" {{{TMUXLINE CONF
-" ==================================================
+" ######## TMUXLINE ###########################################################
 let g:tmuxline_theme='airline'
 let g:tmuxline_preset={
             \'a'    : '#S',
@@ -334,11 +338,8 @@ let g:tmuxline_preset={
             \'y'    : ['%R', '%a', '%Y'],
             \'z'    : '#H'}
 let g:tmuxline_powerline_separators=1
-" }}}
 
-" ==================================================
-" {{{PROMPTLINE CONF
-" ==================================================
+" ######## PROMPTLINE #########################################################
 let g:promptline_theme='airline'
 let g:promptline_preset={
             \'a' : [ promptline#slices#jobs() ],
@@ -347,71 +348,8 @@ let g:promptline_preset={
             \'z' : [ promptline#slices#git_status(), promptline#slices#vcs_branch()],
             \'warn' : [ promptline#slices#last_exit_code(), promptline#slices#battery() ]}
 let g:promptline_powerline_symbols=1
-" }}}
 
-" ==================================================
-" {{{COLORSCHEME
-" ==================================================
-" SyntaxHighlight
-syntax enable
-
-set background=dark
-
-let g:solarized_termtrans=0
-let g:solarized_termcolors=256
-let g:solarized_contrast="high"
-let g:solarized_visibility="normal"
-
-"Access colors present in 256 colorspace
-let base16colorspace=256  
-" }}}
-
-" ==================================================
-" {{{SETTINGS FOR GVIM/VIM
-" ==================================================
-if has("gui_running")
-
-    " Disable Toolbar in gvim
-    set guioptions-=T
-    " Disable MenuBar in gvim
-    set guioptions-=m
-    " Disable left and right scrollbar
-    set guioptions-=r
-    set guioptions-=L
-
-    set guifont=Droid\ Sans\ Mono\ for\ Powerline\ 9
-    " set guifont=Monaco\ for\ Powerline\ 9
-
-    " colorscheme base16-default
-    colorscheme base16-monokai
-else
-
-    colorscheme Tomorrow-Night
-endif
-" }}}
-
-" =================================================
-" {{{FILETYPE SETTINGS
-" ==================================================
-autocmd Bufread,BufNewFile *.tex set filetype=tex
-" Vim interprets .md as 'modula2'
-autocmd Bufread,BufNewFile *.md set filetype=markdown 
-
-" spell in tex
-autocmd FileType tex setlocal spell
-autocmd BufNewFile,BufRead *.tex setlocal spell
-
-" javascript
-autocmd FileType javascript nnoremap <buffer> <leader>jb :call JsBeautify()<cr>
-" for html
-autocmd FileType html nnoremap <buffer> <leader>jb :call HtmlBeautify()<cr>
-" for css or scss
-autocmd FileType css nnoremap <buffer> <leader>jb :call CSSBeautify()<cr>
-" }}}
-
-" ==================================================
-" {{{ULTISNIPS CONFIG
-" ==================================================
+" ######## ULTISNIPS ##########################################################
 let g:UltiSnipsSnippetDirectories=["~/.vim/bundle/vim-snippets/UltiSnips"]
 let g:UltiSnipsJumpBackwardTrigger="<s-tab>"
 
@@ -436,20 +374,52 @@ function! g:UltiSnips_Reverse()
 endfunction 
 
 au BufEnter * exec "inoremap <silent> " . g:UltiSnipsJumpBackwardTrigger . " <C-R>=g:UltiSnips_Reverse()<cr>"
-" }}}
 
-" ==================================================
-" {{{NERDTREE CONFIG
-" ==================================================
+" ######## NERDTREE ###########################################################
 let g:nerdtree_tabs_open_on_gui_startup=0
 let g:nerdtree_open_open_on_console_startup=0
 
 let g:nerdtree_tabs_open_on_new_tab=1
+
+" ######## PLUGIN KEYBINDINGS #################################################
+" javascript
+autocmd FileType javascript nnoremap <buffer> <leader>jb :call JsBeautify()<cr>
+" for html
+autocmd FileType html nnoremap <buffer> <leader>jb :call HtmlBeautify()<cr>
+" for css or scss
+autocmd FileType css nnoremap <buffer> <leader>jb :call CSSBeautify()<cr>
+" jshint
+nnoremap <leader>js :JSHint<Cr>
+" ctrl-p
+nnoremap <leader>p :CtrlPMixed<Cr>
+" nerdtree
+nnoremap <silent> <leader>n :NERDTreeTabsToggle<Cr>
 " }}}
- 
-" ==================================================
+
+" =============================================================================
+" {{{ SETTINGS FOR GVIM/VIM
+" =============================================================================
+if has("gui_running")
+    " Disable Toolbar in gvim
+    set guioptions-=T
+    " Disable MenuBar in gvim
+    set guioptions-=m
+    " Disable left and right scrollbar
+    set guioptions-=r
+    set guioptions-=L
+    " font
+    set guifont=Droid\ Sans\ Mono\ for\ Powerline\ 9
+    " set guifont=Monaco\ for\ Powerline\ 9
+
+    execute "colorscheme ".g:gui_dark_colorscheme
+else
+    execute "colorscheme ".g:term_dark_colorscheme
+endif
+" }}}
+
+" =============================================================================
 " {{{INTERESTING WORD
-" ==================================================
+" =============================================================================
 function! HiInterestingWord(n)
     " Save our location.
     normal! mz
