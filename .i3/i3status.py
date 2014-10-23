@@ -37,44 +37,44 @@ status.register("shell",
         interval=5)
 
 status.register("temp",
-    format="{temp:.0f}°C",
-    color=white)
+        format="{temp:.0f}°C",
+        color=white)
 
 status.register("battery",
-    format=" {status} {consumption:.0f}W {percentage:.0f}% {remaining:%E%hh:%Mm}",
-    alert=True,
-    alert_percentage=5,
-    status={
-        "DIS": "",
-        "CHR": "",
-        "FULL": "",
-    },
-    color=orange,
-    full_color=white,
-    charging_color=green,
-    critical_color=red)
+        format=" {status} {consumption:.0f}W {percentage:.0f}% {remaining:%E%hh:%Mm}",
+        alert=True,
+        alert_percentage=5,
+        status={
+            "DIS": "",
+            "CHR": "",
+            "FULL": "",
+            },
+        color=orange,
+        full_color=white,
+        charging_color=green,
+        critical_color=red)
 
 status.register("network",
-    interface="enp0s25",
-    format_up="{v4cidr}",
-    color_up=white,
-    color_down=gray)
+        interface="enp0s25",
+        format_up="{v4cidr}",
+        color_up=white,
+        color_down=gray)
 
 status.register("wireless",
-    interface="wlp3s0",
-    format_up=" {essid}/{v4} {quality:03.0f}%",
-    color_up=white,
-    color_down=gray)
+        interface="wlp3s0",
+        format_up=" {essid}/{v4} {quality:03.0f}%",
+        color_up=white,
+        color_down=gray)
 
 status.register("alsa",
-    format=" {volume}%",
-    color=white,
-    color_muted=gray)
+        format=" {volume}%",
+        color=white,
+        color_muted=gray)
 
 status.register("backlight",
-    format=" {brightness}/{max_brightness}",
-    interval=1,
-    color=white)
+        format=" {brightness}/{max_brightness}",
+        interval=1,
+        color=white)
 
 status.register("uptime",
         color=white)
@@ -88,5 +88,10 @@ status.register("text",
         text="  ",
         color=white,
         cmd_leftclick="/mnt/hdd/dotfiles/touch-toggle.sh")
+
+status.register("shell",
+        color=white,
+        command="~/Applications/scraper.rb",
+        interval=3600)
 
 status.run()
