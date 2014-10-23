@@ -172,9 +172,6 @@ function o() {
     xdg-open $1 > /dev/null 2>&1 &
 }
 
-# gitignore io
-function gi() { curl http://www.gitignore.io/api/$@ ;}
-
 # copy files from uni
 function cp_uni() {
     scp co5@login.informatik.uni-ulm.de:/home/co5/.win7_profile/$1 $2
@@ -188,4 +185,6 @@ fe() {
   ${EDITOR:-vim} "$file"
   cd -
 }
+
+function gi() { curl -L -s https://www.gitignore.io/api/$@ ;}
 # }}}
