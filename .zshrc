@@ -38,8 +38,6 @@ fi
 
 export TERM=screen-256color
 
-set guifont=Droid\ Sans\ Mono\ for\ Powerline\ 8
-
 # load vim Promptline
 # source ~/.promptline.sh
 
@@ -81,7 +79,8 @@ alias v="vim"
 alias vimrc="vim ~/.vimrc"
 alias zshrc="vim ~/.zshrc"
 alias i3conf="vim ~/.i3/config"
-alias i3status="vim ~/.i3/i3status.py"
+
+alias sizes="du -mh --max-depth 1 . | sort -hr"
 
 hash -d h=/mnt/hdd/
 
@@ -124,6 +123,8 @@ alias sd-only="xrandr --output DP-0 --auto --primary --rotate normal --pos 0x0 -
 alias sda="xrandr --output LVDS-0 --auto --primary --rotate normal --pos 0x0 --output DP-0 --auto --above LVDS-0 --output VGA-0 --auto --above LVDS-0"
 alias sdr="xrandr --output LVDS-0 --auto --primary --rotate normal --pos 0x0 --output DP-0 --auto --right-of LVDS-0 --output VGA-0 --auto --right-of LVDS-0"
 alias sdl="xrandr --output LVDS-0 --auto --primary --rotate normal --pos 0x0 --output DP-0 --auto --left-of LVDS-0 --output VGA-0 --auto --left-of LVDS-0"
+
+alias sd-mirror="xrandr --output VGA-0 --auto --primary --rotate normal --pos 0x0 --output LVDS-0 --auto --same-as VGA-0"
 # }}}
 
 #======================================================================================
@@ -184,6 +185,10 @@ fe() {
   file=$(echo "$file" | tail -1)
   ${EDITOR:-vim} "$file"
   cd -
+}
+
+function pgit() {
+    pacman -Qs '.*-git' | grep '.*-git' | awk '{print $1}' | cut -d '/' -f 2
 }
 
 function gi() { curl -L -s https://www.gitignore.io/api/$@ ;}
