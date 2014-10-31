@@ -14,6 +14,8 @@ set $w5 5   mail
 set $w6 6   todo
 set $w7 7   vm
 set $w8 8   files
+
+set $font pango:Open Sans Regular, Font Awesome 8
 # }}}
 
 # ===========================================================================================
@@ -37,9 +39,9 @@ bindsym $mod+q kill
 bindsym $alt+ctrl+l exec amixer -q sset Master mute; exec slimlock;
 
 # Volume
-bindsym XF86AudioRaiseVolume exec amixer -q sset Master 5%+ unmute
-bindsym XF86AudioLowerVolume exec amixer -q sset Master 5%- unmute
-bindsym XF86AudioMute exec amixer -q sset Master toggle
+bindsym XF86AudioRaiseVolume exec /mnt/hdd/dotfiles/volume.sh up;
+bindsym XF86AudioLowerVolume exec /mnt/hdd/dotfiles/volume.sh down;
+bindsym XF86AudioMute exec /mnt/hdd/dotfiles/volume.sh toggle;
 # Screenshot
 bindsym Print exec scrot '%Y-%m-%d-%T_$wx$h_scrot.png' -e 'mv $f ~/Pictures/screenshots/'
 
@@ -103,6 +105,11 @@ bindsym $mod+a focus parent
 
 # focus the child container
 #bindsym $mod+d focus child
+
+# move window to scratchpad
+bindsym $alt+Shift+p move scratchpad
+# get window from scratchpad
+bindsym $alt+p scratchpad show
 # }}}
 
 # ===========================================================================================
@@ -229,10 +236,17 @@ bar {
 # ===========================================================================================
 # WINDOW-RULES {{{
 # ===========================================================================================
-for_window [class="(?i)keepassx"] floating enable
+# floating windows
+for_window [class="(?i)keepassx"] floating enable, move position center
 for_window [class="(?i)dolphin"] floating enable
 for_window [class="(?i)pidgin"] floating enable
 for_window [class="(?i)ksysguard"] floating enable
+for_window [class="(?i)evince"] floating enable
+for_window [class="(?i)kcalc"] floating enable
+for_window [window_role="(?i)msgcompose"] floating enable, border pixel 1, move position center
+
+for_window [class="(?i)konsole"] border pixel 1
+for_window [class="(?i)gvim"] border pixel 1
 # }}}
 
 # ===========================================================================================
@@ -250,7 +264,7 @@ new_window normal
 new_float none
 
 # Font
-font pango:Roboto-Light, Font Awesome 8
+font $font
 
 # ===========================================================================================
 # COLORS
