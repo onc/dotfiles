@@ -12,7 +12,8 @@ REPORTTIME=10
 # Which plugins would you like to load? (plugins can be found in ~/.oh-my-zsh/plugins/*)
 # Custom plugins may be added to ~/.oh-my-zsh/custom/plugins/
 # Example format: plugins=(rails git textmate ruby lighthouse)
-plugins=(git svn tmux colored-man colorize themes autojump sudo zsh-syntax-highlighting)
+plugins=(git svn tmux colored-man colorize themes autojump sudo 
+        rails zsh-syntax-highlighting fzf npm)
 
 # Disable repeating command before result of command
 DISABLE_AUTO_TITLE="true"
