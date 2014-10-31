@@ -7,8 +7,6 @@ green = "#90A959"
 orange = "#D28445"
 red = "#AC4142"
 
-import subprocess
-
 from i3pystatus import Status
 from i3pystatus.mail import imap
 
