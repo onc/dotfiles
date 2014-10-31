@@ -302,6 +302,13 @@ Plugin 'maksimr/vim-jsbeautify'
 " ruby
 Plugin 'vim-ruby/vim-ruby'
 
+" syntastic
+Plugin 'scrooloose/syntastic'
+" vim surround
+Plugin 'tpope/vim-surround'
+" workspaces in vim
+Plugin 'szw/vim-ctrlspace'
+
 " COLORSCHEMES
 " base 16 colorscheme
 Plugin 'chriskempson/base16-vim'
