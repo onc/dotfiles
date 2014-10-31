@@ -183,10 +183,33 @@ exec --no-startup-id kupfer
 # ===========================================================================================
 # BAR {{{
 # ===========================================================================================
+# primary monitor
 bar {
+  output LVDS-0
   position top
-  status_command python ~/.i3/i3status.py
-  font pango:Roboto-Light, Font Awesome 8
+  status_command python ~/.i3/i3status_primary.py
+  font $font
+  workspace_buttons yes
+  tray_output LVDS-0
+  # hide workspace number if workspace is named
+  # strip_workspace_numbers yes
+  colors {
+    separator #505050
+    background #151515
+    statusline #E0E0E0
+    focused_workspace #505050 #505050 #90A959
+    active_workspace #303030 #303030 #AA759F
+    inactive_workspace #151515 #151515 #B0B0B0
+    urgent_workspace #AC4142 #AC4142 #E0E0E0
+  }
+}
+# secondary monitor
+bar {
+  output DP-0
+  output VGA-0
+  position top
+  status_command python ~/.i3/i3status_secondary.py
+  font $font
   workspace_buttons yes
   # hide workspace number if workspace is named
   # strip_workspace_numbers yes
@@ -200,6 +223,7 @@ bar {
     urgent_workspace #AC4142 #AC4142 #E0E0E0
   }
 }
+
 # }}}
 
 # ===========================================================================================

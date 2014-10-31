@@ -19,26 +19,23 @@ status.register("clock",
         color=white)
 
 status.register("mem",
-        format="{used_mem:.0f}/{total_mem:.0f} MiB",
+        format="Mem: {used_mem:.0f}/{total_mem:.0f} MiB",
         round_size=0,
         color=white,
         warn_color=orange,
         alert_color=red)
 
-status.register("load",
-        critical_color=red,
-        color=white,
-        critical_limit=2,
-        interval=5)
+status.register("cpu_usage",
+        format="Cpu: {usage:03}%")
+
+status.register("temp",
+        format="{temp:.0f}°C",
+        color=white)
 
 status.register("shell",
         color=white,
         command="echo ; cat /sys/devices/system/cpu/cpu0/cpufreq/scaling_governor",
         interval=5)
-
-status.register("temp",
-        format="{temp:.0f}°C",
-        color=white)
 
 status.register("battery",
         format=" {status} {consumption:.0f}W {percentage:.0f}% {remaining:%E%hh:%Mm}",
