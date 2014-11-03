@@ -12,8 +12,8 @@ REPORTTIME=10
 # Which plugins would you like to load? (plugins can be found in ~/.oh-my-zsh/plugins/*)
 # Custom plugins may be added to ~/.oh-my-zsh/custom/plugins/
 # Example format: plugins=(rails git textmate ruby lighthouse)
-plugins=(git svn tmux colored-man colorize themes autojump sudo 
-        rails zsh-syntax-highlighting fzf npm)
+plugins=(git svn tmux colored-man colorize themes z sudo 
+rails zsh-syntax-highlighting fzf npm)
 
 # Disable repeating command before result of command
 DISABLE_AUTO_TITLE="true"
@@ -32,36 +32,44 @@ export PATH="${PATH}:/home/onze/Applications"
 
 # Preferred editor for local and remote sessions
 if [[ -n $SSH_CONNECTION ]]; then
-  export EDITOR='vim'
+    export EDITOR='vim'
 else
-  export EDITOR='vim'
+    export EDITOR='vim'
 fi
 
 export TERM=screen-256color
-
-# load vim Promptline
-# source ~/.promptline.sh
-
-# tmux on start
-# if [ "$TMUX" = "" ]; then tmux; fi
 
 # faster scrolling etc
 xset r rate 400 75
 
 # fuzzy-finder
 source ~/.fzf.zsh
+
+# get systeminformation
+DISTRO=$(lsb_release -ds | awk '{print $1}' | sed 's/\"//g')
 # }}}
 
 #======================================================================================
 # ALIASES {{{
 #======================================================================================
-alias yi="yaourt"
-# remove ALL orphaned packages
-alias yro="yaourt -Qdt"
-# clean package
-alias yc="yaourt -Scc"
-# update all packages
-alias yu="yaourt -Syua"
+case "$DISTRO" in
+    "Arch")
+        alias yi="yaourt"
+        # remove ALL orphaned packages
+        alias yro="yaourt -Qdt"
+        # clean package
+        alias yc="yaourt -Scc"
+        # update all packages
+        alias yu="yaourt -Syua"
+        ;;
+    "Ubuntu")
+        alias agi="sudo apt-get install"
+        alias acs="apt-cache search"
+        ;;
+    *)
+        ;;
+esac
+
 
 # List all files installed by a given package
 alias paclf="yaourt -Ql"		
@@ -133,32 +141,32 @@ alias sd-mirror="xrandr --output VGA-0 --auto --primary --rotate normal --pos 0x
 #======================================================================================
 # ls after every cd
 function chpwd() {
-    emulate -L zsh
-    ls
-}
+emulate -L zsh
+ls
+    }
 
-auto-ls () {
-   if [[ $#BUFFER -eq 0 ]]; then
-       echo ""
-       ls
-       echo -e "\n"
-       zle redisplay
-   else
-       zle .$WIDGET
-   fi
-}
-zle -N accept-line auto-ls
-zle -N other-widget auto-ls
+    auto-ls () {
+        if [[ $#BUFFER -eq 0 ]]; then
+            echo ""
+            ls
+            echo -e "\n"
+            zle redisplay
+        else
+            zle .$WIDGET
+        fi
+    }
+    zle -N accept-line auto-ls
+    zle -N other-widget auto-ls
 
-# change kde lockscreen image
-# function set-lockscreen() {
-#     convert $1 temp_2560x1600.png
-#     sudo cp temp_2560x1600.png /usr/share/wallpapers/Elarun/contents/images/2560x1600.png
-#     rm temp_2560x1600.png
-#     echo "changed lockscreen"
-# }
+    # change kde lockscreen image
+    # function set-lockscreen() {
+    #     convert $1 temp_2560x1600.png
+    #     sudo cp temp_2560x1600.png /usr/share/wallpapers/Elarun/contents/images/2560x1600.png
+    #     rm temp_2560x1600.png
+    #     echo "changed lockscreen"
+    # }
 
-function set-backnlock() {
+    function set-backnlock() {
     convert $1 temp_image_back_n_lock.png
     cp temp_image_back_n_lock.png ~/.i3/back.png
     rm temp_image_back_n_lock.png
@@ -166,31 +174,49 @@ function set-backnlock() {
 }
 
 function mk() {
-    mkdir $1
-    cd $1
+mkdir $1
+cd $1
 }
 
 function o() {
-    xdg-open $1 > /dev/null 2>&1 &
+xdg-open $1 > /dev/null 2>&1 &
 }
 
 # copy files from uni
 function cp_uni() {
-    scp co5@login.informatik.uni-ulm.de:/home/co5/.win7_profile/$1 $2
+scp co5@login.informatik.uni-ulm.de:/home/co5/.win7_profile/$1 $2
 }
 
 fe() {
-  local file
-  cd ~/.notes
-  file=$(fzf --query="$1" --print-query)
-  file=$(echo "$file" | tail -1)
-  ${EDITOR:-vim} "$file"
-  cd -
+    local file
+    cd ~/.notes
+    file=$(fzf --query="$1" --print-query)
+    file=$(echo "$file" | tail -1)
+    ${EDITOR:-vim} "$file"
+    cd -
 }
 
 function pgit() {
-    pacman -Qs '.*-git' | grep '.*-git' | awk '{print $1}' | cut -d '/' -f 2
+pacman -Qs '.*-git' | grep '.*-git' | awk '{print $1}' | cut -d '/' -f 2
 }
+
+# fzf for z
+unalias z
+function z {
+if [[ -z "$*" ]]; then
+    cd "$(_z -l 2>&1 | sed -n 's/^[ 0-9.,]*//p' | fzf +s)"
+else
+    _last_z_args="$@"
+    cd "$(_z -l 2>&1 | sed -n 's/^[ 0-9.,]*//p' | fzf +s -q $_last_z_args)"
+fi
+}
+
+function zz {
+cd "$(_z -l 2>&1 | sed -n 's/^[ 0-9.,]*//p' | fzf -q $_last_z_args)"
+}
+
+alias j=z
+alias jj=z
 
 function gi() { curl -L -s https://www.gitignore.io/api/$@ ;}
 # }}}
