@@ -388,6 +388,20 @@ let g:nerdtree_open_open_on_console_startup=0
 
 let g:nerdtree_tabs_open_on_new_tab=1
 
+" ######## SYNTASTIC ##########################################################
+" C-Files
+let g:syntastic_c_checkers = ['gcc']
+" check headerfiles
+let g:syntastic_c_check_header = 1
+" dont check external libs
+let g:syntastic_c_no_include_search = 1
+" dont search include dirs like /usr/include
+let g:syntastic_c_no_default_include_dirs = 1
+" auto-refresh header-files
+let g:syntastic_c_auto_refresh_includes = 1
+" use gcc
+let g:syntastic_c_compiler = 'gcc'
+
 " ######## PLUGIN KEYBINDINGS #################################################
 " javascript
 autocmd FileType javascript nnoremap <buffer> <leader>jb :call JsBeautify()<cr>
