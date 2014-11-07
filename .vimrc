@@ -257,18 +257,16 @@ Plugin 'jszakmeister/vim-togglecursor'
 Plugin 'bling/vim-airline'
 " Tmuxline
 Plugin 'edkolev/tmuxline.vim'
-" Promptline
-Plugin 'edkolev/promptline.vim'
 " GitGutter for Vim
 Plugin 'airblade/vim-gitgutter'
 " Nerdtree
 Plugin 'scrooloose/nerdtree'
+" Comments
+Plugin 'scrooloose/nerdcommenter'
 " Nerdtree in all tabs
 Plugin 'jistr/vim-nerdtree-tabs'
 " ctrlp
 Plugin 'kien/ctrlp.vim'
-" improved sessions for vim
-Plugin 'manuel-colmenero/vim-simple-session'
 " Autocomplete
 Plugin 'Valloric/YouCompleteMe'
 " Tern for Vim - JS
@@ -292,7 +290,7 @@ Plugin 'aaronj1335/underscore-templates.vim'
 " show indentions
 Plugin 'nathanaelkane/vim-indent-guides'
 " show colors
-Plugin 'ap/vim-css-color'
+Plugin 'lilydjwg/colorizer'
 " text-objects-user
 Plugin 'kana/vim-textobj-user'
 Plugin 'Julian/vim-textobj-brace'
@@ -301,12 +299,12 @@ Plugin 'einars/js-beautify'
 Plugin 'maksimr/vim-jsbeautify'
 " ruby
 Plugin 'vim-ruby/vim-ruby'
-
 " syntastic
 Plugin 'scrooloose/syntastic'
 " vim surround
 Plugin 'tpope/vim-surround'
-" workspaces in vim
+
+" workspaces
 Plugin 'szw/vim-ctrlspace'
 
 " COLORSCHEMES
@@ -345,16 +343,6 @@ let g:tmuxline_preset={
             \'y'    : ['%R', '%a', '%Y'],
             \'z'    : '#H'}
 let g:tmuxline_powerline_separators=1
-
-" ######## PROMPTLINE #########################################################
-let g:promptline_theme='airline'
-let g:promptline_preset={
-            \'a' : [ promptline#slices#jobs() ],
-            \'b' : [ '%T' ],
-            \'c' : [ promptline#slices#cwd({ 'dir_limit': 2 }) ],
-            \'z' : [ promptline#slices#git_status(), promptline#slices#vcs_branch()],
-            \'warn' : [ promptline#slices#last_exit_code(), promptline#slices#battery() ]}
-let g:promptline_powerline_symbols=1
 
 " ######## ULTISNIPS ##########################################################
 let g:UltiSnipsSnippetDirectories=["~/.vim/bundle/vim-snippets/UltiSnips"]
@@ -415,6 +403,11 @@ nnoremap <leader>js :JSHint<Cr>
 nnoremap <leader>p :CtrlPMixed<Cr>
 " nerdtree
 nnoremap <silent> <leader>n :NERDTreeTabsToggle<Cr>
+
+" ######## CTRL-SPACE SETTINGS ################################################
+set hidden
+let g:ctrlspace_load_last_workspace_on_start=1
+let g:ctrlspace_save_workspace_on_exit=1
 " }}}
 
 " =============================================================================
