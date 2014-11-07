@@ -23,12 +23,19 @@ source $ZSH/oh-my-zsh.sh
 #======================================================================================
 # USER CONFIGURATION {{{
 #======================================================================================
-export JAVA_HOME=/usr/lib/jvm/java-7-openjdk
 export LC_ALL=en_US.UTF-8 
 export LC_CTYPE=en_US.UTF-8 
 export LANG=en_US.UTF-8
 
 export PATH="${PATH}:/home/onze/Applications"
+# Java
+export JAVA_HOME=/usr/lib/jvm/java-8-openjdk
+# Ruby
+export GEM_HOME=$(ruby -e 'print Gem.user_dir')
+export PATH="`ruby -e 'print Gem.user_dir'`/bin:$PATH"
+# Nodejs
+export NPM_PACKAGES="${HOME}/.npm-packages"
+export PATH="${NPM_PACKAGES}/bin:$PATH"
 
 # Preferred editor for local and remote sessions
 if [[ -n $SSH_CONNECTION ]]; then
