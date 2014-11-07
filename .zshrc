@@ -9,9 +9,7 @@ COMPLETION_WAITING_DOTS="true"
 
 REPORTTIME=10
 
-# Which plugins would you like to load? (plugins can be found in ~/.oh-my-zsh/plugins/*)
-# Custom plugins may be added to ~/.oh-my-zsh/custom/plugins/
-# Example format: plugins=(rails git textmate ruby lighthouse)
+# plugins
 plugins=(git svn tmux colored-man colorize themes z sudo 
 rails zsh-syntax-highlighting fzf npm)
 
@@ -148,22 +146,22 @@ alias sd-mirror="xrandr --output VGA-0 --auto --primary --rotate normal --pos 0x
 #======================================================================================
 # ls after every cd
 function chpwd() {
-emulate -L zsh
-ls
-    }
+    emulate -L zsh
+    ls
+}
 
-    auto-ls () {
-        if [[ $#BUFFER -eq 0 ]]; then
-            echo ""
-            ls
-            echo -e "\n"
-            zle redisplay
-        else
-            zle .$WIDGET
-        fi
-    }
-    zle -N accept-line auto-ls
-    zle -N other-widget auto-ls
+auto-ls () {
+    if [[ $#BUFFER -eq 0 ]]; then
+        echo ""
+        ls
+        echo -e "\n"
+        zle redisplay
+    else
+        zle .$WIDGET
+    fi
+}
+zle -N accept-line auto-ls
+zle -N other-widget auto-ls
 
     # change kde lockscreen image
     # function set-lockscreen() {
