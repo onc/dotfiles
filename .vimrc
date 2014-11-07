@@ -54,6 +54,9 @@ set hlsearch
 set nowrapscan
 " tolle regex
 set magic
+" better search
+set smartcase
+set ignorecase
 
 " ######## VISUAL #############################################################
 " Don't redraw while executing macros (good performance config)
@@ -224,6 +227,9 @@ nnoremap <leader>H :echo "hi<" . synIDattr(synID(line("."),col("."),1),"name") .
             \ . synIDattr(synIDtrans(synID(line("."),col("."),1)),"name") . ">"<CR>
 " set filetype to undescore_template
 nnoremap <leader>under :set syntax=underscore_template<Cr>
+" Switch to alternate file
+map <C-Tab> :bnext<cr>
+map <C-S-Tab> :bprevious<cr>
 
 " ######## COLORSCHEME SETTINGS ###############################################
 " solarized
