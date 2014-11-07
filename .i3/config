@@ -36,7 +36,7 @@ bindsym $mod+c exec --no-startup-id chromium
 bindsym $mod+q kill
 # lock screen and mute sound
 # bindsym $alt+ctrl+l exec amixer -q sset Master mute; exec i3lock -u -i ~/.i3/back.png;
-bindsym $alt+ctrl+l exec amixer -q sset Master mute; exec slimlock;
+bindsym $alt+ctrl+l exec amixer -q sset Master mute; exec --no-startup-id slimlock;
 
 # Volume
 bindsym XF86AudioRaiseVolume exec /mnt/hdd/dotfiles/volume.sh up;
@@ -107,9 +107,9 @@ bindsym $mod+a focus parent
 #bindsym $mod+d focus child
 
 # move window to scratchpad
-bindsym $alt+Shift+p move scratchpad
+bindsym $mod+Shift+Tab move scratchpad
 # get window from scratchpad
-bindsym $alt+p scratchpad show
+bindsym $mod+Tab scratchpad show
 # }}}
 
 # ===========================================================================================

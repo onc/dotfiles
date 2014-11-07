@@ -1,6 +1,5 @@
 xset r rate 400 75
 xset -dpms
-setxkbmap de
 # make caps an additional esc
 xmodmap ~/.Xmodmap
 
