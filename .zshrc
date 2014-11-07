@@ -171,10 +171,15 @@ zle -N other-widget auto-ls
     #     echo "changed lockscreen"
     # }
 
-    function set-backnlock() {
-    convert $1 temp_image_back_n_lock.png
-    cp temp_image_back_n_lock.png ~/.i3/back.png
-    rm temp_image_back_n_lock.png
+function set-backnlock() {
+    convert $1 temp_image_back.png
+    convert $2 temp_image_lock.png
+
+    cp temp_image_back.png ~/.i3/back.png
+    rm temp_image_back.png
+
+    cp temp_image_lock.png ~/.i3/lock.png
+    rm temp_image_lock.png
     echo "lockscreen and background changed"
 }
 
