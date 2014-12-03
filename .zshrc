@@ -50,7 +50,9 @@ if hash xset 2>/dev/null; then
 fi
 
 # fuzzy-finder
-source ~/.fzf.zsh
+if [ -f ~/.fzf.zsh ]; then
+    source ~/.fzf.zsh
+fi
 
 # get systeminformation
 DISTRO=$(lsb_release -ds | awk '{print $1}' | sed 's/\"//g')
