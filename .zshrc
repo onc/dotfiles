@@ -45,7 +45,9 @@ fi
 export TERM=screen-256color
 
 # faster scrolling etc
-xset r rate 400 75
+if hash xset 2>/dev/null; then
+    xset r rate 400 75
+fi
 
 # fuzzy-finder
 source ~/.fzf.zsh
