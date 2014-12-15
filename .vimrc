@@ -261,8 +261,6 @@ Plugin 'tpope/vim-fugitive'
 Plugin 'jszakmeister/vim-togglecursor'
 " Vim airline
 Plugin 'bling/vim-airline'
-" Tmuxline
-Plugin 'edkolev/tmuxline.vim'
 " GitGutter for Vim
 Plugin 'airblade/vim-gitgutter'
 " Nerdtree
@@ -337,18 +335,6 @@ let g:airline#extensions#tabline#enabled=1
 let g:airline_powerline_fonts=1
 let g:solarized_termcolors=256
 let g:airline_theme='tomorrow'
-
-" ######## TMUXLINE ###########################################################
-let g:tmuxline_theme='airline'
-let g:tmuxline_preset={
-            \'a'    : '#S',
-            \'b'    : ['#(whoami)', '#(uptime | cut -d " " -f 3,4,5 | cut -d "," -f 1)'],
-            \'c'    : '#(echo  `cat /sys/devices/platform/smapi/BAT0/remaining_percent`%)', 
-            \'win'  : ['#I #W'],
-            \'cwin' : ['#I #W'],
-            \'y'    : ['%R', '%a', '%Y'],
-            \'z'    : '#H'}
-let g:tmuxline_powerline_separators=1
 
 " ######## ULTISNIPS ##########################################################
 let g:UltiSnipsSnippetDirectories=["~/.vim/bundle/vim-snippets/UltiSnips"]
