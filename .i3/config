@@ -42,6 +42,8 @@ bindsym $alt+ctrl+l exec amixer -q sset Master mute; exec --no-startup-id slimlo
 bindsym XF86AudioRaiseVolume exec /mnt/hdd/dotfiles/volume.sh up;
 bindsym XF86AudioLowerVolume exec /mnt/hdd/dotfiles/volume.sh down;
 bindsym XF86AudioMute exec /mnt/hdd/dotfiles/volume.sh toggle;
+# Touchpad
+bindsym XF86TouchpadToggle exec /mnt/hdd/dotfiles/touch-toggle.sh;
 # Screenshot
 bindsym Print exec scrot '%Y-%m-%d-%T_$wx$h_scrot.png' -e 'mv $f ~/Pictures/screenshots/'
 
