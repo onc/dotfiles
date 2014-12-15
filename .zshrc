@@ -165,8 +165,8 @@ alias sd-mirror="xrandr --output VGA-0 --auto --primary --rotate normal --pos 0x
 #======================================================================================
 # ls after every cd
 function chpwd() {
-    emulate -L zsh
-    ls
+emulate -L zsh
+ls
 }
 
 auto-ls () {
@@ -195,17 +195,17 @@ function set-backnlock() {
 }
 
 function mk() {
-mkdir $1
-cd $1
+    mkdir $1
+    cd $1
 }
 
 function o() {
-xdg-open $1 > /dev/null 2>&1 &
+    xdg-open $1 > /dev/null 2>&1 &
 }
 
 # copy files from uni
 function cp_uni() {
-scp co5@login.informatik.uni-ulm.de:/home/co5/.win7_profile/$1 $2
+    scp co5@login.informatik.uni-ulm.de:/home/co5/.win7_profile/$1 $2
 }
 
 fe() {
@@ -218,7 +218,7 @@ fe() {
 }
 
 function pgit() {
-pacman -Qs '.*-git' | grep '.*-git' | awk '{print $1}' | cut -d '/' -f 2
+    pacman -Qs '.*-git' | grep '.*-git' | awk '{print $1}' | cut -d '/' -f 2
 }
 
 # fzf for z
@@ -233,7 +233,11 @@ fi
 }
 
 function zz {
-cd "$(_z -l 2>&1 | sed -n 's/^[ 0-9.,]*//p' | fzf -q $_last_z_args)"
+    cd "$(_z -l 2>&1 | sed -n 's/^[ 0-9.,]*//p' | fzf -q $_last_z_args)"
+}
+
+function cpu-frequency {
+    watch grep \"cpu MHz\" /proc/cpuinfo
 }
 
 alias j=z
