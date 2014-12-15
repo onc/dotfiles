@@ -418,8 +418,8 @@ if has("gui_running")
     set guioptions-=r
     set guioptions-=L
     " font
-    set guifont=Droid\ Sans\ Mono\ for\ Powerline\ 9
-    " set guifont=Monaco\ for\ Powerline\ 9
+    " set guifont=Droid\ Sans\ Mono\ for\ Powerline\ 9
+    set guifont=Monaco\ for\ Powerline\ 9
 
     execute "colorscheme ".g:gui_dark_colorscheme
 else
