@@ -178,15 +178,11 @@ bindsym $mod+r mode "resize"
 # ===========================================================================================
 # exec xcompmgr -c -f -n
 exec --no-startup-id compton --config ~/.i3/compton.conf -b
-# exec --no-startup-id compton -cb
 exec --no-startup-id feh --bg-fill ~/.i3/back.png
-exec --no-startup-id nm-applet
-exec --no-startup-id dropboxd
-exec --no-startup-id clipit
-exec --no-startup-id unclutter
 exec --no-startup-id conky
-exec --no-startup-id kupfer
-# exec --no-startup-id redshift -t 6500:4400
+exec --no-startup-id unclutter
+
+exec --no-startup-id dex -a
 # }}}
 
 # ===========================================================================================
