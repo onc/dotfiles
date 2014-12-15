@@ -314,6 +314,8 @@ Plugin 'tpope/vim-surround'
 
 " workspaces
 Plugin 'szw/vim-ctrlspace'
+" compiling stuff
+Plugin 'SingleCompile'
 
 " COLORSCHEMES
 " base 16 colorscheme
@@ -422,6 +424,9 @@ nnoremap <leader>be :CtrlPBuffer<CR>
 cabbrev mr CtrlPMRUFiles<CR>
 nnoremap <leader>mr :CtrlPMRUFiles<cr>
 
+" ######## SINGLECOMPILER SETTINGS ############################################
+nnoremap <leader>c :SCCompile<CR>
+nnoremap <leader>r :SCCompileRun<CR>
 " }}}
 
 " =============================================================================
