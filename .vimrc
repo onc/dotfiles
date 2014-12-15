@@ -404,6 +404,24 @@ nnoremap <silent> <leader>n :NERDTreeTabsToggle<Cr>
 set hidden
 let g:ctrlspace_load_last_workspace_on_start=1
 let g:ctrlspace_save_workspace_on_exit=1
+" ######## CTRL-SPACE SETTINGS ################################################
+cnoremap %% <C-R>=expand('%:h').'/'<cr>
+map <leader>F :CtrlP %%<cr>
+
+let g:ctrlp_mruf_max = 10000
+let g:ctrlp_max_files = 10000
+let g:ctrlp_mruf_last_entered = 0
+let g:ctrlp_clear_cache_on_exit = 0
+let g:ctrlp_extensions = ['mixed']
+let g:ctrlp_cmd = 'CtrlPMixed'
+
+" Open list of buffers in CtrlP
+nnoremap <leader>be :CtrlPBuffer<CR>
+
+" Faster access to CtrlP's MRU list
+cabbrev mr CtrlPMRUFiles<CR>
+nnoremap <leader>mr :CtrlPMRUFiles<cr>
+
 " }}}
 
 " =============================================================================
