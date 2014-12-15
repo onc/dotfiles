@@ -130,13 +130,17 @@ nnoremap <leader>vim :tabnew ~/.vimrc<cr>
 autocmd Bufread,BufNewFile *.tex set filetype=tex
 " Vim interprets .md as 'modula2'
 autocmd Bufread,BufNewFile *.md set filetype=markdown 
-"
+autocmd Bufread,BufNewFile *.mail set filetype=mail 
+
 " spell in tex
 autocmd FileType tex setlocal spell
 autocmd BufNewFile,BufRead *.tex setlocal spell
 
 " javascript
 autocmd FileType javascript setlocal shiftwidth=2 tabstop=2 expandtab
+" mail
+autocmd FileType mail setlocal textwidth=80 spell
+
 " }}}
 
 " =============================================================================
