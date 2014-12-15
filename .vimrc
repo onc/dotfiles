@@ -138,9 +138,12 @@ autocmd BufNewFile,BufRead *.tex setlocal spell
 
 " javascript
 autocmd FileType javascript setlocal shiftwidth=2 tabstop=2 expandtab
+
 " mail
 autocmd FileType mail setlocal textwidth=80 spell
 
+" C
+autocmd FileType c setlocal foldmethod=syntax
 " }}}
 
 " =============================================================================
@@ -311,9 +314,6 @@ Plugin 'vim-ruby/vim-ruby'
 Plugin 'scrooloose/syntastic'
 " vim surround
 Plugin 'tpope/vim-surround'
-
-" workspaces
-Plugin 'szw/vim-ctrlspace'
 " compiling stuff
 Plugin 'SingleCompile'
 
@@ -406,6 +406,8 @@ nnoremap <silent> <leader>n :NERDTreeTabsToggle<Cr>
 set hidden
 let g:ctrlspace_load_last_workspace_on_start=1
 let g:ctrlspace_save_workspace_on_exit=1
+let g:airline_exclude_preview = 1
+
 " ######## CTRL-SPACE SETTINGS ################################################
 cnoremap %% <C-R>=expand('%:h').'/'<cr>
 map <leader>F :CtrlP %%<cr>
