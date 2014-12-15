@@ -176,14 +176,6 @@ auto-ls () {
 zle -N accept-line auto-ls
 zle -N other-widget auto-ls
 
-    # change kde lockscreen image
-    # function set-lockscreen() {
-    #     convert $1 temp_2560x1600.png
-    #     sudo cp temp_2560x1600.png /usr/share/wallpapers/Elarun/contents/images/2560x1600.png
-    #     rm temp_2560x1600.png
-    #     echo "changed lockscreen"
-    # }
-
 function set-backnlock() {
     convert $1 temp_image_back.png
     convert $2 temp_image_lock.png
