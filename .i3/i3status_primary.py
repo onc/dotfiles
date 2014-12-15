@@ -71,22 +71,9 @@ status.register("backlight",
         interval=1,
         color=white)
 
-status.register("uptime",
-        color=white)
-
 status.register("shell",
         color=white,
         command="echo ; /mnt/hdd/dotfiles/pacUpdates.sh",
         interval=600)
-
-status.register("text",
-        text="  ",
-        color=white,
-        cmd_leftclick="/mnt/hdd/dotfiles/touch-toggle.sh")
-
-status.register("shell",
-        color=white,
-        command="~/Applications/scraper.rb",
-        interval=3600)
 
 status.run()
