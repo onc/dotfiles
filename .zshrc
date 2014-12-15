@@ -40,6 +40,9 @@ export PATH="`ruby -e 'print Gem.user_dir'`/bin:${PATH}"
 export NPM_PACKAGES="${HOME}/.npm-packages"
 export PATH="${NPM_PACKAGES}/bin:${PATH}"
 
+# GNOME Keyring
+SSH_AUTH_SOCK=`netstat -xl | grep -o '/run/user/1000/keyring.*/ssh'`
+[ -z "$SSH_AUTH_SOCK" ] || export SSH_AUTH_SOCK
 
 # Preferred editor for local and remote sessions
 if [[ -n $SSH_CONNECTION ]]; then
