@@ -132,7 +132,7 @@ alias scom="svn commit -m"
 alias gpatch="git add -p"
 
 # Redshift
-alias redshift-standart="redshift &"
+alias redshift-standart="redshift -l 48.2:10.0 &"
 alias redshift-onze="redshift -l 48.2:10.0 -t 6500:4400 &"
 alias redshift-dark="redshift -l 48.2:10.0 -t 4400:4000 &"
 
