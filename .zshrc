@@ -66,6 +66,9 @@ if [ -f ~/.fzf.zsh ]; then
     source ~/.fzf.zsh
 fi
 
+# teamocil autocompletion
+compctl -g '~/.teamocil/*(:t:r)' teamocil
+
 # get systeminformation
 DISTRO=$(lsb_release -ds | awk '{print $1}' | sed 's/\"//g')
 # }}}
