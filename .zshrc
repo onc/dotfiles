@@ -22,6 +22,10 @@ source $ZSH/oh-my-zsh.sh
 # USER CONFIGURATION {{{
 #======================================================================================
 
+HISTFILE=~/.zsh_history
+HISTSIZE=10000
+SAVEHIST=10000
+
 export LC_ALL=en_US.UTF-8 
 export LC_CTYPE=en_US.UTF-8 
 export LANG=en_US.UTF-8
