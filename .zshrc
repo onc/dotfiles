@@ -69,6 +69,15 @@ fi
 # teamocil autocompletion
 compctl -g '~/.teamocil/*(:t:r)' teamocil
 
+# ignore ls und cd in history
+setopt SHARE_HISTORY        # import new commands from history file and append immediately to it
+setopt NO_CASE_GLOB         # set ignore case for ls etc
+setopt COMPLETE_IN_WORD     # more extensive tab completion
+setopt HIST_IGNORE_ALL_DUPS # ignore duplicates
+setopt HIST_IGNORE_SPACE    # ignore entries which begin with a space
+setopt EXTENDED_GLOB        # activate extended globbing
+setopt LIST_PACKED          # try to make the completion list smaller (occupying  less  lines)
+
 # get systeminformation
 DISTRO=$(lsb_release -ds | awk '{print $1}' | sed 's/\"//g')
 # }}}
