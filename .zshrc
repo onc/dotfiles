@@ -103,6 +103,8 @@ case "$DISTRO" in
         ;;
 esac
 
+alias ls=' ls'
+alias cd=' cd'
 
 # List all files installed by a given package
 alias paclf="yaourt -Ql"		
@@ -139,6 +141,15 @@ alias scom="svn commit -m"
 
 # Git
 alias gpatch="git add -p"
+
+# Global Aliases
+alias -g G="| grep"
+alias -g L="| less"
+alias -g NUL="> /dev/null 2>&1"
+# alias -g C="| pbcopy"
+alias -g CNT="| wc -l"
+alias -g H="| head"
+alias -g T="| tail"
 
 # Redshift
 alias redshift-standart="redshift -l 48.2:10.0 &"
