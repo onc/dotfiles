@@ -11,7 +11,7 @@ REPORTTIME=10
 
 # plugins
 plugins=(git svn tmux colored-man colorize themes z sudo 
-rails zsh-syntax-highlighting fzf npm)
+rails zsh-syntax-highlighting fzf npm cp)
 
 # Disable repeating command before result of command
 DISABLE_AUTO_TITLE="true"
