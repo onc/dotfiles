@@ -31,12 +31,14 @@ bindsym $mod+v exec --no-startup-id gvim
 # dolphin
 bindsym $mod+e exec --no-startup-id dolphin
 # chromium
-bindsym $mod+c exec --no-startup-id chromium
+bindsym $mod+c exec --no-startup-id google-chrome-stable
 # close window
 bindsym $mod+q kill
 # lock screen and mute sound
 # bindsym $alt+ctrl+l exec amixer -q sset Master mute; exec i3lock -u -i ~/.i3/back.png;
 bindsym $alt+ctrl+l exec amixer -q sset Master mute; exec --no-startup-id slimlock;
+# open sysguard
+bindsym ctrl+Escape exec --no-startup-id ksysguard
 
 # Volume
 bindsym XF86AudioRaiseVolume exec /mnt/hdd/dotfiles/volume.sh up;
@@ -196,8 +198,6 @@ bar {
   font $font
   workspace_buttons yes
   tray_output LVDS-0
-  # hide workspace number if workspace is named
-  # strip_workspace_numbers yes
   colors {
     separator #505050
     background #151515
@@ -216,8 +216,7 @@ bar {
   status_command python ~/.i3/i3status_secondary.py
   font $font
   workspace_buttons yes
-  # hide workspace number if workspace is named
-  # strip_workspace_numbers yes
+  tray_output primary
   colors {
     separator #505050
     background #151515
@@ -235,12 +234,13 @@ bar {
 # WINDOW-RULES {{{
 # ===========================================================================================
 # floating windows
-for_window [class="(?i)keepassx"] floating enable, move position center
+for_window [class="(?i)keepassx"] floating enable
 for_window [class="(?i)dolphin"] floating enable
 for_window [class="(?i)pidgin"] floating enable
 for_window [class="(?i)ksysguard"] floating enable
 for_window [class="(?i)evince"] floating enable
 for_window [class="(?i)kcalc"] floating enable
+for_window [class="(?i)zeal"] floating enable, move position center
 for_window [window_role="(?i)msgcompose"] floating enable, border pixel 1, move position center
 
 for_window [class="(?i)konsole"] border pixel 1
