@@ -103,8 +103,12 @@ case "$DISTRO" in
         ;;
 esac
 
-alias ls=' ls'
+alias ls=' ls --color=always'
 alias cd=' cd'
+alias ..=' cd ..'
+alias ...=' cd ...'
+alias -- -=' cd -'
+alias ~=' cd ~'
 
 # List all files installed by a given package
 alias paclf="yaourt -Ql"		
