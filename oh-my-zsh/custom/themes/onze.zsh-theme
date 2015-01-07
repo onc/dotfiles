@@ -1,7 +1,7 @@
 # AVIT ZSH Theme
 
 PROMPT='
-%D{%T} $(_user_host)${_current_dir} $(git_prompt_info) $(_ruby_version)
+$(_current_time) $(_user_host)${_current_dir} $(git_prompt_info) $(_ruby_version)
 $(_running_jobs) ❯ '
 
 PROMPT2='%{$fg[grey]%}◀%{$reset_color%} '
@@ -11,6 +11,10 @@ RPROMPT='$(_vi_status)%{$(echotc UP 1)%}$(_git_time_since_commit) $(git_prompt_s
 local _current_dir="%{$fg[blue]%}%3~%{$reset_color%} "
 local _return_status="%{$fg[red]%}%(?..⍉)%{$reset_color%}"
 local _hist_no="%{$fg[grey]%}%h%{$reset_color%}"
+
+function _current_time() {
+    echo "%{$fg[green]%}[%{$reset_color%}%T%{$fg[green]%}]%{$reset_color%}"
+}
 
 function _user_host() {
   if [[ -n $SSH_CONNECTION ]]; then
