@@ -91,6 +91,10 @@ setopt LIST_PACKED          # try to make the completion list smaller (occupying
 
 # get systeminformation
 DISTRO=$(lsb_release -ds | awk '{print $1}' | sed 's/\"//g')
+
+if [ "$DISTRO" = "Ubuntu" ]; then
+    . /home/onze/Applications/z/z.sh
+fi
 # }}}
 
 #======================================================================================
