@@ -135,6 +135,8 @@ alias touch-on="synclient TouchpadOff=0"
 alias cpu-performance="sudo cpupower frequency-set -g performance"
 alias cpu-powersave="sudo cpupower frequency-set -g powersave"
 
+alias gccm="gcc -Wall -std=gnu11 -o"
+
 alias v="vim"
 alias vimrc="vim ~/.vimrc"
 alias zshrc="vim ~/.zshrc"
