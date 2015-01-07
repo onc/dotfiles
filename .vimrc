@@ -317,6 +317,8 @@ Plugin 'tpope/vim-surround'
 " compiling stuff
 Plugin 'SingleCompile'
 
+Plugin 'godlygeek/tabular'
+
 " COLORSCHEMES
 " base 16 colorscheme
 Plugin 'chriskempson/base16-vim'
