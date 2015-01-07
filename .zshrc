@@ -66,6 +66,18 @@ if [ -f ~/.fzf.zsh ]; then
     source ~/.fzf.zsh
 fi
 
+# Do not use /etc/hosts for host completions
+# This is quite useful when /etc/hosts contains thousands of hosts to block
+[ -r ~/.ssh/known_hosts ] && _ssh_hosts=(${${${${(f)"$(<$HOME/.ssh/known_hosts)"}:#[\|]*}%%\ *}%%,*}) || _ssh_hosts=()
+[ -r ~/.ssh/config ] && _ssh_config=($(cat ~/.ssh/config | sed -ne 's/Host[=\t ]//p')) || _ssh_config=()
+hosts=(
+  "$_ssh_hosts[@]"
+  "$_ssh_config[@]"
+  "$HOST"
+  localhost
+)
+zstyle ':completion:*:hosts' hosts $hosts
+
 # teamocil autocompletion
 compctl -g '~/.teamocil/*(:t:r)' teamocil
 
