@@ -250,85 +250,71 @@ let g:base16colorspace=256
 " }}}
 
 " =============================================================================
-" {{{ VUNDLE
-" =============================================================================
-filetype off
-set rtp+=~/.vim/bundle/Vundle.vim
-call vundle#begin()
-" required! 
-Plugin 'gmarik/Vundle.vim'
-" }}}
-
-" =============================================================================
 " {{{ MY BUNDELS 
 " =============================================================================
+call plug#begin('~/.vim/plugged')
 " git for vim
-Plugin 'tpope/vim-fugitive'
+Plug 'tpope/vim-fugitive'
 " toggle Cursor
-Plugin 'jszakmeister/vim-togglecursor'
+Plug 'jszakmeister/vim-togglecursor'
 " Vim airline
-Plugin 'bling/vim-airline'
+Plug 'bling/vim-airline'
 " GitGutter for Vim
-Plugin 'airblade/vim-gitgutter'
+Plug 'airblade/vim-gitgutter'
 " Nerdtree
-Plugin 'scrooloose/nerdtree'
+Plug 'scrooloose/nerdtree'
 " Comments
-Plugin 'scrooloose/nerdcommenter'
+Plug 'scrooloose/nerdcommenter'
 " Nerdtree in all tabs
-Plugin 'jistr/vim-nerdtree-tabs'
+Plug 'jistr/vim-nerdtree-tabs'
 " ctrlp
-Plugin 'kien/ctrlp.vim'
+Plug 'kien/ctrlp.vim'
 " Autocomplete
-Plugin 'Valloric/YouCompleteMe'
+Plug 'Valloric/YouCompleteMe'
 " Tern for Vim - JS
-Plugin 'marijnh/tern_for_vim'
+Plug 'marijnh/tern_for_vim', {'for': 'javascript'}
 " Snippets for UltiSnip
-Plugin 'honza/vim-snippets'
+Plug 'honza/vim-snippets'
 " UltiSnips Autocomplete
-Plugin 'SirVer/ultisnips'
+Plug 'SirVer/ultisnips'
 " Latex-Plugin
-Plugin 'LaTeX-Box-Team/LaTeX-Box'
+Plug 'LaTeX-Box-Team/LaTeX-Box', {'for': 'latex'}
 " Matching Tags
-Plugin 'Valloric/MatchTagAlways'
-" syntax highlight for jade
-Plugin 'digitaltoad/vim-jade'
+Plug 'Valloric/MatchTagAlways'
 " auto close brackets
-Plugin 'raimondi/delimitmate'
+Plug 'raimondi/delimitmate'
 " jshint
-Plugin 'Shutnik/jshint2.vim'
+Plug 'Shutnik/jshint2.vim', {'for': 'javascript'}
 " underscore template highlight
-Plugin 'aaronj1335/underscore-templates.vim'
+Plug 'aaronj1335/underscore-templates.vim'
 " show indentions
-Plugin 'nathanaelkane/vim-indent-guides'
+Plug 'nathanaelkane/vim-indent-guides'
 " show colors
-Plugin 'lilydjwg/colorizer'
+Plug 'lilydjwg/colorizer'
 " text-objects-user
-Plugin 'kana/vim-textobj-user'
-Plugin 'Julian/vim-textobj-brace'
+Plug 'kana/vim-textobj-user'
+Plug 'Julian/vim-textobj-brace'
 " javascript
-Plugin 'einars/js-beautify'
-Plugin 'maksimr/vim-jsbeautify'
+Plug 'einars/js-beautify'
+Plug 'maksimr/vim-jsbeautify'
 " ruby
-Plugin 'vim-ruby/vim-ruby'
+Plug 'vim-ruby/vim-ruby', {'for': 'ruby'}
 " syntastic
-Plugin 'scrooloose/syntastic'
+Plug 'scrooloose/syntastic'
 " vim surround
-Plugin 'tpope/vim-surround'
+Plug 'tpope/vim-surround'
 
-Plugin 'godlygeek/tabular'
+Plug 'godlygeek/tabular'
 
 " COLORSCHEMES
 " base 16 colorscheme
-Plugin 'chriskempson/base16-vim'
+Plug 'chriskempson/base16-vim'
 " Tomorrow
-Plugin 'chriskempson/vim-tomorrow-theme'
+Plug 'chriskempson/vim-tomorrow-theme'
 " solarized
-Plugin 'altercation/vim-colors-solarized'
+Plug 'altercation/vim-colors-solarized'
 
-call vundle#end()
-filetype on
-filetype plugin on
-filetype indent on 
+call plug#end()
 " }}}
 
 " =============================================================================
