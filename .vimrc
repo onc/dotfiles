@@ -314,8 +314,6 @@ Plugin 'vim-ruby/vim-ruby'
 Plugin 'scrooloose/syntastic'
 " vim surround
 Plugin 'tpope/vim-surround'
-" compiling stuff
-Plugin 'SingleCompile'
 
 Plugin 'godlygeek/tabular'
 
@@ -428,9 +426,6 @@ nnoremap <leader>be :CtrlPBuffer<CR>
 cabbrev mr CtrlPMRUFiles<CR>
 nnoremap <leader>mr :CtrlPMRUFiles<cr>
 
-" ######## SINGLECOMPILER SETTINGS ############################################
-nnoremap <leader>c :SCCompile<CR>
-nnoremap <leader>r :SCCompileRun<CR>
 " }}}
 
 " =============================================================================
