@@ -252,6 +252,15 @@ let g:base16colorspace=256
 " =============================================================================
 " {{{ MY BUNDELS 
 " =============================================================================
+
+" install plug if not installed
+if empty(glob('~/.vim/autoload/plug.vim'))
+  silent !mkdir -p ~/.vim/autoload
+  silent !curl -fLo ~/.vim/autoload/plug.vim
+    \ https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim
+  autocmd VimEnter * PlugInstall
+endif
+
 call plug#begin('~/.vim/plugged')
 " git for vim
 Plug 'tpope/vim-fugitive'
@@ -262,7 +271,7 @@ Plug 'bling/vim-airline'
 " GitGutter for Vim
 Plug 'airblade/vim-gitgutter'
 " Nerdtree
-Plug 'scrooloose/nerdtree'
+Plug 'scrooloose/nerdtree', { 'on': 'NERDTreeTabsToggle'}
 " Comments
 Plug 'scrooloose/nerdcommenter'
 " Nerdtree in all tabs
@@ -272,19 +281,19 @@ Plug 'kien/ctrlp.vim'
 " Autocomplete
 Plug 'Valloric/YouCompleteMe'
 " Tern for Vim - JS
-Plug 'marijnh/tern_for_vim', {'for': 'javascript'}
-" Snippets for UltiSnip
+Plug 'marijnh/tern_for_vim', { 'for': 'javascript' }
+" snippets for ultisnip
 Plug 'honza/vim-snippets'
 " UltiSnips Autocomplete
 Plug 'SirVer/ultisnips'
 " Latex-Plugin
-Plug 'LaTeX-Box-Team/LaTeX-Box', {'for': 'latex'}
+Plug 'LaTeX-Box-Team/LaTeX-Box', { 'for': ['latex', 'tex'] }
 " Matching Tags
 Plug 'Valloric/MatchTagAlways'
 " auto close brackets
 Plug 'raimondi/delimitmate'
 " jshint
-Plug 'Shutnik/jshint2.vim', {'for': 'javascript'}
+Plug 'Shutnik/jshint2.vim', { 'for': 'javascript' }
 " underscore template highlight
 Plug 'aaronj1335/underscore-templates.vim'
 " show indentions
@@ -298,7 +307,7 @@ Plug 'Julian/vim-textobj-brace'
 Plug 'einars/js-beautify'
 Plug 'maksimr/vim-jsbeautify'
 " ruby
-Plug 'vim-ruby/vim-ruby', {'for': 'ruby'}
+Plug 'vim-ruby/vim-ruby', { 'for': 'ruby' }
 " syntastic
 Plug 'scrooloose/syntastic'
 " vim surround
@@ -475,4 +484,30 @@ nnoremap <silent> <leader>6 :call HiInterestingWord(6)<cr>
 nnoremap <silent> <leader>0 :call clearmatches()<cr>
 
 call HiInterestingWordGroups()
+" }}}
+
+" =============================================================================
+" {{{SWAPPING WINDOWS
+" =============================================================================
+function! MarkWindowSwap()
+    let g:markedWinNum = winnr()
+endfunction
+
+function! DoWindowSwap()
+    "Mark destination
+    let curNum = winnr()
+    let curBuf = bufnr( "%" )
+    exe g:markedWinNum . "wincmd w"
+    "Switch to source and shuffle dest->source
+    let markedBuf = bufnr( "%" )
+    "Hide and open so that we aren't prompted and keep history
+    exe 'hide buf' curBuf
+    "Switch to dest and shuffle source->dest
+    exe curNum . "wincmd w"
+    "Hide and open so that we aren't prompted and keep history
+    exe 'hide buf' markedBuf 
+endfunction
+
+nmap <silent> <leader>mw :call MarkWindowSwap()<CR>
+nmap <silent> <leader>sw :call DoWindowSwap()<CR>
 " }}}
