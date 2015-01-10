@@ -109,6 +109,8 @@ case "$DISTRO" in
         alias yc="yaourt -Scc"
         # update all packages
         alias yu="yaourt -Syua"
+        # update pacman
+        alias pacu="sudo pacman -Syu"
         ;;
     "Ubuntu")
         alias agi="sudo apt-get install"
