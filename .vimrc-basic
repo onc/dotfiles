@@ -264,10 +264,8 @@ endif
 call plug#begin('~/.vim/plugged')
 " toggle Cursor
 Plug 'jszakmeister/vim-togglecursor'
-" GitGutter for Vim
-Plug 'airblade/vim-gitgutter'
 " Nerdtree
-Plug 'scrooloose/nerdtree'
+Plug 'scrooloose/nerdtree', { 'on': 'NERDTreeTabsToggle'}
 " Comments
 Plug 'scrooloose/nerdcommenter'
 " Nerdtree in all tabs
