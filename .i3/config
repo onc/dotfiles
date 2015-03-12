@@ -52,7 +52,7 @@ bindsym XF86TouchpadToggle exec /mnt/hdd/dotfiles/touch-toggle.sh;
 bindsym Print exec scrot '%Y-%m-%d-%T_$wx$h_scrot.png' -e 'mv $f ~/Pictures/screenshots/'
 
 # reload the configuration file
-bindsym $mod+Shift+c reload
+bindsym $mod+Shift+c exec "/home/onze/Applications/i3-functions.sh reload"
 # exit i3
 bindsym $mod+Shift+e exec --no-startup-id "i3-nagbar -t warning -m 'You pressed the exit shortcut. Do you really want to exit i3? This will end your X session.' -b 'Yes, exit i3' 'i3-msg exit'"
 # }}}
