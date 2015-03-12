@@ -52,6 +52,16 @@ re-downloaded in order to locate PACKAGE."
 (recentf-mode t)
 (setq recentf-max-saved-items 1000)
 
+;; If this is non-nil, then when both .el and .elc
+;; versions of a file exist, and the caller did not explicitly specify
+;; which one to load, then the newer file is loaded.
+(setq load-prefer-newer t)
+
+;; Show system name and full file path in emacs frame title
+(setq frame-title-format
+      (list (format "%s %%S: %%j " (system-name))
+            '(buffer-file-name "%f" (dired-directory dired-directory "%b"))))
+
 ;; line numbers
 ;; (global-linum-mode 1)
 
@@ -87,6 +97,27 @@ re-downloaded in order to locate PACKAGE."
 ;; Don't make me type 'yes' or 'no', y/n will do
 (defalias 'yes-or-no-p 'y-or-n-p)
 
+;; dont ask to follow symlink in git
+(setq vc-follow-symlinks t)
+
+;; Nonzero means echo unfinished commands after this many seconds of pause.
+;; The value may be integer or floating point.
+(setq echo-keystrokes 0.02)
+
+;; Auto refresh buffers
+(global-auto-revert-mode t)
+
+;; Make sure UTF-8 is used
+(set-terminal-coding-system 'utf-8)
+(set-keyboard-coding-system 'utf-8)
+(set-language-environment "UTF-8")
+(prefer-coding-system 'utf-8)
+
+(add-to-list 'auto-mode-alist '("\\.h\\'" . c++-mode))
+
+;; start emacs in server mode
+(load "server")
+(unless (server-running-p) (server-start))
 ;; #############################################################################
 ;; ################################# PACKAGES ##################################
 ;; #############################################################################
