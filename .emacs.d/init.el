@@ -384,6 +384,89 @@ re-downloaded in order to locate PACKAGE."
               :config (progn
                         add-hook 'magit-mode-hook 'turn-on-magit-gitflow))))
 
+(use-package org-clock
+  :defer t
+  :config (progn
+            (setq org-clock-persist 'history)
+            (org-clock-persistence-insinuate)))
+
+(use-package async
+  :defer t
+  :ensure t
+  :config (progn
+            (require 'async-bytecomp)))
+
+(use-package dash
+  :defer t
+  :ensure t)
+
+(use-package paradox
+  :ensure t
+  :defer t
+  :commands (paradox-list-packages))
+
+(use-package glsl-mode
+  :ensure t
+  :mode (("\\.vert\\'" . glsl-mode)
+         ("\\.frag\\'" . glsl-mode)))
+
+(use-package cmake-mode
+  :ensure t)
+
+(use-package highlight-symbol
+  :ensure t)
+
+(use-package diminish
+  :ensure t
+  :config (progn
+            ;; Clean up mode line
+            ;; (eval-after-load "company" '(diminish 'company-mode "cpy"))
+            (eval-after-load "undo-tree" '(diminish 'undo-tree-mode))
+            (eval-after-load "eldoc" '(diminish 'eldoc-mode))
+            (eval-after-load "helm" '(diminish 'helm-mode))
+
+            (add-hook 'emacs-lisp-mode-hook
+                      (lambda ()
+                        (setq mode-name "el")))))
+
+(use-package scss-mode
+  :ensure t)
+
+(use-package web-mode
+  :ensure t
+  :defer t
+  :mode (("\\.html?\\'" . web-mode)
+         ("\\.php\\'"   . web-mode)
+         ("\\.jsp\\'"   . web-mode)
+         ("\\.erb\\'"   . web-mode)))
+
+(use-package yaml-mode
+  :ensure t)
+
+(use-package markdown-mode
+  :ensure t
+  :config (progn
+            (add-to-list 'auto-mode-alist '("\\.markdown\\'" . markdown-mode))
+            (add-to-list 'auto-mode-alist '("\\.md\\'" . markdown-mode))
+            (add-to-list 'auto-mode-alist '("\\.mmd\\'" . markdown-mode))
+
+            (add-hook 'markdown-mode-hook 'orgtbl-mode)
+            (add-hook 'markdown-mode-hook
+                      (lambda()
+                        (add-hook 'after-save-hook 'org-tables-to-markdown  nil 'make-it-local)))))
+
+(use-package rainbow-mode
+  :ensure t
+  :config (progn
+            (dolist
+                (hook '(css-mode-hook
+                        html-mode-hook
+                        js-mode-hook
+                        emacs-lisp-mode-hook
+                        ;; org-mode-hook
+                        text-mode-hook))
+              (add-hook hook 'rainbow-mode))))
+
 (use-package flycheck
   :ensure t
   :config (progn
