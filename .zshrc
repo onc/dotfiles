@@ -279,12 +279,22 @@ function zz {
     cd "$(_z -l 2>&1 | sed -n 's/^[ 0-9.,]*//p' | fzf -q $_last_z_args)"
 }
 
-function cpu-frequency {
+alias j=z
+alias jj=z
+
+function cpu-frequency() {
     watch grep \"cpu MHz\" /proc/cpuinfo
 }
 
-alias j=z
-alias jj=z
+function use_clang() {
+    export CC="clang"
+    export CXX="clang++"
+}
+
+function take() {
+    mkdir $1
+    cd $1
+}
 
 function gi() { curl -L -s https://www.gitignore.io/api/$@ ;}
 # }}}
