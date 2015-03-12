@@ -557,6 +557,9 @@ re-downloaded in order to locate PACKAGE."
                   (revert-buffer nil t)
                   (message "Buffer reverted")))
 
+;; Unconditionally kill unmodified buffers.
+(global-set-key (kbd "C-x k") 'kill-this-buffer-if-not-modified)
+
 ;; #############################################################################
 ;; ################################# FUNCTIONS #################################
 ;; #############################################################################
