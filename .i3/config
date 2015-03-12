@@ -7,7 +7,7 @@ set $mod Mod4
 set $alt Mod1
 
 set $w1 1   term
-set $w2 2   vim
+set $w2 2   code
 set $w3 3   www
 set $w4 4   music
 set $w5 5   mail
@@ -28,6 +28,8 @@ bindsym $mod+t exec konsole
 # bindsym $mod+space exec --no-startup-id kupfer
 # gvim
 bindsym $mod+v exec --no-startup-id gvim
+# emacs
+bindsym $mod+x exec --no-startup-id emacs
 # dolphin
 bindsym $mod+e exec --no-startup-id dolphin
 # chromium
