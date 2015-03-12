@@ -37,8 +37,8 @@ bindsym $mod+c exec --no-startup-id google-chrome-stable
 # close window
 bindsym $mod+q kill
 # lock screen and mute sound
-# bindsym $alt+ctrl+l exec amixer -q sset Master mute; exec i3lock -u -i ~/.i3/back.png;
-bindsym $alt+ctrl+l exec amixer -q sset Master mute; exec --no-startup-id slimlock;
+bindsym $alt+ctrl+l exec amixer -q sset Master mute; exec i3lock -u -i ~/.i3/back.png;
+# bindsym $alt+ctrl+l exec amixer -q sset Master mute; exec --no-startup-id slimlock;
 # open sysguard
 bindsym ctrl+Escape exec --no-startup-id ksysguard
 
