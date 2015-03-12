@@ -1,3 +1,12 @@
+;;; package --- Summary
+
+;; -*- coding: utf-8; lexical-binding: t -*
+
+;;; Commentary:
+
+
+;;; Code:
+
 ;; #############################################################################
 ;; ################################# SOURCES ###################################
 ;; #############################################################################
@@ -279,3 +288,6 @@
  ;; Your init file should contain only one such instance.
  ;; If there is more than one, they won't work right.
  )
+
+;; Make FlyCheck happy...
+;;; init.el ends here
