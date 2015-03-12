@@ -565,7 +565,7 @@ re-downloaded in order to locate PACKAGE."
 ;; #############################################################################
 
 ;; indent whole buffer
-(defun pamo-indent-whole-buffer ()
+(defun onze-indent-whole-buffer ()
   "Delete trailing whitespace, indent and untabify whole buffer."
   (interactive)
   (save-excursion
