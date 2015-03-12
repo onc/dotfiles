@@ -279,7 +279,7 @@ Plug 'jistr/vim-nerdtree-tabs'
 " ctrlp
 Plug 'kien/ctrlp.vim'
 " Autocomplete
-Plug 'Valloric/YouCompleteMe'
+" Plug 'Valloric/YouCompleteMe'
 " Tern for Vim - JS
 Plug 'marijnh/tern_for_vim', { 'for': 'javascript' }
 " snippets for ultisnip
@@ -330,6 +330,23 @@ call plug#end()
 " {{{ PLUGIN SETTINGS
 " =============================================================================
 
+" ######## YOU COMPLETE ME ####################################################
+let g:rainbow_active = 1
+" blue, orange, green, purple, white
+" let g:rainbow_guifgs = ['Function', 'Number', 'String', 'Define', 'Normal']
+" let g:rainbow_ctermfgs = ['Function', 'Number', 'String', 'Define', 'Normal'] 
+let g:rainbow_load_separately = [
+    \ [ '*' , [['(', ')'], ['\[', '\]'], ['{', '}']] ],
+    \ [ '*.tex' , [['(', ')'], ['\[', '\]']] ],
+    \ [ '*.cpp' , [['(', ')'], ['\[', '\]'], ['{', '}']] ],
+    \ [ '*.{html,htm}' , [['(', ')'], ['\[', '\]'], ['{', '}'], ['<\a[^>]*>', '</[^>]*>']] ],
+    \ ]
+let g:rainbow_guifgs = ['RoyalBlue3', 'DarkOrange3', 'DarkOrchid3', 'FireBrick']
+let g:rainbow_ctermfgs = ['lightblue', 'lightgreen', 'yellow', 'red', 'magenta']
+
+" ######## YOU COMPLETE ME ####################################################
+let g:ycm_global_ycm_extra_conf = '~/.vim/ycm_extra_conf.py'
+let g:ycm_register_as_syntastic_checker = 0
 " ######## AIRLINE ############################################################
 set laststatus=2
 let g:airline#extensions#tabline#enabled=1
