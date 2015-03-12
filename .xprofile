@@ -30,5 +30,9 @@ xcape -e 'Shift_L=Shift_L|parenleft;Shift_R=Shift_R|parenright;Control_L=Escape'
 xrdb ~/.Xresources &
 
 # GNOME keyring
-eval $(/usr/bin/gnome-keyring-daemon --start --components=gpg,pkcs11,secrets,ssh)
-export GPG_AGENT_INFO SSH_AUTH_SOCK
+# eval $(/usr/bin/gnome-keyring-daemon --start --components=gpg,pkcs11,secrets,ssh)
+export GPG_AGENT_INFO 
+export SSH_AUTH_SOCK
+export GNOME_KEYRING_CONTROL
+export SSH_AGENT_PID
+
