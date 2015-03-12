@@ -10,8 +10,7 @@ COMPLETION_WAITING_DOTS="true"
 REPORTTIME=10
 
 # plugins
-plugins=(git svn tmux colored-man colorize themes z sudo 
-rails zsh-syntax-highlighting fzf npm cp)
+plugins=(git svn tmux colored-man colorize themes z sudo rails zsh-syntax-highlighting fzf npm cp bgnotify)
 
 # Disable repeating command before result of command
 DISABLE_AUTO_TITLE="true"
@@ -29,7 +28,7 @@ export LC_ALL=en_US.UTF-8
 export LC_CTYPE=en_US.UTF-8 
 export LANG=en_US.UTF-8
 
-export PATH="${PATH}:/home/onze/Applications"
+export PATH="${HOME}/Applications:${PATH}"
 # Java
 export JAVA_HOME="/usr/lib/jvm/default"
 # Ruby
@@ -38,10 +37,9 @@ export PATH="`ruby -e 'print Gem.user_dir'`/bin:${PATH}"
 # Nodejs
 export NPM_PACKAGES="${HOME}/.npm-packages"
 export PATH="${NPM_PACKAGES}/bin:${PATH}"
-
-# GNOME Keyring
-SSH_AUTH_SOCK=`netstat -xl | grep -o '/run/user/1000/keyring.*/ssh'`
-[ -z "$SSH_AUTH_SOCK" ] || export SSH_AUTH_SOCK
+# go
+export GOPATH="/mnt/hdd/Coding/go"
+export PATH="${GOPATH}/bin:${PATH}"
 
 # Preferred editor for local and remote sessions
 if [[ -n $SSH_CONNECTION ]]; then
