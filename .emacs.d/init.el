@@ -137,24 +137,74 @@ re-downloaded in order to locate PACKAGE."
 ;; make emacs usable
 (use-package evil
   :ensure t
-  :config
-  (progn
-    (evil-mode 1)
-    (setq evil-move-cursor-back nil)))
+  :config (progn
+            (evil-mode 1)
+            (setq evil-move-cursor-back nil)
 
-(use-package evil-leader
-  :ensure t
-  :config
-  (progn
-    (global-evil-leader-mode)
+            ;; Some modes should not start in evil-mode
+            (evil-set-initial-state 'paradox-menu-mode 'emacs)
+            (evil-set-initial-state 'el-get-package-menu-mode 'emacs)
+            (evil-set-initial-state 'ag-mode 'emacs)
+            (evil-set-initial-state 'flycheck-error-list-mode 'emacs)
+            (evil-set-initial-state 'dired-mode 'emacs)
+            (evil-set-initial-state 'neotree-mode 'emacs)
+            (evil-set-initial-state 'magit-popup-mode 'emacs)
+            (evil-set-initial-state 'magit-mode 'emacs)
 
-    (evil-leader/set-key
-      "n" 'neotree-toggle
-      "f" 'pamo-indent-whole-buffer
-      "init" (lambda () (interactive) (find-file "~/.emacs.d/init.el"))
-      "b" 'helm-mini
-      "o" 'find-file
-      "e" 'eval-defun)))
+            (defun copy-to-end-of-line ()
+              "Yank from point to end of line."
+              (interactive)
+              (evil-yank (point) (point-at-eol)))
+            ;; copy to end of line
+            (define-key evil-normal-state-map "Y" 'copy-to-end-of-line)
+
+            ;; if no second escape is pressed in a given timeout, dont wait for a second escape
+            (defun save-with-escape-and-timeout ()
+              (interactive)
+              (block return-point
+                (let ((timer (run-at-time "0.2 sec" nil (lambda () (return-from return-point))))
+                      (key (read-key)))
+                  (if (eq key 27)
+                      (progn
+                        (cancel-timer timer)
+                        (save-buffer))))))
+
+            ;; save on double escape and space for command mode
+            (defun add-vim-bindings()
+              (define-key evil-normal-state-local-map (kbd "<escape>") 'save-with-escape-and-timeout))
+            (define-key evil-normal-state-local-map (kbd "<SPC>") 'evil-ex)
+            (define-key evil-normal-state-local-map (kbd "<DEL>") 'evil-search-highlight-persist-remove-all)
+
+            (add-hook 'evil-normal-state-entry-hook 'add-vim-bindings)
+
+            (use-package evil-leader
+              :ensure t
+              :config (progn
+                        (global-evil-leader-mode)
+
+                        (evil-leader/set-key
+                          "n" 'neotree-toggle
+                          "f" 'onze-indent-whole-buffer
+                          "init" (lambda () (interactive) (find-file "~/.emacs.d/init.el"))
+                          "b" 'helm-mini
+                          "o" 'find-file
+                          "e" 'eval-defun
+                          "1" 'highlight-symbol-at-point
+                          "0" 'highlight-symbol-remove-all
+                          "gst" 'magit-status
+                          "p" 'helm-projectile)))
+
+            (use-package evil-search-highlight-persist
+              :ensure t
+              :config (progn
+                        (global-evil-search-highlight-persist)))
+
+            ;; PACKAGE: EVIL-SURROUND
+            (use-package evil-surround
+              :defer t
+              :ensure t
+              :config (progn
+                        (global-evil-surround-mode 1)))))
 
 (use-package smartparens
   :ensure t
