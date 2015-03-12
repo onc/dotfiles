@@ -550,7 +550,12 @@ re-downloaded in order to locate PACKAGE."
 (global-set-key (kbd "C-x \"") 'split-window-below)
 (global-set-key (kbd "C-x t") 'make-frame-command)
 
-(add-hook 'evil-normal-state-entry-hook 'add-vim-bindings)
+;; revert buffer
+(global-set-key [f5]
+                (lambda ()
+                  (interactive)
+                  (revert-buffer nil t)
+                  (message "Buffer reverted")))
 
 ;; #############################################################################
 ;; ################################# FUNCTIONS #################################
