@@ -118,6 +118,14 @@ re-downloaded in order to locate PACKAGE."
 ;; start emacs in server mode
 (load "server")
 (unless (server-running-p) (server-start))
+
+;; email mode
+(add-to-list 'auto-mode-alist '("\\.mail\\'" . mail-mode))
+(add-hook 'mail-mode-hook
+          (lambda ()
+            (setq fill-column 80)
+            (auto-fill-mode t)))
+
 ;; #############################################################################
 ;; ################################# PACKAGES ##################################
 ;; #############################################################################
