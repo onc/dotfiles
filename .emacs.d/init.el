@@ -47,7 +47,7 @@ re-downloaded in order to locate PACKAGE."
 (global-hl-line-mode t)
 
 ;; save current session
-(desktop-save-mode 1)
+(desktop-save-mode t)
 
 (recentf-mode t)
 (setq recentf-max-saved-items 1000)
