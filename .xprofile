@@ -36,3 +36,4 @@ export SSH_AUTH_SOCK
 export GNOME_KEYRING_CONTROL
 export SSH_AGENT_PID
 
+export GNUPGHOME="${HOME}/.gnupg"
