@@ -370,9 +370,20 @@ re-downloaded in order to locate PACKAGE."
             (setq company-backends (mapcar #'company-mode/backend-with-yas company-backends))))
 
 (use-package magit
-  :ensure t
+  :defer t
   :load-path "/home/onze/.emacs.d/git-package/magit"
-  :pin manual)
+  :config (progn
+
+            (add-to-list 'load-path "/home/onze/.emacs.d/git-package/magit-gitflow")
+            (require 'magit-gitflow)
+            (add-hook 'magit-mode-hook 'turn-on-magit-gitflow)
+
+            (use-package magit-gitflow
+              :load-path "/home/onze/.emacs.d/git-packages/magit-gitflow"
+              :disabled t
+              :config (progn
+                        add-hook 'magit-mode-hook 'turn-on-magit-gitflow))))
+
 
 ;; #############################################################################
 ;; ################################# KEY BINDINGS ##############################
