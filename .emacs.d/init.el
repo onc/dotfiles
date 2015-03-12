@@ -131,6 +131,7 @@ re-downloaded in order to locate PACKAGE."
 ;; #############################################################################
 
 ;; load use-package module
+(require-package 'use-package)
 (require 'use-package)
 
 ;; make emacs usable
