@@ -566,6 +566,90 @@ re-downloaded in order to locate PACKAGE."
     (untabify (point-min) (point-max))))
 
 ;; #############################################################################
+;; ################################# FUNCTIONS PATRICK #########################
+;; #############################################################################
+
+(defun my-where-is (definition count &optional length)
+  "DEFINITION is the name of the function.
+Return COUNT key sequences that invoke the command DEFINITTION as a string.
+If COUNT is 0 then all key sequences will be returned.
+The optional LENGTH argument limits the returned string to LENGTH number of
+chars.
+
+For convenience there are also the functions `my-where-is-first'
+and `my-where-is-all'.
+
+This function relies on Magnar Sveen's dash.el library."
+  (interactive
+   (let ((fn (function-called-at-point))
+         (enable-recursive-minibuffers t)
+         val)
+     (setq val (completing-read
+                (if fn
+                    (format "Where is command (default %s): " fn)
+                  "Where is command: ")
+                obarray 'commandp t nil nil
+                (and fn (symbol-name fn))))
+     (list (unless (equal val "") (intern val))
+           current-prefix-arg)))
+  (unless definition (error "No command"))
+  (let ((func (indirect-function definition))
+        (defs nil)
+        string)
+    ;; In DEFS, find all symbols that are aliases for DEFINITION.
+    (mapatoms (lambda (symbol)
+                (and (fboundp symbol)
+                     (not (eq symbol definition))
+                     (eq func (condition-case ()
+                                  (indirect-function symbol)
+                                (error symbol)))
+                     (push symbol defs))))
+    ;; Look at all the symbols--first DEFINITION,
+    ;; then its aliases.
+    (dolist (symbol (cons definition defs))
+      (let* ((remapped (command-remapping symbol))
+             (keys (where-is-internal
+                    symbol overriding-local-map nil nil remapped))
+             (keys (if (> count 0)
+                       (mapconcat 'key-description (-take count keys) ", ")
+                     (mapconcat 'key-description keys ", "))))
+        (setq string
+              (if (> (length keys) 0)
+                  (if remapped
+                      (format "%s is remapped to %s which is on %s"
+                              symbol remapped keys)
+                    (format "%s" keys))
+                ;; If this is the command the user asked about,
+                ;; and it is not on any key, say so.
+                ;; For other symbols, its aliases, say nothing
+                ;; about them unless they are on keys.
+                (if (eq symbol definition)
+                    (format "NA"))))))
+    (if length
+        (substring string 0 (min (length string) (+ 1 length)))
+      string)))
+
+(defun my-where-is-first (definition &optional length)
+  "DEFINITION is the name of the function.
+Return the first key sequence for DEFINITION as a string.
+The optional LENGTH argument limits the returned string to LENGTH number of
+chars.
+
+This is a convenience function for `my-where-is'."
+  (interactive)
+  (my-where-is definition 1 length))
+
+(defun my-where-is-all (definition &optional length)
+  "DEFINITION is the name of the function.
+Return all key sequence for DEFINITION as a string.
+The optional LENGTH argument limits the returned string to LENGTH number of
+chars.
+
+This is a convenience function for `my-where-is'."
+  (interactive)
+  (my-where-is definition 0 length))
+
+;; #############################################################################
 ;; ################################# EMACS #####################################
 ;; #############################################################################
 
