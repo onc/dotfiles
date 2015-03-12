@@ -573,6 +573,28 @@ re-downloaded in order to locate PACKAGE."
     (indent-region (point-min) (point-max) nil)
     (untabify (point-min) (point-max))))
 
+(defun onze-create-new-blog-post (name)
+  "Create a new blog post in my blog directory.  NAME ist the name of the post, which is a suffix for the filename."
+  (interactive "sEnter name of new blog-post: ")
+  (let ((filename (concat (concat (format-time-string "%Y-%m-%d-") name) ".md")))
+    (find-file (concat "/mnt/hdd/Blog/onc.github.io/_posts/" filename))))
+
+;; source: http://steve.yegge.googlepages.com/my-dot-emacs-file
+(defun onze-rename-file-and-buffer (new-name)
+  "Renames both current buffer and file it's visiting to NEW-NAME."
+  (interactive "sNew name: ")
+  (let ((name (buffer-name))
+        (filename (buffer-file-name)))
+    (if (not filename)
+        (message "Buffer '%s' is not visiting a file!" name)
+      (if (get-buffer new-name)
+          (message "A buffer named '%s' already exists!" new-name)
+        (progn
+          (rename-file name new-name 1)
+          (rename-buffer new-name)
+          (set-visited-file-name new-name)
+          (set-buffer-modified-p nil))))))
+
 ;; #############################################################################
 ;; ################################# FUNCTIONS PATRICK #########################
 ;; #############################################################################
