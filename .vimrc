@@ -315,6 +315,10 @@ Plug 'tpope/vim-surround'
 
 Plug 'godlygeek/tabular'
 
+Plug 'plasticboy/vim-markdown'
+
+Plug 'oblitum/rainbow'
+
 " COLORSCHEMES
 " base 16 colorscheme
 Plug 'chriskempson/base16-vim'
@@ -347,6 +351,7 @@ let g:rainbow_ctermfgs = ['lightblue', 'lightgreen', 'yellow', 'red', 'magenta']
 " ######## YOU COMPLETE ME ####################################################
 let g:ycm_global_ycm_extra_conf = '~/.vim/ycm_extra_conf.py'
 let g:ycm_register_as_syntastic_checker = 0
+
 " ######## AIRLINE ############################################################
 set laststatus=2
 let g:airline#extensions#tabline#enabled=1
