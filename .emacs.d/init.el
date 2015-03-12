@@ -541,11 +541,14 @@ re-downloaded in order to locate PACKAGE."
 ;; #############################################################################
 ;; ################################# KEY BINDINGS ##############################
 ;; #############################################################################
+;; Map escape to cancel (like C-g)...
+(define-key isearch-mode-map [escape] 'isearch-abort)   ;; isearch
+(global-set-key [escape] 'keyboard-escape-quit)         ;; everywhere else
 
-;; save on double escape and space for command mode
-(defun add-vim-bindings()
-  (define-key evil-normal-state-local-map (kbd "<escape> <escape>") 'save-buffer)
-  (define-key evil-normal-state-local-map (kbd "<SPC>") 'evil-ex))
+;; tmux-like spliting
+(global-set-key (kbd "C-x %") 'split-window-right)
+(global-set-key (kbd "C-x \"") 'split-window-below)
+(global-set-key (kbd "C-x t") 'make-frame-command)
 
 (add-hook 'evil-normal-state-entry-hook 'add-vim-bindings)
 
