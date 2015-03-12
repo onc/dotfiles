@@ -157,141 +157,141 @@ re-downloaded in order to locate PACKAGE."
 
 (use-package smartparens
   :ensure t
-  :config
-  (progn
-    (smartparens-global-mode t)
-    (show-smartparens-global-mode)))
+  :config (progn
+            (smartparens-global-mode t)
+            (show-smartparens-global-mode)))
 
 (use-package smooth-scrolling
   :ensure t
-  :config
-  (progn
-    (setq scroll-margin 5 scroll-conservatively 9999 scroll-step 1)))
+  :config (progn
+            (setq scroll-margin 5 scroll-conservatively 9999 scroll-step 1)))
 
 (use-package undo-tree
   :ensure t
-  :config
-  (progn
-    (setq undo-tree-auto-save-history t)
-    (setq undo-tree-history-directory-alist
-          `(("." . ,(concat user-emacs-directory "undo"))))
-    (global-undo-tree-mode)))
+  :config (progn
+            (setq undo-tree-auto-save-history t)
+            (setq undo-tree-history-directory-alist
+                  `(("." . ,(concat user-emacs-directory "undo"))))
+            (global-undo-tree-mode)))
 
 (use-package rainbow-delimiters
   :ensure t
-  :config
-  (progn
-    (add-hook 'prog-mode-hook 'rainbow-delimiters-mode)))
+  :config (progn
+            (add-hook 'prog-mode-hook 'rainbow-delimiters-mode)))
 
 (use-package company
   :ensure t
-  :config
-  (progn
-    (add-hook 'after-init-hook 'global-company-mode)
-    ;; no delay no autocomplete
-    (setq company-idle-delay 0)
-    (setq company-minimum-prefix-length 2)))
+  :config (progn
+            (add-hook 'after-init-hook 'global-company-mode)
+            ;; no delay no autocomplete
+            (setq company-idle-delay 0)
+            (setq company-minimum-prefix-length 2)
+
+            (use-package company-cmake
+              :ensure t)))
 
 (use-package neotree
   :ensure t
-  :config
-  (progn
-    (global-set-key [f8] 'neotree-toggle)
-    (evil-set-initial-state 'neotree-mode 'emacs)
-    (setq neo-theme 'arrow)
+  :defer t
+  :config (progn
+            (global-set-key [f8] 'neotree-toggle)
+            (evil-set-initial-state 'neotree-mode 'emacs)
+            (setq neo-theme 'arrow)
 
-    (define-key neotree-mode-map (kbd "j") 'next-line)
-    (define-key neotree-mode-map (kbd "k") 'previous-line)
-    (define-key neotree-mode-map (kbd "s") 'neotree-enter-vertical-split)
-    (define-key neotree-mode-map (kbd "i") 'neotree-enter-horizontal-split)
-    (define-key neotree-mode-map (kbd "C-w l") 'other-window)
-    ;; (define-key neotree-mode-map (kbd "<escape>") 'neotree-hide)
-    ;; If this variable is non-nil then it's not possible to
-    ;; get help in Helm buffers
-    ;; https://github.com/jaypei/emacs-neotree/issues/26
-    (setq neo-persist-show nil)
-    (add-hook 'neotree-mode-hook
-              (lambda ()
-                (define-key evil-normal-state-local-map (kbd "TAB") 'neotree-enter)
-                (define-key evil-normal-state-local-map (kbd "SPC") 'neotree-enter)
-                (define-key evil-normal-state-local-map (kbd "q") 'neotree-hide)
-                (define-key evil-normal-state-local-map (kbd "RET") 'neotree-enter)))))
+            (define-key neotree-mode-map (kbd "j") 'next-line)
+            (define-key neotree-mode-map (kbd "k") 'previous-line)
+            (define-key neotree-mode-map (kbd "s") 'neotree-enter-vertical-split)
+            (define-key neotree-mode-map (kbd "i") 'neotree-enter-horizontal-split)
+            (define-key neotree-mode-map (kbd "C-w l") 'other-window)
+            ;; (define-key neotree-mode-map (kbd "<escape>") 'neotree-hide)
+            ;; If this variable is non-nil then iT's not possible to
+            ;; get help in Helm buffers
+            ;; https://github.com/jaypei/emacs-neotree/issues/26
+            (setq neo-persist-show nil)
+            (add-hook 'neotree-mode-hook
+                      (lambda ()
+                        (define-key evil-normal-state-local-map (kbd "TAB") 'neotree-enter)
+                        (define-key evil-normal-state-local-map (kbd "SPC") 'neotree-enter)
+                        (define-key evil-normal-state-local-map (kbd "q") 'neotree-hide)
+                        (define-key evil-normal-state-local-map (kbd "RET") 'neotree-enter)))))
 
 (use-package helm
   :ensure t
-  :config
-  (progn
-    (helm-mode 1)
-    (setq helm-buffer-details-flag nil)
-    ;; fuzzy matching
-    (setq helm-apropos-fuzzy-match t)
-    (setq helm-ff-file-name-history-use-recentf t)
-    ;; rebind tab to do persistens action
-    (define-key helm-map (kbd "<tab>") 'helm-execute-persistent-action)
-    ;; make tab work in terminal
-    (define-key helm-map (kbd "C-i") 'helm-execute-persistent-action)
-    ;; list actions using C-j
-    (define-key helm-map (kbd "C-j") 'helm-select-action)
-    (global-set-key (kbd "C-h C-h") 'helm-apropos)
-    ;; use helm for meta x
-    (global-set-key (kbd "M-x") 'helm-M-x)
-    (global-set-key (kbd "C-x b") 'helm-mini)))
+  :config (progn
+            (helm-mode 1)
+            (setq helm-buffer-details-flag nil)
+            ;; fuzzy matching
+            (setq helm-apropos-fuzzy-match t)
+            (setq helm-ff-file-name-history-use-recentf t)
+
+            (setq helm-reuse-last-window-split-state t)
+            ;; Don't use full width of the frame
+            (setq helm-split-window-in-side-p t)
+            (helm-autoresize-mode t)
+
+            ;; rebind tab to do persistens action
+            (define-key helm-map (kbd "<tab>") 'helm-execute-persistent-action)
+            ;; make tab work in terminal
+            (define-key helm-map (kbd "C-i") 'helm-execute-persistent-action)
+            ;; list actions using C-j
+            (define-key helm-map (kbd "C-j") 'helm-select-action)
+            (global-set-key (kbd "C-h C-h") 'helm-apropos)
+            ;; use helm for meta x
+            (global-set-key (kbd "M-x") 'helm-M-x)
+            (global-set-key (kbd "C-x b") 'helm-mini)
+
+            (use-package helm-projectile
+              :ensure t
+              :config (progn
+                        (setq projectile-completion-system 'helm)
+                        (helm-projectile-on)))))
 
 (use-package git-gutter
   :ensure t
-  :config
-  (progn
-    (global-git-gutter-mode +1)))
+  :config (progn
+            (global-git-gutter-mode +1)
+            ;; hide if there are no changes
+            (setq git-gutter:hide-gutter t)))
 
 (use-package ycmd
   :ensure t
-  :config
-  (progn
-    (add-hook 'c++-mode-hook 'ycmd-mode)
-    (set-variable 'ycmd-server-command '("python2" "/home/onze/Applications/ycmd/ycmd"))
-    (set-variable 'ycmd-global-config "/home/onze/Applications/ycmd/cpp/ycm/.ycm_extra_conf.py")))
+  :config (progn
+            (add-hook 'c++-mode-hook 'ycmd-mode)
+            (set-variable 'ycmd-server-command '("python2" "/home/onze/Applications/ycmd/ycmd"))
+            (set-variable 'ycmd-global-config "/home/onze/Applications/ycmd/cpp/ycm/.ycm_extra_conf.py")
+
+            (eval-after-load "flycheck-ycmd-autoloads" '(add-hook 'ycmd-mode-hook 'flycheck-ycmd-setup))))
 
 (use-package company-ycmd
   :ensure t
-  :config
-  (progn
-    (company-ycmd-setup)))
+  :config (progn
+            (company-ycmd-setup)))
 
 (use-package projectile
   :ensure t
-  :config
-  (progn
-    (projectile-global-mode)))
-
-(use-package helm-projectile
-  :ensure t
-  :config
-  (progn
-    (setq projectile-completion-system 'helm)
-    (helm-projectile-on)))
+  :config (progn
+            (projectile-global-mode)))
 
 (use-package powerline
   :ensure t
-  :config
-  (progn
-    (powerline-default-theme)))
+  :config (progn
+            (powerline-default-theme)))
 
 (use-package yasnippet
   :ensure t
-  :config
-  (progn
-    (yas-global-mode 1)
-    (global-set-key (kbd "C-c y") 'company-yasnippet)
-    ;; enable yasnippet everywhere
-    (defvar company-mode/enable-yas t
-      "Enable yasnippet for all backends.")
-    (defun company-mode/backend-with-yas (backend)
-      (if (or (not company-mode/enable-yas) (and (listp backend) (member 'company-yasnippet backend)))
-          backend
-        (append (if (consp backend) backend (list backend))
-                '(:with company-yasnippet))))
+  :config (progn
+            (yas-global-mode 1)
+            (global-set-key (kbd "C-c y") 'company-yasnippet)
+            ;; enable yasnippet everywhere
+            (defvar company-mode/enable-yas t
+              "Enable yasnippet for all backends.")
+            (defun company-mode/backend-with-yas (backend)
+              (if (or (not company-mode/enable-yas) (and (listp backend) (member 'company-yasnippet backend)))
+                  backend
+                (append (if (consp backend) backend (list backend))
+                        '(:with company-yasnippet))))
 
-    (setq company-backends (mapcar #'company-mode/backend-with-yas company-backends))))
+            (setq company-backends (mapcar #'company-mode/backend-with-yas company-backends))))
 
 (use-package magit
   :ensure t
