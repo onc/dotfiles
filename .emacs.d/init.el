@@ -595,6 +595,11 @@ re-downloaded in order to locate PACKAGE."
           (set-visited-file-name new-name)
           (set-buffer-modified-p nil))))))
 
+(defun kill-this-buffer-if-not-modified ()
+  "Kill current buffer, even if it has been modified."
+  (interactive)
+  (kill-buffer (current-buffer)))
+
 (defun read-file (filename)
   "Read the data from FILENAME and return it as a string."
   (let ((real-filename (expand-file-name filename)))
