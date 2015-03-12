@@ -247,6 +247,31 @@ re-downloaded in order to locate PACKAGE."
                         (setq projectile-completion-system 'helm)
                         (helm-projectile-on)))))
 
+(use-package hydra
+  :ensure t
+  :config (progn
+
+            (global-set-key (kbd "C-x m")
+                            (defhydra hydra-onze (:color teal)
+                              "
+      Onzes functions
+
+     Buffers                       Blog                       Projects
+-------------------------------------------------------------------------------------------
+  _i_: indent buffer              _n_: create new blog post    _p_: switch project %(my-where-is-first 'helm-projectile-switch-project)
+  _r_: rename buffer and file                                _s_: start clock
+                                                           _f_: stop/finish clock
+                                                           _t_: create report-table
+"
+                              ("i" onze-indent-whole-buffer       nil)
+                              ("r" onze-rename-file-and-buffer    nil)
+                              ("n" onze-create-new-blog-post      nil)
+                              ("p" helm-projectile-switch-project nil)
+                              ("s" org-clock-in                   nil)
+                              ("f" org-clock-out                  nil)
+                              ("t" org-clock-report               nil)
+                              ("q" nil                            "cancel" :color blue)))))
+
 (use-package git-gutter
   :ensure t
   :config (progn
