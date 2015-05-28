@@ -183,7 +183,7 @@ bindsym $mod+r mode "resize"
 # exec xcompmgr -c -f -n
 exec --no-startup-id compton --config ~/.i3/compton.conf -b
 exec --no-startup-id feh --bg-fill ~/.i3/back.png
-exec --no-startup-id conky
+# exec --no-startup-id conky
 exec --no-startup-id unclutter
 
 exec --no-startup-id dex -a
