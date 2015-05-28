@@ -501,8 +501,15 @@ re-downloaded in order to locate PACKAGE."
 (use-package flycheck
   :ensure t
   :config (progn
-            (global-flycheck-mode)
-            (add-hook 'c++-mode-hook (lambda () (setq flycheck-clang-language-standard "c++14")))))
+            (flycheck-mode 1)
+            (add-hook 'c++-mode-hook (lambda () (setq flycheck-clang-language-standard "c++14")))
+            (flycheck-add-next-checker 'c/c++-clang 'c/c++-googlelint 'append)))
+
+(use-package flycheck-google-cpplint
+  :ensure t
+  :config (progn
+            (custom-set-variables
+             '(flycheck-c/c++-googlelint-executable "/usr/local/bin/cpplint.py"))))
 
 (use-package flyspell
   :ensure t
