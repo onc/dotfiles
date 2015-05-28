@@ -461,6 +461,15 @@ re-downloaded in order to locate PACKAGE."
 (use-package yaml-mode
   :ensure t)
 
+(use-package fill-column-indicator
+  :ensure t
+  :config (progn
+            (setq fci-rule-width 1)
+            (setq fci-rule-color "gray71")
+            (add-hook 'c-mode-common-hook 'fci-mode)
+            (add-hook 'mail-mode-hook 'fci-mode)))
+
+
 (use-package markdown-mode
   :ensure t
   :config (progn
