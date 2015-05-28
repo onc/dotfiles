@@ -121,7 +121,7 @@ esac
 alias ls=' ls --color=always'
 alias cd=' cd'
 alias ..=' cd ..'
-alias ...=' cd ...'
+alias ...=' cd ..; cd ..'
 alias -- -=' cd -'
 alias ~=' cd ~'
 
