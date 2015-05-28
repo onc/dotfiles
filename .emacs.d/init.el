@@ -117,11 +117,9 @@ re-downloaded in order to locate PACKAGE."
 (set-language-environment "UTF-8")
 (prefer-coding-system 'utf-8)
 
+;; Add .h and .cc files to c++-mode
 (add-to-list 'auto-mode-alist '("\\.h\\'" . c++-mode))
-
-;; start emacs in server mode
-(load "server")
-(unless (server-running-p) (server-start))
+(add-to-list 'auto-mode-alist '("\\.cc\\'" . c++-mode))
 
 ;; email mode
 (add-to-list 'auto-mode-alist '("\\.mail\\'" . mail-mode))
