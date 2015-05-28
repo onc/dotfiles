@@ -216,7 +216,10 @@ re-downloaded in order to locate PACKAGE."
             (smartparens-global-mode t)
             (show-smartparens-global-mode)))
 
+(use-package org
   :config (progn
+            (setq org-time-clocksum-format (quote (:hours "%d" :require-hours t :minutes ":%02d" :require-minutes t)))))
+
 ;; (use-package smooth-scrolling
 ;;   :ensure t
 ;;   :config (progn
