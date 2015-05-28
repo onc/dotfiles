@@ -196,6 +196,7 @@ alias latexmk-pdf="latexmk -c -pdf -gg -pvc -bibtex"
 
 # Youtube-dl
 alias youtube-dl-mp3="youtube-dl -x --audio-format mp3"
+alias youtube-best="youtube-dl -f bestvideo+bestaudio"
 
 # 7z with all cores, arguments: output-file input-dir/file
 alias 7z8core="7za a -r -t7z -m0=LZMA2 -mmt=8"
