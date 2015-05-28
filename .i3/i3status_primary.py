@@ -27,8 +27,13 @@ status.register("cpu_usage",
         format="Cpu: {usage:03}%")
 
 status.register("temp",
-        format="{temp:.0f}°C",
+        format="Cpu: {temp:.0f}°C",
         color=white)
+
+status.register("shell",
+        color=white,
+        command="echo Gpu:; nvidia-smi -q -d TEMPERATURE | grep 'Current' | awk '{print $5}'; echo °C;",
+        interval=5)
 
 status.register("shell",
         color=white,
