@@ -244,6 +244,7 @@ for_window [class="(?i)evince"] floating enable
 for_window [class="(?i)kcalc"] floating enable
 for_window [class="(?i)teamviewer"] floating enable
 for_window [class="(?i)ark"] floating enable
+for_window [class="(?i)gwenview"] floating enable
 for_window [class="(?i)zeal"] floating enable, move position center
 for_window [window_role="(?i)msgcompose"] floating enable, border pixel 1, move position center
 
@@ -251,6 +252,7 @@ for_window [class="(?i)konsole"] border pixel 1
 for_window [class="(?i)gvim"] border pixel 1
 
 for_window [class="(?i)opengl program"] floating enable
+for_window [class="(?i)perception"] floating enable
 
 for_window [class="(?i)thunderbird"] move container to workspace $w5
 for_window [class="(?i)google-chrome-stable"] move container to workspace $w3
