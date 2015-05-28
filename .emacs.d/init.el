@@ -123,6 +123,7 @@ re-downloaded in order to locate PACKAGE."
 
 ;; email mode
 (add-to-list 'auto-mode-alist '("\\.mail\\'" . mail-mode))
+(add-to-list 'auto-mode-alist '("\\.eml\\'" . mail-mode))
 (add-hook 'mail-mode-hook
           (lambda ()
             (setq fill-column 80)
