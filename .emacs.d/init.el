@@ -565,6 +565,10 @@ re-downloaded in order to locate PACKAGE."
                 (ispell-change-dictionary change)
                 (message "Dictionary switched from %s to %s" dic change)))))
 
+(use-package cc-mode
+  :config (progn
+            (define-key c++-mode-map (kbd "C-c x") 'recompile)))
+
 ;; #############################################################################
 ;; ################################# KEY BINDINGS ##############################
 ;; #############################################################################
