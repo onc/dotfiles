@@ -41,6 +41,11 @@ export PATH="${NPM_PACKAGES}/bin:${PATH}"
 export GOPATH="/mnt/hdd/Coding/go"
 export PATH="${GOPATH}/bin:${PATH}"
 
+# moodle
+export PATH="${HOME}/Applications/moodle-destroyer-tools:${PATH}"
+
+export PATH="${HOME}/Applications/mu-repo:${PATH}"
+
 # Preferred editor for local and remote sessions
 if [[ -n $SSH_CONNECTION ]]; then
     export EDITOR='vim'
