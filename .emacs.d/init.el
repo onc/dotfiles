@@ -446,6 +446,7 @@ re-downloaded in order to locate PACKAGE."
             (eval-after-load "undo-tree" '(diminish 'undo-tree-mode))
             (eval-after-load "eldoc" '(diminish 'eldoc-mode))
             (eval-after-load "helm" '(diminish 'helm-mode))
+            (eval-after-load "company" '(diminish 'company-mode))
 
             (add-hook 'emacs-lisp-mode-hook
                       (lambda ()
