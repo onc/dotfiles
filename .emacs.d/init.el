@@ -216,10 +216,21 @@ re-downloaded in order to locate PACKAGE."
             (smartparens-global-mode t)
             (show-smartparens-global-mode)))
 
-(use-package smooth-scrolling
-  :ensure t
   :config (progn
-            (setq scroll-margin 5 scroll-conservatively 9999 scroll-step 1)))
+;; (use-package smooth-scrolling
+;;   :ensure t
+;;   :config (progn
+;;             ;; (setq scroll-margin 5)
+;;             ;; (setq scroll-conservatively 10000)
+;;             (setq scroll-step 1)
+;;             (setq auto-window-vscroll nil)
+;;
+;;             (setq scroll-margin 1
+;;                   scroll-conservatively 0
+;;                   scroll-up-aggressively 0.01
+;;                   scroll-down-aggressively 0.01)
+;;             (setq-default scroll-up-aggressively 0.01
+;;                           scroll-down-aggressively 0.01)))
 
 (use-package undo-tree
   :ensure t
