@@ -652,6 +652,19 @@ re-downloaded in order to locate PACKAGE."
 ;; ################################# FUNCTIONS PATRICK #########################
 ;; #############################################################################
 
+(defun noumlaut-to-umlaut ()
+  "Search/replace non-umlaut candidates to umlauts in entire buffer.
+This is done interactively and queries on every candidate."
+  (interactive)
+  (toggle-case-fold-search)
+  (query-replace "ae" "ä" nil (point-min) (point-max))
+  (query-replace "Ae" "Ä" nil (point-min) (point-max))
+  (query-replace "oe" "ö" nil (point-min) (point-max))
+  (query-replace "Oe" "Ö" nil (point-min) (point-max))
+  (query-replace "ue" "ü" nil (point-min) (point-max))
+  (query-replace "Ue" "Ü" nil (point-min) (point-max))
+  (toggle-case-fold-search))
+
 (defun my-where-is (definition count &optional length)
   "DEFINITION is the name of the function.
 Return COUNT key sequences that invoke the command DEFINITTION as a string.
