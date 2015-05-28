@@ -135,8 +135,16 @@ alias pacimpl="pacman -D --asdep"
 alias screen-off="xset dpms force off"
 alias touch-off="synclient TouchpadOff=1"
 alias touch-on="synclient TouchpadOff=0"
+
 alias cpu-performance="sudo cpupower frequency-set -g performance"
 alias cpu-powersave="sudo cpupower frequency-set -g powersave"
+function cpu-frequency() {
+    watch grep \"cpu MHz\" /proc/cpuinfo
+}
+function cpu-toggle() {
+    sudo cpupower frequency-set -g powersave
+    sudo cpupower frequency-set -g performance
+}
 
 alias gccm="gcc -Wall -std=gnu11 -o"
 
@@ -279,10 +287,6 @@ function zz {
 
 alias j=z
 alias jj=z
-
-function cpu-frequency() {
-    watch grep \"cpu MHz\" /proc/cpuinfo
-}
 
 function use_clang() {
     export CC="clang"
