@@ -460,6 +460,9 @@ re-downloaded in order to locate PACKAGE."
 (use-package yaml-mode
   :ensure t)
 
+(use-package nlinum
+  :ensure t)
+
 (use-package google-c-style
   :ensure t
   :config (progn
@@ -575,6 +578,9 @@ re-downloaded in order to locate PACKAGE."
                      (change (if (string= dic "deutsch") "english" "deutsch")))
                 (ispell-change-dictionary change)
                 (message "Dictionary switched from %s to %s" dic change)))))
+
+(use-package unbound
+  :ensure t)
 
 (use-package cc-mode
   :config (progn
