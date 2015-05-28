@@ -784,18 +784,25 @@ This is a convenience function for `my-where-is'."
  ;; If you edit it by hand, you could mess it up, so be careful.
  ;; Your init file should contain only one such instance.
  ;; If there is more than one, they won't work right.
+ '(ansi-color-names-vector
+   ["#272822" "#f92672" "#a6e22e" "#f4bf75" "#66d9ef" "#ae81ff" "#66d9ef" "#f8f8f2"])
+ '(ansi-term-color-vector
+   [unspecified "#272822" "#f92672" "#a6e22e" "#f4bf75" "#66d9ef" "#ae81ff" "#66d9ef" "#f8f8f2"])
  '(custom-enabled-themes (quote (base16-monokai-dark)))
  '(custom-safe-themes
    (quote
-    ("4f034ec900e09a0ecfe7025d5f8c02bcf4448d131c5d0ea962b8b74b2ce4d4ea" "3994497138fa263aadde66e0f869e2c2426afc342bf2b06da4c2431473fde61c" "7e3b0c38791f8ee1d067bf7b84cd916ffea6392b428db4b375b47504a89edc6c" default)))
+    ("7b3124eec8107900b9c03eb7370e3ef6a7a86d896361c8e85bbbe4bbc952124b" "5be9916bc54fd57fcb5a3d9426ed5aec0389a4bd4ed75b497a0d4cf2bbde7a4b" "3a6d8378f18a5ba2a0c88ddcad2500675a755d056b3343b13b36911453e96c34" "4f034ec900e09a0ecfe7025d5f8c02bcf4448d131c5d0ea962b8b74b2ce4d4ea" "3994497138fa263aadde66e0f869e2c2426afc342bf2b06da4c2431473fde61c" "7e3b0c38791f8ee1d067bf7b84cd916ffea6392b428db4b375b47504a89edc6c" default)))
  '(desktop-load-locked-desktop t)
+ '(flycheck-c/c++-googlelint-executable "/usr/local/bin/cpplint.py")
  '(fringe-mode (quote (1 . 1)) nil (fringe))
  '(paradox-github-token t))
+
 (custom-set-faces
  ;; custom-set-faces was added by Custom.
  ;; If you edit it by hand, you could mess it up, so be careful.
  ;; Your init file should contain only one such instance.
  ;; If there is more than one, they won't work right.
+ '(evil-search-highlight-persist-highlight-face ((t (:background "magenta" :foreground "white"))))
  )
 
 ;; Make FlyCheck happy...
