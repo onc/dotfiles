@@ -104,6 +104,11 @@ re-downloaded in order to locate PACKAGE."
 ;; dont ask to follow symlink in git
 (setq vc-follow-symlinks t)
 
+;; redraw completly before continue to avoid lagging
+(setq redisplay-dont-pause t)
+
+(setq jit-lock-defer-time 0.05)
+
 ;; Nonzero means echo unfinished commands after this many seconds of pause.
 ;; The value may be integer or floating point.
 (setq echo-keystrokes 0.02)
