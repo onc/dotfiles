@@ -459,6 +459,11 @@ re-downloaded in order to locate PACKAGE."
 (use-package yaml-mode
   :ensure t)
 
+(use-package google-c-style
+  :ensure t
+  :config (progn
+            (add-hook 'c-mode-common-hook 'google-set-c-style)))
+
 (use-package fill-column-indicator
   :ensure t
   :config (progn
