@@ -52,6 +52,9 @@ bindsym XF86TouchpadToggle exec /mnt/hdd/dotfiles/touch-toggle.sh;
 # Screenshot
 bindsym Print exec scrot '%Y-%m-%d-%T_$wx$h_scrot.png' -e 'mv $f ~/Pictures/screenshots/'
 
+# new random wallpaper
+bindsym $alt+ctrl+Shift+w exec --no-startup-id "/mnt/hdd/dotfiles/change-wallpaper.py /mnt/hdd/Pictures/wall"
+
 # reload the configuration file
 bindsym $mod+Shift+c exec "/home/onze/Applications/i3-functions.sh reload"
 # exit i3
