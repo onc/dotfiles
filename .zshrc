@@ -5,7 +5,7 @@ ZSH=$HOME/.oh-my-zsh
 ZSH_THEME="onze"
 
 # Uncomment following line if you want red dots to be displayed while waiting for completion
-COMPLETION_WAITING_DOTS="true"
+COMPLETION_WAITING_DOTS="false"
 
 REPORTTIME=10
 
