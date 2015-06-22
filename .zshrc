@@ -24,8 +24,8 @@ HISTFILE=~/.zsh_history
 HISTSIZE=10000
 SAVEHIST=10000
 
-export LC_ALL=en_US.UTF-8 
-export LC_CTYPE=en_US.UTF-8 
+export LC_ALL=en_US.UTF-8
+export LC_CTYPE=en_US.UTF-8
 export LANG=en_US.UTF-8
 
 export PATH="${HOME}/Applications:${PATH}"
@@ -73,10 +73,10 @@ fi
 [ -r ~/.ssh/known_hosts ] && _ssh_hosts=(${${${${(f)"$(<$HOME/.ssh/known_hosts)"}:#[\|]*}%%\ *}%%,*}) || _ssh_hosts=()
 [ -r ~/.ssh/config ] && _ssh_config=($(cat ~/.ssh/config | sed -ne 's/Host[=\t ]//p')) || _ssh_config=()
 hosts=(
-  "$_ssh_hosts[@]"
-  "$_ssh_config[@]"
-  "$HOST"
-  localhost
+    "$_ssh_hosts[@]"
+    "$_ssh_config[@]"
+    "$HOST"
+    localhost
 )
 zstyle ':completion:*:hosts' hosts $hosts
 
@@ -133,11 +133,11 @@ alias -- -=' cd -'
 alias ~=' cd ~'
 
 # List all files installed by a given package
-alias paclf="yaourt -Ql"		
-# Mark one or more installed packages as explicitly installed 
-alias pacexpl="pacman -D --asexp"	
+alias paclf="yaourt -Ql"
+# Mark one or more installed packages as explicitly installed
+alias pacexpl="pacman -D --asexp"
 # Mark one or more installed packages as non explicitly installed
-alias pacimpl="pacman -D --asdep"	
+alias pacimpl="pacman -D --asdep"
 
 alias screen-off="xset dpms force off"
 alias touch-off="synclient TouchpadOff=1"
@@ -222,8 +222,8 @@ alias sd-mirror="xrandr --output VGA-0 --auto --primary --rotate normal --pos 0x
 #======================================================================================
 # ls after every cd
 function chpwd() {
-emulate -L zsh
-ls
+    emulate -L zsh
+    ls
 }
 
 auto-ls () {
@@ -281,16 +281,16 @@ function pgit() {
 # fzf for z
 unalias z
 function z {
-if [[ -z "$*" ]]; then
-    cd "$(_z -l 2>&1 | sed -n 's/^[ 0-9.,]*//p' | fzf +s)"
-else
-    _last_z_args="$@"
-    cd "$(_z -l 2>&1 | sed -n 's/^[ 0-9.,]*//p' | fzf +s -q $_last_z_args)"
-fi
+    if [[ -z "$*" ]]; then
+        cd "$(_z -l 2>&1 | sed -n 's/^[ 0-9.,]*//p' | fzf-tmux +s)"
+    else
+        _last_z_args="$@"
+        cd "$(_z -l 2>&1 | sed -n 's/^[ 0-9.,]*//p' | fzf-tmux +s -q $_last_z_args)"
+    fi
 }
 
 function zz {
-    cd "$(_z -l 2>&1 | sed -n 's/^[ 0-9.,]*//p' | fzf -q $_last_z_args)"
+    cd "$(_z -l 2>&1 | sed -n 's/^[ 0-9.,]*//p' | fzf-tmux -q $_last_z_args)"
 }
 
 alias j=z
