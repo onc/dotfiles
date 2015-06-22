@@ -306,6 +306,17 @@ export FZF_DEFAULT_OPTS='
     --color info:144,prompt:123,spinner:135,pointer:161,marker:118
 '
 
+function dict {
+
+    readonly DICT_PATH=~/Applications/onctionary/de-en-tab-utf-8.txt
+
+    if [ -z "$1" ]; then
+        cat $DICT_PATH | fzf-tmux | awk -F '\t' '{print $1}' | xclip -i -selection clipboard
+    else
+        ag --nonumber --ignore-case "$1" $DICT_PATH | fzf-tmux -q "$1" | awk -F '\t' '{print $1}' | xclip -i -selection clipboard
+    fi
+}
+
 function use_clang() {
     export CC="clang"
     export CXX="clang++"
