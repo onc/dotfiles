@@ -296,6 +296,16 @@ function zz {
 alias j=z
 alias jj=z
 
+export FZF_DEFAULT_COMMAND='ag -l -g ""'
+export FZF_DEFAULT_OPTS='
+    --extended
+    --reverse
+    --tac
+    --tiebreak=length
+    --color fg:252,bg:235,hl:112,fg+:252,bg+:235,hl+:161
+    --color info:144,prompt:123,spinner:135,pointer:161,marker:118
+'
+
 function use_clang() {
     export CC="clang"
     export CXX="clang++"
