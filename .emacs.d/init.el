@@ -222,7 +222,14 @@ re-downloaded in order to locate PACKAGE."
 
 (use-package org
   :config (progn
-            (setq org-time-clocksum-format (quote (:hours "%d" :require-hours t :minutes ":%02d" :require-minutes t)))))
+            (setq org-time-clocksum-format (quote (:hours "%d" :require-hours t :minutes ":%02d" :require-minutes t)))
+
+            (use-package org-bullets
+              :ensure t
+              :config (progn
+                        (add-hook 'org-mode-hook (lambda () (org-bullets-mode 1)))
+                        (setq org-bullets-bullet-list '("●" "■" "▶" "◆"))
+                        ))))
 
 ;; (use-package smooth-scrolling
 ;;   :ensure t
