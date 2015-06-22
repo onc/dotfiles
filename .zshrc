@@ -317,6 +317,13 @@ function dict {
     fi
 }
 
+git-interactive-change-branch() {
+    local branches branch
+    branches=$(git branch) &&
+        branch=$(echo "$branches" | fzf-tmux +s +m) &&
+        git checkout $(echo "$branch" | sed "s/.* //")
+}
+
 function use_clang() {
     export CC="clang"
     export CXX="clang++"
