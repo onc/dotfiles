@@ -77,6 +77,9 @@ re-downloaded in order to locate PACKAGE."
 (add-to-list 'default-frame-alist '(font . "DejaVu Sans Mono for Powerline-9" ))
 (set-face-attribute 'default t :font "DejaVu Sans Mono for Powerline-9")
 
+;; (add-to-list 'default-frame-alist '(font . "Meslo LG S for Powerline-9" ))
+;; (set-face-attribute 'default t :font "Meslo LG S for Powerline-9")
+
 ;; fucking use spaces emacs
 (setq-default tab-width 4 indent-tabs-mode nil)
 
