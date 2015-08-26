@@ -10,15 +10,17 @@ COMPLETION_WAITING_DOTS="false"
 REPORTTIME=10
 
 # plugins
-plugins=(git svn tmux colored-man colorize themes z sudo rails zsh-syntax-highlighting fzf npm cp bgnotify)
+plugins=(test git svn tmux colored-man colorize themes z sudo rails zsh-syntax-highlighting fzf npm cp bgnotify)
 
 # Disable repeating command before result of command
 DISABLE_AUTO_TITLE="true"
 
+fpath=($ZSH/custom/completions $fpath)
+
 source $ZSH/oh-my-zsh.sh
 
 #======================================================================================
-# USER CONFIGURATION {{{
+# USER CONFIGURATION
 #======================================================================================
 HISTFILE=~/.zsh_history
 HISTSIZE=10000
@@ -98,146 +100,26 @@ DISTRO=$(lsb_release -ds | awk '{print $1}' | sed 's/\"//g')
 if [ "$DISTRO" = "Ubuntu" ]; then
     . /home/onze/Applications/z/z.sh
 fi
-# }}}
 
-#======================================================================================
-# ALIASES {{{
-#======================================================================================
 case "$DISTRO" in
     "Arch")
-        alias yi="yaourt"
-        # remove ALL orphaned packages
-        alias yro="yaourt -Qdt"
-        # clean package
-        alias yc="yaourt -Scc"
-        # update all packages
-        alias yu="yaourt -Syua"
-        # update pacman
-        alias pacu="sudo pacman -Syu"
+        source ~/.oncsh/arch.zsh
         ;;
     "Ubuntu")
-        alias agi="sudo apt-get install"
-        alias acs="apt-cache search"
+        source ~/.oncsh/ubuntu.zsh
         ;;
     *)
         ;;
 esac
 
-alias ls=' ls --color=always'
-alias cd=' cd'
-alias ..=' cd ..'
-alias ...=' cd ../../'
-alias ....=' cd ../../../'
-alias .....=' cd ../../../../'
-alias -- -=' cd -'
-alias ~=' cd ~'
+source ~/.oncsh/misc.zsh
+source ~/.oncsh/fzf.zsh
+source ~/.oncsh/monitor.zsh
+source ~/.oncsh/touchpad.zsh
+source ~/.oncsh/cpu.zsh
+source ~/.oncsh/h.zsh
 
-# List all files installed by a given package
-alias paclf="yaourt -Ql"
-# Mark one or more installed packages as explicitly installed
-alias pacexpl="pacman -D --asexp"
-# Mark one or more installed packages as non explicitly installed
-alias pacimpl="pacman -D --asdep"
-
-alias screen-off="xset dpms force off"
-alias touch-off="synclient TouchpadOff=1"
-alias touch-on="synclient TouchpadOff=0"
-
-alias cpu-performance="sudo cpupower frequency-set -g performance"
-alias cpu-powersave="sudo cpupower frequency-set -g powersave"
-function cpu-frequency() {
-    watch grep \"cpu MHz\" /proc/cpuinfo
-}
-function cpu-toggle() {
-    sudo cpupower frequency-set -g powersave
-    sudo cpupower frequency-set -g performance
-}
-
-alias gccm="gcc -Wall -std=gnu11 -o"
-
-alias v="vim"
-alias vimrc="vim ~/.vimrc"
-alias zshrc="vim ~/.zshrc"
-alias i3conf="vim ~/.i3/config"
-
-alias sizes="du -mh --max-depth 1 . | sort -hr"
-
-hash -d h=/mnt/hdd/
-
-# Open in google-chrome
-alias gchrome-open='google-chrome-stable $(xclip -selection "clipboard" -o) &'
-
-alias so="source ~/.zshrc"
-alias t="tmux"
-
-# SVN aliases
-alias sst="svn status"
-alias sad="svn add"
-alias scom="svn commit -m"
-
-# Git
-alias gpatch="git add -p"
-
-# Global Aliases
-alias -g G="| grep"
-alias -g L="| less"
-alias -g NUL="> /dev/null 2>&1"
-# alias -g C="| pbcopy"
-alias -g CNT="| wc -l"
-alias -g H="| head"
-alias -g T="| tail"
-
-# Redshift
-alias redshift-standart="redshift -l 48.2:10.0 &"
-alias redshift-onze="redshift -l 48.2:10.0 -t 6500:4400 &"
-alias redshift-dark="redshift -l 48.2:10.0 -t 4400:4000 &"
-
-# Xetex
-alias xetexmk-pdf="latexmk -c -pdf -gg -xelatex -pvc -bibtex"
-alias latexmk-pdf="latexmk -c -pdf -gg -pvc -bibtex"
-
-# Youtube-dl
-alias youtube-dl-mp3="youtube-dl -x --audio-format mp3"
-alias youtube-best="youtube-dl -f bestvideo+bestaudio"
-
-# 7z with all cores, arguments: output-file input-dir/file
-alias 7z8core="7za a -r -t7z -m0=LZMA2 -mmt=8"
-
-# restart some stuff
-alias re-httpd="sudo systemctl restart httpd"
-alias re-mysql="sudo systemctl restart mysqld"
-
-# monitor-stuff
-alias sdo=" xrandr --output LVDS-0 --auto --primary --rotate normal --pos 0x0 --output DP-0 --off --output VGA-0 --off && feh --bg-fill ~/.i3/back.png"
-alias sd-only=" xrandr --output DP-0 --auto --primary --rotate normal --pos 0x0 --output VGA-0 --auto --above LVDS-0 --output LVDS-0 --off"
-alias sda=" xrandr --output LVDS-0 --auto --primary --rotate normal --pos 0x0 --output DP-0 --auto --above LVDS-0 --output VGA-0 --auto --above LVDS-0 && feh --bg-fill ~/.i3/back.png"
-alias sdr=" xrandr --output LVDS-0 --auto --primary --rotate normal --pos 0x0 --output DP-0 --auto --right-of LVDS-0 --output VGA-0 --auto --right-of LVDS-0 && feh --bg-fill ~/.i3/back.png"
-alias sdl=" xrandr --output LVDS-0 --auto --primary --rotate normal --pos 0x0 --output DP-0 --auto --left-of LVDS-0 --output VGA-0 --auto --left-of LVDS-0 && feh --bg-fill ~/.i3/back.png"
-
-alias sd-mirror="xrandr --output VGA-0 --auto --primary --rotate normal --pos 0x0 --output LVDS-0 --auto --same-as VGA-0"
-# }}}
-
-#======================================================================================
-# FUNCTIONS {{{
-#======================================================================================
-# ls after every cd
-function chpwd() {
-    emulate -L zsh
-    ls
-}
-
-auto-ls () {
-    if [[ $#BUFFER -eq 0 ]]; then
-        echo ""
-        ls
-        echo -e "\n"
-        zle redisplay
-    else
-        zle .$WIDGET
-    fi
-}
-zle -N accept-line auto-ls
-zle -N other-widget auto-ls
+alias webshare='python2 -c "import SimpleHTTPServer;SimpleHTTPServer.test()"'
 
 function set-backnlock() {
     convert $1 temp_image_back.png
@@ -250,117 +132,3 @@ function set-backnlock() {
     rm temp_image_lock.png
     echo "lockscreen and background changed"
 }
-
-function mk() {
-    mkdir $1
-    cd $1
-}
-
-function o() {
-    xdg-open $1 > /dev/null 2>&1 &
-}
-
-# copy files from uni
-function cp_uni() {
-    scp co5@login.informatik.uni-ulm.de:/home/co5/.win7_profile/$1 $2
-}
-
-fe() {
-    local file
-    cd ~/.notes
-    file=$(fzf --query="$1" --print-query)
-    file=$(echo "$file" | tail -1)
-    ${EDITOR:-vim} "$file"
-    cd -
-}
-
-function pgit() {
-    pacman -Qs '.*-git' | grep '.*-git' | awk '{print $1}' | cut -d '/' -f 2
-}
-
-# fzf for z
-unalias z
-function z {
-    if [[ -z "$*" ]]; then
-        cd "$(_z -l 2>&1 | sed -n 's/^[ 0-9.,]*//p' | fzf-tmux +s)"
-    else
-        _last_z_args="$@"
-        cd "$(_z -l 2>&1 | sed -n 's/^[ 0-9.,]*//p' | fzf-tmux +s -q $_last_z_args)"
-    fi
-}
-
-function zz {
-    cd "$(_z -l 2>&1 | sed -n 's/^[ 0-9.,]*//p' | fzf-tmux -q $_last_z_args)"
-}
-
-alias j=z
-alias jj=z
-
-export FZF_DEFAULT_COMMAND='ag -l -g ""'
-export FZF_DEFAULT_OPTS='
-    --extended
-    --reverse
-    --tac
-    --tiebreak=length
-    --color fg:252,bg:235,hl:112,fg+:252,bg+:235,hl+:161
-    --color info:144,prompt:123,spinner:135,pointer:161,marker:118
-'
-
-function dict {
-
-    readonly DICT_PATH=~/Applications/onctionary/de-en-tab-utf-8.txt
-
-    if [ -z "$1" ]; then
-        cat $DICT_PATH | fzf-tmux | awk -F '\t' '{print $1}' | xclip -i -selection clipboard
-    else
-        ag --nonumber --ignore-case "$1" $DICT_PATH | fzf-tmux -q "$1" | awk -F '\t' '{print $1}' | xclip -i -selection clipboard
-    fi
-}
-
-git-interactive-change-branch() {
-    local branches branch
-    branches=$(git branch) &&
-        branch=$(echo "$branches" | fzf-tmux +s +m) &&
-        git checkout $(echo "$branch" | sed "s/.* //")
-}
-
-function use_clang() {
-    export CC="clang"
-    export CXX="clang++"
-}
-
-function take() {
-    mkdir $1
-    cd $1
-}
-
-function gi() { curl -L -s https://www.gitignore.io/api/$@ ;}
-
-fshow() {
-    local out shas sha q k
-    while out=$(
-            git log --graph --color=always \
-                --format="%C(auto)%h%d %s %C(black)%C(bold)%cr" "$@" |
-                fzf --ansi --multi --no-sort --reverse --query="$q" \
-                    --print-query --expect=ctrl-d --toggle-sort=\`); do
-        q=$(head -1 <<< "$out")
-        k=$(head -2 <<< "$out" | tail -1)
-        shas=$(sed '1,2d;s/^[^a-z0-9]*//;/^$/d' <<< "$out" | awk '{print $1}')
-        [ -z "$shas" ] && continue
-        if [ "$k" = ctrl-d ]; then
-            git diff --color=always $shas | less -R
-        else
-            for sha in $shas; do
-                git show --color=always $sha | less -R
-            done
-        fi
-    done
-}
-
-function gifzf() {
-
-    local list=$(gi list | tr , '\n' | fzf --multi | tr '\n' , | sed 's/,$//' )
-    gi $list
-}
-
-# }}}
