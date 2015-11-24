@@ -256,7 +256,6 @@ re-downloaded in order to locate PACKAGE."
 
             ;; PACKAGE: EVIL-SURROUND
             (use-package evil-surround
-              :defer t
               :ensure t
               :config (progn
                         (global-evil-surround-mode 1)))))
