@@ -280,6 +280,7 @@ for_window [class="(?i)google-chrome-stable"] move container to workspace $w3
 # ===========================================================================================
 # Other Settings
 focus_follows_mouse no
+mouse_warping none
 # Move floating windows using ALT-key
 floating_modifier $alt
 
