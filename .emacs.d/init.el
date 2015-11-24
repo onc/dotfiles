@@ -764,8 +764,79 @@ re-downloaded in order to locate PACKAGE."
   :ensure t)
 
 (use-package cc-mode
-  :config (progn
-            (define-key c++-mode-map (kbd "C-c x") 'recompile)))
+  :config
+  (progn
+
+    ;; -------------------------------------------------
+    ;; build a cmakeproject
+    ;; -------------------------------------------------
+    (defcustom dirvars-chase-remote nil
+      "Whether dirvars looks upward if in a remote filesystem."
+      :type 'boolean)
+
+    (defun dirvars-find-upwards (file-name)
+      "Find a file in the current directory or one of its parents.
+
+Returns the fully qualified file name, or nil if it isn't found.
+
+The FILE-NAME specifies the file name to search for."
+      (if (and (not dirvars-chase-remote) (file-remote-p default-directory))
+          nil
+        ;; Chase links in the source file and search in the dir where it
+        ;; points.
+        (setq dir-name (or (and buffer-file-name
+                                (file-name-directory (file-chase-links
+                                                      buffer-file-name)))
+                           default-directory))
+        ;; Chase links before visiting the file.  This makes it easier to
+        ;; use a single file for several related directories.
+        (setq dir-name (file-chase-links dir-name))
+        (setq dir-name (expand-file-name dir-name))
+        ;; Move up in the dir hierarchy till we find a change log file.
+        (let ((file1 (concat dir-name file-name))
+              parent-dir)
+          (while (and (not (file-exists-p file1))
+                      (progn (setq parent-dir
+                                   (file-name-directory
+                                    (directory-file-name
+                                     (file-name-directory file1))))
+                             ;; Give up if we are already at the root dir.
+                             (not (string= (file-name-directory file1)
+                                           parent-dir))))
+            ;; Move up to the parent dir and try again.
+            (setq file1 (expand-file-name file-name parent-dir)))
+          ;; If we found the file in a parent dir, use that.  Otherwise,
+          ;; return nil
+          (if (or (get-file-buffer file1) (file-exists-p file1))
+              file1
+            nil))))
+
+    (defun onze-cmake-build ()
+      (interactive)
+      (let* ((build-path-exists (dirvars-find-upwards "build"))
+             (cmakelists-dir (file-name-directory (dirvars-find-upwards "CMakeLists.txt")))
+             (build-path (concat cmakelists-dir "build"))
+             )
+        (if build-path-exists
+            (compile (concat "make -k -C " build-path))
+          ;; create build path and run cmake
+          (make-directory build-path)
+          (call-process "cmake" nil nil nil (concat "-B" build-path) (concat "-H" cmakelists-dir)))))
+
+    (defun my-executable-path ()
+      "Returns ...."
+      (with-temp-buffer
+        (if (zerop (call-process "/bin/bash" nil t nil "-c" (concat (concat "find " (dirvars-find-upwards "build")) " -executable -type f | grep -v CMake")))
+            (buffer-substring (point-min) (1- (point-max)))
+          nil)))
+
+    (defun onze-cmake-run ()
+      (interactive)
+      (call-process (my-executable-path)))
+
+    (define-key c++-mode-map (kbd "C-c c") 'onze-cmake-build)
+    (define-key c++-mode-map (kbd "C-c x") 'onze-cmake-run)
+    ))
 
 ;; #############################################################################
 ;; ################################# KEY BINDINGS ##############################
