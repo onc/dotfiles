@@ -838,6 +838,14 @@ The FILE-NAME specifies the file name to search for."
     (define-key c++-mode-map (kbd "C-c x") 'onze-cmake-run)
     ))
 
+(use-package groovy-mode
+  :ensure t
+  :mode (("\.groovy$" . groovy-mode)
+         ("\.gradle$" . groovy-mode))
+  :config
+  (use-package gradle-mode
+    :ensure t))
+
 ;; #############################################################################
 ;; ################################# KEY BINDINGS ##############################
 ;; #############################################################################
