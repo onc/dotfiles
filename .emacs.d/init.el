@@ -961,6 +961,19 @@ The FILE-NAME specifies the file name to search for."
             (font-lock-add-keywords nil
                                     '(("\\<\\(FIXME\\|TODO\\|BUG\\|DONE\\)" 1 font-lock-warning-face t)))))
 
+(defun toggle-transparency ()
+  "Toggle the transparency of the current frame."
+  (interactive)
+  (let ((alpha-value 90))
+    (cond
+     ((eq (frame-parameter nil 'alpha) nil)                                           ; case 1
+      (set-frame-parameter (selected-frame) 'alpha (cons alpha-value alpha-value)))   ; action 1
+     ((eq alpha-value (car (frame-parameter nil 'alpha)))                             ; case 2
+      (set-frame-parameter (selected-frame) 'alpha '(100 100)))                       ; action 2
+     (t                                                                               ; default case
+      (set-frame-parameter (selected-frame) 'alpha (cons alpha-value alpha-value))))) ; default action
+  )
+
 ;; indent whole buffer
 (defun onze-indent-whole-buffer ()
   "Delete trailing whitespace, indent and untabify whole buffer."
