@@ -312,7 +312,7 @@ re-downloaded in order to locate PACKAGE."
 (use-package company
   :ensure t
   :config (progn
-            (add-hook 'after-init-hook 'global-company-mode)
+            (global-company-mode)
             ;; no delay no autocomplete
             (setq company-idle-delay 0)
             (setq company-minimum-prefix-length 2)
