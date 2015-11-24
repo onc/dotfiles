@@ -539,10 +539,10 @@ re-downloaded in order to locate PACKAGE."
 (use-package nlinum
   :ensure t)
 
-(use-package google-c-style
-  :ensure t
-  :config (progn
-            (add-hook 'c-mode-common-hook 'google-set-c-style)))
+;; (use-package google-c-style
+;;   :ensure t
+;;   :config (progn
+;;             (add-hook 'c-mode-common-hook 'google-set-c-style)))
 
 (use-package fill-column-indicator
   :ensure t
