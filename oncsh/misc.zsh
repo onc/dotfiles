@@ -20,7 +20,8 @@ alias vimrc="vim ~/.vimrc"
 alias zshrc="vim ~/.zshrc"
 alias i3conf="vim ~/.i3/config"
 
-alias so="source ~/.zshrc"
+# alias for alias using zsh_reload plugin
+alias so="src"
 
 alias sizes="du -mh --max-depth 1 . | sort -hr"
 
