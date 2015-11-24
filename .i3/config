@@ -44,9 +44,14 @@ bindsym $alt+ctrl+l exec amixer -q sset Master mute; exec playerctl stop; exec i
 bindsym ctrl+Escape exec --no-startup-id ksysguard
 
 # Volume
-bindsym XF86AudioRaiseVolume exec /mnt/hdd/dotfiles/volume.sh up;
-bindsym XF86AudioLowerVolume exec /mnt/hdd/dotfiles/volume.sh down;
-bindsym XF86AudioMute exec /mnt/hdd/dotfiles/volume.sh toggle;
+# bindsym XF86AudioRaiseVolume exec /mnt/hdd/dotfiles/volume.sh up;
+# bindsym XF86AudioLowerVolume exec /mnt/hdd/dotfiles/volume.sh down;
+# bindsym XF86AudioMute exec /mnt/hdd/dotfiles/volume.sh toggle;
+
+bindsym XF86AudioRaiseVolume exec pactl set-sink-mute 1 false; exec pactl set-sink-volume 1 +5%
+bindsym XF86AudioLowerVolume exec pactl set-sink-mute 1 false; exec pactl set-sink-volume 1 -5%
+bindsym XF86AudioMute exec pactl set-sink-mute 1 toggle
+bindsym XF86AudioMicMute exec amixer -q sset Capture toggle
 # Touchpad
 bindsym XF86TouchpadToggle exec /mnt/hdd/dotfiles/touch-toggle.sh;
 # Screenshot
