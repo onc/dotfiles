@@ -1,0 +1,6 @@
+alias docker-com-clean="docker-compose stop && docker-compose rm"
+alias docker-list="printf 'DOCKER: \n' && docker ps -a && printf '\nDOCKER-COMPOSE: \n' && docker-compose ps"
+alias dcps="docker-compose ps"
+alias dcg="docker-compose start"
+alias dcs="docker-compose stop"
+alias dcl="docker-compose logs"

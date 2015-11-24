@@ -119,6 +119,7 @@ source ~/.oncsh/monitor.zsh
 source ~/.oncsh/touchpad.zsh
 source ~/.oncsh/cpu.zsh
 source ~/.oncsh/h.zsh
+source ~/.oncsh/docker.zsh
 
 alias webshare='python2 -c "import SimpleHTTPServer;SimpleHTTPServer.test()"'
 
