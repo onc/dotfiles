@@ -134,3 +134,5 @@ function set-backnlock() {
     rm temp_image_lock.png
     echo "lockscreen and background changed"
 }
+
+alias dd_progress="sudo killall -USR1 dd"
