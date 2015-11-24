@@ -956,6 +956,11 @@ The FILE-NAME specifies the file name to search for."
 ;; ################################# FUNCTIONS #################################
 ;; #############################################################################
 
+(add-hook 'prog-mode-hook
+          (lambda ()
+            (font-lock-add-keywords nil
+                                    '(("\\<\\(FIXME\\|TODO\\|BUG\\|DONE\\)" 1 font-lock-warning-face t)))))
+
 ;; indent whole buffer
 (defun onze-indent-whole-buffer ()
   "Delete trailing whitespace, indent and untabify whole buffer."
