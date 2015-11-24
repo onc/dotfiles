@@ -318,6 +318,9 @@ re-downloaded in order to locate PACKAGE."
             (setq company-idle-delay 0)
             (setq company-minimum-prefix-length 2)
 
+            (define-key company-active-map (kbd "M-j") 'company-select-next)
+            (define-key company-active-map (kbd "M-k") 'company-select-previous)
+
             (use-package company-cmake
               :ensure t)))
 
