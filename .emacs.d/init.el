@@ -891,6 +891,45 @@ The FILE-NAME specifies the file name to search for."
 (use-package jsx-mode
   :ensure t)
 
+(use-package golden-ratio
+  :commands (golden-ratio-mode)
+  :diminish golden-ratio-mode
+  :config
+  (golden-ratio-mode nil)
+
+  (setq golden-ratio-extra-commands
+        (append golden-ratio-extra-commands
+                '(evil-window-left
+                  evil-window-right
+                  evil-window-up
+                  evil-window-down
+                  select-window-1
+                  select-window-2
+                  select-window-3
+                  select-window-4
+                  select-window-5)))
+  ;; Disable for specific modes
+  (setq golden-ratio-exclude-modes '("ediff-mode"
+                                     "eshell-mode"
+                                     "dired-mode"
+                                     "magit-status-mode"
+                                     "magit-log-mode"
+                                     "magit-mode"
+                                     "magit-key-mode"
+                                     "magit-reflog-mode"
+                                     "helm-mode"
+                                     "neotree-mode"
+                                     "mu4e-headers-mode"
+                                     "mu4e-view-mode"))
+
+  ;; when the display width of the focused window resized by
+  ;; golden ratio is larger than 160 characters, opening any
+  ;; commands which call to pop-up-window will cause Emacs
+  ;; to create extra window instead of jump to an already
+  ;; existing window. TO prevent that, just set the variable
+  ;; split-width-threshold to nil
+  (setq split-width-threshold nil))
+
 ;; #############################################################################
 ;; ################################# KEY BINDINGS ##############################
 ;; #############################################################################
