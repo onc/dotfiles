@@ -846,6 +846,9 @@ The FILE-NAME specifies the file name to search for."
   (use-package gradle-mode
     :ensure t))
 
+(use-package solarized-theme
+  :ensure t)
+
 ;; #############################################################################
 ;; ################################# KEY BINDINGS ##############################
 ;; #############################################################################
