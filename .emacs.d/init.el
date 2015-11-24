@@ -321,7 +321,16 @@ re-downloaded in order to locate PACKAGE."
             (define-key company-active-map (kbd "M-k") 'company-select-previous)
 
             (use-package company-cmake
-              :ensure t)))
+              :ensure t)
+            (use-package company-emoji
+              :ensure t)
+            (add-to-list 'company-backends 'company-emoji)))
+
+;; emoji font
+(set-fontset-font
+ t 'symbol
+ (font-spec :family "Symbola") nil 'prepend)
+
 
 (use-package neotree
   :ensure t
