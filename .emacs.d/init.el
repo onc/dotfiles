@@ -961,6 +961,14 @@ The FILE-NAME specifies the file name to search for."
             (font-lock-add-keywords nil
                                     '(("\\<\\(FIXME\\|TODO\\|BUG\\|DONE\\)" 1 font-lock-warning-face t)))))
 
+(defun beautify-json ()
+  "Beatify json in buffer."
+  (interactive)
+  (let ((b (if mark-active (min (point) (mark)) (point-min)))
+        (e (if mark-active (max (point) (mark)) (point-max))))
+    (shell-command-on-region b e
+                             "python -mjson.tool" (current-buffer) t)))
+
 (defun toggle-transparency ()
   "Toggle the transparency of the current frame."
   (interactive)
