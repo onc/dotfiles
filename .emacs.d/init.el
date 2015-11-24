@@ -1209,13 +1209,13 @@ This is a convenience function for `my-where-is'."
    ["#272822" "#f92672" "#a6e22e" "#f4bf75" "#66d9ef" "#ae81ff" "#66d9ef" "#f8f8f2"])
  '(ansi-term-color-vector
    [unspecified "#272822" "#f92672" "#a6e22e" "#f4bf75" "#66d9ef" "#ae81ff" "#66d9ef" "#f8f8f2"])
- '(custom-enabled-themes (quote (base16-monokai-dark)))
+ '(custom-enabled-themes (quote (base16-onze-google-dark)))
  '(custom-safe-themes
    (quote
-    ("7b3124eec8107900b9c03eb7370e3ef6a7a86d896361c8e85bbbe4bbc952124b" "5be9916bc54fd57fcb5a3d9426ed5aec0389a4bd4ed75b497a0d4cf2bbde7a4b" "3a6d8378f18a5ba2a0c88ddcad2500675a755d056b3343b13b36911453e96c34" "4f034ec900e09a0ecfe7025d5f8c02bcf4448d131c5d0ea962b8b74b2ce4d4ea" "3994497138fa263aadde66e0f869e2c2426afc342bf2b06da4c2431473fde61c" "7e3b0c38791f8ee1d067bf7b84cd916ffea6392b428db4b375b47504a89edc6c" default)))
+    ("113ae6902d98261317b5507e55ac6e7758af81fc4660c34130490252640224a2" "3ae2686d180c6ea92ccfe418d881b7e984be62639dea15f330d31904cd228f10" "f7799c0c6fc9e8b02853f36a6a7e2b7ce57e51f89d52ad1e25ab302c80e9dd19" "4a171c5c7386e30d16f1ba552fd652dc1c7d79c3b216ef2e9296a7025482ce58" "3270c6e92aa1dd60f8317e7913a658173ad9c953657792cd6f805bd4dcf4e476" "d3e906a019c1b18c6f091eaf05d441be8991bd57e7535a7f0d52f92f7770f37c" "d085be39ec443f01b3a581766ecc292921c76262f25268ff0786310db7351edc" "7d2f37e0de6f872c3d90801b0b8f27d03165876b82c685532d7adafaa08cc30f" "641b002f11edd63d448f1fa8b19e2b318cd5a5edfd6898de025a6754da77c02a" "ab12e149a516519a4794245d65242a13f28ffb4b86b20b9e98551a7fb1e02dd2" "c2c86325e71c2f3b70838e91dfee8f80471021824fe896106922595265cfc93e" "d362b08d053513c09741093741abff117ef807b664e9d85c2c520143e8551022" "c98ce4ee9d83b21991a1d393030cee776458e50c331be8f2911c9cf6cb6bf719" "c6b26b882659f842363a235d8ba376998811d2b73336fc48ad2e10841030cdab" "0240d45644b370b0518e8407f5990a243c769fb0150a7e74297e6f7052a04a72" "9c961e80e46c08fb6d0f71cc2654f302ef214fb69eccb390917a82a42a275f27" "ac31699d6255ef22b646ebc80e69f518929b57f2f0855a814170d060db78a5f1" "d92db4e2b227ce1506a9b95160f6ae594b9844cc685f7c67fb109f4fd6bb0388" "d677ef584c6dfc0697901a44b885cc18e206f05114c8a3b7fde674fce6180879" "e3a3b7d7fe89b5d57d40bc825ca2324875a6f37bd63da66f2a6fc68cc8b2ee95" "7b3124eec8107900b9c03eb7370e3ef6a7a86d896361c8e85bbbe4bbc952124b" "5be9916bc54fd57fcb5a3d9426ed5aec0389a4bd4ed75b497a0d4cf2bbde7a4b" "3a6d8378f18a5ba2a0c88ddcad2500675a755d056b3343b13b36911453e96c34" "4f034ec900e09a0ecfe7025d5f8c02bcf4448d131c5d0ea962b8b74b2ce4d4ea" "3994497138fa263aadde66e0f869e2c2426afc342bf2b06da4c2431473fde61c" "7e3b0c38791f8ee1d067bf7b84cd916ffea6392b428db4b375b47504a89edc6c" default)))
  '(desktop-load-locked-desktop t)
- '(flycheck-c/c++-googlelint-executable "/usr/local/bin/cpplint.py")
  '(fringe-mode (quote (1 . 1)) nil (fringe))
+ '(magit-diff-refine-hunk t)
  '(paradox-github-token t))
 
 (custom-set-faces
@@ -1223,8 +1223,7 @@ This is a convenience function for `my-where-is'."
  ;; If you edit it by hand, you could mess it up, so be careful.
  ;; Your init file should contain only one such instance.
  ;; If there is more than one, they won't work right.
- '(evil-search-highlight-persist-highlight-face ((t (:background "magenta" :foreground "white"))))
- )
+ '(evil-search-highlight-persist-highlight-face ((t (:background "magenta" :foreground "white")))))
 
 ;; Make FlyCheck happy...
 ;;; init.el ends here
