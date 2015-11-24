@@ -857,6 +857,25 @@ The FILE-NAME specifies the file name to search for."
   (setq-default js2-global-externs '("exports" "module" "require" "setTimeout" "THREE"))
   (setq-default js2-basic-offset 2))
 
+;; PACKAGE: TERN
+(use-package tern
+  :ensure t
+  :init
+  (add-hook 'js-mode-hook (lambda () (tern-mode t)))
+  (add-hook 'js2-mode-hook (lambda () (tern-mode t)))
+  :config
+  (use-package company-tern
+    :ensure t
+    :init
+    (add-hook 'js-mode-hook
+              (lambda ()
+                (set (make-local-variable 'company-backends)
+                     '((company-tern company-dabbrev-code company-yasnippet)))))
+    (add-hook 'js2-mode-hook
+              (lambda ()
+                (set (make-local-variable 'company-backends)
+                     '((company-tern company-dabbrev-code company-yasnippet)))))))
+
 ;; #############################################################################
 ;; ################################# KEY BINDINGS ##############################
 ;; #############################################################################
