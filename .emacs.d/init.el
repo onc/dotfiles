@@ -138,6 +138,9 @@ re-downloaded in order to locate PACKAGE."
 (add-to-list 'auto-mode-alist '("\\.h\\'" . c++-mode))
 (add-to-list 'auto-mode-alist '("\\.cc\\'" . c++-mode))
 
+;; Open zsh-files in shell-mode
+(add-to-list 'auto-mode-alist '("\\.zsh\\'" . sh-mode))
+
 ;; email mode
 (add-to-list 'auto-mode-alist '("\\.mail\\'" . mail-mode))
 (add-to-list 'auto-mode-alist '("\\.eml\\'" . mail-mode))
