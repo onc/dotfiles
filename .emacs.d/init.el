@@ -236,6 +236,9 @@ re-downloaded in order to locate PACKAGE."
               :config (progn
                         (global-evil-search-highlight-persist)))
 
+            (use-package evil-nerd-commenter
+              :ensure t)
+
             ;; PACKAGE: EVIL-SURROUND
             (use-package evil-surround
               :defer t
