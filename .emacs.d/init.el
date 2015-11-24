@@ -158,8 +158,6 @@ re-downloaded in order to locate PACKAGE."
 ;; from http://mbork.pl/2015-01-10_A_few_random_Emacs_tips
 (add-hook 'after-save-hook 'executable-make-buffer-file-executable-if-script-p)
 
-(pdf-tools-install)
-
 ;; #############################################################################
 ;; ################################# PACKAGES ##################################
 ;; #############################################################################
@@ -274,6 +272,15 @@ re-downloaded in order to locate PACKAGE."
 ;;   :ensure t
 ;;   :config (progn
 ;;             (autopair-global-mode)))
+
+
+(use-package pdf-tools
+  :config
+  (pdf-tools-install)
+  (define-key pdf-view-mode-map (kbd "j") 'pdf-view-next-line-or-next-page)
+  (define-key pdf-view-mode-map (kbd "k") 'pdf-view-previous-line-or-previous-page)
+  (define-key pdf-view-mode-map (kbd "l") 'pdf-view-next-page-command)
+  (define-key pdf-view-mode-map (kbd "h") 'pdf-view-previous-page-command))
 
 (use-package org
   :config (progn
