@@ -162,6 +162,11 @@ re-downloaded in order to locate PACKAGE."
 (require-package 'use-package)
 (require 'use-package)
 
+(use-package exec-path-from-shell
+  :ensure t
+  :config
+  (exec-path-from-shell-initialize))
+
 ;; make emacs usable
 (use-package evil
   :ensure t
