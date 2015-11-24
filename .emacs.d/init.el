@@ -849,6 +849,14 @@ The FILE-NAME specifies the file name to search for."
 (use-package solarized-theme
   :ensure t)
 
+;; PACKAGE: JS2
+(use-package js2-mode
+  :ensure t
+  :mode ("\\.js\\'" . js2-mode)
+  :config
+  (setq-default js2-global-externs '("exports" "module" "require" "setTimeout" "THREE"))
+  (setq-default js2-basic-offset 2))
+
 ;; #############################################################################
 ;; ################################# KEY BINDINGS ##############################
 ;; #############################################################################
