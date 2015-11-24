@@ -579,18 +579,21 @@ re-downloaded in order to locate PACKAGE."
                         text-mode-hook))
               (add-hook hook 'rainbow-mode))))
 
+;; (use-package flycheck-google-cpplint
+;;   :ensure t
+;;   :config (progn
+;;             (custom-set-variables
+;;              '(flycheck-c/c++-googlelint-executable "/usr/local/bin/cpplint.py"))))
+
 (use-package flycheck
   :ensure t
   :config (progn
-            (flycheck-mode 1)
+            (global-flycheck-mode)
             (add-hook 'c++-mode-hook (lambda () (setq flycheck-clang-language-standard "c++14")))
-            (flycheck-add-next-checker 'c/c++-clang 'c/c++-googlelint 'append)))
+            ;; (flycheck-add-next-checker 'c/c++-clang 'c/c++-googlelint 'append)
+            ))
 
-(use-package flycheck-google-cpplint
   :ensure t
-  :config (progn
-            (custom-set-variables
-             '(flycheck-c/c++-googlelint-executable "/usr/local/bin/cpplint.py"))))
 
 (use-package flyspell
   :ensure t
