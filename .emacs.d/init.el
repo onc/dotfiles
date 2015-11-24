@@ -549,8 +549,10 @@ re-downloaded in order to locate PACKAGE."
   :config (progn
             (setq fci-rule-width 1)
             (setq fci-rule-color "gray71")
+            (setq-default fill-column 80)
             (add-hook 'c-mode-common-hook 'fci-mode)
-            (add-hook 'mail-mode-hook 'fci-mode)))
+            (add-hook 'mail-mode-hook 'fci-mode)
+            (add-hook 'js2-mode-hook 'fci-mode)))
 
 
 (use-package markdown-mode
