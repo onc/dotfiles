@@ -149,6 +149,9 @@ re-downloaded in order to locate PACKAGE."
             (setq fill-column 80)
             (auto-fill-mode t)))
 
+(setq browse-url-browser-function 'browse-url-generic
+      browse-url-generic-program "google-chrome-stable")
+
 ;; #############################################################################
 ;; ################################# PACKAGES ##################################
 ;; #############################################################################
