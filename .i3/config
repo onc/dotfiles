@@ -269,6 +269,7 @@ for_window [class="(?i)gvim"] border pixel 1
 
 for_window [class="(?i)opengl program"] floating enable
 for_window [class="(?i)perception"] floating enable
+for_window [class="(?i)GED Window"] floating enable
 
 for_window [class="(?i)thunderbird"] move container to workspace $w5
 for_window [class="(?i)google-chrome-stable"] move container to workspace $w3
