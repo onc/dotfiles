@@ -1102,6 +1102,16 @@ This is done interactively and queries on every candidate."
   (query-replace "sz" "ß" nil (point-min) (point-max))
   (toggle-case-fold-search))
 
+(defun onze-insert-alphabets-az (&optional useUppercase-p)
+  "Insert letters a to z vertically.
+If `universal-argument' is called first, use CAPITAL letters.
+Note: this command is similar to `rectangle-number-lines', starting at 65 or 97, and with a format of 「%c」."
+  (interactive "P")
+  (let ((startChar (if useUppercase-p 65 97 )))
+    (dotimes (ii 26 )
+      (insert (format "%c\n" (+ startChar ii)))
+      )))
+
 (defun my-where-is (definition count &optional length)
   "DEFINITION is the name of the function.
 Return COUNT key sequences that invoke the command DEFINITTION as a string.
