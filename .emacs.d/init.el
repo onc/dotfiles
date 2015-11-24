@@ -346,6 +346,12 @@ re-downloaded in order to locate PACKAGE."
                            (company-mode/backend-with-yas 'elpy-company-backend))))
   (elpy-use-cpython))
 
+(use-package robe
+  :ensure t
+  :config
+  (add-hook 'ruby-mode-hook 'robe-mode)
+  (push 'company-robe company-backends))
+
 (use-package neotree
   :ensure t
   :defer t
