@@ -152,6 +152,8 @@ re-downloaded in order to locate PACKAGE."
 (setq browse-url-browser-function 'browse-url-generic
       browse-url-generic-program "google-chrome-stable")
 
+(electric-pair-mode)
+
 ;; #############################################################################
 ;; ################################# PACKAGES ##################################
 ;; #############################################################################
@@ -232,11 +234,16 @@ re-downloaded in order to locate PACKAGE."
               :config (progn
                         (global-evil-surround-mode 1)))))
 
-(use-package smartparens
-  :ensure t
-  :config (progn
-            (smartparens-global-mode t)
-            (show-smartparens-global-mode)))
+;; (use-package smartparens
+;;   :ensure t
+;;   :config (progn
+;;             (smartparens-global-mode t)
+;;             (show-smartparens-global-mode)))
+
+;; (use-package autopair
+;;   :ensure t
+;;   :config (progn
+;;             (autopair-global-mode)))
 
 (use-package org
   :config (progn
