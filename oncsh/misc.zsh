@@ -63,6 +63,9 @@ alias sst="svn status"
 alias sad="svn add"
 alias scom="svn commit -m"
 
+# ping
+alias p="ping google.de"
+
 # ls after every cd
 function chpwd() {
     emulate -L zsh
