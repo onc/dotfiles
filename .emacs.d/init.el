@@ -74,11 +74,14 @@ re-downloaded in order to locate PACKAGE."
 (add-to-list 'custom-theme-load-path "~/.emacs.d/themes")
 
 ;; set font
-(add-to-list 'default-frame-alist '(font . "DejaVu Sans Mono for Powerline-9" ))
-(set-face-attribute 'default t :font "DejaVu Sans Mono for Powerline-9")
+;; (add-to-list 'default-frame-alist '(font . "DejaVu Sans Mono for Powerline-9" ))
+;; (set-face-attribute 'default t :font "DejaVu Sans Mono for Powerline-9")
 
-;; (add-to-list 'default-frame-alist '(font . "Meslo LG S for Powerline-9" ))
-;; (set-face-attribute 'default t :font "Meslo LG S for Powerline-9")
+(add-to-list 'default-frame-alist '(font . "Source Code Pro-9:weight=medium"))
+(set-face-attribute 'default t :font "Source Code Pro-9:weight=medium")
+
+;; (add-to-list 'default-frame-alist '(font . "Monoid-10"))
+;; (set-face-attribute 'default t :font "Monoid-10")
 
 ;; fucking use spaces emacs
 (setq-default tab-width 4 indent-tabs-mode nil)
