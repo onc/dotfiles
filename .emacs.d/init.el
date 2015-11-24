@@ -399,9 +399,9 @@ re-downloaded in order to locate PACKAGE."
 
      Buffers                       Blog                       Projects
 -------------------------------------------------------------------------------------------
-  _i_: indent buffer              _n_: create new blog post    _p_: switch project %(my-where-is-first 'helm-projectile-switch-project)
+  _i_: indent buffer %(my-where-is-first 'onze-indent-whole-buffer)       _n_: create new blog post    _p_: switch project %(my-where-is-first 'helm-projectile-switch-project)
   _r_: rename buffer and file                                _s_: start clock
-                                                           _f_: stop/finish clock
+  _v_: toggle transparency                                   _f_: stop/finish clock
                                                            _t_: create report-table
 "
                               ("i" onze-indent-whole-buffer       nil)
@@ -411,6 +411,7 @@ re-downloaded in order to locate PACKAGE."
                               ("s" org-clock-in                   nil)
                               ("f" org-clock-out                  nil)
                               ("t" org-clock-report               nil)
+                              ("v" toggle-transparency            nil)
                               ("q" nil                            "cancel" :color blue)))))
 
 (use-package git-gutter
