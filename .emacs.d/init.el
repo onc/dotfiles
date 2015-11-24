@@ -1099,6 +1099,7 @@ This is done interactively and queries on every candidate."
   (query-replace "Oe" "Ö" nil (point-min) (point-max))
   (query-replace "ue" "ü" nil (point-min) (point-max))
   (query-replace "Ue" "Ü" nil (point-min) (point-max))
+  (query-replace "sz" "ß" nil (point-min) (point-max))
   (toggle-case-fold-search))
 
 (defun my-where-is (definition count &optional length)
