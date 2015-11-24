@@ -8,6 +8,9 @@ alias .....=' cd ../../../../'
 alias -- -=' cd -'
 alias ~=' cd ~'
 
+alias tmp='cd ~/tmp'
+alias hiwi='cd /mnt/hdd/Hiwi'
+
 # shortcuts for apps
 alias v="vim"
 alias t="tmux"
