@@ -239,6 +239,13 @@ re-downloaded in order to locate PACKAGE."
             (use-package evil-nerd-commenter
               :ensure t)
 
+            ;; PACKAGE: EVIL-NUMBERS
+            (use-package evil-numbers
+              :ensure t
+              ;; :bind (:map evil-normal-state-map
+              :bind (("<M-up>" . evil-numbers/inc-at-pt)
+                     ("<M-down>" . evil-numbers/dec-at-pt)))
+
             ;; PACKAGE: EVIL-SURROUND
             (use-package evil-surround
               :defer t
