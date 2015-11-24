@@ -90,14 +90,22 @@ re-downloaded in order to locate PACKAGE."
 (setq-default c-basic-offset 4)
 
 ;; Write backup files to own directory
-(setq backup-directory-alist
-      `(("." . ,(expand-file-name
-                 (concat user-emacs-directory "backups")))))
+;; (setq backup-directory-alist
+;;       `(("." . ,(expand-file-name
+;;                  (concat user-emacs-directory "backups")))))
 ;; Write auto save files to own directory
 ;; http://stackoverflow.com/a/2020954/29618
-(defvar autosave-dir (expand-file-name (concat user-emacs-directory "autosaves/")))
-(setq auto-save-list-file-prefix autosave-dir)
-(setq auto-save-file-name-transforms `((".*" ,autosave-dir t)))
+;; (defvar autosave-dir (expand-file-name (concat user-emacs-directory "autosaves/")))
+;; (setq auto-save-list-file-prefix autosave-dir)
+;; (setq auto-save-file-name-transforms `((".*" ,autosave-dir t)))
+
+;; from http://emacswiki.org/emacs/AutoSave
+(setq backup-directory-alist
+      `((".*" . ,temporary-file-directory)))
+(setq auto-save-file-name-transforms
+      `((".*" ,temporary-file-directory t)))
+
+(setq create-lockfiles nil)
 
 ;; Save point position between sessions
 (require 'saveplace)
