@@ -158,6 +158,8 @@ re-downloaded in order to locate PACKAGE."
 ;; from http://mbork.pl/2015-01-10_A_few_random_Emacs_tips
 (add-hook 'after-save-hook 'executable-make-buffer-file-executable-if-script-p)
 
+(pdf-tools-install)
+
 ;; #############################################################################
 ;; ################################# PACKAGES ##################################
 ;; #############################################################################
@@ -187,6 +189,8 @@ re-downloaded in order to locate PACKAGE."
             (evil-set-initial-state 'neotree-mode 'emacs)
             (evil-set-initial-state 'magit-popup-mode 'emacs)
             (evil-set-initial-state 'magit-mode 'emacs)
+            (evil-set-initial-state 'pdf-view-mode 'emacs)
+            (evil-set-initial-state 'pdf-annot-list-mode 'emacs)
 
             (defun copy-to-end-of-line ()
               "Yank from point to end of line."
