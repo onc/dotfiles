@@ -259,6 +259,8 @@ for_window [class="(?i)kcalc"] floating enable
 for_window [class="(?i)teamviewer"] floating enable
 for_window [class="(?i)ark"] floating enable
 for_window [class="(?i)gwenview"] floating enable
+for_window [class="(?i)kmix"] floating enable
+for_window [class="(?i)okular"] floating enable
 for_window [class="(?i)zeal"] floating enable, move position center
 for_window [window_role="(?i)msgcompose"] floating enable, border pixel 1, move position center
 
