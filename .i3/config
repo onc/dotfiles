@@ -22,7 +22,7 @@ set $font pango:Source Code Pro for Powerline, Font Awesome 7
 # KEYBINDINGS FOR PROGRAMMS {{{
 # ===========================================================================================
 # terminal
-bindsym $mod+t exec konsole
+bindsym $mod+t exec --no-startup-id konsole -graphicssystem raster
 # bindsym $mod+t exec xfce4-terminal
 # launcher
 # bindsym $mod+space exec --no-startup-id kupfer
