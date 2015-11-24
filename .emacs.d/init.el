@@ -331,6 +331,20 @@ re-downloaded in order to locate PACKAGE."
  t 'symbol
  (font-spec :family "Symbola") nil 'prepend)
 
+(use-package elpy
+  :ensure t
+  :init
+  (setq elpy-rpc-backend "jedi")
+  :config
+  (setq elpy-modules (delq 'elpy-module-company elpy-modules))
+  (elpy-enable)
+
+  (add-hook 'python-mode-hook
+            (lambda ()
+              (company-mode)
+              (add-to-list 'company-backends
+                           (company-mode/backend-with-yas 'elpy-company-backend))))
+  (elpy-use-cpython))
 
 (use-package neotree
   :ensure t
