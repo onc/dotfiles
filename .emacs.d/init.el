@@ -876,6 +876,9 @@ The FILE-NAME specifies the file name to search for."
                 (set (make-local-variable 'company-backends)
                      '((company-tern company-dabbrev-code company-yasnippet)))))))
 
+(use-package adoc-mode
+  :ensure t)
+
 ;; #############################################################################
 ;; ################################# KEY BINDINGS ##############################
 ;; #############################################################################
