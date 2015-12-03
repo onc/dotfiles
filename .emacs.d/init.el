@@ -413,6 +413,9 @@ re-downloaded in order to locate PACKAGE."
             (global-set-key (kbd "M-x") 'helm-M-x)
             (global-set-key (kbd "C-x b") 'helm-mini)
 
+            (use-package helm-ag
+              :ensure t)
+
             (use-package helm-projectile
               :ensure t
               :config (progn
