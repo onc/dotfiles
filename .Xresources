@@ -1,0 +1,51 @@
+! cursor
+Xcursor.size: 10
+Xcursor.theme: breeze_cursors
+
+! Emacs.pane.menubar.background: darkGrey
+! Emacs.pane.menubar.foreground: black
+! Emacs*menubar.margin: 0
+! Emacs*shadowThickness: 1
+
+rofi.key-run: mod4+space
+rofi.key-window: mod4+shift+space
+rofi.font: Source Code Pro for Powerline, Font Awesome 10 
+rofi.fuzzy: true
+
+! colors
+! #272822
+! #F8F8F2
+! #90908b
+! #F92672
+! #A6E22E
+! #66D9EF
+! #AE81FF
+! #303030
+
+! bordercolor
+rofi.bc: #A6E22E
+
+! normal
+rofi.bg: #272822
+rofi.bg-active: #272822
+rofi.bg-urgent: #272822
+ 
+rofi.fg: #F8F8F2
+rofi.fg-active: #A6E22E
+rofi.fg-urgent: #F92672
+
+! highlight
+rofi.hlbg: #303030
+rofi.hlbg-active: #303030
+rofi.hlbg-urgent: #303030
+
+rofi.hlfg: #F92672
+rofi.hlfg-active: #F92672
+rofi.hlfg-urgent: #F92672
+
+rofi.sidebar-mode: true
+rofi.modi: run,window,workspaces:/home/onze/Applications/i3_switch_workspaces.sh,i3:/home/onze/Applications/i3-functions,vbox:/home/onze/Applications/vbctrl.sh
+
+! keybindings
+rofi.kb-mode-next: Alt+j
+rofi.kb-mode-previous: Alt+k
