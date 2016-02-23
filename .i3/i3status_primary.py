@@ -1,6 +1,7 @@
 # -*- coding: utf-8 -*-
 
 from i3pystatus import Status
+from lifebar import Lifebar
 
 # Colors - base16:
 white = "#E0E0E0"
@@ -52,6 +53,13 @@ status.register("battery",
                 full_color=white,
                 charging_color=green,
                 critical_color=red)
+
+status.register(Lifebar,
+                color=white,
+                warn_color=orange,
+                alert_color=red,
+                charging_color=green,
+                steps=7)
 
 status.register("network",
                 interface="enp0s25",
