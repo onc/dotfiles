@@ -513,13 +513,15 @@ re-downloaded in order to locate PACKAGE."
             (setq company-backends (mapcar #'company-mode/backend-with-yas company-backends))))
 
 (use-package magit
-  :defer t
-  :load-path "/home/onze/.emacs.d/git-package/magit"
+  :ensure nil
+  :load-path "/home/onze/.emacs.d/git-package/magit/lisp"
+  :bind (("M-s" . magit-status))
   :config (progn
 
-            (add-to-list 'load-path "/home/onze/.emacs.d/git-package/magit-gitflow")
-            (require 'magit-gitflow)
-            (add-hook 'magit-mode-hook 'turn-on-magit-gitflow)
+            (with-eval-after-load 'info
+              (info-initialize)
+              (add-to-list 'Info-directory-list
+                           "~/.emacs.d/git-package/magit/Documentation/"))
 
             (use-package magit-gitflow
               :load-path "/home/onze/.emacs.d/git-packages/magit-gitflow"
