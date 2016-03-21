@@ -136,4 +136,6 @@ function set-backnlock() {
 }
 
 alias dd_progress="sudo killall -USR1 dd"
+
+alias mplayer_hdmi="mplayer -ao alsa:device=hw=1.7"
 alias pyserver="python2 -m SimpleHTTPServer"
