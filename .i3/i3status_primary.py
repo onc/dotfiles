@@ -41,7 +41,7 @@ status.register("shell",
                 interval=5)
 
 status.register("battery",
-                format="{status}  {consumption:.0f}W {percentage:.0f}% {remaining:%E%hh:%Mm}",
+                format="{consumption:.0f}W {percentage:.0f}% {remaining:%E%hh:%Mm}",
                 alert=True,
                 alert_percentage=5,
                 status={
