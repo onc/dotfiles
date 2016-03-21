@@ -911,7 +911,9 @@ The FILE-NAME specifies the file name to search for."
   :ensure t)
 
 (use-package json-mode
-  :ensure t)
+  :ensure t
+  :config
+  (setq js-indent-level 2))
 
 (use-package rubocop
   :ensure t)
