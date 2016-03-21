@@ -494,7 +494,7 @@ re-downloaded in order to locate PACKAGE."
 (use-package powerline
   :ensure t
   :config (progn
-            (powerline-default-theme)))
+            (powerline-center-evil-theme)))
 
 (use-package yasnippet
   :ensure t
