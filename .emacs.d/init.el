@@ -191,6 +191,7 @@ re-downloaded in order to locate PACKAGE."
             (evil-set-initial-state 'magit-mode 'emacs)
             (evil-set-initial-state 'pdf-view-mode 'emacs)
             (evil-set-initial-state 'pdf-annot-list-mode 'emacs)
+            (evil-set-initial-state 'calendar-mode 'emacs)
 
             (defun copy-to-end-of-line ()
               "Yank from point to end of line."
@@ -298,6 +299,13 @@ re-downloaded in order to locate PACKAGE."
   (setq deft-use-filter-string-for-filename t)
   (setq deft-recursive t)
   (setq deft-auto-save-interval 3.0))
+
+(use-package calendar
+  :config
+  (define-key calendar-mode-map (kbd "j") 'calendar-forward-week)
+  (define-key calendar-mode-map (kbd "k") 'calendar-backward-week)
+  (define-key calendar-mode-map (kbd "h") 'calendar-backward-day)
+  (define-key calendar-mode-map (kbd "l") 'calendar-forward-day))
 
 (use-package org
   :config (progn
