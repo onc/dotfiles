@@ -66,6 +66,8 @@ alias scom="svn commit -m"
 # ping
 alias p="ping google.de"
 
+alias jmake="make -j9"
+
 # ls after every cd
 function chpwd() {
     emulate -L zsh
