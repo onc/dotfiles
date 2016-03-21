@@ -136,3 +136,4 @@ function set-backnlock() {
 }
 
 alias dd_progress="sudo killall -USR1 dd"
+alias pyserver="python2 -m SimpleHTTPServer"
