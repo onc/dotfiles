@@ -8,6 +8,9 @@ alias yu="yaourt -Syua"
 # update pacman
 alias pacu="sudo pacman -Syu"
 
+# clean up packages
+alias yclean="yaourt -Qdt && yaourt -Scc"
+
 # List all files installed by a given package
 alias paclf="yaourt -Ql"
 # Mark one or more installed packages as explicitly installed
