@@ -43,6 +43,8 @@ re-downloaded in order to locate PACKAGE."
 (tool-bar-mode -1)
 ;; disable scrollbar
 (scroll-bar-mode -1)
+;; disable menu-bar
+(menu-bar-mode -1)
 
 ;; disable cursor blink
 (blink-cursor-mode 0)
