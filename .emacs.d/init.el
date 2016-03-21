@@ -287,6 +287,18 @@ re-downloaded in order to locate PACKAGE."
   (define-key pdf-view-mode-map (kbd "l") 'pdf-view-next-page-command)
   (define-key pdf-view-mode-map (kbd "h") 'pdf-view-previous-page-command))
 
+(use-package deft
+  :ensure t
+  :bind (([f6] . deft))
+  :config
+  (setq deft-directory "~/Dropbox/Notes")
+  (setq deft-extensions '("md" "org" "txt"))
+  (setq deft-default-extension "md")
+  (setq deft-use-filename-as-title t)
+  (setq deft-use-filter-string-for-filename t)
+  (setq deft-recursive t)
+  (setq deft-auto-save-interval 3.0))
+
 (use-package org
   :config (progn
             (setq org-time-clocksum-format (quote (:hours "%d" :require-hours t :minutes ":%02d" :require-minutes t)))
