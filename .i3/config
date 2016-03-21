@@ -202,6 +202,8 @@ exec --no-startup-id feh --bg-fill ~/.i3/back.png
 # exec --no-startup-id conky
 exec --no-startup-id unclutter
 
+exec --no-startup-id /usr/bin/xscreensaver -no-splash &
+
 exec --no-startup-id dex -a
 # }}}
 
