@@ -232,6 +232,9 @@ bar {
   output DP-3
   output VGA-0
   position top
+  mode hide
+  modifier $mod
+  hidden_state hide
   status_command python ~/.i3/i3status_secondary.py
   font $font
   workspace_buttons yes
