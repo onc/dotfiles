@@ -317,6 +317,56 @@ re-downloaded in order to locate PACKAGE."
                         (add-hook 'org-mode-hook (lambda () (org-bullets-mode 1)))
                         (setq org-bullets-bullet-list '("●" "◼" "▶" "♦"))))))
 
+(use-package ox-latex
+  :defer t
+  :ensure nil
+  :config
+  (setq org-latex-packages-alist
+        (quote (("" "color" t) ("" "minted" t) ("" "parskip" t))))
+
+  ;; XeLaTeX customisations
+  ;; remove "inputenc" from default packages as it clashes with xelatex
+  (setf org-latex-default-packages-alist
+        (remove '("AUTO" "inputenc" t) org-latex-default-packages-alist))
+
+  (setq org-latex-pdf-process
+        '("xelatex --shell-escape -interaction nonstopmode -output-directory %o %f"
+          "biber $(basename %b)"
+          "xelatex --shell-escape -interaction nonstopmode -output-directory %o %f"
+          "xelatex --shell-escape -interaction nonstopmode -output-directory %o %f"))
+
+  (add-to-list 'org-latex-packages-alist '("" "minted"))
+  (add-to-list 'org-latex-packages-alist '("" "color"))
+  (setq org-latex-listings 'minted)
+
+  ;; add emacs lisp support for minted
+  (setq org-latex-custom-lang-environments '((emacs-lisp "common-lisp")))
+  (add-to-list 'org-latex-minted-langs '(elisp "common-lisp"))
+
+  (add-to-list 'org-latex-classes
+               '("thesis" "\\documentclass{thesis}"
+                 ("\\chapter{%s}" . "\\chapter*{%s}")
+                 ("\\section{%s}" . "\\section*{%s}")
+                 ("\\subsection{%s}" . "\\subsection*{%s}")
+                 ("\\subsubsection{%s}" . "\\subsubsection*{%s}")))
+
+  (add-to-list 'org-latex-classes
+               '("djcb-org-article" "\\documentclass[11pt,a4paper]{article}
+\\usepackage[T1]{fontenc}
+\\usepackage{fontspec}
+\\usepackage{graphicx}
+\\usepackage{geometry}
+\\geometry{a4paper, textwidth=6.5in, textheight=10in,
+            marginparsep=7pt, marginparwidth=.6in}
+\\pagestyle{empty}
+\\title{}"
+                 ("\\section{%s}" . "\\section*{%s}")
+                 ("\\subsection{%s}" . "\\subsection*{%s}")
+                 ("\\subsubsection{%s}" . "\\subsubsection*{%s}")
+                 ("\\paragraph{%s}" . "\\paragraph*{%s}")
+                 ("\\subparagraph{%s}" . "\\subparagraph*{%s}"))))
+
+
 ;; (use-package smooth-scrolling
 ;;   :ensure t
 ;;   :config (progn
