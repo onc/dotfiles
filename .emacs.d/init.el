@@ -551,10 +551,16 @@ re-downloaded in order to locate PACKAGE."
   :config (progn
             (projectile-global-mode)))
 
-(use-package powerline
+;; (use-package powerline
+;;   :ensure t
+;;   :config (progn
+;;             (powerline-center-evil-theme)))
+
+(use-package spaceline
   :ensure t
-  :config (progn
-            (powerline-center-evil-theme)))
+  :config
+  (require 'spaceline-config)
+  (spaceline-spacemacs-theme))
 
 (use-package yasnippet
   :ensure t
