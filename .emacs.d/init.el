@@ -931,6 +931,11 @@ The FILE-NAME specifies the file name to search for."
     (define-key c++-mode-map (kbd "C-c x") 'onze-cmake-run)
     ))
 
+(use-package mode-icons
+  :ensure t
+  :config
+  (mode-icons-mode))
+
 (use-package groovy-mode
   :ensure t
   :mode (("\.groovy$" . groovy-mode)
