@@ -152,6 +152,8 @@ re-downloaded in order to locate PACKAGE."
             (setq fill-column 80)
             (auto-fill-mode t)))
 
+(require 'mu4e)
+
 (setq browse-url-browser-function 'browse-url-generic
       browse-url-generic-program "google-chrome-stable")
 
@@ -260,6 +262,9 @@ re-downloaded in order to locate PACKAGE."
               :bind (("<M-up>" . evil-numbers/inc-at-pt)
                      ("<M-down>" . evil-numbers/dec-at-pt)))
 
+            (use-package evil-mu4e
+              :ensure t)
+
             ;; PACKAGE: EVIL-SURROUND
             (use-package evil-surround
               :ensure t
@@ -277,6 +282,88 @@ re-downloaded in order to locate PACKAGE."
 ;;   :config (progn
 ;;             (autopair-global-mode)))
 
+(use-package mu4e
+  :ensure nil
+  :config
+  ;; default
+  (setq mu4e-maildir (expand-file-name "~/Mail"))
+  ;; allow for updating mail using 'U' in the main view:
+  (setq mu4e-get-mail-command "offlineimap")
+
+  (setq mu4e-drafts-folder "/UniMail/Drafts")
+  (setq mu4e-sent-folder   "/UniMail/Sent")
+  (setq mu4e-trash-folder  "/UniMail/Trash")
+
+  ;; fetch mails every 3 min
+  (setq mu4e-update-interval (* 3 60))
+
+  ;; Don't keep message buffers around.
+  (setq message-kill-buffer-on-exit t)
+
+  ;; http://www.djcbsoftware.nl/code/mu/mu4e/Displaying-rich_002dtext-messages.html
+  (setq mu4e-html2text-command "html2text | grep -v '&nbsp_place_holder;'")
+
+  ;; use imagemagick, if available
+  (when (fboundp 'imagemagick-register-types)
+    (imagemagick-register-types))
+
+  (setq mu4e-split-view 'vertical)
+  (setq mu4e-headers-visible-columns 120)
+
+  (setq mu4e-maildir-shortcuts
+        '( ("/UniMail/INBOX"                            . ?i)
+           ("/UniMail/Sent"                             . ?s)
+           ("/UniMail/Trash"                            . ?t)
+           ("/UniMailDrafts"                            . ?d)))
+
+  (add-to-list 'mu4e-bookmarks
+               '("/UniMail/Uni-Mails.jugendhackt.jugendhackt"   "Jugendhackt" ?j))
+
+  (setq mu4e-show-images t)
+
+  (setq mu4e-attachment-dir  "~/Downloads/Mail")
+
+  ;; spell check
+  (add-hook 'mu4e-compose-mode-hook
+            (defun my-do-compose-stuff ()
+              "My settings for message composition."
+              (set-fill-column 72)
+              (flyspell-mode)))
+
+  ;; adjust columns of headers view
+  (setq mu4e-headers-fields
+        '((:human-date . 12)
+          (:flags . 6)
+          (:mailing-list . 12)
+          (:from . 22)
+          (:subject)))
+
+  ;; something about ourselves
+  (setq
+   user-mail-address "christian.van-onzenoodt@uni-ulm.de"
+   user-full-name  "Christian van Onzenoodt")
+
+  (use-package mu4e-alert
+    :ensure t
+    :config
+
+    (mu4e-alert-set-default-style 'libnotify)
+    (add-hook 'after-init-hook #'mu4e-alert-enable-notifications)
+    (add-hook 'after-init-hook #'mu4e-alert-enable-mode-line-display))
+  )
+
+(use-package smtpmail
+  :ensure nil
+  :config
+  (setq message-send-mail-function 'smtpmail-send-it
+        starttls-use-gnutls t
+        smtpmail-starttls-credentials
+        '(("mail.uni-ulm.de" 587 nil nil))
+        smtpmail-auth-credentials (expand-file-name "~/.authinfo")
+        smtpmail-default-smtp-server "mail.uni-ulm.de"
+        smtpmail-smtp-server "mail.uni-ulm.de"
+        smtpmail-smtp-service 587
+        smtpmail-debug-info t))
 
 (use-package pdf-tools
   :config
