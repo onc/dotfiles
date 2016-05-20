@@ -45,6 +45,9 @@ bindsym $alt+ctrl+l exec amixer -q sset Master mute; exec playerctl stop; exec x
 # open sysguard
 bindsym ctrl+Escape exec --no-startup-id ksysguard
 
+bindsym $mod+space exec rofi -show run
+bindsym $mod+shift+space exec rofi -show i3
+
 # Volume
 # bindsym XF86AudioRaiseVolume exec /mnt/hdd/dotfiles/volume.sh up;
 # bindsym XF86AudioLowerVolume exec /mnt/hdd/dotfiles/volume.sh down;

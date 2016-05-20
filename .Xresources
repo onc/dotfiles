@@ -7,8 +7,8 @@ Xcursor.theme: breeze_cursors
 ! Emacs*menubar.margin: 0
 ! Emacs*shadowThickness: 1
 
-rofi.key-run: SuperL+space
-rofi.key-i3: SuperL+shift+space
+!rofi.key-run: SuperL+space
+!rofi.key-i2: SuperL+shift+space
 rofi.font: Source Code Pro for Powerline, Font Awesome 10 
 rofi.fuzzy: true
 
