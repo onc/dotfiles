@@ -284,6 +284,8 @@ re-downloaded in order to locate PACKAGE."
 
   (add-hook 'pdf-view-mode-hook 'pdf-view-fit-page-to-window)
 
+  (define-key pdf-view-mode-map (kbd "C-w l") 'evil-window-right)
+  (define-key pdf-view-mode-map (kbd "C-w h") 'evil-window-left)
   (define-key pdf-view-mode-map (kbd "j") 'pdf-view-next-line-or-next-page)
   (define-key pdf-view-mode-map (kbd "k") 'pdf-view-previous-line-or-previous-page)
   (define-key pdf-view-mode-map (kbd "l") 'pdf-view-next-page-command)
