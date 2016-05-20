@@ -131,10 +131,11 @@ re-downloaded in order to locate PACKAGE."
 (global-auto-revert-mode t)
 
 ;; Make sure UTF-8 is used
+(prefer-coding-system 'utf-8)
+(set-default-coding-systems 'utf-8)
 (set-terminal-coding-system 'utf-8)
 (set-keyboard-coding-system 'utf-8)
 (set-language-environment "UTF-8")
-(prefer-coding-system 'utf-8)
 
 ;; Add .h and .cc files to c++-mode
 (add-to-list 'auto-mode-alist '("\\.h\\'" . c++-mode))
