@@ -341,6 +341,17 @@ re-downloaded in order to locate PACKAGE."
           (:from . 22)
           (:subject)))
 
+  (setq mu4e-use-fancy-chars t
+        mu4e-headers-first-child-prefix  '("\\" . "┗▶")
+        mu4e-headers-unread-mark '("u" . "❌")
+        mu4e-headers-unseed-mark '("u" . "❌")
+        mu4e-headers-replied-mark '("R" . "←")
+        mu4e-headers-seen-mark '("S" . "✓")
+        mu4e-headers-attach-mark '("a" . "↓")
+        mu4e-headers-signed-mark '("s" . "™")
+        mu4e-headers-encrypted-mark '("x" . "🔒")
+        mu4e-headers-flagged-mark '("F" . "♥"))
+
   ;; something about ourselves
   (setq
    user-mail-address "christian.van-onzenoodt@uni-ulm.de"
