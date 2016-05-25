@@ -341,6 +341,10 @@ re-downloaded in order to locate PACKAGE."
           (:from . 22)
           (:subject)))
 
+  (define-key mu4e-main-mode-map (kbd "s") 'helm-mu)
+  (define-key mu4e-headers-mode-map (kbd "C-<return>") 'mu4e-headers-mark-for-something)
+  (define-key mu4e-headers-mode-map (kbd "C-r") 'mu4e-mark-resolve-deferred-marks)
+
   (setq mu4e-use-fancy-chars t
         mu4e-headers-first-child-prefix  '("\\" . "┗▶")
         mu4e-headers-unread-mark '("u" . "❌")
