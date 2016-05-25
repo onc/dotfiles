@@ -304,6 +304,8 @@ re-downloaded in order to locate PACKAGE."
   ;; http://www.djcbsoftware.nl/code/mu/mu4e/Displaying-rich_002dtext-messages.html
   (setq mu4e-html2text-command "html2text | grep -v '&nbsp_place_holder;'")
 
+  (setq mu4e-show-images t)
+
   ;; use imagemagick, if available
   (when (fboundp 'imagemagick-register-types)
     (imagemagick-register-types))
