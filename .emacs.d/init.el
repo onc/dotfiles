@@ -357,6 +357,14 @@ re-downloaded in order to locate PACKAGE."
    user-mail-address "christian.van-onzenoodt@uni-ulm.de"
    user-full-name  "Christian van Onzenoodt")
 
+  ;; Silly mu4e only shows names in From: by default. Of course we also
+  ;; want the addresses.
+  (setq mu4e-view-show-addresses t)
+
+  (setq mu4e-headers-time-format "%H:%M")
+  (setq mu4e-date-format-long "%d/%m/%Y %H:%M")
+  (setq mu4e-headers-date-format "%d/%m/%y")
+
   (use-package mu4e-alert
     :ensure t
     :config
