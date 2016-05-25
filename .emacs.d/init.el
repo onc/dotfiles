@@ -314,10 +314,12 @@ re-downloaded in order to locate PACKAGE."
   (setq mu4e-headers-visible-columns 120)
 
   (setq mu4e-maildir-shortcuts
-        '( ("/UniMail/INBOX"                            . ?i)
-           ("/UniMail/Sent"                             . ?s)
-           ("/UniMail/Trash"                            . ?t)
-           ("/UniMailDrafts"                            . ?d)))
+        '(("/UniMail/INBOX"                             . ?u)
+          ("/GoogleMail/INBOX"                          . ?g)
+          ("/Onze-io/OnzeMail/INBOX"                    . ?o)
+          ("/Onze-io/AnyoneMail/INBOX"                  . ?a)
+          ("/UniMail/Uni-Mails"                         . ?w)
+          ("/UniMail/Uni-Mails.jugendhackt.jugendhackt" . ?j)))
 
   (add-to-list 'mu4e-bookmarks
                '("/UniMail/Uni-Mails.jugendhackt.jugendhackt"   "Jugendhackt" ?j))
