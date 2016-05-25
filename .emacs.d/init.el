@@ -284,6 +284,7 @@ re-downloaded in order to locate PACKAGE."
 
 (use-package mu4e
   :ensure nil
+  :bind (([f7] . mu4e))
   :config
   ;; default
   (setq mu4e-maildir (expand-file-name "~/Mail"))
