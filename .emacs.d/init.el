@@ -321,10 +321,8 @@ re-downloaded in order to locate PACKAGE."
           ("/UniMail/Uni-Mails"                         . ?w)
           ("/UniMail/Uni-Mails.jugendhackt.jugendhackt" . ?j)))
 
-  (add-to-list 'mu4e-bookmarks
-               '("/UniMail/Uni-Mails.jugendhackt.jugendhackt"   "Jugendhackt" ?j))
-
-  (setq mu4e-show-images t)
+  (add-to-list 'mu4e-bookmarks '("/UniMail/Uni-Mails.jugendhackt.jugendhackt"   "Jugendhackt" ?j) t)
+  (add-to-list 'mu4e-bookmarks '("/UniMail/INBOX OR /GoogleMail/INBOX OR /Onze-io/OnzeMail/INBOX OR /Onze-io/AnyoneMail/INBOX" "Combined Inbox" ?i) t)
 
   (setq mu4e-attachment-dir  "~/Downloads/Mail")
 
