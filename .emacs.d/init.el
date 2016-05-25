@@ -333,12 +333,24 @@ re-downloaded in order to locate PACKAGE."
               (set-fill-column 72)
               (flyspell-mode)))
 
+  ;; custom header, which only shows the root mail-dir like /Uni or /Google for all my mailaccounts.
+  ;; the regex replaces all symbols between the LAST forward-slash and the end string.
+  ;; this works, because all imap-subfolders are seperated by dots instead of slashes.
+  (add-to-list 'mu4e-header-info-custom
+               '(:maildir-root .
+               (:name "Root-Folder of the maildir"
+                      :shortname "MailRoot"
+                      :help "Root-Folder of the maildir"
+                      :function (lambda (msg)
+                                  (replace-regexp-in-string "\/[a-zA-Z0-9-. ]*$" "" (concat (mu4e-message-field msg :maildir) ""))))))
+
   ;; adjust columns of headers view
   (setq mu4e-headers-fields
-        '((:human-date . 12)
-          (:flags . 6)
-          (:mailing-list . 12)
-          (:from . 22)
+        '((:human-date . 10)
+          (:flags . 8)
+          (:mailing-list . 15)
+          (:maildir-root . 12)
+          (:from . 26)
           (:subject)))
 
   (define-key mu4e-main-mode-map (kbd "s") 'helm-mu)
@@ -372,7 +384,6 @@ re-downloaded in order to locate PACKAGE."
   (use-package mu4e-alert
     :ensure t
     :config
-
     (mu4e-alert-set-default-style 'libnotify)
     (add-hook 'after-init-hook #'mu4e-alert-enable-notifications)
     (add-hook 'after-init-hook #'mu4e-alert-enable-mode-line-display))
