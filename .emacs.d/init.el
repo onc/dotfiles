@@ -444,6 +444,9 @@ re-downloaded in order to locate PACKAGE."
                         (add-hook 'org-mode-hook (lambda () (org-bullets-mode 1)))
                         (setq org-bullets-bullet-list '("●" "◼" "▶" "♦"))))))
 
+(use-package restclient
+  :ensure t)
+
 (use-package ox-latex
   :defer t
   :ensure nil
@@ -537,6 +540,9 @@ re-downloaded in order to locate PACKAGE."
               :ensure t)
             (use-package company-emoji
               :ensure t)
+            (use-package company-restclient
+              :ensure t)
+
             (add-to-list 'company-backends 'company-emoji)))
 
 ;; emoji font
