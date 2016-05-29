@@ -625,6 +625,9 @@ re-downloaded in order to locate PACKAGE."
             (use-package helm-ag
               :ensure t)
 
+            (use-package helm-mu
+              :ensure t)
+
             (use-package helm-projectile
               :ensure t
               :config (progn
