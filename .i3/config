@@ -278,6 +278,7 @@ for_window [window_role="(?i)addressbook"] floating enable, border pixel 1, move
 
 for_window [class="(?i)konsole"] border pixel 1
 for_window [class="(?i)gvim"] border pixel 1
+for_window [class="(?i)emacs"] border pixel 1
 
 for_window [class="(?i)opengl program"] floating enable
 for_window [class="(?i)perception"] floating enable
