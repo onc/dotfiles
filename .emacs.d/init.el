@@ -1085,8 +1085,8 @@ The FILE-NAME specifies the file name to search for."
 (use-package solarized-theme
   :ensure t)
 
-(use-package material-theme
-  :ensure t)
+;; (use-package material-theme
+;;   :ensure t)
 
 ;; PACKAGE: JS2
 (use-package js2-mode
