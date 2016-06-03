@@ -386,8 +386,7 @@ re-downloaded in order to locate PACKAGE."
     :config
     (mu4e-alert-set-default-style 'libnotify)
     (add-hook 'after-init-hook #'mu4e-alert-enable-notifications)
-    (add-hook 'after-init-hook #'mu4e-alert-enable-mode-line-display))
-  )
+    (add-hook 'after-init-hook #'mu4e-alert-enable-mode-line-display)))
 
 (use-package smtpmail
   :ensure nil
