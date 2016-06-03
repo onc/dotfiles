@@ -685,16 +685,18 @@ re-downloaded in order to locate PACKAGE."
   :config (progn
             (projectile-global-mode)))
 
-;; (use-package powerline
-;;   :ensure t
-;;   :config (progn
-;;             (powerline-center-evil-theme)))
-
-(use-package spaceline
+(use-package powerline
   :ensure t
   :config
-  (require 'spaceline-config)
-  (spaceline-spacemacs-theme))
+
+  (use-package spaceline
+    :ensure t
+    :config
+    (require 'spaceline-config)
+    (spaceline-spacemacs-theme)
+    (setq powerline-height 10)
+    (setq powerline-raw "  ")
+    (setq ns-use-srgb-colorspace nil)))
 
 (use-package yasnippet
   :ensure t
@@ -806,7 +808,6 @@ re-downloaded in order to locate PACKAGE."
             (add-hook 'c-mode-common-hook 'fci-mode)
             (add-hook 'mail-mode-hook 'fci-mode)
             (add-hook 'js2-mode-hook 'fci-mode)))
-
 
 (use-package markdown-mode
   :ensure t
