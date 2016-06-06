@@ -441,7 +441,8 @@ re-downloaded in order to locate PACKAGE."
               :ensure t
               :config (progn
                         (add-hook 'org-mode-hook (lambda () (org-bullets-mode 1)))
-                        (setq org-bullets-bullet-list '("●" "◼" "▶" "♦"))))))
+                        (setq org-bullets-bullet-list '("●" "◼" "▶" "♦"))))
+
 
 (use-package restclient
   :ensure t)
