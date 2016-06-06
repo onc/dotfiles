@@ -443,6 +443,8 @@ re-downloaded in order to locate PACKAGE."
                         (add-hook 'org-mode-hook (lambda () (org-bullets-mode 1)))
                         (setq org-bullets-bullet-list '("●" "◼" "▶" "♦"))))
 
+            (use-package org-vcard
+              :ensure t)))
 
 (use-package restclient
   :ensure t)
