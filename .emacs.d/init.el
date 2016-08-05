@@ -794,6 +794,9 @@ re-downloaded in order to locate PACKAGE."
 (use-package yaml-mode
   :ensure t)
 
+(use-package gitignore-mode
+  :ensure t)
+
 (use-package nlinum
   :ensure t)
 
