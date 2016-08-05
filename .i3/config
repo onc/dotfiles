@@ -67,6 +67,8 @@ bindsym XF86TouchpadToggle exec /mnt/hdd/dotfiles/touch-toggle.sh;
 # Screenshot
 bindsym Print exec scrot '%Y-%m-%d-%T_$wx$h_scrot.png' -e 'mv $f ~/Pictures/screenshots/'
 
+bindsym $alt+Shift+s sticky enable
+
 # new random wallpaper
 bindsym $alt+ctrl+Shift+w exec --no-startup-id "/mnt/hdd/dotfiles/change-wallpaper.py /mnt/hdd/Pictures/wall"
 
