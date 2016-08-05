@@ -217,7 +217,7 @@ re-downloaded in order to locate PACKAGE."
             ;; save on double escape and space for command mode
             (defun add-vim-bindings()
               (define-key evil-normal-state-local-map (kbd "<escape>") 'save-with-escape-and-timeout))
-            (define-key evil-normal-state-local-map (kbd "<SPC>") 'evil-ex)
+
             (define-key evil-normal-state-local-map (kbd "<DEL>") 'evil-search-highlight-persist-remove-all)
 
             (add-hook 'evil-normal-state-entry-hook 'add-vim-bindings)
@@ -338,11 +338,11 @@ re-downloaded in order to locate PACKAGE."
   ;; this works, because all imap-subfolders are seperated by dots instead of slashes.
   (add-to-list 'mu4e-header-info-custom
                '(:maildir-root .
-               (:name "Root-Folder of the maildir"
-                      :shortname "MailRoot"
-                      :help "Root-Folder of the maildir"
-                      :function (lambda (msg)
-                                  (replace-regexp-in-string "\/[a-zA-Z0-9-. ]*$" "" (concat (mu4e-message-field msg :maildir) ""))))))
+                               (:name "Root-Folder of the maildir"
+                                      :shortname "MailRoot"
+                                      :help "Root-Folder of the maildir"
+                                      :function (lambda (msg)
+                                                  (replace-regexp-in-string "\/[a-zA-Z0-9-. ]*$" "" (concat (mu4e-message-field msg :maildir) ""))))))
 
   ;; adjust columns of headers view
   (setq mu4e-headers-fields
@@ -437,6 +437,16 @@ re-downloaded in order to locate PACKAGE."
   :config (progn
             (setq org-time-clocksum-format (quote (:hours "%d" :require-hours t :minutes ":%02d" :require-minutes t)))
 
+            (setq org-publish-project-alist
+                  '(("blog"
+                     :base-directory "/mnt/hdd/Blog/org-test/"
+                     :html-extension "html"
+                     :base-extension "org"
+                     :publishing-directory "/mnt/hdd/Blog/org-test/public_html/"
+                     :publishing-function (org-html-publish-to-html)
+                     :html-preamble nil
+                     :html-postamble nil)))
+
             (use-package org-bullets
               :ensure t
               :config (progn
@@ -467,6 +477,7 @@ re-downloaded in order to locate PACKAGE."
           "xelatex --shell-escape -interaction nonstopmode -output-directory %o %f"
           "xelatex --shell-escape -interaction nonstopmode -output-directory %o %f"))
 
+  ;; you have to install pygmentize to use minted
   (add-to-list 'org-latex-packages-alist '("" "minted"))
   (add-to-list 'org-latex-packages-alist '("" "color"))
   (setq org-latex-listings 'minted)
@@ -539,13 +550,15 @@ re-downloaded in order to locate PACKAGE."
             (define-key company-active-map (kbd "M-k") 'company-select-previous)
 
             (use-package company-cmake
-              :ensure t)
-            (use-package company-emoji
-              :ensure t)
-            (use-package company-restclient
-              :ensure t)
+              :ensure t
+              :config
+              (add-to-list 'company-backends 'company-cmake))
 
-            (add-to-list 'company-backends 'company-emoji)))
+            (use-package company-restclient
+              :ensure t
+              :config
+              (add-to-list 'company-backends 'company-restclient))
+            ))
 
 ;; emoji font
 (set-fontset-font
@@ -649,17 +662,19 @@ re-downloaded in order to locate PACKAGE."
                               "
       Onzes functions
 
-     Buffers                     Blog                        Projects
+     Buffers                     Blog                        Other
 ------------------------------------------------------------------------------------------
   _i_: indent buffer %(my-where-is-first 'onze-indent-whole-buffer)     _n_: create new blog post     _p_: switch project %(my-where-is-first 'helm-projectile-switch-project)
   _r_: rename buffer and file                               _s_: start clock
   _v_: toggle transparency                                  _f_: stop/finish cock
                                                           _t_: create report-table
+                                                          _m_: compose mail
 "
                               ("i" onze-indent-whole-buffer       nil)
                               ("r" onze-rename-file-and-buffer    nil)
                               ("n" onze-create-new-blog-post      nil)
                               ("p" helm-projectile-switch-project nil)
+                              ("m" mu4e-compose-new               nil)
                               ("s" org-clock-in                   nil)
                               ("f" org-clock-out                  nil)
                               ("t" org-clock-report               nil)
@@ -793,7 +808,11 @@ re-downloaded in order to locate PACKAGE."
   :mode (("\\.html?\\'" . web-mode)
          ("\\.php\\'"   . web-mode)
          ("\\.jsp\\'"   . web-mode)
-         ("\\.erb\\'"   . web-mode)))
+         ("\\.erb\\'"   . web-mode))
+  :config (progn
+            (setq web-mode-markup-indent-offset 2)
+            (setq web-mode-css-indent-offset 2)
+            (setq web-mode-code-indent-offset 2)))
 
 (use-package yaml-mode
   :ensure t)
@@ -1091,7 +1110,8 @@ The FILE-NAME specifies the file name to search for."
   :mode ("\\.js\\'" . js2-mode)
   :config
   (setq-default js2-global-externs '("exports" "module" "require" "setTimeout" "THREE"))
-  (setq-default js2-basic-offset 2))
+  (setq-default js2-basic-offset 2)
+  (define-key js2-mode-map (kbd "M-SPC") 'js2-mode-toggle-element))
 
 ;; PACKAGE: TERN
 (use-package tern
@@ -1442,12 +1462,29 @@ This is a convenience function for `my-where-is'."
  '(ansi-color-names-vector
    ["#272822" "#f92672" "#a6e22e" "#f4bf75" "#66d9ef" "#ae81ff" "#66d9ef" "#f8f8f2"])
  '(ansi-term-color-vector
-   [unspecified "#272822" "#f92672" "#a6e22e" "#f4bf75" "#66d9ef" "#ae81ff" "#66d9ef" "#f8f8f2"])
+   [unspecified "#272822" "#f92672" "#a6e22e" "#f4bf75" "#66d9ef" "#ae81ff" "#66d9ef" "#f8f8f2"] t)
+ ;; '(company-backends
+ ;;   (quote
+ ;;    ((company-ycmd :with company-yasnippet)
+ ;;     (company-eclim :with comany-yasnippet)
+ ;;     (company-restclient :with company-yasnippet)
+ ;;     (company-robe :with company-yasnippet)
+ ;;     (company-emoji :with company-yasnippet)
+ ;;     (company-nxml :with company-yasnippet)
+ ;;     (company-css :with company-yasnippet)
+ ;;     (company-semantic :with company-yasnippet)
+ ;;     (company-clang :with company-yasnippet)
+ ;;     (company-cmake :with company-yasnippet)
+ ;;     (company-capf :with company-yasnippet)
+ ;;     (company-files :with company-yasnippet)
+ ;;     (company-dabbrev-code company-gtags company-etags company-keywords :with company-yasnippet)
+ ;;     (company-dabbrev :with company-yasnippet))))
  '(custom-enabled-themes (quote (base16-onze-google-dark)))
  '(custom-safe-themes
    (quote
-    ("113ae6902d98261317b5507e55ac6e7758af81fc4660c34130490252640224a2" "3ae2686d180c6ea92ccfe418d881b7e984be62639dea15f330d31904cd228f10" "f7799c0c6fc9e8b02853f36a6a7e2b7ce57e51f89d52ad1e25ab302c80e9dd19" "4a171c5c7386e30d16f1ba552fd652dc1c7d79c3b216ef2e9296a7025482ce58" "3270c6e92aa1dd60f8317e7913a658173ad9c953657792cd6f805bd4dcf4e476" "d3e906a019c1b18c6f091eaf05d441be8991bd57e7535a7f0d52f92f7770f37c" "d085be39ec443f01b3a581766ecc292921c76262f25268ff0786310db7351edc" "7d2f37e0de6f872c3d90801b0b8f27d03165876b82c685532d7adafaa08cc30f" "641b002f11edd63d448f1fa8b19e2b318cd5a5edfd6898de025a6754da77c02a" "ab12e149a516519a4794245d65242a13f28ffb4b86b20b9e98551a7fb1e02dd2" "c2c86325e71c2f3b70838e91dfee8f80471021824fe896106922595265cfc93e" "d362b08d053513c09741093741abff117ef807b664e9d85c2c520143e8551022" "c98ce4ee9d83b21991a1d393030cee776458e50c331be8f2911c9cf6cb6bf719" "c6b26b882659f842363a235d8ba376998811d2b73336fc48ad2e10841030cdab" "0240d45644b370b0518e8407f5990a243c769fb0150a7e74297e6f7052a04a72" "9c961e80e46c08fb6d0f71cc2654f302ef214fb69eccb390917a82a42a275f27" "ac31699d6255ef22b646ebc80e69f518929b57f2f0855a814170d060db78a5f1" "d92db4e2b227ce1506a9b95160f6ae594b9844cc685f7c67fb109f4fd6bb0388" "d677ef584c6dfc0697901a44b885cc18e206f05114c8a3b7fde674fce6180879" "e3a3b7d7fe89b5d57d40bc825ca2324875a6f37bd63da66f2a6fc68cc8b2ee95" "7b3124eec8107900b9c03eb7370e3ef6a7a86d896361c8e85bbbe4bbc952124b" "5be9916bc54fd57fcb5a3d9426ed5aec0389a4bd4ed75b497a0d4cf2bbde7a4b" "3a6d8378f18a5ba2a0c88ddcad2500675a755d056b3343b13b36911453e96c34" "4f034ec900e09a0ecfe7025d5f8c02bcf4448d131c5d0ea962b8b74b2ce4d4ea" "3994497138fa263aadde66e0f869e2c2426afc342bf2b06da4c2431473fde61c" "7e3b0c38791f8ee1d067bf7b84cd916ffea6392b428db4b375b47504a89edc6c" default)))
+    ("e97dbbb2b1c42b8588e16523824bc0cb3a21b91eefd6502879cf5baa1fa32e10" "2305decca2d6ea63a408edd4701edf5f4f5e19312114c9d1e1d5ffe3112cde58" "113ae6902d98261317b5507e55ac6e7758af81fc4660c34130490252640224a2" "3ae2686d180c6ea92ccfe418d881b7e984be62639dea15f330d31904cd228f10" "f7799c0c6fc9e8b02853f36a6a7e2b7ce57e51f89d52ad1e25ab302c80e9dd19" "4a171c5c7386e30d16f1ba552fd652dc1c7d79c3b216ef2e9296a7025482ce58" "3270c6e92aa1dd60f8317e7913a658173ad9c953657792cd6f805bd4dcf4e476" "d3e906a019c1b18c6f091eaf05d441be8991bd57e7535a7f0d52f92f7770f37c" "d085be39ec443f01b3a581766ecc292921c76262f25268ff0786310db7351edc" "7d2f37e0de6f872c3d90801b0b8f27d03165876b82c685532d7adafaa08cc30f" "641b002f11edd63d448f1fa8b19e2b318cd5a5edfd6898de025a6754da77c02a" "ab12e149a516519a4794245d65242a13f28ffb4b86b20b9e98551a7fb1e02dd2" "c2c86325e71c2f3b70838e91dfee8f80471021824fe896106922595265cfc93e" "d362b08d053513c09741093741abff117ef807b664e9d85c2c520143e8551022" "c98ce4ee9d83b21991a1d393030cee776458e50c331be8f2911c9cf6cb6bf719" "c6b26b882659f842363a235d8ba376998811d2b73336fc48ad2e10841030cdab" "0240d45644b370b0518e8407f5990a243c769fb0150a7e74297e6f7052a04a72" "9c961e80e46c08fb6d0f71cc2654f302ef214fb69eccb390917a82a42a275f27" "ac31699d6255ef22b646ebc80e69f518929b57f2f0855a814170d060db78a5f1" "d92db4e2b227ce1506a9b95160f6ae594b9844cc685f7c67fb109f4fd6bb0388" "d677ef584c6dfc0697901a44b885cc18e206f05114c8a3b7fde674fce6180879" "e3a3b7d7fe89b5d57d40bc825ca2324875a6f37bd63da66f2a6fc68cc8b2ee95" "7b3124eec8107900b9c03eb7370e3ef6a7a86d896361c8e85bbbe4bbc952124b" "5be9916bc54fd57fcb5a3d9426ed5aec0389a4bd4ed75b497a0d4cf2bbde7a4b" "3a6d8378f18a5ba2a0c88ddcad2500675a755d056b3343b13b36911453e96c34" "4f034ec900e09a0ecfe7025d5f8c02bcf4448d131c5d0ea962b8b74b2ce4d4ea" "3994497138fa263aadde66e0f869e2c2426afc342bf2b06da4c2431473fde61c" "7e3b0c38791f8ee1d067bf7b84cd916ffea6392b428db4b375b47504a89edc6c" default)))
  '(desktop-load-locked-desktop t)
+ '(diary-file "/home/onze/Dropbox/LinuxBackup/diary")
  '(fringe-mode (quote (1 . 1)) nil (fringe))
  '(magit-diff-refine-hunk t)
  '(paradox-github-token t))
