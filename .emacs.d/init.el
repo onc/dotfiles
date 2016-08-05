@@ -618,6 +618,10 @@ re-downloaded in order to locate PACKAGE."
             (define-key helm-map (kbd "C-i") 'helm-execute-persistent-action)
             ;; list actions using C-j
             (define-key helm-map (kbd "C-j") 'helm-select-action)
+
+            (define-key helm-map (kbd "M-j") 'helm-next-line)
+            (define-key helm-map (kbd "M-k") 'helm-previous-line)
+
             (global-set-key (kbd "C-h C-h") 'helm-apropos)
             ;; use helm for meta x
             (global-set-key (kbd "M-x") 'helm-M-x)
