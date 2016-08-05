@@ -202,7 +202,7 @@ bindsym $mod+r mode "resize"
 # STARTUP {{{
 # ===========================================================================================
 # exec xcompmgr -c -f -n
-# exec --no-startup-id compton --config ~/.i3/compton.conf -b
+exec --no-startup-id compton --config ~/.i3/compton.conf -b
 exec --no-startup-id feh --bg-fill ~/.i3/back.png
 # exec --no-startup-id conky
 exec --no-startup-id unclutter
@@ -223,8 +223,9 @@ bar {
   font $font
   workspace_buttons yes
   tray_output LVDS-0
+  separator_symbol " "
   colors {
-    separator #505050
+    separator #E0E0E0
     background #151515
     statusline #E0E0E0
     focused_workspace #505050 #505050 #90A959
@@ -275,6 +276,7 @@ for_window [class="(?i)gwenview"] floating enable
 for_window [class="(?i)kmix"] floating enable
 for_window [class="(?i)okular"] floating enable
 for_window [class="(?i)zeal"] floating enable, move position center
+for_window [class="(?i)de-ulm-uni-pvs-rep*"] floating enable
 for_window [window_role="(?i)msgcompose"] floating enable, border pixel 1, move position center
 for_window [window_role="(?i)addressbook"] floating enable, border pixel 1, move position center
 
