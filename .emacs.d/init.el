@@ -11,10 +11,9 @@
 ;; #############################################################################
 
 (require 'package)
-(add-to-list 'package-archives '("gnu" . "http://elpa.gnu.org/packages/") t)
-(add-to-list 'package-archives '("org" . "http://orgmode.org/elpa/") t)
-(add-to-list 'package-archives '("marmalade" . "http://marmalade-repo.org/packages/") t)
-(add-to-list 'package-archives '("melpa" . "http://melpa.milkbox.net/packages/") t)
+(add-to-list 'package-archives '("gnu" . "https://elpa.gnu.org/packages/") t)
+(add-to-list 'package-archives '("marmalade" . "https://marmalade-repo.org/packages/") t)
+(add-to-list 'package-archives '("melpa" . "https://melpa.org/packages/") t)
 (package-initialize)
 
 ;;; from purcell/emacs.d
@@ -170,6 +169,7 @@ re-downloaded in order to locate PACKAGE."
 ;; load use-package module
 (require-package 'use-package)
 (require 'use-package)
+(setq use-package-verbose t)
 
 (use-package exec-path-from-shell
   :ensure t
@@ -179,111 +179,101 @@ re-downloaded in order to locate PACKAGE."
 ;; make emacs usable
 (use-package evil
   :ensure t
-  :config (progn
-            (evil-mode 1)
-            (setq evil-move-cursor-back nil)
+  :config
+  (evil-mode 1)
+  (setq evil-move-cursor-back nil)
 
-            ;; Some modes should not start in evil-mode
-            (evil-set-initial-state 'paradox-menu-mode 'emacs)
-            (evil-set-initial-state 'el-get-package-menu-mode 'emacs)
-            (evil-set-initial-state 'ag-mode 'emacs)
-            (evil-set-initial-state 'flycheck-error-list-mode 'emacs)
-            (evil-set-initial-state 'dired-mode 'emacs)
-            (evil-set-initial-state 'neotree-mode 'emacs)
-            (evil-set-initial-state 'magit-popup-mode 'emacs)
-            (evil-set-initial-state 'magit-mode 'emacs)
-            (evil-set-initial-state 'pdf-view-mode 'emacs)
-            (evil-set-initial-state 'pdf-annot-list-mode 'emacs)
-            (evil-set-initial-state 'calendar-mode 'emacs)
+  ;; Some modes should not start in evil-mode
+  (evil-set-initial-state 'paradox-menu-mode 'emacs)
+  (evil-set-initial-state 'el-get-package-menu-mode 'emacs)
+  (evil-set-initial-state 'ag-mode 'emacs)
+  (evil-set-initial-state 'flycheck-error-list-mode 'emacs)
+  (evil-set-initial-state 'dired-mode 'emacs)
+  (evil-set-initial-state 'neotree-mode 'emacs)
+  (evil-set-initial-state 'magit-popup-mode 'emacs)
+  (evil-set-initial-state 'magit-mode 'emacs)
+  (evil-set-initial-state 'pdf-view-mode 'emacs)
+  (evil-set-initial-state 'pdf-annot-list-mode 'emacs)
+  (evil-set-initial-state 'calendar-mode 'emacs)
 
-            (defun copy-to-end-of-line ()
-              "Yank from point to end of line."
-              (interactive)
-              (evil-yank (point) (point-at-eol)))
-            ;; copy to end of line
-            (define-key evil-normal-state-map "Y" 'copy-to-end-of-line)
+  (defun copy-to-end-of-line ()
+    "Yank from point to end of line."
+    (interactive)
+    (evil-yank (point) (point-at-eol)))
+  ;; copy to end of line
+  (define-key evil-normal-state-map "Y" 'copy-to-end-of-line)
 
-            ;; if no second escape is pressed in a given timeout, dont wait for a second escape
-            (defun save-with-escape-and-timeout ()
-              (interactive)
-              (block return-point
-                (let ((timer (run-at-time "0.2 sec" nil (lambda () (return-from return-point))))
-                      (key (read-key)))
-                  (if (eq key 27)
-                      (progn
-                        (cancel-timer timer)
-                        (save-buffer))))))
+  ;; if no second escape is pressed in a given timeout, dont wait for a second escape
+  (defun save-with-escape-and-timeout ()
+    (interactive)
+    (block return-point
+      (let ((timer (run-at-time "0.2 sec" nil (lambda () (return-from return-point))))
+            (key (read-key)))
+        (if (eq key 27)
+            (progn
+              (cancel-timer timer)
+              (save-buffer))))))
 
-            ;; save on double escape and space for command mode
-            (defun add-vim-bindings()
-              (define-key evil-normal-state-local-map (kbd "<escape>") 'save-with-escape-and-timeout))
+  ;; save on double escape and space for command mode
+  (defun add-vim-bindings()
+    (define-key evil-normal-state-local-map (kbd "<escape>") 'save-with-escape-and-timeout))
 
-            (define-key evil-normal-state-local-map (kbd "<DEL>") 'evil-search-highlight-persist-remove-all)
+  (define-key evil-normal-state-local-map (kbd "<DEL>") 'evil-search-highlight-persist-remove-all)
 
-            (add-hook 'evil-normal-state-entry-hook 'add-vim-bindings)
+  (add-hook 'evil-normal-state-entry-hook 'add-vim-bindings)
 
-            (use-package evil-leader
-              :ensure t
-              :config (progn
-                        (global-evil-leader-mode)
+  (use-package evil-leader
+    :ensure t
+    :config
+    (global-evil-leader-mode)
 
-                        (evil-leader/set-key
-                          "n" 'neotree-toggle
-                          "f" 'onze-indent-whole-buffer
-                          "init" (lambda () (interactive) (find-file "~/.emacs.d/init.el"))
-                          "b" 'helm-mini
-                          "o" 'find-file
-                          "e" 'eval-defun
-                          "1" 'highlight-symbol-at-point
-                          "0" 'highlight-symbol-remove-all
-                          "gst" 'magit-status
-                          "p" 'helm-projectile
-                          "ci" 'evilnc-comment-or-uncomment-lines
-                          "cl" 'evilnc-quick-comment-or-uncomment-to-the-line
-                          "ll" 'evilnc-quick-comment-or-uncomment-to-the-line
-                          "cc" 'evilnc-copy-and-comment-lines
-                          "cp" 'evilnc-comment-or-uncomment-paragraphs
-                          "cr" 'comment-or-uncomment-region
-                          "cv" 'evilnc-toggle-invert-comment-line-by-line
-                          "a" 'align-regexp)))
+    (evil-leader/set-key
+      "n" 'neotree-toggle
+      "f" 'onze-indent-whole-buffer
+      "init" (lambda () (interactive) (find-file "~/.emacs.d/init.el"))
+      "b" 'helm-mini
+      "o" 'find-file
+      "e" 'eval-defun
+      "1" 'highlight-symbol-at-point
+      "0" 'highlight-symbol-remove-all
+      "gst" 'magit-status
+      "p" 'helm-projectile
+      "ci" 'evilnc-comment-or-uncomment-lines
+      "cl" 'evilnc-quick-comment-or-uncomment-to-the-line
+      "ll" 'evilnc-quick-comment-or-uncomment-to-the-line
+      "cc" 'evilnc-copy-and-comment-lines
+      "cp" 'evilnc-comment-or-uncomment-paragraphs
+      "cr" 'comment-or-uncomment-region
+      "cv" 'evilnc-toggle-invert-comment-line-by-line
+      "a" 'align-regexp))
 
-            (use-package evil-search-highlight-persist
-              :ensure t
-              :config (progn
-                        (global-evil-search-highlight-persist)))
+  (use-package evil-search-highlight-persist
+    :ensure t
+    :config
+    (global-evil-search-highlight-persist))
 
-            (use-package evil-nerd-commenter
-              :ensure t)
+  (use-package evil-nerd-commenter
+    :ensure t)
 
-            ;; PACKAGE: EVIL-NUMBERS
-            (use-package evil-numbers
-              :ensure t
-              ;; :bind (:map evil-normal-state-map
-              :bind (("<M-up>" . evil-numbers/inc-at-pt)
-                     ("<M-down>" . evil-numbers/dec-at-pt)))
+  ;; PACKAGE: EVIL-NUMBERS
+  (use-package evil-numbers
+    :ensure t
+    ;; :bind (:map evil-normal-state-map
+    :bind (("<M-up>" . evil-numbers/inc-at-pt)
+           ("<M-down>" . evil-numbers/dec-at-pt)))
 
-            (use-package evil-mu4e
-              :ensure t)
+  (use-package evil-mu4e
+    :ensure t)
 
-            ;; PACKAGE: EVIL-SURROUND
-            (use-package evil-surround
-              :ensure t
-              :config (progn
-                        (global-evil-surround-mode 1)))))
-
-;; (use-package smartparens
-;;   :ensure t
-;;   :config (progn
-;;             (smartparens-global-mode t)
-;;             (show-smartparens-global-mode)))
-
-;; (use-package autopair
-;;   :ensure t
-;;   :config (progn
-;;             (autopair-global-mode)))
+  ;; PACKAGE: EVIL-SURROUND
+  (use-package evil-surround
+    :ensure t
+    :config
+    (global-evil-surround-mode 1)))
 
 (use-package mu4e
-  :ensure nil
+  ;; load mu4e after 2 seconds of idle
+  :defer 2
   :bind (([f7] . mu4e))
   :config
   ;; default
@@ -316,13 +306,14 @@ re-downloaded in order to locate PACKAGE."
   (setq mu4e-maildir-shortcuts
         '(("/UniMail/INBOX"                             . ?u)
           ("/GoogleMail/INBOX"                          . ?g)
+          ("/GoogleSpamMail/INBOX"                      . ?s)
           ("/Onze-io/OnzeMail/INBOX"                    . ?o)
           ("/Onze-io/AnyoneMail/INBOX"                  . ?a)
           ("/UniMail/Uni-Mails"                         . ?w)
           ("/UniMail/Uni-Mails.jugendhackt.jugendhackt" . ?j)))
 
   (add-to-list 'mu4e-bookmarks '("/UniMail/Uni-Mails.jugendhackt.jugendhackt"   "Jugendhackt" ?j) t)
-  (add-to-list 'mu4e-bookmarks '("/UniMail/INBOX OR /GoogleMail/INBOX OR /Onze-io/OnzeMail/INBOX OR /Onze-io/AnyoneMail/INBOX" "Combined Inbox" ?i) t)
+  (add-to-list 'mu4e-bookmarks '("/UniMail/INBOX OR /GoogleMail/INBOX OR /Onze-io/OnzeMail/INBOX OR /Onze-io/AnyoneMail/INBOX OR /GoogleSpamMail/INBOX" "Combined Inbox" ?i) t)
 
   (setq mu4e-attachment-dir  "~/Downloads/Mail")
 
@@ -434,27 +425,27 @@ re-downloaded in order to locate PACKAGE."
   (define-key calendar-mode-map (kbd "l") 'calendar-forward-day))
 
 (use-package org
-  :config (progn
-            (setq org-time-clocksum-format (quote (:hours "%d" :require-hours t :minutes ":%02d" :require-minutes t)))
+  :config
+  (setq org-time-clocksum-format (quote (:hours "%d" :require-hours t :minutes ":%02d" :require-minutes t)))
 
-            (setq org-publish-project-alist
-                  '(("blog"
-                     :base-directory "/mnt/hdd/Blog/org-test/"
-                     :html-extension "html"
-                     :base-extension "org"
-                     :publishing-directory "/mnt/hdd/Blog/org-test/public_html/"
-                     :publishing-function (org-html-publish-to-html)
-                     :html-preamble nil
-                     :html-postamble nil)))
+  (setq org-publish-project-alist
+        '(("blog"
+           :base-directory "/mnt/hdd/Blog/org-test/"
+           :html-extension "html"
+           :base-extension "org"
+           :publishing-directory "/mnt/hdd/Blog/org-test/public_html/"
+           :publishing-function (org-html-publish-to-html)
+           :html-preamble nil
+           :html-postamble nil)))
 
-            (use-package org-bullets
-              :ensure t
-              :config (progn
-                        (add-hook 'org-mode-hook (lambda () (org-bullets-mode 1)))
-                        (setq org-bullets-bullet-list '("●" "◼" "▶" "♦"))))
+  (use-package org-bullets
+    :ensure t
+    :config
+    (add-hook 'org-mode-hook (lambda () (org-bullets-mode 1)))
+    (setq org-bullets-bullet-list '("●" "◼" "▶" "♦")))
 
-            (use-package org-vcard
-              :ensure t)))
+  (use-package org-vcard
+    :ensure t))
 
 (use-package restclient
   :ensure t)
@@ -510,75 +501,62 @@ re-downloaded in order to locate PACKAGE."
                  ("\\subparagraph{%s}" . "\\subparagraph*{%s}"))))
 
 
-;; (use-package smooth-scrolling
-;;   :ensure t
-;;   :config (progn
-;;             ;; (setq scroll-margin 5)
-;;             ;; (setq scroll-conservatively 10000)
-;;             (setq scroll-step 1)
-;;             (setq auto-window-vscroll nil)
-;;
-;;             (setq scroll-margin 1
-;;                   scroll-conservatively 0
-;;                   scroll-up-aggressively 0.01
-;;                   scroll-down-aggressively 0.01)
-;;             (setq-default scroll-up-aggressively 0.01
-;;                           scroll-down-aggressively 0.01)))
-
 (use-package undo-tree
   :ensure t
-  :config (progn
-            (setq undo-tree-auto-save-history t)
-            (setq undo-tree-history-directory-alist
-                  `(("." . ,(concat user-emacs-directory "undo"))))
-            (global-undo-tree-mode)))
+  :config
+  (setq undo-tree-auto-save-history t)
+  (setq undo-tree-history-directory-alist
+        `(("." . ,(concat user-emacs-directory "undo"))))
+  (global-undo-tree-mode))
 
 (use-package rainbow-delimiters
   :ensure t
-  :config (progn
-            (add-hook 'prog-mode-hook 'rainbow-delimiters-mode)))
+  :config
+  (add-hook 'prog-mode-hook 'rainbow-delimiters-mode))
 
 (use-package company
   :ensure t
-  :config (progn
-            (global-company-mode)
-            ;; no delay no autocomplete
-            (setq company-idle-delay 0)
-            (setq company-minimum-prefix-length 2)
+  :config
+  (global-company-mode)
+  ;; no delay no autocomplete
+  (setq company-idle-delay 0)
+  (setq company-minimum-prefix-length 2)
 
-            (define-key company-active-map (kbd "M-j") 'company-select-next)
-            (define-key company-active-map (kbd "M-k") 'company-select-previous)
+  (define-key company-active-map (kbd "M-j") 'company-select-next)
+  (define-key company-active-map (kbd "M-k") 'company-select-previous)
 
-            (use-package company-cmake
-              :ensure t
-              :config
-              (add-to-list 'company-backends 'company-cmake))
+  (use-package company-cmake
+    :ensure t
+    :config
+    (add-to-list 'company-backends 'company-cmake))
 
-            (use-package company-restclient
-              :ensure t
-              :config
-              (add-to-list 'company-backends 'company-restclient))
-            ))
+  (use-package company-restclient
+    :ensure t
+    :config
+    (add-to-list 'company-backends 'company-restclient)))
 
 ;; emoji font
 (set-fontset-font
  t 'symbol
  (font-spec :family "Symbola") nil 'prepend)
 
-(use-package elpy
-  :ensure t
-  :init
-  (setq elpy-rpc-backend "jedi")
+(use-package python
+  :mode ("\\.py\\'" . python-mode)
   :config
-  (setq elpy-modules (delq 'elpy-module-company elpy-modules))
-  (elpy-enable)
 
-  (add-hook 'python-mode-hook
-            (lambda ()
-              (company-mode)
-              (add-to-list 'company-backends
-                           (company-mode/backend-with-yas 'elpy-company-backend))))
-  (elpy-use-cpython))
+  (use-package elpy
+    :init
+    (setq elpy-rpc-backend "jedi")
+    :config
+    (setq elpy-modules (delq 'elpy-module-company elpy-modules))
+    (elpy-enable)
+
+    (add-hook 'python-mode-hook
+              (lambda ()
+                (company-mode)
+                (add-to-list 'company-backends
+                             (company-mode/backend-with-yas 'elpy-company-backend))))
+    (elpy-use-cpython)))
 
 (use-package robe
   :ensure t
@@ -589,77 +567,76 @@ re-downloaded in order to locate PACKAGE."
 (use-package neotree
   :ensure t
   :defer t
-  :config (progn
-            (global-set-key [f8] 'neotree-toggle)
-            (evil-set-initial-state 'neotree-mode 'emacs)
-            (setq neo-theme 'arrow)
+  :config
+  (global-set-key [f8] 'neotree-toggle)
+  (evil-set-initial-state 'neotree-mode 'emacs)
+  (setq neo-theme 'arrow)
 
-            (define-key neotree-mode-map (kbd "j") 'next-line)
-            (define-key neotree-mode-map (kbd "k") 'previous-line)
-            (define-key neotree-mode-map (kbd "s") 'neotree-enter-vertical-split)
-            (define-key neotree-mode-map (kbd "i") 'neotree-enter-horizontal-split)
-            (define-key neotree-mode-map (kbd "C-w l") 'other-window)
-            ;; (define-key neotree-mode-map (kbd "<escape>") 'neotree-hide)
-            ;; If this variable is non-nil then iT's not possible to
-            ;; get help in Helm buffers
-            ;; https://github.com/jaypei/emacs-neotree/issues/26
-            (setq neo-persist-show nil)
-            (add-hook 'neotree-mode-hook
-                      (lambda ()
-                        (define-key evil-normal-state-local-map (kbd "TAB") 'neotree-enter)
-                        (define-key evil-normal-state-local-map (kbd "SPC") 'neotree-enter)
-                        (define-key evil-normal-state-local-map (kbd "q") 'neotree-hide)
-                        (define-key evil-normal-state-local-map (kbd "RET") 'neotree-enter)))))
+  (define-key neotree-mode-map (kbd "j") 'next-line)
+  (define-key neotree-mode-map (kbd "k") 'previous-line)
+  (define-key neotree-mode-map (kbd "s") 'neotree-enter-vertical-split)
+  (define-key neotree-mode-map (kbd "i") 'neotree-enter-horizontal-split)
+  (define-key neotree-mode-map (kbd "C-w l") 'other-window)
+  ;; (define-key neotree-mode-map (kbd "<escape>") 'neotree-hide)
+  ;; If this variable is non-nil then iT's not possible to
+  ;; get help in Helm buffers
+  ;; https://github.com/jaypei/emacs-neotree/issues/26
+  (setq neo-persist-show nil)
+  (add-hook 'neotree-mode-hook
+            (lambda ()
+              (define-key evil-normal-state-local-map (kbd "TAB") 'neotree-enter)
+              (define-key evil-normal-state-local-map (kbd "SPC") 'neotree-enter)
+              (define-key evil-normal-state-local-map (kbd "q") 'neotree-hide)
+              (define-key evil-normal-state-local-map (kbd "RET") 'neotree-enter))))
 
 (use-package helm
   :ensure t
-  :config (progn
-            (helm-mode 1)
-            (setq helm-buffer-details-flag nil)
-            ;; fuzzy matching
-            (setq helm-apropos-fuzzy-match t)
-            (setq helm-ff-file-name-history-use-recentf t)
+  :config
+  (helm-mode 1)
+  (setq helm-buffer-details-flag nil)
+  ;; fuzzy matching
+  (setq helm-apropos-fuzzy-match t)
+  (setq helm-ff-file-name-history-use-recentf t)
 
-            (setq helm-reuse-last-window-split-state t)
-            ;; Don't use full width of the frame
-            (setq helm-split-window-in-side-p t)
-            (helm-autoresize-mode t)
+  (setq helm-reuse-last-window-split-state t)
+  ;; Don't use full width of the frame
+  (setq helm-split-window-in-side-p t)
+  (helm-autoresize-mode t)
 
-            ;; rebind tab to do persistens action
-            (define-key helm-map (kbd "<tab>") 'helm-execute-persistent-action)
-            ;; make tab work in terminal
-            (define-key helm-map (kbd "C-i") 'helm-execute-persistent-action)
-            ;; list actions using C-j
-            (define-key helm-map (kbd "C-j") 'helm-select-action)
+  ;; rebind tab to do persistens action
+  (define-key helm-map (kbd "<tab>") 'helm-execute-persistent-action)
+  ;; make tab work in terminal
+  (define-key helm-map (kbd "C-i") 'helm-execute-persistent-action)
+  ;; list actions using C-j
+  (define-key helm-map (kbd "C-j") 'helm-select-action)
 
-            (define-key helm-map (kbd "M-j") 'helm-next-line)
-            (define-key helm-map (kbd "M-k") 'helm-previous-line)
+  (define-key helm-map (kbd "M-j") 'helm-next-line)
+  (define-key helm-map (kbd "M-k") 'helm-previous-line)
 
-            (global-set-key (kbd "C-h C-h") 'helm-apropos)
-            ;; use helm for meta x
-            (global-set-key (kbd "M-x") 'helm-M-x)
-            (global-set-key (kbd "C-x b") 'helm-mini)
-            (global-set-key (kbd "C-x C-f") 'helm-find-files)
+  (global-set-key (kbd "C-h C-h") 'helm-apropos)
+  ;; use helm for meta x
+  (global-set-key (kbd "M-x") 'helm-M-x)
+  (global-set-key (kbd "C-x b") 'helm-mini)
+  (global-set-key (kbd "C-x C-f") 'helm-find-files)
 
-            (use-package helm-ag
-              :ensure t)
+  (use-package helm-ag
+    :ensure t)
 
-            (use-package helm-mu
-              :ensure t)
+  (use-package helm-mu
+    :ensure t)
 
-            (use-package helm-projectile
-              :ensure t
-              :config (progn
-                        (setq projectile-completion-system 'helm)
-                        (helm-projectile-on)))))
+  (use-package helm-projectile
+    :ensure t
+    :config
+    (setq projectile-completion-system 'helm)
+    (helm-projectile-on)))
 
 (use-package hydra
   :ensure t
-  :config (progn
-
-            (global-set-key (kbd "C-x m")
-                            (defhydra hydra-onze (:color teal)
-                              "
+  :config
+  (global-set-key (kbd "C-x m")
+                  (defhydra hydra-onze (:color teal)
+                    "
       Onzes functions
 
      Buffers                     Blog                        Other
@@ -670,42 +647,42 @@ re-downloaded in order to locate PACKAGE."
                                                           _t_: create report-table
                                                           _m_: compose mail
 "
-                              ("i" onze-indent-whole-buffer       nil)
-                              ("r" onze-rename-file-and-buffer    nil)
-                              ("n" onze-create-new-blog-post      nil)
-                              ("p" helm-projectile-switch-project nil)
-                              ("m" mu4e-compose-new               nil)
-                              ("s" org-clock-in                   nil)
-                              ("f" org-clock-out                  nil)
-                              ("t" org-clock-report               nil)
-                              ("v" toggle-transparency            nil)
-                              ("q" nil                            "cancel")))))
+                    ("i" onze-indent-whole-buffer       nil)
+                    ("r" onze-rename-file-and-buffer    nil)
+                    ("n" onze-create-new-blog-post      nil)
+                    ("p" helm-projectile-switch-project nil)
+                    ("m" mu4e-compose-new               nil)
+                    ("s" org-clock-in                   nil)
+                    ("f" org-clock-out                  nil)
+                    ("t" org-clock-report               nil)
+                    ("v" toggle-transparency            nil)
+                    ("q" nil                            "cancel"))))
 
 (use-package git-gutter
   :ensure t
-  :config (progn
-            (global-git-gutter-mode +1)
-            ;; hide if there are no changes
-            (setq git-gutter:hide-gutter t)))
+  :config
+  (global-git-gutter-mode +1)
+  ;; hide if there are no changes
+  (setq git-gutter:hide-gutter t))
 
 (use-package ycmd
   :ensure t
-  :config (progn
-            (add-hook 'c++-mode-hook 'ycmd-mode)
-            (set-variable 'ycmd-server-command '("python2" "/home/onze/Applications/ycmd/ycmd"))
-            (set-variable 'ycmd-global-config "/home/onze/Applications/ycmd/cpp/ycm/.ycm_extra_conf.py")
+  :config
+  (add-hook 'c++-mode-hook 'ycmd-mode)
+  (set-variable 'ycmd-server-command '("python2" "/home/onze/Applications/ycmd/ycmd"))
+  (set-variable 'ycmd-global-config "/home/onze/Applications/ycmd/cpp/ycm/.ycm_extra_conf.py")
 
-            (eval-after-load "flycheck-ycmd-autoloads" '(add-hook 'ycmd-mode-hook 'flycheck-ycmd-setup))))
+  (eval-after-load "flycheck-ycmd-autoloads" '(add-hook 'ycmd-mode-hook 'flycheck-ycmd-setup)))
 
 (use-package company-ycmd
   :ensure t
-  :config (progn
-            (company-ycmd-setup)))
+  :config
+  (company-ycmd-setup))
 
 (use-package projectile
   :ensure t
-  :config (progn
-            (projectile-global-mode)))
+  :config
+  (projectile-global-mode))
 
 (use-package powerline
   :ensure t
@@ -722,48 +699,47 @@ re-downloaded in order to locate PACKAGE."
 
 (use-package yasnippet
   :ensure t
-  :config (progn
-            (yas-global-mode 1)
-            (global-set-key (kbd "C-c y") 'company-yasnippet)
-            ;; enable yasnippet everywhere
-            (defvar company-mode/enable-yas t
-              "Enable yasnippet for all backends.")
-            (defun company-mode/backend-with-yas (backend)
-              (if (or (not company-mode/enable-yas) (and (listp backend) (member 'company-yasnippet backend)))
-                  backend
-                (append (if (consp backend) backend (list backend))
-                        '(:with company-yasnippet))))
+  :config
+  (yas-global-mode 1)
+  (global-set-key (kbd "C-c y") 'company-yasnippet)
+  ;; enable yasnippet everywhere
+  (defvar company-mode/enable-yas t
+    "Enable yasnippet for all backends.")
+  (defun company-mode/backend-with-yas (backend)
+    (if (or (not company-mode/enable-yas) (and (listp backend) (member 'company-yasnippet backend)))
+        backend
+      (append (if (consp backend) backend (list backend))
+              '(:with company-yasnippet))))
 
-            (setq company-backends (mapcar #'company-mode/backend-with-yas company-backends))))
+  (setq company-backends (mapcar #'company-mode/backend-with-yas company-backends)))
 
 (use-package magit
   :ensure nil
   :load-path "/home/onze/.emacs.d/git-package/magit/lisp"
   :bind (("M-s" . magit-status))
-  :config (progn
+  :config
+  (with-eval-after-load 'info
+    (info-initialize)
+    (add-to-list 'Info-directory-list
+                 "~/.emacs.d/git-package/magit/Documentation/"))
 
-            (with-eval-after-load 'info
-              (info-initialize)
-              (add-to-list 'Info-directory-list
-                           "~/.emacs.d/git-package/magit/Documentation/"))
-
-            (use-package magit-gitflow
-              :load-path "/home/onze/.emacs.d/git-packages/magit-gitflow"
-              :disabled t
-              :config (progn
-                        add-hook 'magit-mode-hook 'turn-on-magit-gitflow))))
+  (use-package magit-gitflow
+    :load-path "/home/onze/.emacs.d/git-packages/magit-gitflow"
+    :disabled t
+    :config
+    add-hook 'magit-mode-hook 'turn-on-magit-gitflow))
 
 (use-package org-clock
   :defer t
-  :config (progn
-            (setq org-clock-persist 'history)
-            (org-clock-persistence-insinuate)))
+  :config
+  (setq org-clock-persist 'history)
+  (org-clock-persistence-insinuate))
 
 (use-package async
   :defer t
   :ensure t
-  :config (progn
-            (require 'async-bytecomp)))
+  :config
+  (require 'async-bytecomp))
 
 (use-package dash
   :defer t
@@ -787,32 +763,30 @@ re-downloaded in order to locate PACKAGE."
 
 (use-package diminish
   :ensure t
-  :config (progn
-            ;; Clean up mode line
-            ;; (eval-after-load "company" '(diminish 'company-mode "cpy"))
-            (eval-after-load "undo-tree" '(diminish 'undo-tree-mode))
-            (eval-after-load "eldoc" '(diminish 'eldoc-mode))
-            (eval-after-load "helm" '(diminish 'helm-mode))
-            (eval-after-load "company" '(diminish 'company-mode))
+  :config
+  ;; Clean up mode line
+  ;; (eval-after-load "company" '(diminish 'company-mode "cpy"))
+  (eval-after-load "undo-tree" '(diminish 'undo-tree-mode))
+  (eval-after-load "eldoc" '(diminish 'eldoc-mode))
+  (eval-after-load "helm" '(diminish 'helm-mode))
+  (eval-after-load "company" '(diminish 'company-mode))
 
-            (add-hook 'emacs-lisp-mode-hook
-                      (lambda ()
-                        (setq mode-name "el")))))
+  (add-hook 'emacs-lisp-mode-hook
+            (lambda ()
+              (setq mode-name "el"))))
 
 (use-package scss-mode
   :ensure t)
 
 (use-package web-mode
-  :ensure t
-  :defer t
   :mode (("\\.html?\\'" . web-mode)
          ("\\.php\\'"   . web-mode)
          ("\\.jsp\\'"   . web-mode)
          ("\\.erb\\'"   . web-mode))
-  :config (progn
-            (setq web-mode-markup-indent-offset 2)
-            (setq web-mode-css-indent-offset 2)
-            (setq web-mode-code-indent-offset 2)))
+  :config
+  (setq web-mode-markup-indent-offset 2)
+  (setq web-mode-css-indent-offset 2)
+  (setq web-mode-code-indent-offset 2))
 
 (use-package yaml-mode
   :ensure t)
@@ -826,58 +800,47 @@ re-downloaded in order to locate PACKAGE."
 (use-package nlinum
   :ensure t)
 
-;; (use-package google-c-style
-;;   :ensure t
-;;   :config (progn
-;;             (add-hook 'c-mode-common-hook 'google-set-c-style)))
-
 (use-package fill-column-indicator
   :ensure t
-  :config (progn
-            (setq fci-rule-width 1)
-            (setq fci-rule-color "gray71")
-            (setq-default fill-column 80)
-            (add-hook 'c-mode-common-hook 'fci-mode)
-            (add-hook 'mail-mode-hook 'fci-mode)
-            (add-hook 'js2-mode-hook 'fci-mode)))
+  :config
+  (setq fci-rule-width 1)
+  (setq fci-rule-color "gray71")
+  (setq-default fill-column 80)
+  (add-hook 'c-mode-common-hook 'fci-mode)
+  (add-hook 'mail-mode-hook 'fci-mode)
+  (add-hook 'js2-mode-hook 'fci-mode))
 
 (use-package markdown-mode
   :ensure t
-  :config (progn
-            (add-to-list 'auto-mode-alist '("\\.markdown\\'" . markdown-mode))
-            (add-to-list 'auto-mode-alist '("\\.md\\'" . markdown-mode))
-            (add-to-list 'auto-mode-alist '("\\.mmd\\'" . markdown-mode))
+  :config
+  (add-to-list 'auto-mode-alist '("\\.markdown\\'" . markdown-mode))
+  (add-to-list 'auto-mode-alist '("\\.md\\'" . markdown-mode))
+  (add-to-list 'auto-mode-alist '("\\.mmd\\'" . markdown-mode))
 
-            (add-hook 'markdown-mode-hook 'orgtbl-mode)
-            (add-hook 'markdown-mode-hook
-                      (lambda()
-                        (add-hook 'after-save-hook 'org-tables-to-markdown  nil 'make-it-local)))))
+  (add-hook 'markdown-mode-hook 'orgtbl-mode)
+  (add-hook 'markdown-mode-hook
+            (lambda()
+              (add-hook 'after-save-hook 'org-tables-to-markdown  nil 'make-it-local))))
 
 (use-package rainbow-mode
   :ensure t
-  :config (progn
-            (dolist
-                (hook '(css-mode-hook
-                        html-mode-hook
-                        js-mode-hook
-                        emacs-lisp-mode-hook
-                        ;; org-mode-hook
-                        text-mode-hook))
-              (add-hook hook 'rainbow-mode))))
-
-;; (use-package flycheck-google-cpplint
-;;   :ensure t
-;;   :config (progn
-;;             (custom-set-variables
-;;              '(flycheck-c/c++-googlelint-executable "/usr/local/bin/cpplint.py"))))
+  :config
+  (dolist
+      (hook '(css-mode-hook
+              html-mode-hook
+              js-mode-hook
+              emacs-lisp-mode-hook
+              ;; org-mode-hook
+              text-mode-hook))
+    (add-hook hook 'rainbow-mode)))
 
 (use-package flycheck
   :ensure t
-  :config (progn
-            (global-flycheck-mode)
-            (add-hook 'c++-mode-hook (lambda () (setq flycheck-clang-language-standard "c++14")))
-            ;; (flycheck-add-next-checker 'c/c++-clang 'c/c++-googlelint 'append)
-            ))
+  :config
+  (global-flycheck-mode)
+  (add-hook 'c++-mode-hook (lambda () (setq flycheck-clang-language-standard "c++14")))
+  ;; (flycheck-add-next-checker 'c/c++-clang 'c/c++-googlelint 'append)
+  )
 
 (use-package wcheck-mode
   :ensure t
@@ -999,91 +962,88 @@ re-downloaded in order to locate PACKAGE."
 (use-package ispell
   :defer t
   :bind (([f8]. fd-switch-dictionary))
-  :config (progn
-            (defun fd-switch-dictionary()
-              (interactive)
-              (let* ((dic ispell-current-dictionary)
-                     (change (if (string= dic "english") "deutsch" "english")))
-                (ispell-change-dictionary change)
-                (message "Dictionary switched from %s to %s" dic change)))))
+  :config
+  (defun fd-switch-dictionary()
+    (interactive)
+    (let* ((dic ispell-current-dictionary)
+           (change (if (string= dic "english") "deutsch" "english")))
+      (ispell-change-dictionary change)
+      (message "Dictionary switched from %s to %s" dic change))))
 
 (use-package unbound
   :ensure t)
 
 (use-package cc-mode
   :config
-  (progn
+  ;; -------------------------------------------------
+  ;; build a cmakeproject
+  ;; -------------------------------------------------
+  (defcustom dirvars-chase-remote nil
+    "Whether dirvars looks upward if in a remote filesystem."
+    :type 'boolean)
 
-    ;; -------------------------------------------------
-    ;; build a cmakeproject
-    ;; -------------------------------------------------
-    (defcustom dirvars-chase-remote nil
-      "Whether dirvars looks upward if in a remote filesystem."
-      :type 'boolean)
-
-    (defun dirvars-find-upwards (file-name)
-      "Find a file in the current directory or one of its parents.
+  (defun dirvars-find-upwards (file-name)
+    "Find a file in the current directory or one of its parents.
 
 Returns the fully qualified file name, or nil if it isn't found.
 
 The FILE-NAME specifies the file name to search for."
-      (if (and (not dirvars-chase-remote) (file-remote-p default-directory))
-          nil
-        ;; Chase links in the source file and search in the dir where it
-        ;; points.
-        (setq dir-name (or (and buffer-file-name
-                                (file-name-directory (file-chase-links
-                                                      buffer-file-name)))
-                           default-directory))
-        ;; Chase links before visiting the file.  This makes it easier to
-        ;; use a single file for several related directories.
-        (setq dir-name (file-chase-links dir-name))
-        (setq dir-name (expand-file-name dir-name))
-        ;; Move up in the dir hierarchy till we find a change log file.
-        (let ((file1 (concat dir-name file-name))
-              parent-dir)
-          (while (and (not (file-exists-p file1))
-                      (progn (setq parent-dir
-                                   (file-name-directory
-                                    (directory-file-name
-                                     (file-name-directory file1))))
-                             ;; Give up if we are already at the root dir.
-                             (not (string= (file-name-directory file1)
-                                           parent-dir))))
-            ;; Move up to the parent dir and try again.
-            (setq file1 (expand-file-name file-name parent-dir)))
-          ;; If we found the file in a parent dir, use that.  Otherwise,
-          ;; return nil
-          (if (or (get-file-buffer file1) (file-exists-p file1))
-              file1
-            nil))))
+    (if (and (not dirvars-chase-remote) (file-remote-p default-directory))
+        nil
+      ;; Chase links in the source file and search in the dir where it
+      ;; points.
+      (setq dir-name (or (and buffer-file-name
+                              (file-name-directory (file-chase-links
+                                                    buffer-file-name)))
+                         default-directory))
+      ;; Chase links before visiting the file.  This makes it easier to
+      ;; use a single file for several related directories.
+      (setq dir-name (file-chase-links dir-name))
+      (setq dir-name (expand-file-name dir-name))
+      ;; Move up in the dir hierarchy till we find a change log file.
+      (let ((file1 (concat dir-name file-name))
+            parent-dir)
+        (while (and (not (file-exists-p file1))
+                    (progn (setq parent-dir
+                                 (file-name-directory
+                                  (directory-file-name
+                                   (file-name-directory file1))))
+                           ;; Give up if we are already at the root dir.
+                           (not (string= (file-name-directory file1)
+                                         parent-dir))))
+          ;; Move up to the parent dir and try again.
+          (setq file1 (expand-file-name file-name parent-dir)))
+        ;; If we found the file in a parent dir, use that.  Otherwise,
+        ;; return nil
+        (if (or (get-file-buffer file1) (file-exists-p file1))
+            file1
+          nil))))
 
-    (defun onze-cmake-build ()
-      (interactive)
-      (let* ((build-path-exists (dirvars-find-upwards "build"))
-             (cmakelists-dir (file-name-directory (dirvars-find-upwards "CMakeLists.txt")))
-             (build-path (concat cmakelists-dir "build"))
-             )
-        (if build-path-exists
-            (compile (concat "make -k -C " build-path))
-          ;; create build path and run cmake
-          (make-directory build-path)
-          (call-process "cmake" nil nil nil (concat "-B" build-path) (concat "-H" cmakelists-dir)))))
+  (defun onze-cmake-build ()
+    (interactive)
+    (let* ((build-path-exists (dirvars-find-upwards "build"))
+           (cmakelists-dir (file-name-directory (dirvars-find-upwards "CMakeLists.txt")))
+           (build-path (concat cmakelists-dir "build"))
+           )
+      (if build-path-exists
+          (compile (concat "make -k -C " build-path))
+        ;; create build path and run cmake
+        (make-directory build-path)
+        (call-process "cmake" nil nil nil (concat "-B" build-path) (concat "-H" cmakelists-dir)))))
 
-    (defun my-executable-path ()
-      "Returns ...."
-      (with-temp-buffer
-        (if (zerop (call-process "/bin/bash" nil t nil "-c" (concat (concat "find " (dirvars-find-upwards "build")) " -executable -type f | grep -v CMake")))
-            (buffer-substring (point-min) (1- (point-max)))
-          nil)))
+  (defun my-executable-path ()
+    "Returns ...."
+    (with-temp-buffer
+      (if (zerop (call-process "/bin/bash" nil t nil "-c" (concat (concat "find " (dirvars-find-upwards "build")) " -executable -type f | grep -v CMake")))
+          (buffer-substring (point-min) (1- (point-max)))
+        nil)))
 
-    (defun onze-cmake-run ()
-      (interactive)
-      (call-process (my-executable-path)))
+  (defun onze-cmake-run ()
+    (interactive)
+    (call-process (my-executable-path)))
 
-    (define-key c++-mode-map (kbd "C-c c") 'onze-cmake-build)
-    (define-key c++-mode-map (kbd "C-c x") 'onze-cmake-run)
-    ))
+  (define-key c++-mode-map (kbd "C-c c") 'onze-cmake-build)
+  (define-key c++-mode-map (kbd "C-c x") 'onze-cmake-run))
 
 (use-package mode-icons
   :ensure t
@@ -1092,8 +1052,8 @@ The FILE-NAME specifies the file name to search for."
 
 (use-package groovy-mode
   :ensure t
-  :mode (("\.groovy$" . groovy-mode)
-         ("\.gradle$" . groovy-mode))
+  :mode (("\\.groovy\\'" . groovy-mode)
+         ("\\.gradle\\'" . groovy-mode))
   :config
   (use-package gradle-mode
     :ensure t))
@@ -1148,6 +1108,10 @@ The FILE-NAME specifies the file name to search for."
 
 (use-package jsx-mode
   :ensure t)
+
+(use-package elisp-mode
+  :ensure nil
+  :mode ("\\.el\\'" . emacs-lisp-mode))
 
 (use-package golden-ratio
   :commands (golden-ratio-mode)
