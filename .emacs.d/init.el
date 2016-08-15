@@ -151,8 +151,6 @@ re-downloaded in order to locate PACKAGE."
             (setq fill-column 80)
             (auto-fill-mode t)))
 
-(require 'mu4e)
-
 (setq browse-url-browser-function 'browse-url-generic
       browse-url-generic-program "google-chrome-stable")
 
@@ -169,7 +167,7 @@ re-downloaded in order to locate PACKAGE."
 ;; load use-package module
 (require-package 'use-package)
 (require 'use-package)
-(setq use-package-verbose t)
+;; (setq use-package-verbose t)
 
 (use-package exec-path-from-shell
   :ensure t
@@ -273,7 +271,6 @@ re-downloaded in order to locate PACKAGE."
 
 (use-package mu4e
   ;; load mu4e after 2 seconds of idle
-  :defer 2
   :bind (([f7] . mu4e))
   :config
   ;; default
@@ -425,6 +422,8 @@ re-downloaded in order to locate PACKAGE."
   (define-key calendar-mode-map (kbd "l") 'calendar-forward-day))
 
 (use-package org
+  :mode (("\\.org\\'" . org-mode)
+         ("\\.org_archive\\'" . org-mode))
   :config
   (setq org-time-clocksum-format (quote (:hours "%d" :require-hours t :minutes ":%02d" :require-minutes t)))
 
@@ -559,7 +558,7 @@ re-downloaded in order to locate PACKAGE."
     (elpy-use-cpython)))
 
 (use-package robe
-  :ensure t
+  :defer t
   :config
   (add-hook 'ruby-mode-hook 'robe-mode)
   (push 'company-robe company-backends))
@@ -751,7 +750,6 @@ re-downloaded in order to locate PACKAGE."
   :commands (paradox-list-packages))
 
 (use-package glsl-mode
-  :ensure t
   :mode (("\\.vert\\'" . glsl-mode)
          ("\\.frag\\'" . glsl-mode)))
 
@@ -776,7 +774,7 @@ re-downloaded in order to locate PACKAGE."
               (setq mode-name "el"))))
 
 (use-package scss-mode
-  :ensure t)
+  :mode ("\\.scss\\'" . scss-mode))
 
 (use-package web-mode
   :mode (("\\.html?\\'" . web-mode)
@@ -789,13 +787,13 @@ re-downloaded in order to locate PACKAGE."
   (setq web-mode-code-indent-offset 2))
 
 (use-package yaml-mode
-  :ensure t)
+  :mode ("\\.yml\\'" . yaml-mode))
 
 (use-package nginx-mode
   :ensure t)
 
 (use-package gitignore-mode
-  :ensure t)
+  :mode ("\\.gitignore\\'" . gitignore-mode))
 
 (use-package nlinum
   :ensure t)
@@ -811,12 +809,10 @@ re-downloaded in order to locate PACKAGE."
   (add-hook 'js2-mode-hook 'fci-mode))
 
 (use-package markdown-mode
-  :ensure t
+  :mode (("\\.markdown\\'" . markdown-mode)
+         ("\\.md\\'" . markdown-mode)
+         ("\\.mmd\\'" . markdown-mode))
   :config
-  (add-to-list 'auto-mode-alist '("\\.markdown\\'" . markdown-mode))
-  (add-to-list 'auto-mode-alist '("\\.md\\'" . markdown-mode))
-  (add-to-list 'auto-mode-alist '("\\.mmd\\'" . markdown-mode))
-
   (add-hook 'markdown-mode-hook 'orgtbl-mode)
   (add-hook 'markdown-mode-hook
             (lambda()
@@ -974,6 +970,9 @@ re-downloaded in order to locate PACKAGE."
   :ensure t)
 
 (use-package cc-mode
+  :mode (("\\.[hH]\\'" . cc-mode)
+         ("\\.cpp\\'" . cc-mode)
+         ("\\.hpp\\'" . cc-mode))
   :config
   ;; -------------------------------------------------
   ;; build a cmakeproject
