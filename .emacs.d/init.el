@@ -403,7 +403,6 @@ re-downloaded in order to locate PACKAGE."
   (define-key pdf-view-mode-map (kbd "h") 'pdf-view-previous-page-command))
 
 (use-package deft
-  :ensure t
   :bind (([f6] . deft))
   :config
   (setq deft-directory "~/Dropbox/Notes")
@@ -447,7 +446,7 @@ re-downloaded in order to locate PACKAGE."
     :ensure t))
 
 (use-package restclient
-  :ensure t)
+  :mode ("\\.rest\\'" . restclient-mode))
 
 (use-package ox-latex
   :defer t
@@ -564,10 +563,8 @@ re-downloaded in order to locate PACKAGE."
   (push 'company-robe company-backends))
 
 (use-package neotree
-  :ensure t
-  :defer t
+  :bind(([f8] . neotree-toggle))
   :config
-  (global-set-key [f8] 'neotree-toggle)
   (evil-set-initial-state 'neotree-mode 'emacs)
   (setq neo-theme 'arrow)
 
@@ -741,13 +738,14 @@ re-downloaded in order to locate PACKAGE."
   (require 'async-bytecomp))
 
 (use-package dash
-  :defer t
-  :ensure t)
+  :defer t)
 
 (use-package paradox
-  :ensure t
-  :defer t
-  :commands (paradox-list-packages))
+  :commands (paradox-list-packages)
+  :config
+  (setq paradox-automatically-star nil)
+  (setq paradox-display-star-count nil)
+  (setq paradox-execute-asynchronously t))
 
 (use-package glsl-mode
   :mode (("\\.vert\\'" . glsl-mode)
@@ -1050,12 +1048,10 @@ The FILE-NAME specifies the file name to search for."
   (mode-icons-mode))
 
 (use-package groovy-mode
-  :ensure t
-  :mode (("\\.groovy\\'" . groovy-mode)
-         ("\\.gradle\\'" . groovy-mode))
-  :config
-  (use-package gradle-mode
-    :ensure t))
+  :mode ("\\.groovy\\'" . groovy-mode))
+
+(use-package gradle-mode
+  :mode ("\\.gradle\\'" . gradle-mode))
 
 (use-package solarized-theme
   :ensure t)
@@ -1065,7 +1061,6 @@ The FILE-NAME specifies the file name to search for."
 
 ;; PACKAGE: JS2
 (use-package js2-mode
-  :ensure t
   :mode ("\\.js\\'" . js2-mode)
   :config
   (setq-default js2-global-externs '("exports" "module" "require" "setTimeout" "THREE"))
@@ -1074,10 +1069,11 @@ The FILE-NAME specifies the file name to search for."
 
 ;; PACKAGE: TERN
 (use-package tern
-  :ensure t
+  :defer t
   :init
   (add-hook 'js-mode-hook (lambda () (tern-mode t)))
   (add-hook 'js2-mode-hook (lambda () (tern-mode t)))
+  (add-hook 'web-mode-hook (lambda () (tern-mode t)))
   :config
   (use-package company-tern
     :ensure t
@@ -1095,7 +1091,7 @@ The FILE-NAME specifies the file name to search for."
   :ensure t)
 
 (use-package json-mode
-  :ensure t
+  :mode ("\\.json\\'" . json-mode)
   :config
   (setq js-indent-level 2))
 
@@ -1105,11 +1101,7 @@ The FILE-NAME specifies the file name to search for."
 (use-package dockerfile-mode
   :ensure t)
 
-(use-package jsx-mode
-  :ensure t)
-
 (use-package elisp-mode
-  :ensure nil
   :mode ("\\.el\\'" . emacs-lisp-mode))
 
 (use-package golden-ratio
