@@ -48,7 +48,7 @@ export PATH="${GOPATH}/bin:${PATH}"
 # moodle
 export PATH="${HOME}/Applications/moodle-destroyer-tools:${PATH}"
 
-export PATH="${HOME}/Applications/mu-repo:${PATH}"
+# export PATH="${HOME}/Applications/mu-repo:${PATH}"
 
 # for tmuxinator
 export DISABLE_AUTO_TITLE=true
