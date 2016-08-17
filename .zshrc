@@ -10,8 +10,9 @@ COMPLETION_WAITING_DOTS="false"
 REPORTTIME=10
 
 # plugins
-plugins=(test git git-flow-avh svn tmux man colored-man-pages colorize themes z sudo 
-rails zsh-syntax-highlighting fzf npm cp bgnotify zsh_reload docker docker-compose)
+plugins=(test git git-flow-avh svn tmux tmuxinator man colored-man-pages colorize
+         themes z sudo rails zsh-syntax-highlighting fzf npm cp bgnotify
+         zsh_reload docker docker-compose)
 
 # Disable repeating command before result of command
 DISABLE_AUTO_TITLE="true"
@@ -48,6 +49,9 @@ export PATH="${GOPATH}/bin:${PATH}"
 export PATH="${HOME}/Applications/moodle-destroyer-tools:${PATH}"
 
 export PATH="${HOME}/Applications/mu-repo:${PATH}"
+
+# for tmuxinator
+export DISABLE_AUTO_TITLE=true
 
 # Preferred editor for local and remote sessions
 if [[ -n $SSH_CONNECTION ]]; then
