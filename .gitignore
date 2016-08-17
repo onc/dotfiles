@@ -1,7 +1,6 @@
-/.i3/back.png
-/.i3/lock.png
 .tern-port
 *.gif
+*.png
 
 # Created by https://www.gitignore.io/api/node,emacs,vim
 
