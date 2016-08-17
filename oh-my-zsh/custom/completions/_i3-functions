@@ -1,0 +1,18 @@
+#compdef i3-functions
+_i3-functions() {
+
+    local -a commands
+    commands=(
+    'reload: reload i3 configuration'
+    'restart: restart i3'
+    'logout: exit i3'
+    )
+
+    if (( CURRENT == 2 )); then
+        _describe -t commands 'commands' commands
+    fi
+
+    return 0
+}
+
+_i3-functions
