@@ -1,0 +1,4 @@
+" space fuer comandmode
+nnoremap <space> :
+
+set clipboard=unnamed
