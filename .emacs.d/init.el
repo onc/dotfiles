@@ -167,7 +167,7 @@ re-downloaded in order to locate PACKAGE."
 ;; load use-package module
 (require-package 'use-package)
 (require 'use-package)
-;; (setq use-package-verbose t)
+(setq use-package-verbose t)
 
 (use-package exec-path-from-shell
   :ensure t
@@ -272,6 +272,7 @@ re-downloaded in order to locate PACKAGE."
 (use-package mu4e
   ;; load mu4e after 2 seconds of idle
   :bind (([f7] . mu4e))
+  :commands mu4e
   :config
   ;; default
   (setq mu4e-maildir (expand-file-name "~/Mail"))
@@ -390,9 +391,9 @@ re-downloaded in order to locate PACKAGE."
         smtpmail-debug-info t))
 
 (use-package pdf-tools
+  :commands (pdf-tools-install)
+  :mode (("\\.pdf\\'" . pdf-view-mode))
   :config
-  (pdf-tools-install)
-
   (add-hook 'pdf-view-mode-hook 'pdf-view-fit-page-to-window)
 
   (define-key pdf-view-mode-map (kbd "C-w l") 'evil-window-right)
@@ -785,7 +786,8 @@ re-downloaded in order to locate PACKAGE."
   (setq web-mode-code-indent-offset 2))
 
 (use-package yaml-mode
-  :mode ("\\.yml\\'" . yaml-mode))
+  :mode (("\\.yml\\'" . yaml-mode)
+         ("\\.yaml\\'" . yaml-mode)))
 
 (use-package nginx-mode
   :ensure t)
