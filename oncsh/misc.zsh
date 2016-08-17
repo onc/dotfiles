@@ -14,6 +14,7 @@ alias hiwi='cd /mnt/hdd/Hiwi'
 # shortcuts for apps
 alias v="vim"
 alias t="tmux"
+alias mux="tmuxinator"
 
 # configs
 alias vimrc="vim ~/.vimrc"
