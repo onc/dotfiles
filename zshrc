@@ -44,6 +44,8 @@ export PATH="${NPM_PACKAGES}/bin:${PATH}"
 # go
 export GOPATH="/mnt/hdd/Coding/go"
 export PATH="${GOPATH}/bin:${PATH}"
+# rust/cargo
+export PATH="/home/onze/.cargo/bin:${PATH}"
 
 # moodle
 export PATH="${HOME}/Applications/moodle-destroyer-tools:${PATH}"
