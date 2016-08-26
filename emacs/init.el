@@ -1225,6 +1225,12 @@ The FILE-NAME specifies the file name to search for."
 (global-set-key (kbd "C-x \"") 'split-window-below)
 (global-set-key (kbd "C-x t") 'make-frame-command)
 
+;; keyboard shortcuts for resizing windows
+(global-set-key (kbd "<C-s-left>") (lambda () (interactive) (shrink-window-horizontally 5)))
+(global-set-key (kbd "<C-s-right>") (lambda () (interactive) (enlarge-window-horizontally 5)))
+(global-set-key (kbd "<C-s-down>") (lambda () (interactive) (shrink-window 5)))
+(global-set-key (kbd "<C-s-up>") (lambda () (interactive) (enlarge-window 5)))
+
 ;; revert buffer
 (global-set-key [f5]
                 (lambda ()
