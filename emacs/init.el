@@ -37,6 +37,21 @@ re-downloaded in order to locate PACKAGE."
 (load "server")
 (unless (server-running-p) (server-start))
 
+;; GC tweaking according to
+;; https://bling.github.io/blog/2016/01/18/why-are-you-changing-gc-cons-threshold/
+(setq gc-cons-threshold most-positive-fixnum)
+
+(defun my-minibuffer-setup-hook ()
+  "Crank up the Garbage Collection threshold."
+  (setq gc-cons-threshold most-positive-fixnum))
+
+(defun my-minibuffer-exit-hook ()
+  "Put Garbage Collection back to default value."
+  (setq gc-cons-threshold 800000))
+
+(add-hook 'minibuffer-setup-hook #'my-minibuffer-setup-hook)
+(add-hook 'minibuffer-exit-hook #'my-minibuffer-exit-hook)
+
 
 ;; disable toolbar
 (tool-bar-mode -1)
