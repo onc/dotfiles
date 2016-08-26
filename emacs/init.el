@@ -168,6 +168,8 @@ re-downloaded in order to locate PACKAGE."
 ;; from http://mbork.pl/2015-01-10_A_few_random_Emacs_tips
 (add-hook 'after-save-hook 'executable-make-buffer-file-executable-if-script-p)
 
+(setq scroll-preserve-screen-position 'always)
+
 ;; #############################################################################
 ;; ################################# PACKAGES ##################################
 ;; #############################################################################
