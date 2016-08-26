@@ -281,9 +281,9 @@ re-downloaded in order to locate PACKAGE."
     (global-evil-surround-mode 1)))
 
 (use-package mu4e
-  ;; load mu4e after 2 seconds of idle
   :bind (([f7] . mu4e))
   :commands mu4e
+  :defer 60
   :config
   ;; default
   (setq mu4e-maildir (expand-file-name "~/Mail"))
