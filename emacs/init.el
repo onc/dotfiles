@@ -449,6 +449,16 @@ re-downloaded in order to locate PACKAGE."
 (use-package restclient
   :mode ("\\.rest\\'" . restclient-mode))
 
+(use-package rust-mode
+  :mode("\\.rs\\'" . rust-mode)
+  :config
+  (use-package racer
+    :config
+    (setq racer-cmd "/home/onze/.cargo/bin/racer")
+    (setq racer-rust-src-path "/usr/src/rust/src")
+    (add-hook 'rust-mode-hook 'racer-mode)
+    (add-hook 'racer-mode-hook 'eldoc-mode)))
+
 (use-package ox-latex
   :defer t
   :ensure nil
@@ -528,6 +538,11 @@ re-downloaded in order to locate PACKAGE."
     :ensure t
     :config
     (add-to-list 'company-backends 'company-cmake))
+
+  (use-package company-racer
+    :ensure t
+    :config
+    (add-to-list 'company-backends 'company-racer))
 
   (use-package company-restclient
     :ensure t
