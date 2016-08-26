@@ -87,9 +87,6 @@ re-downloaded in order to locate PACKAGE."
 ;; fucking use spaces emacs
 (setq-default tab-width 4 indent-tabs-mode nil)
 
-;; set indention in c files
-(setq-default c-basic-offset 4)
-
 ;; Write backup files to own directory
 ;; (setq backup-directory-alist
 ;;       `(("." . ,(expand-file-name
@@ -135,10 +132,6 @@ re-downloaded in order to locate PACKAGE."
 (set-terminal-coding-system 'utf-8)
 (set-keyboard-coding-system 'utf-8)
 (set-language-environment "UTF-8")
-
-;; Add .h and .cc files to c++-mode
-(add-to-list 'auto-mode-alist '("\\.h\\'" . c++-mode))
-(add-to-list 'auto-mode-alist '("\\.cc\\'" . c++-mode))
 
 ;; Open zsh-files in shell-mode
 (add-to-list 'auto-mode-alist '("\\.zsh\\'" . sh-mode))
@@ -243,7 +236,10 @@ re-downloaded in order to locate PACKAGE."
       "cp" 'evilnc-comment-or-uncomment-paragraphs
       "cr" 'comment-or-uncomment-region
       "cv" 'evilnc-toggle-invert-comment-line-by-line
-      "a" 'align-regexp))
+      "a" 'align-regexp)
+
+    (evil-leader/set-key-for-mode
+      'c++-mode "f" 'clang-format-buffer))
 
   (use-package evil-search-highlight-persist
     :ensure t
@@ -679,17 +675,20 @@ re-downloaded in order to locate PACKAGE."
 
 (use-package ycmd
   :ensure t
-  :config
+  :init
   (add-hook 'c++-mode-hook 'ycmd-mode)
-  (set-variable 'ycmd-server-command '("python2" "/home/onze/Applications/ycmd/ycmd"))
+  :config
+  (set-variable 'ycmd-server-command '("python" "/home/onze/Applications/ycmd/ycmd"))
   (set-variable 'ycmd-global-config "/home/onze/Applications/ycmd/cpp/ycm/.ycm_extra_conf.py")
 
-  (eval-after-load "flycheck-ycmd-autoloads" '(add-hook 'ycmd-mode-hook 'flycheck-ycmd-setup)))
+  (eval-after-load "flycheck-ycmd-autoloads"
+    '(add-hook 'ycmd-mode-hook 'flycheck-ycmd-setup))
 
-(use-package company-ycmd
-  :ensure t
-  :config
-  (company-ycmd-setup))
+  (use-package company-ycmd
+    :ensure t
+    :config
+    (company-ycmd-setup)
+    (add-to-list 'company-backends (company-mode/backend-with-yas 'company-ycmd))))
 
 (use-package projectile
   :ensure t
@@ -985,10 +984,28 @@ re-downloaded in order to locate PACKAGE."
   :ensure t)
 
 (use-package cc-mode
-  :mode (("\\.[hH]\\'" . cc-mode)
-         ("\\.cpp\\'" . cc-mode)
-         ("\\.hpp\\'" . cc-mode))
+  :ensure t
+
   :config
+  (setq-default c-basic-offset 4))
+
+(use-package c++-mode
+  :ensure nil
+  :mode (("\\.[hH]\\'" . c++-mode)
+         ("\\.cpp\\'" . c++-mode)
+         ("\\.hpp\\'" . c++-mode)
+         ("\\.cc\\'" . c++-mode))
+  :config
+
+  (add-hook 'c++-mode-hook
+            (lambda ()
+              (c-set-style "stroustrup")))
+
+  (use-package clang-format
+    :commands (clang-format-buffer)
+    :config
+    (setq clang-format-executable "/usr/bin/clang-format"))
+
   ;; -------------------------------------------------
   ;; build a cmakeproject
   ;; -------------------------------------------------
