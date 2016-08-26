@@ -534,17 +534,37 @@ re-downloaded in order to locate PACKAGE."
   :config
   (add-hook 'prog-mode-hook 'rainbow-delimiters-mode))
 
+(use-package yasnippet
+  :init
+  (setq yas-verbosity 0)
+  :defer 30
+  :config
+  (yas-global-mode 1))
+
 (use-package company
-  :ensure t
+  :defer 10
   :config
   (global-company-mode)
   ;; no delay no autocomplete
   (setq company-idle-delay 0)
   (setq company-minimum-prefix-length 2)
+  (setq company-tooltip-limit 20)
 
   (define-key company-active-map (kbd "M-j") 'company-select-next)
   (define-key company-active-map (kbd "M-k") 'company-select-previous)
 
+  ;; enable yasnippet everywhere
+  (defvar company-mode/enable-yas t
+    "Enable yasnippet for all backends.")
+  (defun company-mode/backend-with-yas (backend)
+    (if (or (not company-mode/enable-yas) (and (listp backend) (member 'company-yasnippet backend)))
+        backend
+      (append (if (consp backend) backend (list backend))
+              '(:with company-yasnippet))))
+
+  (setq company-backends (mapcar #'company-mode/backend-with-yas company-backends))
+
+  ;; sub-packages
   (use-package company-cmake
     :ensure t
     :config
@@ -722,22 +742,6 @@ re-downloaded in order to locate PACKAGE."
     (setq powerline-height 10)
     (setq powerline-raw "  ")
     (setq ns-use-srgb-colorspace nil)))
-
-(use-package yasnippet
-  :ensure t
-  :config
-  (yas-global-mode 1)
-  (global-set-key (kbd "C-c y") 'company-yasnippet)
-  ;; enable yasnippet everywhere
-  (defvar company-mode/enable-yas t
-    "Enable yasnippet for all backends.")
-  (defun company-mode/backend-with-yas (backend)
-    (if (or (not company-mode/enable-yas) (and (listp backend) (member 'company-yasnippet backend)))
-        backend
-      (append (if (consp backend) backend (list backend))
-              '(:with company-yasnippet))))
-
-  (setq company-backends (mapcar #'company-mode/backend-with-yas company-backends)))
 
 (use-package magit
   :ensure nil
