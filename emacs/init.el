@@ -575,6 +575,11 @@ re-downloaded in order to locate PACKAGE."
     :config
     (add-to-list 'company-backends 'company-racer))
 
+  (use-package company-inf-ruby
+    :ensure t
+    :config
+    (add-to-list 'company-backends 'company-inf-ruby))
+
   (use-package company-restclient
     :ensure t
     :config
@@ -603,11 +608,23 @@ re-downloaded in order to locate PACKAGE."
                              (company-mode/backend-with-yas 'elpy-company-backend))))
     (elpy-use-cpython)))
 
-(use-package robe
-  :defer t
+(use-package ruby-mode
+  :mode "\\.rb\\'"
   :config
-  (add-hook 'ruby-mode-hook 'robe-mode)
-  (push 'company-robe company-backends))
+
+  (define-key ruby-mode-map (kbd "C-c r") 'onze-run-current-file)
+
+  (use-package robe
+    :ensure t
+    :config
+    (add-hook 'ruby-mode-hook 'robe-mode)
+    (add-to-list 'company-backends (company-mode/backend-with-yas 'company-robe)))
+
+  (use-package inf-ruby
+    :ensure t
+    :config
+    (add-hook 'ruby-mode-hook 'inf-ruby-minor-mode)
+    (add-hook 'compilation-filter-hook 'inf-ruby-auto-enter)))
 
 (use-package neotree
   :bind(([f8] . neotree-toggle))
