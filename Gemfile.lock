@@ -231,11 +231,11 @@ DEPENDENCIES
   curses
   github-pages
   json
-  rails (~> 5.0.0.beta2)
+  rails
   rubocop
   thyme
   tmuxinator
   video_transcoding
 
 BUNDLED WITH
-   1.11.2
+   1.12.5
