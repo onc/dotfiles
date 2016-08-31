@@ -242,6 +242,7 @@ re-downloaded in order to locate PACKAGE."
       "b" 'helm-mini
       "o" 'find-file
       "e" 'eval-defun
+      "d" 'dictcc
       "1" 'highlight-symbol-at-point
       "0" 'highlight-symbol-remove-all
       "gst" 'magit-status
@@ -843,6 +844,12 @@ re-downloaded in order to locate PACKAGE."
 
 (use-package nginx-mode
   :ensure t)
+
+(use-package dictcc
+  :ensure t
+  :config
+  (setq dictcc-source-lang "de")
+  (setq dictcc-destination-lang "en"))
 
 (use-package gitignore-mode
   :mode ("\\.gitignore\\'" . gitignore-mode))
