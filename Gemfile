@@ -7,6 +7,7 @@ gem "json"
 gem "rubocop"
 gem "video_transcoding"
 gem "tmuxinator"
+gem "robocop"
 
 # blog
 #gem "jekyll"
