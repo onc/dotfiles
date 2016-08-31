@@ -441,6 +441,9 @@ re-downloaded in order to locate PACKAGE."
   :config
   (setq org-time-clocksum-format (quote (:hours "%d" :require-hours t :minutes ":%02d" :require-minutes t)))
 
+  (define-key org-mode-map (kbd "M-j") 'org-forward-heading-same-level)
+  (define-key org-mode-map (kbd "M-k") 'org-backward-heading-same-level)
+
   (setq org-publish-project-alist
         '(("blog"
            :base-directory "/mnt/hdd/Blog/org-test/"
