@@ -1,0 +1,18 @@
+# ~/.tmuxinator/webeng-rails.yml
+
+name: webeng-rails
+root: /mnt/hdd/Hiwi/WebEng/webeng-ws2016/rails-chapter
+
+windows:
+  - etc:
+      layout: 772a,365x88,0,0{182x88,0,0,0,182x88,183,0[182x44,183,0,1,182x43,183,45,2]}
+      panes:
+        - clear
+        - clear
+        - clear
+  - rails:
+      layout: 772a,365x88,0,0{182x88,0,0,0,182x88,183,0[182x44,183,0,1,182x43,183,45,2]}
+      panes:
+        - cd todo-list && clear
+        - cd todo-list && clear
+        - cd todo-list && clear
