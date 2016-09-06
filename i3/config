@@ -49,11 +49,6 @@ bindsym ctrl+Escape exec --no-startup-id ksysguard
 bindsym $mod+space exec rofi -show run
 bindsym $mod+shift+space exec rofi -show i3
 
-# Volume
-# bindsym XF86AudioRaiseVolume exec /mnt/hdd/dotfiles/volume.sh up;
-# bindsym XF86AudioLowerVolume exec /mnt/hdd/dotfiles/volume.sh down;
-# bindsym XF86AudioMute exec /mnt/hdd/dotfiles/volume.sh toggle;
-
 bindsym XF86AudioRaiseVolume exec --no-startup-id amixer -D pulse sset Master 5%+ > /dev/null
 bindsym XF86AudioLowerVolume exec --no-startup-id amixer -D pulse sset Master 5%- > /dev/null
 bindsym XF86AudioMute exec --no-startup-id amixer -D pulse sset Master toggle > /dev/null
