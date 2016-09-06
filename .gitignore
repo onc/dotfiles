@@ -1,6 +1,7 @@
 .tern-port
 *.gif
 *.png
+!screenshots/*.png
 
 # Created by https://www.gitignore.io/api/node,emacs,vim
 
