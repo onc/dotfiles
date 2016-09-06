@@ -269,7 +269,8 @@ Plug 'tpope/vim-fugitive'
 " toggle Cursor
 Plug 'jszakmeister/vim-togglecursor'
 " Vim airline
-Plug 'bling/vim-airline'
+Plug 'vim-airline/vim-airline'
+Plug 'vim-airline/vim-airline-themes'
 " GitGutter for Vim
 Plug 'airblade/vim-gitgutter'
 " Nerdtree
@@ -359,7 +360,7 @@ set laststatus=2
 let g:airline#extensions#tabline#enabled=1
 let g:airline_powerline_fonts=1
 let g:solarized_termcolors=256
-let g:airline_theme='tomorrow'
+let g:airline_theme='base16_monokai'
 
 " ######## ULTISNIPS ##########################################################
 let g:UltiSnipsSnippetDirectories=["~/.vim/bundle/vim-snippets/UltiSnips"]
