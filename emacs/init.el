@@ -526,6 +526,96 @@ re-downloaded in order to locate PACKAGE."
                  ("\\subsection{%s}" . "\\subsection*{%s}")
                  ("\\subsubsection{%s}" . "\\subsubsection*{%s}")))
 
+  ;; debugging new classes like this. this prevents to add the same class multiple times, by only setting this one
+  (add-to-list 'org-latex-classes
+        '("documentation" "
+\\NeedsTeXFormat{LaTeX2e}
+\\documentclass[a4paper,10pt,twoside,openright,numbers=noenddot,headings=normal]{scrbook}
+[NO-DEFAULT-PACKAGES]
+
+% default packages (without inputenc, because we use xetex)
+\\usepackage{fixltx2e}
+\\usepackage{graphicx}
+\\usepackage{longtable}
+\\usepackage{float}
+\\usepackage{wrapfig}
+\\usepackage{rotating}
+\\usepackage[normalem]{ulem}
+\\usepackage{amsmath}
+\\usepackage{textcomp}
+\\usepackage{marvosym}
+\\usepackage{wasysym}
+\\usepackage{amssymb}
+\\usepackage{hyperref}
+\\tolerance=1000
+
+% Encoding
+\\usepackage[ngerman,english]{babel}
+\\usepackage{fontspec}
+\\usepackage{polyglossia}
+
+% Fonts
+\\setmainfont{Source Serif Pro}
+\\setsansfont{Source Sans Pro}
+\\setromanfont{Source Sans Pro}
+\\setmonofont{Source Code Pro}[Scale=MatchLowercase]
+
+% \\linespread{1.05}                      % Palatino needs more leading (space between lines)
+% \\usepackage{setspace}
+% \\setstretch{1.4}
+% \\usepackage{microtype}
+
+% \\usepackage{framed}
+% \\usepackage{xcolor}
+% \\definecolor{shadecolor}{gray}{.95}
+% \\newenvironment{results}{\\begin{shaded}}{\\end{shaded}}
+
+% Default packages
+\\usepackage{multirow}                  % Table rows multiline
+\\usepackage{graphicx}
+\\usepackage{verbatim}
+\\usepackage{subfigure}
+\\usepackage{url}
+\\usepackage{amssymb}
+\\usepackage{amsmath}
+
+% biblio
+\\usepackage{cite}
+
+% Layout
+\\usepackage[scale=0.70, marginratio={4:5, 3:4}, ignoreall, headsep=8mm]{geometry}
+\\setlength{\\parskip}{1.4ex plus 0.35ex minus 0.3ex}
+\\renewcommand\\arraystretch{1.3}       % stretch lines in tables
+\\clubpenalty10000                      % no orphan lines
+\\widowpenalty10000                     % no widowed lines
+\\setcounter{tocdepth}{3}               % max depth of in toc
+
+% Header and Footer
+\\usepackage{fancyhdr}
+\\pagestyle{fancy}
+\\fancyhead[RO]{\\slshape \\rightmark}
+\\fancyhead[LE]{\\slshape \\leftmark}
+\\fancyhead[LO,RE]{}
+\\fancyheadoffset[L,R]{0.5cm}
+\\fancypagestyle{plain}{
+  \\fancyhf{}                           % clear all header and footer fields
+  \\fancyfoot[C]{\\thepage}             % except the center
+  \\renewcommand{\\headrulewidth}{0pt}
+  \\renewcommand{\\footrulewidth}{0pt}}
+
+\\usepackage{hyperref}
+\\hypersetup{
+  colorlinks=false,
+  pdfborder=0 0 0                       % no boxes on links
+}
+"
+           ("\\chapter{%s}" . "\\chapter*{%s}")
+           ("\\section{%s}" . "\\section*{%s}")
+           ("\\subsection{%s}" . "\\subsection*{%s}")
+           ("\\subsubsection{%s}" . "\\subsubsection*{%s}")
+           ("\\paragraph{%s}" . "\\paragraph*{%s}")
+           ("\\subparagraph{%s}" . "\\subparagraph*{%s}")))
+
   (add-to-list 'org-latex-classes
                '("djcb-org-article" "\\documentclass[11pt,a4paper]{article}
 \\usepackage[T1]{fontenc}
