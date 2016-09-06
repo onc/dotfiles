@@ -494,8 +494,6 @@ re-downloaded in order to locate PACKAGE."
   :defer t
   :ensure nil
   :config
-  (setq org-latex-packages-alist
-        (quote (("" "color" t) ("" "minted" t) ("" "parskip" t))))
 
   ;; XeLaTeX customisations
   ;; remove "inputenc" from default packages as it clashes with xelatex
@@ -509,9 +507,13 @@ re-downloaded in order to locate PACKAGE."
           "xelatex --shell-escape -interaction nonstopmode -output-directory %o %f"))
 
   ;; you have to install pygmentize to use minted
-  (add-to-list 'org-latex-packages-alist '("" "minted"))
-  (add-to-list 'org-latex-packages-alist '("" "color"))
+  (setq org-latex-packages-alist
+        (quote (("" "color" t) ("" "minted" t) ("" "parskip" t))))
   (setq org-latex-listings 'minted)
+  (setq org-latex-minted-options
+        '(("frame" "lines")
+          ("linenos")
+          ("samepage")))
 
   ;; add emacs lisp support for minted
   (setq org-latex-custom-lang-environments '((emacs-lisp "common-lisp")))
