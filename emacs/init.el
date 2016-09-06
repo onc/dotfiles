@@ -454,6 +454,20 @@ re-downloaded in order to locate PACKAGE."
            :html-preamble nil
            :html-postamble nil)))
 
+
+  (org-babel-do-load-languages
+   'org-babel-load-languages
+   '((sh . t)
+     (python . t)
+     (ruby . t)
+     (dot . t)
+     (octave . t)
+     (sqlite . t)
+     (perl . t)))
+
+  ;; fontify code in code blocks
+  (setq org-src-fontify-natively t)
+
   (use-package org-bullets
     :ensure t
     :config
