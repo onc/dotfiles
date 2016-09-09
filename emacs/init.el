@@ -438,6 +438,8 @@ re-downloaded in order to locate PACKAGE."
 (use-package org
   :mode (("\\.org\\'" . org-mode)
          ("\\.org_archive\\'" . org-mode))
+  :bind (("C-c a" . org-agenda)
+         ("C-c c" . org-capture))
   :config
   (setq org-time-clocksum-format (quote (:hours "%d" :require-hours t :minutes ":%02d" :require-minutes t)))
 
@@ -468,11 +470,21 @@ re-downloaded in order to locate PACKAGE."
   ;; fontify code in code blocks
   (setq org-src-fontify-natively t)
 
+  (setq org-agenda-files (quote ("~/todo.org")))
+
   (use-package org-bullets
     :ensure t
     :config
     (add-hook 'org-mode-hook (lambda () (org-bullets-mode 1)))
     (setq org-bullets-bullet-list '("●" "◼" "▶" "♦")))
+
+  (use-package org-mu4e
+    :config
+    ;;store link to message if in header view, not to header query
+    (setq org-mu4e-link-query-in-headers-mode nil)
+    (setq org-capture-templates
+      '(("t" "todo" entry (file+headline "~/todo.org" "Tasks")
+         "* TODO [#A] %?\nSCHEDULED: %(org-insert-time-stamp (org-read-date nil t \"+0d\"))\n%a\n"))))
 
   (use-package org-vcard
     :ensure t))
