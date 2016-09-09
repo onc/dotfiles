@@ -422,7 +422,7 @@ re-downloaded in order to locate PACKAGE."
   :config
   (setq deft-directory "~/Dropbox/Notes")
   (setq deft-extensions '("md" "org" "txt"))
-  (setq deft-default-extension "md")
+  (setq deft-default-extension "org")
   (setq deft-use-filename-as-title t)
   (setq deft-use-filter-string-for-filename t)
   (setq deft-recursive t)
