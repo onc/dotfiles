@@ -257,7 +257,10 @@ re-downloaded in order to locate PACKAGE."
       "a" 'align-regexp)
 
     (evil-leader/set-key-for-mode
-      'c++-mode "f" 'clang-format-buffer))
+      'c++-mode "f" 'clang-format-buffer)
+
+    (evil-leader/set-key-for-mode
+      'rust-mode "f" 'cargo-process-fmt))
 
   (use-package evil-search-highlight-persist
     :ensure t
@@ -495,6 +498,19 @@ re-downloaded in order to locate PACKAGE."
 (use-package rust-mode
   :mode("\\.rs\\'" . rust-mode)
   :config
+
+  (use-package cargo
+    :ensure t
+    :config
+    (add-hook 'rust-mode-hook 'cargo-minor-mode)
+    (add-to-list 'display-buffer-alist
+                 `(,(rx bos "*Cargo " (or "Run" "Build" "Fmt") "*" eos)
+                   (display-buffer-reuse-window display-buffer-in-side-window)
+                   ;; (display-buffer-reuse-window display-buffer-same-window)
+                   (reuseable-frames . visible)
+                   (side             . bottom)
+                   (window-height    . 0.2))))
+
   (use-package racer
     :config
     (setq racer-cmd "/home/onze/.cargo/bin/racer")
@@ -1015,6 +1031,12 @@ re-downloaded in order to locate PACKAGE."
   :config
   (global-flycheck-mode)
   (add-hook 'c++-mode-hook (lambda () (setq flycheck-clang-language-standard "c++14")))
+
+  (use-package flycheck-rust
+    :ensure t
+    :config
+    (add-hook 'rust-mode-hook #'flycheck-rust-setup))
+
   ;; (flycheck-add-next-checker 'c/c++-clang 'c/c++-googlelint 'append)
   )
 
