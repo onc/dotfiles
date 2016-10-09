@@ -663,6 +663,7 @@ re-downloaded in order to locate PACKAGE."
 
 (use-package undo-tree
   :ensure t
+  :diminish undo-tree-mode
   :config
   (setq undo-tree-auto-save-history t)
   (setq undo-tree-history-directory-alist
@@ -683,6 +684,7 @@ re-downloaded in order to locate PACKAGE."
 
 (use-package company
   :defer 10
+  :diminish company-mode
   :config
   (global-company-mode)
   ;; no delay no autocomplete
@@ -791,6 +793,11 @@ re-downloaded in order to locate PACKAGE."
 
 (use-package helm
   :ensure t
+  :diminish helm-mode
+  :bind(("C-h C-h" . helm-apropos)
+        ("M-x"     . helm-M-x)
+        ("C-x b"   . helm-mini)
+        ("C-x C-f" . helm-find-files))
   :config
   (helm-mode 1)
   (setq helm-buffer-details-flag nil)
@@ -860,6 +867,7 @@ re-downloaded in order to locate PACKAGE."
 
 (use-package git-gutter
   :ensure t
+  :diminish git-gutter-mode
   :config
   (global-git-gutter-mode +1)
   ;; hide if there are no changes
@@ -948,19 +956,8 @@ re-downloaded in order to locate PACKAGE."
 (use-package highlight-symbol
   :ensure t)
 
-(use-package diminish
-  :ensure t
-  :config
-  ;; Clean up mode line
-  ;; (eval-after-load "company" '(diminish 'company-mode "cpy"))
-  (eval-after-load "undo-tree" '(diminish 'undo-tree-mode))
-  (eval-after-load "eldoc" '(diminish 'eldoc-mode))
-  (eval-after-load "helm" '(diminish 'helm-mode))
-  (eval-after-load "company" '(diminish 'company-mode))
-
-  (add-hook 'emacs-lisp-mode-hook
-            (lambda ()
-              (setq mode-name "el"))))
+(use-package eldoc
+  :diminish eldoc-mode)
 
 (use-package scss-mode
   :mode ("\\.scss\\'" . scss-mode))
