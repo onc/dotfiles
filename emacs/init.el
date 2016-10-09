@@ -799,16 +799,8 @@ re-downloaded in order to locate PACKAGE."
         ("C-x b"   . helm-mini)
         ("C-x C-f" . helm-find-files))
   :config
-  (helm-mode 1)
-  (setq helm-buffer-details-flag nil)
-  ;; fuzzy matching
-  (setq helm-apropos-fuzzy-match t)
-  (setq helm-ff-file-name-history-use-recentf t)
-
-  (setq helm-reuse-last-window-split-state t)
-  ;; Don't use full width of the frame
-  (setq helm-split-window-in-side-p t)
-  (helm-autoresize-mode t)
+  (require 'helm-config)
+  (helm-mode +1)
 
   ;; rebind tab to do persistens action
   (define-key helm-map (kbd "<tab>") 'helm-execute-persistent-action)
@@ -820,11 +812,26 @@ re-downloaded in order to locate PACKAGE."
   (define-key helm-map (kbd "M-j") 'helm-next-line)
   (define-key helm-map (kbd "M-k") 'helm-previous-line)
 
-  (global-set-key (kbd "C-h C-h") 'helm-apropos)
-  ;; use helm for meta x
-  (global-set-key (kbd "M-x") 'helm-M-x)
-  (global-set-key (kbd "C-x b") 'helm-mini)
-  (global-set-key (kbd "C-x C-f") 'helm-find-files)
+  ;; fuzzy matching
+  (setq helm-mode-fuzzy-match t)
+  (setq helm-completion-in-region-fuzzy-match t)
+
+  (setq helm-ff-file-name-history-use-recentf t)
+
+  (setq helm-reuse-last-window-split-state t)
+  ;; Don't use full width of the frame
+  (setq helm-split-window-in-side-p t)
+  (helm-autoresize-mode t)
+
+  ;; Use ack instead of grep
+  (when (executable-find "ack")
+    (setq helm-grep-default-command "ack -Hn --no-group --no-color %p %f"
+          helm-grep-default-recurse-command "ack -H --no-group --no-color %p %f"))
+
+  ;; Even better, use ag if it's available
+  (when (executable-find "ag")
+    (setq helm-grep-default-command "ag --vimgrep -z %p %f"
+          helm-grep-default-recurse-command "ag --vimgrep -z %p %f"))
 
   (use-package helm-ag
     :ensure t)
