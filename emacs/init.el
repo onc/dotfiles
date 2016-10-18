@@ -237,17 +237,14 @@ re-downloaded in order to locate PACKAGE."
     (global-evil-leader-mode)
 
     (evil-leader/set-key
-      "n" 'neotree-toggle
       "f" 'onze-indent-whole-buffer
       "init" (lambda () (interactive) (find-file "~/.emacs.d/init.el"))
-      "b" 'helm-mini
       "o" 'find-file
       "e" 'eval-defun
       "d" 'dictcc
       "1" 'highlight-symbol-at-point
       "0" 'highlight-symbol-remove-all
       "gst" 'magit-status
-      "p" 'helm-projectile
       "ci" 'evilnc-comment-or-uncomment-lines
       "cl" 'evilnc-quick-comment-or-uncomment-to-the-line
       "ll" 'evilnc-quick-comment-or-uncomment-to-the-line
