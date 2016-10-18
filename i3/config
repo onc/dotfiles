@@ -34,7 +34,7 @@ bindsym $mod+x exec --no-startup-id emacs
 # https://wiki.archlinux.org/index.php/Qt#Native_KDE_look_for_Qt_apps_under_environments_other_than_KDE
 bindsym $mod+e exec --no-startup-id XDG_CURRENT_DESKTOP="KDE" dolphin
 # chromium
-bindsym $mod+c exec --no-startup-id google-chrome-stable
+bindsym $mod+c exec --no-startup-id chromium
 # close window
 bindsym $mod+q kill
 # lock screen and mute sound
