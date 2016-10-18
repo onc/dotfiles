@@ -486,8 +486,8 @@ re-downloaded in order to locate PACKAGE."
     ;;store link to message if in header view, not to header query
     (setq org-mu4e-link-query-in-headers-mode nil)
     (setq org-capture-templates
-      '(("t" "todo" entry (file+headline "~/todo.org" "Tasks")
-         "* TODO [#A] %?\nSCHEDULED: %(org-insert-time-stamp (org-read-date nil t \"+0d\"))\n%a\n"))))
+          '(("t" "todo" entry (file+headline "~/todo.org" "Tasks")
+             "* TODO [#A] %?\nSCHEDULED: %(org-insert-time-stamp (org-read-date nil t \"+0d\"))\n%a\n"))))
 
   (use-package org-vcard
     :ensure t))
@@ -556,7 +556,7 @@ re-downloaded in order to locate PACKAGE."
 
   ;; debugging new classes like this. this prevents to add the same class multiple times, by only setting this one
   (add-to-list 'org-latex-classes
-        '("documentation" "
+               '("documentation" "
 \\NeedsTeXFormat{LaTeX2e}
 \\documentclass[a4paper,10pt,twoside,openright,numbers=noenddot,headings=normal]{scrbook}
 [NO-DEFAULT-PACKAGES]
@@ -626,15 +626,15 @@ re-downloaded in order to locate PACKAGE."
 \\fancyhead[LO,RE]{}
 \\fancyheadoffset[L,R]{0.5cm}
 \\fancypagestyle{plain}{
-  \\fancyhf{}                           % clear all header and footer fields
-  \\fancyfoot[C]{\\thepage}             % except the center
-  \\renewcommand{\\headrulewidth}{0pt}
-  \\renewcommand{\\footrulewidth}{0pt}}
+\\fancyhf{}                           % clear all header and footer fields
+\\fancyfoot[C]{\\thepage}             % except the center
+\\renewcommand{\\headrulewidth}{0pt}
+\\renewcommand{\\footrulewidth}{0pt}}
 
 \\usepackage{hyperref}
 \\hypersetup{
-  colorlinks=false,
-  pdfborder=0 0 0                       % no boxes on links
+colorlinks=false,
+pdfborder=0 0 0                       % no boxes on links
 }
 "
            ("\\chapter{%s}" . "\\chapter*{%s}")
@@ -651,7 +651,7 @@ re-downloaded in order to locate PACKAGE."
 \\usepackage{graphicx}
 \\usepackage{geometry}
 \\geometry{a4paper, textwidth=6.5in, textheight=10in,
-            marginparsep=7pt, marginparwidth=.6in}
+marginparsep=7pt, marginparwidth=.6in}
 \\pagestyle{empty}
 \\title{}"
                  ("\\section{%s}" . "\\section*{%s}")
@@ -659,7 +659,6 @@ re-downloaded in order to locate PACKAGE."
                  ("\\subsubsection{%s}" . "\\subsubsection*{%s}")
                  ("\\paragraph{%s}" . "\\paragraph*{%s}")
                  ("\\subparagraph{%s}" . "\\subparagraph*{%s}"))))
-
 
 (use-package undo-tree
   :ensure t
@@ -1365,7 +1364,6 @@ The FILE-NAME specifies the file name to search for."
                                      "magit-key-mode"
                                      "magit-reflog-mode"
                                      "helm-mode"
-                                     "neotree-mode"
                                      "mu4e-headers-mode"
                                      "mu4e-view-mode"))
 
@@ -1408,6 +1406,8 @@ The FILE-NAME specifies the file name to search for."
 ;; Unconditionally kill unmodified buffers.
 (global-set-key (kbd "C-x k") 'kill-this-buffer-if-not-modified)
 
+(global-set-key (kbd "s-+") 'sanityinc/increase-default-font-height)
+(global-set-key (kbd "s--") 'sanityinc/decrease-default-font-height)
 ;; #############################################################################
 ;; ################################# FUNCTIONS #################################
 ;; #############################################################################
@@ -1583,9 +1583,6 @@ by the :height face attribute."
   (interactive)
   (sanityinc/increment-default-font-height -10))
 
-(global-set-key (kbd "s-+") 'sanityinc/increase-default-font-height)
-(global-set-key (kbd "s--") 'sanityinc/decrease-default-font-height)
-
 ;; #############################################################################
 ;; ################################# FUNCTIONS PATRICK #########################
 ;; #############################################################################
@@ -1719,6 +1716,9 @@ This is a convenience function for `my-where-is'."
  '(fringe-mode (quote (1 . 1)) nil (fringe))
  '(hl-sexp-background-color "#efebe9")
  '(magit-diff-refine-hunk t)
+ '(package-selected-packages
+   (quote
+    (yaml-mode web-mode wcheck-mode use-package unbound swiper spaceline solarized-theme smartparens scss-mode rubocop robe rinari rainbow-mode rainbow-delimiters racer php-mode pdf-tools paradox org-vcard org-bullets nlinum nginx-mode neotree mu4e-alert mode-icons material-theme markdown-mode jsx-mode json-mode js2-mode highlight-symbol helm-projectile helm-mu helm-ag groovy-mode gradle-mode google-c-style golden-ratio glsl-mode gitignore-mode git-gutter git-commit flycheck-rust flycheck-google-cpplint fill-column-indicator exec-path-from-shell evil-surround evil-search-highlight-persist evil-numbers evil-nerd-commenter evil-mu4e evil-leader emacs-eclim elpy dockerfile-mode dictcc deft csv-mode cppcheck company-ycmd company-tern company-restclient company-racer company-inf-ruby company-cmake cmake-mode clang-format cargo autopair adoc-mode)))
  '(paradox-github-token t)
  '(vc-annotate-background nil)
  '(vc-annotate-color-map
