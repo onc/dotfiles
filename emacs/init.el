@@ -52,11 +52,12 @@ re-downloaded in order to locate PACKAGE."
 (add-hook 'minibuffer-setup-hook #'my-minibuffer-setup-hook)
 (add-hook 'minibuffer-exit-hook #'my-minibuffer-exit-hook)
 
-
 ;; disable toolbar
 (tool-bar-mode -1)
 ;; disable scrollbar
 (scroll-bar-mode -1)
+(toggle-scroll-bar -1)
+;;(horizontal-scroll-bar-mode -1)
 ;; disable menu-bar
 (menu-bar-mode -1)
 
