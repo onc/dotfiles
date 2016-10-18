@@ -385,8 +385,8 @@ re-downloaded in order to locate PACKAGE."
   (setq mu4e-view-show-addresses t)
 
   (setq mu4e-headers-time-format "%H:%M")
-  (setq mu4e-date-format-long "%d/%m/%Y %H:%M")
-  (setq mu4e-headers-date-format "%d/%m/%y")
+  (setq mu4e-date-format-long "%Y/%m/%d %H:%M")
+  (setq mu4e-headers-date-format "%y/%m/%d")
 
   (use-package mu4e-alert
     :ensure t
