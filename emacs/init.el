@@ -1392,6 +1392,9 @@ The FILE-NAME specifies the file name to search for."
 (global-set-key (kbd "C-x \"") 'split-window-below)
 (global-set-key (kbd "C-x t") 'make-frame-command)
 
+;; close bottom error-frame
+(global-set-key (kbd "C-c q") 'onze-quit-bottom-side-windows)
+
 ;; keyboard shortcuts for resizing windows
 (global-set-key (kbd "<C-s-left>") (lambda () (interactive) (shrink-window-horizontally 5)))
 (global-set-key (kbd "<C-s-right>") (lambda () (interactive) (enlarge-window-horizontally 5)))
@@ -1508,7 +1511,12 @@ If the file is Emacs Lisp, run the byte compiled version if exist."
             (shell-command cmdStr "*run-current-file output*" ))
         (message "No recognized program file suffix for this file.")))))
 
-
+;; from: http://www.lunaryorn.com/2015/04/29/the-power-of-display-buffer-alist.html
+(defun onze-quit-bottom-side-windows ()
+  "Close side-window of the current frame."
+  (interactive)
+  (dolist (window (window-at-side-list))
+    (quit-window nil window)))
 
 (defun kill-this-buffer-if-not-modified ()
   "Kill current buffer, even if it has been modified."
