@@ -918,6 +918,14 @@ re-downloaded in order to locate PACKAGE."
     (setq powerline-raw "  ")
     (setq ns-use-srgb-colorspace nil)))
 
+;; uses ffplay
+;; get urls from podcaster from: http://itunes.so-nik.com/
+(use-package podcaster
+  :ensure nil
+  :load-path "/home/onze/.emacs.d/git-package/podcaster"
+  :config
+  (setq podcaster-feeds-urls '("http://halbwissen.co/feed/mp3/")))
+
 (use-package magit
   :ensure nil
   :load-path "/home/onze/.emacs.d/git-package/magit/lisp"
