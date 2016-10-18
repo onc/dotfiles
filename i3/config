@@ -15,7 +15,7 @@ set $w6 6   todo
 set $w7 7   vm
 set $w8 8   files
 
-set $font pango:Source Code Pro for Powerline, Font Awesome 7
+set $font pango:Source Code Pro, Font Awesome 7
 # }}}
 
 # ===========================================================================================
