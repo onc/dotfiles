@@ -328,6 +328,8 @@ re-downloaded in order to locate PACKAGE."
           ("/UniMail/Uni-Mails"                         . ?w)
           ("/UniMail/Uni-Mails.jugendhackt.jugendhackt" . ?j)))
 
+  (add-to-list 'mu4e-bookmarks '("flag:attach"   "Mails with attachments" ?f) t)
+  (add-to-list 'mu4e-bookmarks '("maildir:/UniMail/Sent flag:attach"   "Sent-Mails with attachments" ?p) t)
   (add-to-list 'mu4e-bookmarks '("/UniMail/Uni-Mails.jugendhackt.jugendhackt"   "Jugendhackt" ?j) t)
   (add-to-list 'mu4e-bookmarks '("/UniMail/INBOX OR /GoogleMail/INBOX OR /Onze-io/OnzeMail/INBOX OR /Onze-io/AnyoneMail/INBOX OR /GoogleSpamMail/INBOX" "Combined Inbox" ?i) t)
 
