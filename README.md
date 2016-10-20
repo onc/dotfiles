@@ -4,8 +4,8 @@ My [archlinux](https://www.archlinux.org/) dotfiles.
 
 ## Colors
 
-I'm using [base16-builder](https://github.com/chriskempson/base16-builder) with a modified version of the google-theme. 
-See `base16/schemes/onze-google.yml`.
+I'm using [base16-builder](https://github.com/base16-builder/base16-builder) with a modified version of the google-theme. 
+See my [base16-onc-scheme](https://github.com/onc/base16-onc-scheme) for the scheme-file.
 
 ## Zsh
 
