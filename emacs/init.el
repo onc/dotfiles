@@ -89,7 +89,6 @@ re-downloaded in order to locate PACKAGE."
 ;; theme
 ;; (require-package 'base16-theme)
 (add-to-list 'custom-theme-load-path "~/.emacs.d/themes")
-(setq custom-enabled-themes 'base16-onc-dark)
 
 ;; set font
 ;; (add-to-list 'default-frame-alist '(font . "DejaVu Sans Mono for Powerline-9" ))
@@ -1655,6 +1654,7 @@ This is a convenience function for `my-where-is'."
    ["#272822" "#f92672" "#a6e22e" "#f4bf75" "#66d9ef" "#ae81ff" "#66d9ef" "#f8f8f2"])
  '(ansi-term-color-vector
    [unspecified "#272822" "#f92672" "#a6e22e" "#f4bf75" "#66d9ef" "#ae81ff" "#66d9ef" "#f8f8f2"] t)
+ '(custom-enabled-themes (quote (base16-onc-dark)))
  '(custom-safe-themes
    (quote
     ("89e434ca1cd40d5a28b3f00c6acc1ca60ca081c0f948869a57164300ea183333" default)))
