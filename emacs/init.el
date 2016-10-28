@@ -210,8 +210,14 @@ re-downloaded in order to locate PACKAGE."
     "Yank from point to end of line."
     (interactive)
     (evil-yank (point) (point-at-eol)))
+
   ;; copy to end of line
   (define-key evil-normal-state-map "Y" 'copy-to-end-of-line)
+  ;; moving with visual line
+  (define-key evil-normal-state-map "j" 'evil-next-visual-line)
+  (define-key evil-normal-state-map "k" 'evil-previous-visual-line)
+  (define-key evil-normal-state-map "gj" 'evil-next-line)
+  (define-key evil-normal-state-map "gk" 'evil-previous-line)
 
   ;; if no second escape is pressed in a given timeout, dont wait for a second escape
   (defun save-with-escape-and-timeout ()
