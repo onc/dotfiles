@@ -22,7 +22,7 @@ set $font pango:Source Code Pro, Font Awesome 7
 # KEYBINDINGS FOR PROGRAMMS {{{
 # ===========================================================================================
 # terminal
-bindsym $mod+t exec --no-startup-id konsole
+bindsym $mod+t exec --no-startup-id urxvt
 # bindsym $mod+t exec xfce4-terminal
 # launcher
 # bindsym $mod+space exec --no-startup-id kupfer
