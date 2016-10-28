@@ -502,15 +502,10 @@ re-downloaded in order to locate PACKAGE."
 
   (use-package cargo
     :ensure t
+    :bind(("C-c c" . cargo-process-build)
+          ("C-c x" . cargo-process-run))
     :config
-    (add-hook 'rust-mode-hook 'cargo-minor-mode)
-    (add-to-list 'display-buffer-alist
-                 `(,(rx bos "*Cargo " (or "Run" "Build" "Fmt") "*" eos)
-                   (display-buffer-reuse-window display-buffer-in-side-window)
-                   ;; (display-buffer-reuse-window display-buffer-same-window)
-                   (reuseable-frames . visible)
-                   (side             . bottom)
-                   (window-height    . 0.2))))
+    (add-hook 'rust-mode-hook 'cargo-minor-mode))
 
   (use-package racer
     :config
@@ -1462,13 +1457,6 @@ If the file is Emacs Lisp, run the byte compiled version if exist."
             ;; (message progName)
             (shell-command cmdStr "*run-current-file output*" ))
         (message "No recognized program file suffix for this file.")))))
-
-;; from: http://www.lunaryorn.com/2015/04/29/the-power-of-display-buffer-alist.html
-(defun onze-quit-bottom-side-windows ()
-  "Close side-window of the current frame."
-  (interactive)
-  (dolist (window (window-at-side-list))
-    (quit-window nil window)))
 
 (defun kill-this-buffer-if-not-modified ()
   "Kill current buffer, even if it has been modified."
