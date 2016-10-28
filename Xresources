@@ -2,11 +2,6 @@
 Xcursor.size: 10
 Xcursor.theme: breeze_cursors
 
-! Emacs.pane.menubar.background: darkGrey
-! Emacs.pane.menubar.foreground: black
-! Emacs*menubar.margin: 0
-! Emacs*shadowThickness: 1
-
 !rofi.key-run: SuperL+space
 !rofi.key-i2: SuperL+shift+space
 rofi.font: Source Code Pro for Powerline, Font Awesome 10 
