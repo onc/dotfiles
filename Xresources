@@ -58,3 +58,60 @@ xscreensaver.Dialog.shadowThickness:    2
 xscreensaver.passwd.thermometer.foreground:  #ff0000
 xscreensaver.passwd.thermometer.background:  #000000
 xscreensaver.passwd.thermometer.width:       8
+
+! urxvt
+Xft.antialias:		true
+Xft.rgba:			rgb
+Xft.hinting:		true
+Xft.hintstyle:		hintfull
+
+URxvt*scrollBar:                false
+URxvt*transparent:              true
+URxvt*shading:                  30
+URxvt*saveLines:                0
+URxvt*termName:                 screen-256color
+URxvt.perl-ext-common:          default,matcher,selection-to-clipboard,clipboard,url-select,keyboard-select
+URxvt.font:                     xft:Source Code Pro:pixelsize=11:antialias=true:hinting=true,xft:FontAwesome,xft:Monospace:antialias=true:hinting=true
+
+URxvt.url-select.launcher:      chromium
+URxvt.url-select.underline:     true
+URxvt.keysym.M-u:               perl:url-select:select_next
+URxvt.keysym.M-Escape:          perl:keyboard-select:activate
+URxvt.keysym.M-s:               perl:keyboard-select:search
+
+URxvt.internalBorder:           2
+URxvt.externalBorder:           0
+URxvt*letterSpace:              -1
+
+! colors
+URxvt*background:               #212121
+URxvt*foreground:               #EEEEEE
+URxvt*cursorColor:              #EEEEEE
+
+URxvt*scrollColor:              #EEEEEE
+URxvt*highlightColor:           #616161
+URxvt*highlightTextColor:       #9E9E9E
+
+URxvt*color0:                   #212121
+URxvt*color1:                   #FF1744
+URxvt*color2:                   #1DE9B6
+URxvt*color3:                   #D500F9
+URxvt*color4:                   #FF9100
+URxvt*color5:                   #FFEA00
+URxvt*color6:                   #18FFFF
+URxvt*color7:                   #EEEEEE
+URxvt*color8:                   #757575
+URxvt*color9:                   #FF1744
+URxvt*color10:                  #1DE9B6
+URxvt*color11:                  #D500F9
+URxvt*color12:                  #FF9100
+URxvt*color13:                  #FFEA00
+URxvt*color14:                  #18FFFF
+URxvt*color15:                  #FAFAFA
+
+URxvt*color16:                  #00B0FF
+URxvt*color17:                  #8D6E63
+URxvt*color18:                  #424242
+URxvt*color19:                  #616161
+URxvt*color20:                  #9E9E9E
+URxvt*color21:                  #F5F5F5
