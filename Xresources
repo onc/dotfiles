@@ -22,26 +22,12 @@ rofi.fuzzy: true
 ! #AE81FF
 ! #303030
 
-! bordercolor
-rofi.bc: #A6E22E
-
-! normal
-rofi.bg: #272822
-rofi.bg-active: #272822
-rofi.bg-urgent: #272822
- 
-rofi.fg: #F8F8F2
-rofi.fg-active: #A6E22E
-rofi.fg-urgent: #F92672
-
-! highlight
-rofi.hlbg: #303030
-rofi.hlbg-active: #303030
-rofi.hlbg-urgent: #303030
-
-rofi.hlfg: #F92672
-rofi.hlfg-active: #F92672
-rofi.hlfg-urgent: #F92672
+! State:           'bg',    'fg',    'bgalt', 'hlbg',  'hlfg'
+rofi.color-normal: #212121, #FAFAFA, #212121, #FAFAFA, #212121
+rofi.color-urgent: #212121, #FF1744, #212121, #FF1744, #212121
+rofi.color-active: #212121, #FF9100, #212121, #FF9100, #212121
+!                  'bg',    'border'
+rofi.color-window: #212121, #FAFAFA
 
 rofi.sidebar-mode: true
 rofi.modi: run,window,workspaces:/home/onze/Applications/i3_switch_workspaces.sh,i3:/home/onze/Applications/i3-functions,vbox:/home/onze/Applications/vbctrl.sh
