@@ -501,6 +501,9 @@ re-downloaded in order to locate PACKAGE."
 (use-package restclient
   :mode ("\\.rest\\'" . restclient-mode))
 
+(use-package haskell-mode
+  :ensure t)
+
 (use-package rust-mode
   :mode("\\.rs\\'" . rust-mode)
   :config
@@ -1049,6 +1052,11 @@ marginparsep=7pt, marginparwidth=.6in}
     :ensure t
     :config
     (add-hook 'rust-mode-hook #'flycheck-rust-setup))
+
+  (use-package flycheck-haskell
+    :ensure t
+    :config
+    (add-hook 'haskell-mode-hook #'flycheck-haskell-setup))
 
   ;; (flycheck-add-next-checker 'c/c++-clang 'c/c++-googlelint 'append)
   )
@@ -1665,7 +1673,7 @@ This is a convenience function for `my-where-is'."
  '(magit-diff-refine-hunk t)
  '(package-selected-packages
    (quote
-    (yaml-mode web-mode wcheck-mode use-package unbound swiper spaceline solarized-theme smartparens scss-mode rubocop robe rinari rainbow-mode rainbow-delimiters racer php-mode pdf-tools paradox org-vcard org-bullets nlinum nginx-mode neotree mu4e-alert mode-icons material-theme markdown-mode jsx-mode json-mode js2-mode highlight-symbol helm-projectile helm-mu helm-ag groovy-mode gradle-mode google-c-style golden-ratio glsl-mode gitignore-mode git-gutter git-commit flycheck-rust flycheck-google-cpplint fill-column-indicator exec-path-from-shell evil-surround evil-search-highlight-persist evil-numbers evil-nerd-commenter evil-mu4e evil-leader emacs-eclim elpy dockerfile-mode dictcc deft csv-mode cppcheck company-ycmd company-tern company-restclient company-racer company-inf-ruby company-cmake cmake-mode clang-format cargo autopair adoc-mode)))
+    (c++-mode flycheck-haskell haskell-mode yaml-mode web-mode wcheck-mode use-package unbound swiper spaceline solarized-theme smartparens scss-mode rubocop robe rinari rainbow-mode rainbow-delimiters racer php-mode pdf-tools paradox org-vcard org-bullets nlinum nginx-mode neotree mu4e-alert mode-icons material-theme markdown-mode jsx-mode json-mode js2-mode highlight-symbol helm-projectile helm-mu helm-ag groovy-mode gradle-mode google-c-style golden-ratio glsl-mode gitignore-mode git-gutter git-commit flycheck-rust flycheck-google-cpplint fill-column-indicator exec-path-from-shell evil-surround evil-search-highlight-persist evil-numbers evil-nerd-commenter evil-mu4e evil-leader emacs-eclim elpy dockerfile-mode dictcc deft csv-mode cppcheck company-ycmd company-tern company-restclient company-racer company-inf-ruby company-cmake cmake-mode clang-format cargo autopair adoc-mode)))
  '(paradox-github-token t)
  '(vc-annotate-background nil)
  '(vc-annotate-color-map
