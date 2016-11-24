@@ -64,6 +64,11 @@ alias sst="svn status"
 alias sad="svn add"
 alias scom="svn commit -m"
 
+# folders and stuff
+
+alias rmr="rm -r"
+alias rmall="rm -rf *"
+
 # ping
 alias p="ping google.de"
 
