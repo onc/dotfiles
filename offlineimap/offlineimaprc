@@ -1,17 +1,13 @@
 # -*- conf-unix -*-
 
 [general]
-accounts = WebMail, UniMail, GoogleMail, Onze-Onzeio, Anyone-Onzeio, GoogleSpamMail
+accounts = UniMail, GoogleMail, Onze-Onzeio, Anyone-Onzeio, GoogleSpamMail
 pythonfile = ~/.offlineimap.py
 fsync = False
 
 [Account UniMail]
 localrepository = LocalUniMail
 remoterepository = RemoteUniMail
-
-[Account WebMail]
-localrepository = LocalWebMail
-remoterepository = RemoteWebMail
 
 [Account GoogleMail]
 localrepository = LocalGoogleMail
@@ -137,20 +133,20 @@ sslcacertfile = /etc/ssl/certs/ca-certificates.crt
 
 ######################## WEB ##################################################
 
-[Repository LocalWebMail]
-type = Maildir
-localfolders = ~/Mail/WebMail
-nametrans = lambda foldername: foldername.decode('utf-8').encode('imap4-utf-7')
+# [Repository LocalWebMail]
+# type = Maildir
+# localfolders = ~/Mail/WebMail
+# nametrans = lambda foldername: foldername.decode('utf-8').encode('imap4-utf-7')
 
-[Repository RemoteWebMail]
-type = IMAP
-remotehost = imap.web.de
-remoteport = 993
-remoteusereval = get_username("offlineimap-webmail")
-remotepasseval = get_password("offlineimap-webmail")
-nametrans = lambda foldername: foldername.decode('imap4-utf-7').encode('utf-8')
+# [Repository RemoteWebMail]
+# type = IMAP
+# remotehost = imap.web.de
+# remoteport = 993
+# remoteusereval = get_username("offlineimap-webmail")
+# remotepasseval = get_password("offlineimap-webmail")
+# nametrans = lambda foldername: foldername.decode('imap4-utf-7').encode('utf-8')
 
-realdelete = no
-holdconnectionopen = true
-ssl = yes
-sslcacertfile = /etc/ssl/certs/ca-certificates.crt
+# realdelete = no
+# holdconnectionopen = true
+# ssl = yes
+# sslcacertfile = /etc/ssl/certs/ca-certificates.crt
