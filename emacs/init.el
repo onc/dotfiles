@@ -103,16 +103,6 @@ re-downloaded in order to locate PACKAGE."
 ;; fucking use spaces emacs
 (setq-default tab-width 4 indent-tabs-mode nil)
 
-;; Write backup files to own directory
-;; (setq backup-directory-alist
-;;       `(("." . ,(expand-file-name
-;;                  (concat user-emacs-directory "backups")))))
-;; Write auto save files to own directory
-;; http://stackoverflow.com/a/2020954/29618
-;; (defvar autosave-dir (expand-file-name (concat user-emacs-directory "autosaves/")))
-;; (setq auto-save-list-file-prefix autosave-dir)
-;; (setq auto-save-file-name-transforms `((".*" ,autosave-dir t)))
-
 ;; from http://emacswiki.org/emacs/AutoSave
 (setq backup-directory-alist
       `((".*" . ,temporary-file-directory)))
@@ -775,29 +765,6 @@ marginparsep=7pt, marginparwidth=.6in}
     (add-hook 'ruby-mode-hook 'inf-ruby-minor-mode)
     (add-hook 'compilation-filter-hook 'inf-ruby-auto-enter)))
 
-(use-package neotree
-  :bind(([f8] . neotree-toggle))
-  :config
-  (evil-set-initial-state 'neotree-mode 'emacs)
-  (setq neo-theme 'arrow)
-
-  (define-key neotree-mode-map (kbd "j") 'next-line)
-  (define-key neotree-mode-map (kbd "k") 'previous-line)
-  (define-key neotree-mode-map (kbd "s") 'neotree-enter-vertical-split)
-  (define-key neotree-mode-map (kbd "i") 'neotree-enter-horizontal-split)
-  (define-key neotree-mode-map (kbd "C-w l") 'other-window)
-  ;; (define-key neotree-mode-map (kbd "<escape>") 'neotree-hide)
-  ;; If this variable is non-nil then iT's not possible to
-  ;; get help in Helm buffers
-  ;; https://github.com/jaypei/emacs-neotree/issues/26
-  (setq neo-persist-show nil)
-  (add-hook 'neotree-mode-hook
-            (lambda ()
-              (define-key evil-normal-state-local-map (kbd "TAB") 'neotree-enter)
-              (define-key evil-normal-state-local-map (kbd "SPC") 'neotree-enter)
-              (define-key evil-normal-state-local-map (kbd "q") 'neotree-hide)
-              (define-key evil-normal-state-local-map (kbd "RET") 'neotree-enter))))
-
 (use-package helm
   :ensure t
   :diminish helm-mode
@@ -921,14 +888,6 @@ marginparsep=7pt, marginparwidth=.6in}
     (setq powerline-height 10)
     (setq powerline-raw "  ")
     (setq ns-use-srgb-colorspace nil)))
-
-;; uses ffplay
-;; get urls from podcaster from: http://itunes.so-nik.com/
-(use-package podcaster
-  :ensure nil
-  :load-path "/home/onze/.emacs.d/git-package/podcaster"
-  :config
-  (setq podcaster-feeds-urls '("http://halbwissen.co/feed/mp3/")))
 
 (use-package magit
   :ensure nil
@@ -1056,10 +1015,7 @@ marginparsep=7pt, marginparwidth=.6in}
   (use-package flycheck-haskell
     :ensure t
     :config
-    (add-hook 'haskell-mode-hook #'flycheck-haskell-setup))
-
-  ;; (flycheck-add-next-checker 'c/c++-clang 'c/c++-googlelint 'append)
-  )
+    (add-hook 'haskell-mode-hook #'flycheck-haskell-setup)))
 
 (use-package wcheck-mode
   :ensure t
@@ -1299,7 +1255,6 @@ The FILE-NAME specifies the file name to search for."
 (use-package gradle-mode
   :mode ("\\.gradle\\'" . gradle-mode))
 
-;; PACKAGE: JS2
 (use-package js2-mode
   :mode ("\\.js\\'" . js2-mode)
   :config
@@ -1307,7 +1262,6 @@ The FILE-NAME specifies the file name to search for."
   (setq-default js2-basic-offset 2)
   (define-key js2-mode-map (kbd "M-SPC") 'js2-mode-toggle-element))
 
-;; PACKAGE: TERN
 (use-package tern
   :defer t
   :init
