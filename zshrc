@@ -47,6 +47,9 @@ export PATH="${GOPATH}/bin:${PATH}"
 # rust/cargo
 export PATH="/home/onze/.cargo/bin:${PATH}"
 
+# ghc
+export PATH="/home/onze/.cabal/bin:${PATH}"
+
 # moodle
 export PATH="${HOME}/Applications/moodle-destroyer-tools:${PATH}"
 
