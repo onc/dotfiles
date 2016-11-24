@@ -1196,7 +1196,7 @@ marginparsep=7pt, marginparwidth=.6in}
   :ensure t
 
   :config
-  (setq-default c-basic-offset 4))
+  (setq-default c-basic-offset 2))
 
 (use-package c++-mode
   :ensure nil
@@ -1204,17 +1204,12 @@ marginparsep=7pt, marginparwidth=.6in}
          ("\\.cpp\\'" . c++-mode)
          ("\\.hpp\\'" . c++-mode)
          ("\\.cc\\'" . c++-mode))
-  :config
+  :bind(:map
+        c++-mode-map
+        ("C-c c" . onze-cmake-build)
+        ("C-c x" . onze-cmake-run))
 
-  (add-hook 'c++-mode-hook
-            (lambda ()
-              (c-set-style "stroustrup")))
-
-  (use-package clang-format
-    :commands (clang-format-buffer)
-    :config
-    (setq clang-format-executable "/usr/bin/clang-format"))
-
+  :preface
   ;; -------------------------------------------------
   ;; build a cmakeproject
   ;; -------------------------------------------------
@@ -1282,8 +1277,16 @@ The FILE-NAME specifies the file name to search for."
     (interactive)
     (call-process (my-executable-path)))
 
-  (define-key c++-mode-map (kbd "C-c c") 'onze-cmake-build)
-  (define-key c++-mode-map (kbd "C-c x") 'onze-cmake-run))
+  :config
+  (add-hook 'c++-mode-hook
+            (lambda ()
+              (c-set-style "stroustrup")))
+
+  (use-package clang-format
+    :commands (clang-format-buffer)
+    :config
+    (setq clang-format-executable "/usr/bin/clang-format"))
+  )
 
 (use-package mode-icons
   :ensure t
