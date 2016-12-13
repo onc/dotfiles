@@ -798,12 +798,10 @@
   _r_: rename buffer and file                               _s_: start clock
   _v_: toggle transparency                                  _f_: stop/finish cock
                                                           _t_: create report-table
-                                                          _m_: compose mail
 "
     ("i" onc/indent-whole-buffer        nil)
     ("r" onc/rename-file-and-buffer     nil)
     ("p" helm-projectile-switch-project nil)
-    ("m" mu4e-compose-new               nil)
     ("s" org-clock-in                   nil)
     ("f" org-clock-out                  nil)
     ("t" org-clock-report               nil)
