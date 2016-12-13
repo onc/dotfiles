@@ -83,8 +83,9 @@
 (tool-bar-mode -1)
 ;; Disable scrollbar
 (scroll-bar-mode -1)
-;; Disable menu-bar
-(menu-bar-mode -1)
+;; Disable menu-bar on anything but macOS
+(when (and (not (eq system-type 'darwin)) (fboundp 'menu-bar-mode))
+  (menu-bar-mode -1))
 
 ;; Disable cursor blink
 (blink-cursor-mode 0)
