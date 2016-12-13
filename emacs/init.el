@@ -640,9 +640,6 @@
   (use-package helm-ag
     :ensure t)
 
-  (use-package helm-mu
-    :ensure t)
-
   (use-package helm-projectile
     :ensure t
     :init (helm-projectile-on)
