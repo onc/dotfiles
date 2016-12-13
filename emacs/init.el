@@ -1364,9 +1364,19 @@ marginparsep=7pt, marginparwidth=.6in}
          ("\\.jsp\\'"   . web-mode)
          ("\\.erb\\'"   . web-mode))
   :config
-  (validate-setq web-mode-markup-indent-offset 2)
-  (validate-setq web-mode-css-indent-offset 2)
-  (validate-setq web-mode-code-indent-offset 2))
+  (validate-setq web-mode-markup-indent-offset 2
+                 web-mode-css-indent-offset 2
+                 web-mode-code-indent-offset 2))
+
+
+;; XML files
+(use-package nxml-mode
+  :mode (("\\.xml\\'" . nxml-mode)
+         ("\\.xslt\\'" . nxml-mode)
+         ("\\.xsd\\'" . nxml-mode))
+  :config
+  (validate-setq nxml-child-indent 2
+                 nxml-attribute-indent 2))
 
 
 ;; Support for AsciiDoc
