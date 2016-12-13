@@ -127,9 +127,21 @@
                        "\n"
                        "\n")))))
 
+;; stfu emacs!!!
+(setq ring-bell-function 'ignore)
 
 ;;; Global keybindings
 ;;; ------------------
+
+;; macOS keybindings
+(when (eq system-type 'darwin)
+  (setq mac-option-modifier 'meta
+        mac-command-modifier 'meta))
+
+;; macOS smooth scrolling
+(when (eq system-type 'darwin)
+  (setq mouse-wheel-scroll-amount '(1))
+  (setq mouse-wheel-progressive-speed nil))
 
 ;; Map escape to cancel (like C-g)...
 (define-key isearch-mode-map [escape] 'isearch-abort)   ;; isearch
@@ -280,6 +292,27 @@
   ;; Save desktop after one minute of idle
   :config (validate-setq desktop-auto-save-timeout 60
                          desktop-load-locked-desktop t))
+
+
+;; OS X window support
+(use-package ns-win
+  :defer t
+  :if (eq system-type 'darwin)
+  :config
+  (validate-setq
+   ;; Don't pop up new frames from the workspace
+   ns-pop-up-frames nil))
+
+
+;; Reveal current buffer in finder
+(use-package reveal-in-osx-finder
+  ;; Bind analogous to `dired-jump' at C-c f j
+  :bind (("C-c f J" . reveal-in-osx-finder)))
+
+
+;; Fringe mode (left and right borders stuff)
+(use-package fringe
+  :init (fringe-mode '(2 . 0)))
 
 
 ;; Save recent files
