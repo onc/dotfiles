@@ -24,17 +24,12 @@
 
 ;; Font for emacs
 (defconst onc/font-family "Source Code Pro")
-(defconst onc/emoji-font-family "Symbola")
+
 ;; Size of font
-(defconst onc/font-size 90)
+(defconst onc/font-size 100)
 
 ;; Location of deft notes
 (defconst onc/deft-directory (expand-file-name "~/Dropbox/Notes"))
-
-;; Paths for magit
-(defconst onc/magit-load-path (expand-file-name "~/.emacs.d/git-package/magit/lisp"))
-(defconst onc/magit-doc-load-path (expand-file-name "~/.emacs.d/git-package/magit/Documentation/"))
-(defconst onc/magit-gitflow-load-path (expand-file-name "~/.emacs.d/git-packages/magit-gitflow"))
 
 ;; Rust paths
 (defconst onc/racer-cmd-path (expand-file-name "~/.cargo/bin/racer"))
@@ -273,6 +268,11 @@
 
 ;; no idea where this comes from...
 (use-package unbound
+  :ensure t)
+
+
+;; magit needs this
+(use-package with-editor
   :ensure t)
 
 
@@ -649,24 +649,27 @@
 
 ;; Git support for emacs
 (use-package magit
-  :ensure nil
-  :load-path onc/magit-load-path
+  :load-path "git-packages/magit/lisp"
+  :commands (magit-status)
   :config
   (validate-setq magit-diff-refine-hunk t)
   (with-eval-after-load 'info
     (info-initialize)
-    (add-to-list 'Info-directory-list onc/magit-doc-load-path))
+    (add-to-list 'Info-directory-list "~/.emacs.d/git-packages/magit/Documentation"))
 
   (use-package magit-gitflow
-    :load-path onc/magit-gitflow-load-path
-    :disabled t
+    :load-path "git-packages/magit-gitflow"
     :init
-    add-hook 'magit-mode-hook #'turn-on-magit-gitflow))
+    (add-hook 'magit-mode-hook #'turn-on-magit-gitflow)))
 
 
 ;; Requirement of Spaceline
 (use-package powerline
-  :ensure t)
+  :ensure t
+  :config (validate-setq
+           powerline-height (truncate (* 1.0 (frame-char-height)))
+           ;;ns-use-srgb-colorspace nil
+           ))
 
 
 ;; Mode line
