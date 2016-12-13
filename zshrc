@@ -32,23 +32,25 @@ export LC_ALL=en_US.UTF-8
 export LC_CTYPE=en_US.UTF-8
 export LANG=en_US.UTF-8
 
+export CLICOLOR=1
+
 export PATH="${HOME}/Applications:${PATH}"
 # Java
-export JAVA_HOME="/usr/lib/jvm/default"
+export JAVA_HOME=$(/usr/libexec/java_home)
 # Ruby
 export GEM_HOME=$(ruby -e 'print Gem.user_dir')
 export PATH="`ruby -e 'print Gem.user_dir'`/bin:${PATH}"
 # Nodejs
-export NPM_PACKAGES="${HOME}/.npm-packages"
+export NPM_PACKAGES="${HOME}/.npm"
 export PATH="${NPM_PACKAGES}/bin:${PATH}"
 # go
-export GOPATH="/mnt/hdd/Coding/go"
-export PATH="${GOPATH}/bin:${PATH}"
+# export GOPATH="/mnt/hdd/Coding/go"
+# export PATH="${GOPATH}/bin:${PATH}"
 # rust/cargo
-export PATH="/home/onze/.cargo/bin:${PATH}"
+export PATH="${HOME}/.cargo/bin:${PATH}"
 
 # ghc
-export PATH="/home/onze/.cabal/bin:${PATH}"
+export PATH="${HOME}/.cabal/bin:${PATH}"
 
 # moodle
 export PATH="${HOME}/Applications/moodle-destroyer-tools:${PATH}"
