@@ -104,23 +104,25 @@ setopt HIST_IGNORE_SPACE    # ignore entries which begin with a space
 setopt EXTENDED_GLOB        # activate extended globbing
 setopt LIST_PACKED          # try to make the completion list smaller (occupying  less  lines)
 
-# get systeminformation
-DISTRO=$(lsb_release -ds | awk '{print $1}' | sed 's/\"//g')
-
-if [ "$DISTRO" = "Ubuntu" ]; then
-    . /home/onze/Applications/z/z.sh
+if [ `uname` != 'Darwin' ]; then
+    # get systeminformation
+    DISTRO=$(lsb_release -ds | awk '{print $1}' | sed 's/\"//g')
+    
+    if [ "$DISTRO" = "Ubuntu" ]; then
+        . /home/onze/Applications/z/z.sh
+    fi
+    
+    case "$DISTRO" in
+        "Arch")
+            source ~/.oncsh/arch.zsh
+            ;;
+        "Ubuntu")
+            source ~/.oncsh/ubuntu.zsh
+            ;;
+        *)
+            ;;
+    esac
 fi
-
-case "$DISTRO" in
-    "Arch")
-        source ~/.oncsh/arch.zsh
-        ;;
-    "Ubuntu")
-        source ~/.oncsh/ubuntu.zsh
-        ;;
-    *)
-        ;;
-esac
 
 source ~/.oncsh/misc.zsh
 source ~/.oncsh/fzf.zsh
