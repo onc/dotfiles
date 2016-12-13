@@ -50,19 +50,6 @@
 ;; Org-Mode
 (defconst onc/org-agenda-file-location (expand-file-name "~/todo.org"))
 
-;; Mu4e
-(defconst onc/mu4e-maildir-path (expand-file-name "~/Mail"))
-(defconst onc/mu4e-attachment-path (expand-file-name "~/Downloads/Mail"))
-(defconst onc/mu4e-mail-command "offlineimap")
-
-(defconst onc/mu4e-mail-address "christian.van-onzenoodt@uni-ulm.de")
-(defconst onc/mu4e-mail-full-name "Christian van Onzenoodt")
-
-;; Smtpmail
-(defconst onc/smtpmail-mailserver-address "mail.uni-ulm.de")
-(defconst onc/smtpmail-mailserver-port 587)
-(defconst onc/smtpmail-credentials-file (expand-file-name "~/.authinfo"))
-
 
 ;;; GC stuff
 ;;; ---------
@@ -741,138 +728,10 @@
     :config (validate-setq org-bullets-bullet-list '("●" "◼" "▶" "♦"))))
 
 
-;; Emails in Emacs
-(use-package mu4e
-  :bind (([f7] . mu4e)
-         :map mu4e-main-mode-map
-         ("s" . helm-mu)
-         :map mu4e-headers-mode-map
-         ("C-<return>" . mu4e-headers-mark-for-something)
-         ("C-r" . mu4e-mark-resolve-deferred-marks))
-  :commands mu4e
-  :defer 60
-  :init
-  ;; spell check
-  (add-hook 'mu4e-compose-mode-hook
-            (defun my-do-compose-stuff ()
-              "My settings for message composition."
-              (set-fill-column 72)
-              (flyspell-mode)))
-
-  :config
-  ;; default
-  (validate-setq mu4e-maildir onc/mu4e-maildir-path
-                 mu4e-attachment-dir onc/mu4e-attachment-path)
-  ;; allow for updating mail using 'U' in the main view:
-  (validate-setq mu4e-get-mail-command onc/mu4e-mail-command)
-
-  (validate-setq mu4e-drafts-folder "/UniMail/Drafts"
-                 mu4e-sent-folder   "/UniMail/Sent"
-                 mu4e-trash-folder  "/UniMail/Trash")
-
-  ;; fetch mails every 3 min
-  (validate-setq mu4e-update-interval (* 3 60))
-
-  ;; Don't keep message buffers around.
-  (validate-setq message-kill-buffer-on-exit t)
-
-  ;; http://www.djcbsoftware.nl/code/mu/mu4e/Displaying-rich_002dtext-messages.html
-  (validate-setq mu4e-html2text-command "html2text | grep -v '&nbsp_place_holder;'")
-
-  ;; use imagemagick, if available
-  (when (fboundp 'imagemagick-register-types)
-    (imagemagick-register-types))
-
-  (validate-setq mu4e-split-view 'vertical
-                 mu4e-headers-visible-columns 120)
-
-  (validate-setq mu4e-maildir-shortcuts
-                 '(("/UniMail/INBOX"                             . ?u)
-                   ("/GoogleMail/INBOX"                          . ?g)
-                   ("/GoogleSpamMail/INBOX"                      . ?s)
-                   ("/Onze-io/OnzeMail/INBOX"                    . ?o)
-                   ("/Onze-io/AnyoneMail/INBOX"                  . ?a)
-                   ("/UniMail/Uni-Mails"                         . ?w)
-                   ("/UniMail/Uni-Mails.jugendhackt.jugendhackt" . ?j)))
-
-  (add-to-list 'mu4e-bookmarks '("flag:attach"   "Mails with attachments" ?f) t)
-  (add-to-list 'mu4e-bookmarks '("maildir:/UniMail/Sent flag:attach"   "Sent-Mails with attachments" ?p) t)
-  (add-to-list 'mu4e-bookmarks '("/UniMail/Uni-Mails.jugendhackt.jugendhackt"   "Jugendhackt" ?j) t)
-  (add-to-list 'mu4e-bookmarks '("/UniMail/INBOX OR /GoogleMail/INBOX OR /Onze-io/OnzeMail/INBOX OR /Onze-io/AnyoneMail/INBOX OR /GoogleSpamMail/INBOX" "Combined Inbox" ?i) t)
-
-  ;; custom header, which only shows the root mail-dir like /Uni or /Google for all my mailaccounts.
-  ;; the regex replaces all symbols between the LAST forward-slash and the end string.
-  ;; this works, because all imap-subfolders are seperated by dots instead of slashes.
-  (add-to-list 'mu4e-header-info-custom
-               '(:maildir-root .
-                               (:name "Root-Folder of the maildir"
-                                      :shortname "MailRoot"
-                                      :help "Root-Folder of the maildir"
-                                      :function (lambda (msg)
-                                                  (replace-regexp-in-string "\/[a-zA-Z0-9-. ]*$" "" (concat (mu4e-message-field msg :maildir) ""))))))
-
-  ;; adjust columns of headers view
-  (setq mu4e-headers-fields
-        '((:human-date . 10)
-          (:flags . 8)
-          (:mailing-list . 15)
-          (:maildir-root . 12)
-          (:from . 26)
-          (:subject)))
-
-  (setq mu4e-use-fancy-chars t
-        mu4e-headers-first-child-prefix  '("\\" . "┗▶")
-        mu4e-headers-unread-mark '("u" . "❌")
-        mu4e-headers-unseed-mark '("u" . "❌")
-        mu4e-headers-replied-mark '("R" . "←")
-        mu4e-headers-seen-mark '("S" . "✓")
-        mu4e-headers-attach-mark '("a" . "↓")
-        mu4e-headers-signed-mark '("s" . "™")
-        mu4e-headers-encrypted-mark '("x" . "🔒")
-        mu4e-headers-flagged-mark '("F" . "♥"))
-
-  ;; something about ourselves
-  (validate-setq user-mail-address onc/mu4e-mail-address
-                 user-full-name onc/mu4e-mail-full-name)
-
-  ;; Silly mu4e only shows names in From: by default. Of course we also
-  ;; want the addresses.
-  (validate-setq mu4e-view-show-addresses t)
-
-  (validate-setq mu4e-headers-time-format "%H:%M"
-                 mu4e-date-format-long "%Y/%m/%d %H:%M"
-                 mu4e-headers-date-format "%y/%m/%d")
-
-  (use-package evil-mu4e
-    :ensure t)
-
-  (use-package mu4e-alert
-    :ensure t
-    :init
-    (add-hook 'after-init-hook #'mu4e-alert-enable-notifications)
-    (add-hook 'after-init-hook #'mu4e-alert-enable-mode-line-display)
-    :config (mu4e-alert-set-default-style 'libnotify)))
-
-
-;; Send mails from emacs
-(use-package smtpmail
-  :ensure t
-  :config
-  (setq message-send-mail-function 'smtpmail-send-it
-        starttls-use-gnutls t
-        smtpmail-starttls-credentials
-        '((onc/smtpmail-mailserver-address onc/smtpmail-mailserver-port nil nil))
-        smtpmail-auth-credentials onc/smtpmail-credentials-file
-        smtpmail-default-smtp-server onc/smtpmail-mailserver-address
-        smtpmail-smtp-server onc/smtpmail-mailserver-address
-        smtpmail-smtp-service onc/smtpmail-mailserver-port
-        smtpmail-debug-info t))
-
-
 ;; Global emacs bindings with prefix
 (use-package hydra
   :bind (("C-x m" . onc/common-functions/body))
-  :init
+  :config
   (defhydra onc/common-functions (:color teal)
     "
       Onzes functions
