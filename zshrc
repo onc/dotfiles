@@ -135,20 +135,8 @@ source ~/.oncsh/h.zsh
 source ~/.oncsh/docker.zsh
 
 alias webshare='python2 -c "import SimpleHTTPServer;SimpleHTTPServer.test()"'
-
-function set-backnlock() {
-    convert $1 temp_image_back.png
-    convert $2 temp_image_lock.png
-
-    cp temp_image_back.png ~/.i3/back.png
-    rm temp_image_back.png
-
-    cp temp_image_lock.png ~/.i3/lock.png
-    rm temp_image_lock.png
-    echo "lockscreen and background changed"
-}
+alias pyserver="python2 -m SimpleHTTPServer"
 
 alias dd_progress="sudo killall -USR1 dd"
 
-alias mplayer_hdmi="mplayer -ao alsa:device=hw=1.7"
-alias pyserver="python2 -m SimpleHTTPServer"
+alias 😭='sudo $(fc -ln -1)'
