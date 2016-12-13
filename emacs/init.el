@@ -498,6 +498,7 @@
 ;; Show colors in code
 (use-package rainbow-mode
   :ensure t
+  :diminish (rainbow-mode . "🌈")
   :init
   (dolist
       (hook '(css-mode-hook
