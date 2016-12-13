@@ -72,7 +72,7 @@ alias rmall="rm -rf *"
 # ping
 alias p="ping google.de"
 
-alias jmake="make -j9"
+alias jmake="make -j5"
 
 # ls after every cd
 function chpwd() {
