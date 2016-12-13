@@ -1,5 +1,5 @@
 # navigation
-alias ls=' ls --color=always'
+alias ls=' ls'
 alias cd=' cd'
 alias ..=' cd ..'
 alias ...=' cd ../../'
