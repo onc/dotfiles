@@ -432,28 +432,28 @@
     :init (global-evil-leader-mode)
     :config
     (evil-leader/set-key
-     "f" 'onc/indent-whole-buffer
-     "init" (lambda () (interactive) (find-file onc/init-el-path))
-     "o" 'find-file
-     "e" 'eval-defun
-     "d" 'dictcc
-     "1" 'highlight-symbol-at-point
-     "0" 'highlight-symbol-remove-all
-     "gst" 'magit-status
-     "ci" 'evilnc-comment-or-uncomment-lines
-     "cl" 'evilnc-quick-comment-or-uncomment-to-the-line
-     "ll" 'evilnc-quick-comment-or-uncomment-to-the-line
-     "cc" 'evilnc-copy-and-comment-lines
-     "cp" 'evilnc-comment-or-uncomment-paragraphs
-     "cr" 'comment-or-uncomment-region
-     "cv" 'evilnc-toggle-invert-comment-line-by-line
-     "a" 'align-regexp)
+      "f" 'onc/indent-whole-buffer
+      "init" (lambda () (interactive) (find-file onc/init-el-path))
+      "o" 'find-file
+      "e" 'eval-defun
+      "d" 'dictcc
+      "1" 'highlight-symbol-at-point
+      "0" 'highlight-symbol-remove-all
+      "gst" 'magit-status
+      "ci" 'evilnc-comment-or-uncomment-lines
+      "cl" 'evilnc-quick-comment-or-uncomment-to-the-line
+      "ll" 'evilnc-quick-comment-or-uncomment-to-the-line
+      "cc" 'evilnc-copy-and-comment-lines
+      "cp" 'evilnc-comment-or-uncomment-paragraphs
+      "cr" 'comment-or-uncomment-region
+      "cv" 'evilnc-toggle-invert-comment-line-by-line
+      "a" 'align-regexp)
 
     (evil-leader/set-key-for-mode
-     'c++-mode "f" 'clang-format-buffer)
+      'c++-mode "f" 'clang-format-buffer)
 
     (evil-leader/set-key-for-mode
-     'rust-mode "f" 'cargo-process-fmt))
+      'rust-mode "f" 'cargo-process-fmt))
 
   (use-package evil-search-highlight-persist
     :ensure t
