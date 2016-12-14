@@ -616,6 +616,10 @@
   (require 'helm-config)
   (helm-mode +1)
 
+  ;; Ignore .DS_Store files with helm mode
+  (add-to-list 'helm-boring-file-regexp-list "\\.DS_Store$")
+  (validate-setq helm-ff-skip-boring-files t)
+
   ;; Fuzzy matching
   (validate-setq helm-mode-fuzzy-match t)
   (validate-setq helm-completion-in-region-fuzzy-match t)
