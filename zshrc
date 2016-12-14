@@ -67,8 +67,6 @@ else
     export EDITOR='vim'
 fi
 
-export TERM=screen-256color
-
 # faster scrolling etc
 if hash xset 2>/dev/null; then
     if [[ -z $SSH_CONNECTION ]]; then
