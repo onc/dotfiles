@@ -96,7 +96,7 @@ set nobackup
 " auto read file when a file is changed from outside
 set autoread
 " normal OS clipboard interaction
-set clipboard=unnamedplus
+set clipboard=unnamed
 
 " ######## KEYBINDINGS ########################################################
 " Treat long lines as break lines (useful when moving around in them)
