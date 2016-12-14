@@ -128,7 +128,7 @@
 
 ;; macOS keybindings
 (when (eq system-type 'darwin)
-  (setq mac-option-modifier 'meta
+  (setq mac-option-modifier 'option
         mac-command-modifier 'meta))
 
 ;; macOS smooth scrolling
