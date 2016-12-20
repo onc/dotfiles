@@ -31,14 +31,6 @@
 ;; Location of deft notes
 (defconst onc/deft-directory (expand-file-name "~/Dropbox/Notes"))
 
-;; Rust paths
-(defconst onc/racer-cmd-path (expand-file-name "~/.cargo/bin/racer"))
-(defconst onc/racer-rust-src-path "/usr/src/rust/src")
-
-;; Ycmd paths
-(defconst onc/ycmd-server-command '("python" "~/Applications/ycmd/ycmd"))
-(defconst onc/ycmd-global-config-path (expand-file-name "~/Applications/ycmd/cpp/ycm/.ycm_extra_conf.py"))
-
 ;; Clang paths
 (defconst onc/clang-format-command-path "/usr/bin/clang-format")
 
@@ -69,7 +61,6 @@
 ;; versions of a file exist, and the caller did not explicitly specify
 ;; which one to load, then the newer file is loaded.
 (setq load-prefer-newer t)
-
 
 ;;; Appearance
 ;;; ----------
@@ -348,7 +339,14 @@
 
 ;; Load shell env
 (use-package exec-path-from-shell
-  :config (exec-path-from-shell-initialize))
+  :ensure t
+  :if (and (eq system-type 'darwin) (display-graphic-p))
+  :config
+  (validate-setq exec-path-from-shell-variables
+                 '("RUST_SRC_PATH"
+                   "PATH"))
+
+  (exec-path-from-shell-initialize))
 
 
 ;; Edit files as root, through Tramp
@@ -718,8 +716,8 @@
   :ensure t
   :init (add-hook 'c++-mode-hook #'ycmd-mode)
   :config
-  (set-variable 'ycmd-server-command onc/ycmd-server-command)
-  (set-variable 'ycmd-global-config onc/ycmd-global-config-path)
+  (set-variable 'ycmd-server-command '("python" "/Users/onze/Applications/ycmd/ycmd"))
+  (set-variable 'ycmd-global-config (expand-file-name "~/Applications/ycmd/cpp/ycm/.ycm_extra_conf.py"))
 
   (eval-after-load "flycheck-ycmd-autoloads" '(add-hook 'ycmd-mode-hook #'flycheck-ycmd-setup))
 
@@ -1089,7 +1087,6 @@ marginparsep=7pt, marginparwidth=.6in}
 
 ;; Rust
 (use-package rust-mode
-  :ensure t
   :mode "\\.rs\\'"
   :config
   (use-package cargo
@@ -1101,11 +1098,10 @@ marginparsep=7pt, marginparwidth=.6in}
     :init (add-hook 'rust-mode-hook #'cargo-minor-mode))
 
   (use-package racer
-    :config
+    :ensure t
     :init (add-hook 'rust-mode-hook #'racer-mode)
     :config
-    (validate-setq racer-cmd onc/racer-cmd-path)
-    (validate-setq racer-rust-src-path onc/racer-rust-src-path))
+    (validate-setq racer-rust-src-path (getenv "RUST_SRC_PATH")))
 
   (use-package flycheck-rust
     :ensure t
