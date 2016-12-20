@@ -702,16 +702,39 @@
 ;; Requirement of Spaceline
 (use-package powerline
   :ensure t
-  :config (validate-setq
-           powerline-height (truncate (* 1.0 (frame-char-height)))
-           ;;ns-use-srgb-colorspace nil
-           ))
+  :config
+  ;; (validate-setq powerline-height (truncate (* 1.0 (frame-char-height)))
+  ;;ns-use-srgb-colorspace nil
+  )
+
+
+;; Icon package
+(use-package all-the-icons
+  :ensure t
+  :config
+  (use-package all-the-icons-dired
+    :ensure t))
 
 
 ;; Mode line
 (use-package spaceline-config
   :ensure spaceline
-  :config (spaceline-spacemacs-theme))
+  :config
+  ;; Custom (iconized) spaceline theme
+  (use-package spaceline-all-the-icons
+    :load-path "spaceline"
+    :config
+    (use-package spaceline-colors
+      :load-path "spaceline"
+      :init (add-hook 'after-init-hook 'spaceline-update-faces)
+      :config (advice-add 'load-theme :after 'spaceline-update-faces)))
+  ;; set spacemacs theme
+  ;; (spaceline-spacemacs-theme)
+  (setq-default mode-line-format '("%e" (:eval (spaceline-ml-ati))))
+  ;; show where you are in the file in the right corner
+  (spaceline-toggle-hud-on)
+  ;; set spaceline in helm-mode
+  (spaceline-helm-mode))
 
 
 ;; Icons for Modes
