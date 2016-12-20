@@ -662,7 +662,25 @@
   :init (global-git-gutter-mode +1)
   :config
   ;; hide if there are no changes
-  (validate-setq git-gutter:hide-gutter t))
+  (validate-setq git-gutter:hide-gutter t)
+
+  (use-package git-gutter-fringe
+    :ensure t
+    :config
+    ;; colored fringe "bars"
+    (define-fringe-bitmap 'git-gutter-fr:added
+      [224 224 224 224 224 224 224 224 224 224 224 224 224 224 224 224 224 224 224 224 224 224 224 224 224]
+      nil nil 'center)
+    (define-fringe-bitmap 'git-gutter-fr:modified
+      [224 224 224 224 224 224 224 224 224 224 224 224 224 224 224 224 224 224 224 224 224 224 224 224 224]
+      nil nil 'center)
+    (define-fringe-bitmap 'git-gutter-fr:deleted
+      [0 0 0 0 0 0 0 0 0 0 0 0 0 128 192 224 240 248]
+      nil nil 'center))
+
+  ;; Refreshing git-gutter
+  (advice-add 'evil-force-normal-state :after 'git-gutter)
+  (add-hook 'focus-in-hook 'git-gutter:update-all-windows))
 
 
 ;; Git support for emacs
