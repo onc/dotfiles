@@ -657,6 +657,7 @@
     (add-hook 'c++-mode-hook 'cc-doc)
     :config
     (validate-setq helm-dash-browser-func 'eww))
+
   (use-package helm-projectile
     :ensure t
     :init (helm-projectile-on)
