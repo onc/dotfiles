@@ -79,15 +79,21 @@
 ;; Highlight current line
 (global-hl-line-mode t)
 
-;; Load theme
-(add-to-list 'custom-theme-load-path onc/custom-theme-load-path)
-(load-theme 'base16-onc-dark 'no-confirm)
-
 ;; Font
 (set-face-attribute 'default nil
-                    :family onc/font-family :height onc/font-size)
+                    :family onc/font-family :height onc/font-size :weight 'normal)
 (set-face-attribute 'variable-pitch nil
-                    :family onc/font-family :height onc/font-size :weight 'regular)
+                    :family onc/font-family :height onc/font-size :weight 'normal)
+
+;; Load theme
+(defun remove-mode-line-box (&rest args)
+  (set-face-attribute 'mode-line nil :box nil :underline nil)
+  (set-face-attribute 'mode-line-inactive nil :box nil :underline nil))
+
+(add-to-list 'custom-theme-load-path onc/custom-theme-load-path)
+(load-theme 'base16-onc-dark 'no-confirm)
+(when window-system
+  (remove-mode-line-box))
 
 ;; Show system name and full file path in emacs frame title
 (setq frame-title-format
