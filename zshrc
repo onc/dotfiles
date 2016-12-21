@@ -48,6 +48,7 @@ export PATH="${NPM_PACKAGES}/bin:${PATH}"
 # export PATH="${GOPATH}/bin:${PATH}"
 # rust/cargo
 export PATH="${HOME}/.cargo/bin:${PATH}"
+export RUST_SRC_PATH="${HOME}/.multirust/toolchains/stable-x86_64-apple-darwin/lib/rustlib/src/rust/src"
 
 # ghc
 export PATH="${HOME}/.cabal/bin:${PATH}"
