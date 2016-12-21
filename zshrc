@@ -134,7 +134,7 @@ source ~/.oncsh/h.zsh
 source ~/.oncsh/docker.zsh
 
 alias webshare='python2 -c "import SimpleHTTPServer;SimpleHTTPServer.test()"'
-alias pyserver="python2 -m SimpleHTTPServer"
+alias pyserver="python -m SimpleHTTPServer"
 
 alias dd_progress="sudo killall -USR1 dd"
 
