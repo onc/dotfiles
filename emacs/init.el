@@ -642,6 +642,21 @@
   (use-package helm-ag
     :ensure t)
 
+  (use-package helm-dash
+    :ensure t
+    :preface
+    (defun rust-doc ()
+      (interactive)
+      (setq-local helm-dash-docsets '("Rust")))
+
+    (defun cc-doc ()
+      (interactive)
+      (setq-local helm-dash-docsets '("C\+\+")))
+    :init
+    (add-hook 'rust-mode-hook 'rust-doc)
+    (add-hook 'c++-mode-hook 'cc-doc)
+    :config
+    (validate-setq helm-dash-browser-func 'eww))
   (use-package helm-projectile
     :ensure t
     :init (helm-projectile-on)
