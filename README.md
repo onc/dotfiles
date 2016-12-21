@@ -1,6 +1,6 @@
 # onze's dotfiles
 
-My ~[archlinux](https://www.archlinux.org/)~ macOS dotfiles.
+My ~~[archlinux](https://www.archlinux.org/)~~ macOS dotfiles.
 
 ## Colors
 
