@@ -664,6 +664,11 @@
     :config
     (validate-setq helm-dash-browser-func 'eww))
 
+  (use-package helm-swoop
+    :ensure t
+    :bind (("M-i" . helm-swoop)
+           ("M-I" . helm-multi-swoop-projectile)))
+
   (use-package helm-projectile
     :ensure t
     :init (helm-projectile-on)
