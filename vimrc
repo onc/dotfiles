@@ -285,10 +285,6 @@ Plug 'kien/ctrlp.vim'
 " Plug 'Valloric/YouCompleteMe'
 " Tern for Vim - JS
 Plug 'marijnh/tern_for_vim', { 'for': 'javascript' }
-" snippets for ultisnip
-Plug 'honza/vim-snippets'
-" UltiSnips Autocomplete
-Plug 'SirVer/ultisnips'
 " Latex-Plugin
 Plug 'LaTeX-Box-Team/LaTeX-Box', { 'for': ['latex', 'tex'] }
 " Matching Tags
