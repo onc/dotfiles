@@ -10,9 +10,9 @@ COMPLETION_WAITING_DOTS="false"
 REPORTTIME=10
 
 # plugins
-plugins=(test git git-flow-avh svn tmux tmuxinator man colored-man-pages colorize
-         themes z sudo rails fzf npm cp bgnotify
-         zsh_reload docker docker-compose brew rbenv zsh-syntax-highlighting)
+plugins=(test git git-flow-avh svn tmux tmuxinator man colored-man-pages 
+         colorize themes z sudo npm cp bgnotify zsh_reload docker 
+         docker-compose brew rbenv zsh-syntax-highlighting)
 
 # Disable repeating command before result of command
 DISABLE_AUTO_TITLE="true"
