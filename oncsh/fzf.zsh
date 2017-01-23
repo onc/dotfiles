@@ -12,6 +12,9 @@ export FZF_DEFAULT_OPTS='
     --color fg:252,bg:235,hl:112,fg+:252,bg+:235,hl+:161
     --color info:144,prompt:123,spinner:135,pointer:161,marker:118
 '
+export FZF_TMUX=1
+export FZF_TMUX_HEIGHT=40
+export FZF_CTRL_R_OPTS="$FZF_DEFAULT_OPTS"
 
 #======================================================================================
 # Git
