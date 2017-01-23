@@ -32,7 +32,7 @@
 (defconst onc/deft-directory (expand-file-name "~/Dropbox/Notes"))
 
 ;; Clang paths
-(defconst onc/clang-format-command-path "/usr/bin/clang-format")
+(defconst onc/clang-format-command-path "/usr/local/bin/clang-format")
 
 ;; Org-Mode
 (defconst onc/org-agenda-file-location (expand-file-name "~/todo.org"))
