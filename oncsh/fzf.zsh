@@ -21,7 +21,7 @@ export FZF_CTRL_R_OPTS="$FZF_DEFAULT_OPTS"
 #======================================================================================
 
 # search git history
-fshow() {
+git-browse() {
     local out shas sha q k
     while out=$(
             git log --graph --color=always \
