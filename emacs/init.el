@@ -137,11 +137,6 @@
 (define-key isearch-mode-map [escape] 'isearch-abort)   ;; isearch
 (global-set-key [escape] 'keyboard-escape-quit)         ;; everywhere else
 
-;; Tmux-like spliting
-(global-set-key (kbd "C-x %") 'split-window-right)
-(global-set-key (kbd "C-x \"") 'split-window-below)
-(global-set-key (kbd "C-x t") 'make-frame-command)
-
 ;; Revert buffer
 (global-set-key [f5]
                 (lambda ()
@@ -414,9 +409,34 @@
   (defun add-vim-bindings()
     (define-key evil-normal-state-local-map (kbd "<escape>") 'save-with-escape-and-timeout))
 
+  ;; unbind C-w from evil-window-map, so I can use it!
+  (defun set-control-w-shortcuts ()
+    (define-prefix-command 'onc-window-map)
+    (global-set-key (kbd "C-w") 'onc-window-map)
+    (define-key onc-window-map (kbd "h") 'evil-window-left)
+    (define-key onc-window-map (kbd "j") 'evil-window-down)
+    (define-key onc-window-map (kbd "k") 'evil-window-up)
+    (define-key onc-window-map (kbd "l") 'evil-window-right)
+    (define-key onc-window-map (kbd "%") 'split-window-right)
+    (define-key onc-window-map (kbd "\"") 'split-window-below)
+    (define-key onc-window-map (kbd "x") 'delete-window)
+    (define-key onc-window-map (kbd "o") 'delete-other-windows)
+    (define-key onc-window-map (kbd "c") 'perspeen-create-ws)
+    (define-key onc-window-map (kbd "n") 'perspeen-next-ws)
+    (define-key onc-window-map (kbd "r") 'perspeen-rename-ws)
+    (define-key onc-window-map (kbd "d") 'perspeen-delete-ws))
+
   :config
   ;; make the cursor stay in place after exiting insert mode
   (validate-setq evil-move-cursor-back nil)
+
+  ;; from: https://lists.ourproject.org/pipermail/implementations-list/2014-September/002064.html
+  (eval-after-load "evil-maps"
+    '(dolist (map (list evil-motion-state-map
+                        evil-insert-state-map
+                        evil-emacs-state-map))
+       (define-key map "\C-w" nil)
+       (set-control-w-shortcuts)))
 
   ;; Some modes should not start in evil-mode
   (evil-set-initial-state 'paradox-menu-mode 'emacs)
@@ -478,6 +498,17 @@
   (use-package evil-surround
     :ensure t
     :init (global-evil-surround-mode t)))
+
+
+;; Workspaces in emacs
+(use-package perspeen
+  :ensure t
+  :commands (perspeen-create-ws
+             perspeen-next-ws
+             perspeen-rename-ws
+             perspeen-delete-ws)
+  :config
+  (perspeen-mode t))
 
 
 ;; On-the-fly syntax checking
