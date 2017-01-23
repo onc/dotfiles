@@ -66,9 +66,9 @@ function dict {
     readonly DICT_PATH=~/Applications/onctionary/de-en-tab-utf-8.txt
 
     if [ -z "$1" ]; then
-        cat $DICT_PATH | fzf-tmux | xclip -i -selection clipboard
+        cat $DICT_PATH | fzf-tmux
     else
-        ag --nonumber --ignore-case "$1" $DICT_PATH | fzf-tmux -q "$1" | xclip -i -selection clipboard
+        ag --nonumber --ignore-case "$1" $DICT_PATH | fzf-tmux -q "$1"
     fi
 }
 
