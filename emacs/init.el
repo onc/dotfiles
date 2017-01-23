@@ -760,11 +760,26 @@
     (add-hook 'magit-mode-hook #'turn-on-magit-gitflow)))
 
 
+;; Moodle-destroyer plugin
+(use-package moodle-destroyer
+  :load-path "/Users/onze/Repos/moodle-destroyer.el/lisp"
+  :bind(:map
+        moodle-destroyer-mode-map
+        ("C-c C-c" . moodle-destroyer-org-to-json))
+  :commands (moodle-destroyer-json-to-org
+             moodle-destroyer-org-to-json)
+  :config
+  ;; set custom name for org-mode gradingfile
+  (setq moodle-destroyer-gradingfile-org-name "grading.org")
+  ;; set custom name for exported json file
+  (setq moodle-destroyer-gradingfile-json-name "grading.ex.json"))
+
+
 ;; Requirement of Spaceline
 (use-package powerline
   :ensure t
   :config
-  ;; (validate-setq powerline-height (truncate (* 1.0 (frame-char-height)))
+  (validate-setq powerline-height (truncate (* 1.0 (frame-char-height))))
   ;;ns-use-srgb-colorspace nil
   )
 
