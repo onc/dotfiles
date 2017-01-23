@@ -3,7 +3,7 @@
 #======================================================================================
 
 # configs for fzf
-export FZF_DEFAULT_COMMAND='ag -l -g ""'
+export FZF_DEFAULT_COMMAND='rg --files --hidden --follow --glob "!.git/*"'
 export FZF_DEFAULT_OPTS='
     --extended
     --reverse
