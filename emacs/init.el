@@ -677,7 +677,10 @@
                    helm-grep-default-recurse-command "ag --vimgrep -z %p %f"))
 
   (use-package helm-ag
-    :ensure t)
+    :ensure t
+    :config
+    (when (executable-find "rg")
+      (validate-setq helm-grep-ag-command "TERM=eterm-color rg --color=always --smart-case --no-heading --line-number %s %s %s")))
 
   (use-package helm-dash
     :ensure t
