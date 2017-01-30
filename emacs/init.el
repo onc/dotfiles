@@ -595,6 +595,11 @@
   (add-hook 'term-mode-hook (lambda()
                               (setq yas-dont-activate t))))
 
+;; Terminal in emacs
+(use-package multi-term
+  :ensure t
+  :config
+  (setq multi-term-program "/bin/zsh"))
 
 ;; Notes
 (use-package deft
