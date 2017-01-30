@@ -767,15 +767,6 @@
   (setq moodle-destroyer-gradingfile-json-name "grading.ex.json"))
 
 
-;; Requirement of Spaceline
-(use-package powerline
-  :ensure t
-  :config
-  (validate-setq powerline-height (truncate (* 1.0 (frame-char-height))))
-  ;;ns-use-srgb-colorspace nil
-  )
-
-
 ;; Icon package
 (use-package all-the-icons
   :ensure t
@@ -785,31 +776,33 @@
     :init (add-hook 'dired-mode-hook 'all-the-icons-dired-mode)))
 
 
-;; Mode line
-(use-package spaceline-config
-  :ensure spaceline
-  :config
-  ;; Custom (iconized) spaceline theme
-  (use-package spaceline-all-the-icons
-    :load-path "spaceline"
-    :config
-    (use-package spaceline-colors
-      :load-path "spaceline"
-      :init (add-hook 'after-init-hook 'spaceline-update-faces)
-      :config (advice-add 'load-theme :after 'spaceline-update-faces)))
-  ;; set spacemacs theme
-  ;; (spaceline-spacemacs-theme)
-  (setq-default mode-line-format '("%e" (:eval (spaceline-ml-ati))))
-  ;; show where you are in the file in the right corner
-  (spaceline-toggle-hud-on)
-  ;; set spaceline in helm-mode
-  (spaceline-helm-mode))
-
-
-;; Icons for Modes
-(use-package mode-icons
+;; Requirement of Spaceline
+(use-package powerline
   :ensure t
-  :init (mode-icons-mode))
+  :config
+
+  ;; Mode line
+  (use-package spaceline-config
+    :ensure spaceline
+    :config
+
+    ;; Custom (iconized) spaceline theme
+    (use-package spaceline-all-the-icons
+      :load-path "spaceline"
+      :config
+      (use-package spaceline-colors
+        :load-path "spaceline"
+        :init (add-hook 'after-init-hook 'spaceline-update-faces)
+        :config (advice-add 'load-theme :after 'spaceline-update-faces)
+
+        (validate-setq powerline-height 13)
+        (setq-default powerline-default-separator 'nil)
+        (setq-default mode-line-format '("%e" (:eval (spaceline-ml-ati))))))))
+
+(use-package atom-one-dark-theme
+  :defer t
+  ;; :config (load-theme 'atom-one-dark t)
+  )
 
 
 ;; Better emacs package menu
