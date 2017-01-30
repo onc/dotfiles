@@ -133,6 +133,10 @@
   (setq mouse-wheel-scroll-amount '(1))
   (setq mouse-wheel-progressive-speed nil))
 
+;; Fix black cursor in emacs-mac
+(when (eq system-type 'darwin)
+  (set-mouse-color "white"))
+
 ;; Map escape to cancel (like C-g)...
 (define-key isearch-mode-map [escape] 'isearch-abort)   ;; isearch
 (global-set-key [escape] 'keyboard-escape-quit)         ;; everywhere else
