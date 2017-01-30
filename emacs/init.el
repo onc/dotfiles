@@ -588,7 +588,11 @@
 (use-package yasnippet
   :ensure t
   :diminish yas-minor-mode
-  :init (yas-global-mode t))
+  :init (yas-global-mode t)
+  :config
+  ;; preserve tab-completion in ansi-term
+  (add-hook 'term-mode-hook (lambda()
+                              (setq yas-dont-activate t))))
 
 
 ;; Notes
