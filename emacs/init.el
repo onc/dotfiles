@@ -507,12 +507,7 @@
 ;; Workspaces in emacs
 (use-package perspeen
   :ensure t
-  :commands (perspeen-create-ws
-             perspeen-next-ws
-             perspeen-rename-ws
-             perspeen-delete-ws)
-  :config
-  (perspeen-mode t))
+  :config (perspeen-mode t))
 
 
 ;; On-the-fly syntax checking
