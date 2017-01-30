@@ -29,7 +29,6 @@
 ;;---------------;;
 ;; First Segment ;;
 ;;---------------;;
-
 (spaceline-define-segment
     ati-modified "An `all-the-icons' modified segment"
     (let* ((config-alist
@@ -92,10 +91,10 @@
       (propertize (format-mode-line "%b ") 'face '(:height 0.8 :inherit) 'display '(raise 0.1)))
     :tight t)
 
+
 ;;----------------;;
 ;; Second Segment ;;
 ;;----------------;;
-
 (spaceline-define-segment
     ati-process "An `all-the-icons' segment for the current process"
     (let ((icon (all-the-icons-icon-for-buffer)))
@@ -128,7 +127,6 @@
 ;;----------------;;
 ;; Third Segement ;;
 ;;----------------;;
-
 (defun spaceline---github-vc ()
   "Function to return the Spaceline formatted GIT Version Control text."
   (let ((branch (mapconcat 'concat (cdr (split-string vc-mode "[:-]")) "-")))
@@ -212,46 +210,23 @@
 ;;---------------------;;
 ;; Right First Segment ;;
 ;;---------------------;;
-(defun spaceline--get-temp ()
-  "Function to return the Temperature formatted for ATI Spacline."
-  (let ((temp (yahoo-weather-info-format yahoo-weather-info "%(temperature)")))
-    (unless (string= "" temp) (format "%s°C" (round (string-to-number temp))))))
-
 (spaceline-define-segment
-    ati-weather "Weather"
-    (let* ((weather (yahoo-weather-info-format yahoo-weather-info "%(weather)"))
-           (temp (spaceline--get-temp))
-           (help (concat "Weather is '" weather "' and the temperature is " temp))
-           (icon (all-the-icons-icon-for-weather (downcase weather))))
-      (concat
-       (if (> (length icon) 1)
-           (propertize icon 'help-echo help 'face `(:height 0.9 :inherit) 'display '(raise 0.1))
-         (propertize icon
-                     'help-echo help
-                     'face `(:height 0.9 :family ,(all-the-icons-wicon-family) :inherit)
-                     'display '(raise 0.0)))
-       (propertize " " 'help-echo help)
-       (propertize (spaceline--get-temp) 'face '(:height 0.9 :inherit) 'help-echo help)))
-    :when (and active (boundp 'yahoo-weather-info) yahoo-weather-mode)
-    :enabled nil
-    :tight t)
+    ati-perspeen "Show the current perspeen workspace"
 
-(spaceline-define-segment
-    ati-suntime "Suntime"
-    (let ((help (yahoo-weather-info-format yahoo-weather-info "Sunrise at %(sunrise-time), Sunset at %(sunset-time)")))
-      (concat
-       (propertize (yahoo-weather-info-format yahoo-weather-info "%(sunrise-time) ")
-                   'face '(:height 0.9 :inherit) 'display '(raise 0.1) 'help-echo help)
-       (propertize (format "%s" (all-the-icons-wicon "sunrise" :v-adjust 0.1))
-                   'face `(:height 0.8 :family ,(all-the-icons-wicon-family) :inherit) 'help-echo help)
-       (propertize " · " 'help-echo help)
-       (propertize (yahoo-weather-info-format yahoo-weather-info "%(sunset-time) ")
-                   'face '(:height 0.9 :inherit) 'display '(raise 0.1) 'help-echo help)
-       (propertize (format "%s" (all-the-icons-wicon "sunset" :v-adjust 0.1))
-                   'face `(:height 0.8 :family ,(all-the-icons-wicon-family) :inherit) 'help-echo help)))
-    :when (and active (boundp 'yahoo-weather-info) yahoo-weather-mode)
-    :enabled nil
-    :tight t )
+    (let* ((full-string))
+      (mapc (lambda (ws)
+              (let* ((name (perspeen-ws-struct-name ws))
+                     (string-name (format "%s" name))
+                     (prop-name))
+
+                (if (equal name (perspeen-ws-struct-name perspeen-current-ws))
+                    (setq prop-name (propertize string-name 'face `(:foreground "DarkGoldenrod2")))
+                  (setq prop-name string-name))
+
+                (setq full-string (append full-string (list prop-name)))))
+            perspeen-ws-list)
+
+      full-string))
 
 (spaceline-define-segment
     ati-time "Time"
@@ -273,40 +248,6 @@
     ati-buffer-size "Buffer Size"
     (propertize (format-mode-line "%I") 'face `(:height 0.9 :inherit) 'display '(raise 0.1))
     :tight t)
-
-(spaceline-define-segment
-    ati-battery-status "Show battery information"
-    (let* ((charging? (equal "AC" (cdr (assoc ?L fancy-battery-last-status))))
-           (percentage (string-to-int (cdr (assoc ?p fancy-battery-last-status))))
-           (time (format "%s" (cdr (assoc ?t fancy-battery-last-status))))
-           (icon-set (if charging? 'alltheicon 'faicon))
-           (icon-alist
-            (cond
-             (charging? '((icon . "charging") (inherit . success) (height . 1.3) (raise . -0.1)))
-             ((> percentage 95) '((icon . "full") (inherit . success)))
-             ((> percentage 70) '((icon . "three-quarters")))
-             ((> percentage 35) '((icon . "half")))
-             ((> percentage 15) '((icon . "quarter") (inherit . warning)))
-             (t '((icon . "empty") (inherit . error)))))
-           (icon-f (all-the-icons--function-name icon-set))
-           (family (funcall (all-the-icons--family-name icon-set))))
-      (let-alist icon-alist
-        (concat
-         (if .inherit
-             (let ((fg (face-attribute .inherit :foreground)))
-               (propertize (funcall icon-f (format "battery-%s" .icon))
-                           'face `(:height ,(or .height 1.0) :family ,family :foreground ,fg)
-                           'display `(raise ,(or .raise 0.0))))
-           (propertize (funcall icon-f (format "battery-%s" .icon))
-                       'face `(:family ,family :inherit)
-                       'display '(raise 0.0)))
-         " "
-         (if .inherit
-             (let ((fg (face-attribute .inherit :foreground)))
-               (propertize (if charging? (format "%s%%%%" percentage) time) 'face `(:height 0.9 :foreground ,fg)))
-           (propertize time 'face '(:height 0.9 :inherit)))
-         )))
-    :global-override fancy-battery-mode-line :when (and active (fboundp 'fancy-battery-mode) fancy-battery-mode))
 
 (defun spaceline--direction (dir)
   "Inverts DIR from right to left & vice versa."
@@ -347,8 +288,8 @@ the directions of the separator."
 (define-separator "left-3" "right" 'spaceline-highlight-face 'mode-line)
 (define-separator "left-4" "right" 'mode-line 'powerline-active2)
 
-(define-separator "right-1" "left" 'powerline-active2 'powerline-active1)
-(define-separator "right-2" "left" 'powerline-active1 'mode-line)
+(define-separator "right-1" "left" 'powerline-active2 'mode-line)
+(define-separator "right-2" "left" 'mode-line 'spaceline-highlight-face)
 
 (spaceline-compile
  "ati"
@@ -361,14 +302,15 @@ the directions of the separator."
    ((ati-process ati-position ati-region-info) :face highlight-face :separator " | ")
    ati-left-3-separator
    ati-left-inactive-separator
-   ((ati-vc-icon ati-flycheck-status ati-package-updates purpose) :separator " · " :face other-face)
+   ((ati-vc-icon ati-flycheck-status ati-package-updates purpose) :separator "  " :face other-face)
    ati-left-4-separator)
 
- '(ati-right-1-separator
-   ((ati-suntime ati-weather) :separator " · " :face other-face)
-   ati-right-2-separator
+ '(
+   ati-right-1-separator
    ati-right-inactive-separator
-   ((ati-battery-status ati-time) :separator " | " :face other-face)
+   ((ati-perspeen) :separator " " :face default-face)
+   ati-right-2-separator
+   ((ati-time) :separator " | " :face highlight-face)
    ))
 
 ;; (setq mode-line-format '("%e" (:eval (spaceline-ml-main))))
