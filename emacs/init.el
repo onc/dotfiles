@@ -317,13 +317,14 @@
 
 ;; Undo with branching
 (use-package undo-tree
-  :ensure t
   :diminish undo-tree-mode
-  :init (global-undo-tree-mode t)
   :config
-  (validate-setq undo-tree-auto-save-history t)
+  (validate-setq undo-tree-auto-save-history nil)
   (validate-setq undo-tree-history-directory-alist
-                 `(("." . ,(concat user-emacs-directory "undo")))))
+                 `(("." . ,(concat user-emacs-directory "undo"))))
+  (validate-setq undo-tree-visualizer-timestamps t
+                 undo-tree-visualizer-diff t)
+  (global-undo-tree-mode))
 
 
 ;; Save position in files
