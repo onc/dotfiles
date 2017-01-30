@@ -959,95 +959,22 @@
 
 ;; Spell checker
 (use-package ispell
-  :bind (([f8]. fd-switch-dictionary))
-  :preface
-  (defun fd-switch-dictionary()
-    (interactive)
-    (let* ((dic ispell-current-dictionary)
-           (change (if (string= dic "english") "deutsch" "english")))
-      (ispell-change-dictionary change)
-      (message "Dictionary switched from %s to %s" dic change))))
-
-
-;; Text-checker interface for Emacs
-(use-package wcheck-mode
-  :ensure t
-  :preface
-  ;; This setup was initially found at
-  ;; https://github.com/ReanGD/dotfiles/blob/414a6bd2eeb8df0fab2d93c5d6c5e90aa03c2e2d/.config/emacs/minor/spelling-cfg.el
-  ;; and then modified to provide simultanous languages for spelling corrections.
-  (defvar lcl-var:spelling-ignore nil)
-
-  (defun lcl:spelling-add-to-dictionary (marked-text)
-    (let* ((word (downcase (aref marked-text 0)))
-           (dict (if (string-match "[a-zA-Z]" word)
-                     (message "en_US.dic")
-                   (message "de_DE.dic")))
-           (file (concat "~/.config/enchant/" dict)))
-      (when (and file (file-writable-p file))
-        (with-temp-buffer
-          (insert word) (newline)
-          (append-to-file (point-min) (point-max) file)
-          (message "Added word \"%s\" to the \"%s\" dictionary" word dict))
-        (wcheck-mode 0)
-        (wcheck-mode 1))))
-
-  (defun lcl:spelling-add-to-ignore (marked-text)
-    (let ((word (aref marked-text 0)))
-      (add-to-list 'lcl-var:spelling-ignore word)
-      (message "Added word \"%s\" to the ignore list" word)
-      (wcheck--hook-outline-view-change)))
-
-  (defun lcl:spelling-action-menu (marked-text)
-    (append (wcheck-parser-lines)
-            (list (cons "[Add to dictionary]" 'lcl:spelling-add-to-dictionary)
-                  (cons "[Ignore]" 'lcl:spelling-add-to-ignore))))
-
-  (defun lcl:delete-list (delete-list list)
-    (dolist (el delete-list)
-      (setq list (remove el list)))
-    list)
-
-  (defun lcl:spelling-parser-lines (&rest ignored)
-    (lcl:delete-list lcl-var:spelling-ignore
-                     (delete-dups
-                      (split-string
-                       (buffer-substring-no-properties (point-min) (point-max))
-                       "\n+" t))))
-
-  (defun lcl:spelling-hotkeys ()
-    (define-key wcheck-mode-map (kbd "M-w RET") 'wcheck-actions)
-    (define-key wcheck-mode-map (kbd "M-w l") 'wcheck-jump-forward)
-    (define-key wcheck-mode-map (kbd "M-w j") 'wcheck-jump-backward))
-
-  (defun lcl:wcheck ()
-    (defun wcheck--choose-action-minibuffer (actions)
-      (cdr
-       (assoc
-        (ido-completing-read "Choose " (mapcar #'car actions))
-        actions)))
-    (setq-default
-     wcheck-language "All"
-     wcheck-language-data
-     '(("All"
-        (program . "/home/onze/Applications/emacs-scripts/spell_check_text.sh")
-        (parser . lcl:spelling-parser-lines)
-        (action-program . "/home/onze/Applications/emacs-scripts/spell_check_word.py")
-        (action-parser . lcl:spelling-action-menu)
-        (read-or-skip-faces
-         ((emacs-lisp-mode c-mode c++-mode python-mode)
-          read font-lock-comment-face)
-         (org-mode
-          skip org-block-begin-line org-block-end-line org-meta-line org-link)
-         (nil))
-        )))
-    (lcl:spelling-hotkeys))
-
-  (defun wcheck-activate ()
-    (interactive)
-    (lcl:wcheck))
+  :defer t
   :config
-  (wcheck-activate))
+  (validate-setq
+   ispell-program-name (if (eq system-type 'darwin)
+                           (executable-find "aspell")
+                         (executable-find "hunspell"))
+   ispell-dictionary "en_US")
+  (unless ispell-program-name
+    (warn "No spell-checker available. Please install aspell or Hunspell")))
+
+
+;; Automatically infer dictionary
+(use-package auto-dictionary
+  :ensure t
+  :init
+  (add-hook 'flyspell-mode-hook #'auto-dictionary-mode))
 
 
 ;; Latex
