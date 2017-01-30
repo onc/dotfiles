@@ -826,10 +826,12 @@
   :ensure t
   :init (add-hook 'c++-mode-hook #'ycmd-mode)
   :config
-  (set-variable 'ycmd-server-command '("python" "/Users/onze/Applications/ycmd/ycmd"))
-  (set-variable 'ycmd-global-config (expand-file-name "~/Applications/ycmd/cpp/ycm/.ycm_extra_conf.py"))
+  (set-variable 'ycmd-server-command '("python2" "/Users/onze/Applications/ycmd/ycmd"))
+  (set-variable 'ycmd-global-config (expand-file-name "~/Repos/dotfiles/ycmd/ycm_conf.py"))
 
-  (eval-after-load "flycheck-ycmd-autoloads" '(add-hook 'ycmd-mode-hook #'flycheck-ycmd-setup))
+  (use-package flycheck-ycmd
+    :commands (flycheck-ycmd-setup)
+    :init (add-hook 'ycmd-mode-hook 'flycheck-ycmd-setup))
 
   (use-package company-ycmd
     :ensure t
