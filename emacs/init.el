@@ -469,6 +469,7 @@
       "1" 'highlight-symbol-at-point
       "0" 'highlight-symbol-remove-all
       "gst" 'magit-status
+      "glg" 'magit-log-all
       "ci" 'evilnc-comment-or-uncomment-lines
       "cl" 'evilnc-quick-comment-or-uncomment-to-the-line
       "ll" 'evilnc-quick-comment-or-uncomment-to-the-line
@@ -738,7 +739,7 @@
 ;; Git support for emacs
 (use-package magit
   :load-path "git-packages/magit/lisp"
-  :commands (magit-status)
+  :commands (magit-status magit-log-all)
   :config
   (validate-setq magit-diff-refine-hunk t)
   (with-eval-after-load 'info
