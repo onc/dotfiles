@@ -35,7 +35,7 @@
 (defconst onc/clang-format-command-path "/usr/local/bin/clang-format")
 
 ;; Org-Mode
-(defconst onc/org-agenda-file-location (expand-file-name "~/todo.org"))
+;; (defconst onc/org-agenda-file-location (expand-file-name "~/todo.org"))
 
 
 ;;; GC stuff
@@ -80,20 +80,11 @@
 (global-hl-line-mode t)
 
 ;; Font
-(set-face-attribute 'default nil
-                    :family onc/font-family :height onc/font-size :weight 'normal)
-(set-face-attribute 'variable-pitch nil
-                    :family onc/font-family :height onc/font-size :weight 'normal)
-
-;; Load theme
-(defun remove-mode-line-box (&rest args)
-  (set-face-attribute 'mode-line nil :box nil :underline nil)
-  (set-face-attribute 'mode-line-inactive nil :box nil :underline nil))
+(set-face-attribute 'default nil :family onc/font-family :height onc/font-size :weight 'normal)
+(set-face-attribute 'variable-pitch nil :family onc/font-family :height onc/font-size :weight 'normal)
 
 (add-to-list 'custom-theme-load-path onc/custom-theme-load-path)
 (load-theme 'base16-onc-dark 'no-confirm)
-(when window-system
-  (remove-mode-line-box))
 
 ;; Show system name and full file path in emacs frame title
 (setq frame-title-format
@@ -148,9 +139,6 @@
                   (revert-buffer nil t)
                   (message "Buffer reverted")))
 
-;; Bring the current line to the center
-(global-set-key (kbd "C-SPC") 'recenter)
-
 ;; Keyboard shortcuts for resizing windows
 (global-set-key (kbd "<C-s-left>") (lambda () (interactive) (shrink-window-horizontally 5)))
 (global-set-key (kbd "<C-s-right>") (lambda () (interactive) (enlarge-window-horizontally 5)))
@@ -163,7 +151,6 @@
 ;; Adjust font size
 (global-set-key (kbd "s-+") 'onc/increase-default-font-height)
 (global-set-key (kbd "s--") 'onc/decrease-default-font-height)
-
 
 ;;; Bootstrap package management
 ;;; ----------------------------
@@ -293,20 +280,18 @@
   :defer t
   :if (eq system-type 'darwin)
   :config
-  (validate-setq
-   ;; Don't pop up new frames from the workspace
-   ns-pop-up-frames nil))
+  ;; Don't pop up new frames from the workspace
+  (validate-setq ns-pop-up-frames nil))
 
 
 ;; Reveal current buffer in finder
 (use-package reveal-in-osx-finder
-  ;; Bind analogous to `dired-jump' at C-c f j
   :bind (("C-c f J" . reveal-in-osx-finder)))
 
 
 ;; Fringe mode (left and right borders stuff)
 (use-package fringe
-  :init (fringe-mode '(2 . 0)))
+  :init (fringe-mode '(4 . 0)))
 
 
 ;; Save recent files
@@ -404,7 +389,7 @@
     "if no second escape is pressed in a given timeout, dont wait for a second escape."
     (interactive)
     (block return-point
-      (let ((timer (run-at-time "0.2 sec" nil (lambda () (return-from return-point))))
+      (let ((timer (run-at-time "0.3 sec" nil (lambda () (return-from return-point))))
             (key (read-key)))
         (if (eq key 27)
             (progn
@@ -620,14 +605,13 @@
 (use-package pdf-tools
   :commands (pdf-tools-install)
   :mode (("\\.pdf\\'" . pdf-view-mode))
-  :bind
-  (:map pdf-view-mode-map
-        ("C-w l" . evil-window-right)
-        ("C-w h" . evil-window-left)
-        ("j" . pdf-view-next-line-or-next-page)
-        ("k" . pdf-view-previous-line-or-previous-page)
-        ("l" . pdf-view-next-page-command)
-        ("h" . pdf-view-previous-page-command))
+  :bind (:map pdf-view-mode-map
+              ("C-w l" . evil-window-right)
+              ("C-w h" . evil-window-left)
+              ("j" . pdf-view-next-line-or-next-page)
+              ("k" . pdf-view-previous-line-or-previous-page)
+              ("l" . pdf-view-next-page-command)
+              ("h" . pdf-view-previous-page-command))
   :config (add-hook 'pdf-view-mode-hook #'pdf-view-fit-page-to-window))
 
 
@@ -814,9 +798,9 @@
 (use-package paradox
   :commands (paradox-list-packages)
   :config
-  (validate-setq paradox-automatically-star nil)
-  (validate-setq paradox-display-star-count nil)
-  (validate-setq paradox-execute-asynchronously t))
+  (validate-setq paradox-automatically-star nil
+                 paradox-display-star-count nil
+                 paradox-execute-asynchronously t))
 
 
 ;; Code-comprehension server
@@ -851,8 +835,8 @@
 (use-package dictcc
   :ensure t
   :config
-  (validate-setq dictcc-source-lang "de")
-  (validate-setq dictcc-destination-lang "en"))
+  (validate-setq dictcc-source-lang "de"
+                 dictcc-destination-lang "en"))
 
 
 ;; Org-Mode
@@ -880,7 +864,7 @@
   ;; fontify code in code blocks
   (validate-setq org-src-fontify-natively t)
 
-  (validate-setq org-agenda-files onc/org-agenda-file-location)
+  ;; (validate-setq org-agenda-files onc/org-agenda-file-location)
 
   (use-package org-clock
     :config
@@ -931,19 +915,24 @@
       (cond
        ((string-match  "aspell$" ispell-program-name)
         ;; force the English dictionary, support Camel Case spelling check (tested with aspell 0.6)
-        (validate-setq args (list "--sug-mode=ultra" "--lang=de_DE"))
+        (validate-setq args (list "--sug-mode=ultra" "--lang=en_US"))
         (if RUN-TOGETHER
             (setq args (append args '("--run-together" "--run-together-limit=5" "--run-together-min=2"))))))
       args))
-
+  :init
+  (dolist (hook '(text-mode-hook message-mode-hook))
+    (add-hook hook 'turn-on-flyspell))
+  :diminish(flyspell-mode . "🙊")
   :config
   (cond
    ((executable-find "aspell")
     (validate-setq ispell-program-name "aspell"))
    (t (validate-setq ispell-program-name nil)))
 
-  ;; ispell-cmd-args is useless, it's the list of *extra* arguments we will append to the ispell process when "ispell-word" is called.
-  ;; ispell-extra-args is the command arguments which will *always* be used when start ispell process
+  ;; ispell-cmd-args is useless, it's the list of *extra* arguments we will
+  ;; append to the ispell process when "ispell-word" is called.
+  ;; ispell-extra-args is the command arguments which will *always* be used
+  ;; when start ispell process
   (validate-setq ispell-extra-args (flyspell-detect-ispell-args t))
 
   (defadvice ispell-word (around my-ispell-word activate)
@@ -1256,7 +1245,6 @@ marginparsep=7pt, marginparwidth=.6in}
         ("C-c x" . onc/cmake-run))
   :init
   (add-hook 'c++-mode-hook (lambda () (validate-setq flycheck-clang-language-standard "c++14")))
-  (add-hook 'c++-mode-hook (lambda () (c-set-style "stroustrup")))
 
   :preface
   ;; -------------------------------------------------
@@ -1330,7 +1318,8 @@ marginparsep=7pt, marginparwidth=.6in}
   :config
   (use-package clang-format
     :commands (clang-format-buffer)
-    :config (validate-setq clang-format-executable onc/clang-format-command-path))
+    :config
+    (validate-setq clang-format-executable onc/clang-format-command-path))
 
   (use-package company-cmake
     :ensure t
