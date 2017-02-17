@@ -91,6 +91,11 @@
       (list (format "%s %%S: %%j " (system-name))
             '(buffer-file-name "%f" (dired-directory dired-directory "%b"))))
 
+(defun onc/colorify (STRING COLOR)
+  "Helper-function apply COLOR to a STRING."
+  (interactive)
+  (propertize STRING 'font-lock-ignore t 'font-lock-face `(:foreground ,COLOR)))
+
 ;; Make the scratch buffer great again
 (add-hook 'after-init-hook
           (lambda ()
@@ -98,15 +103,16 @@
               (goto-char (point-min))
               (insert (concat
                        ";;\n"
-                       ";;   ___  _ __   ___ _ __ ___   __ _  ___ ___  \n"
-                       ";;  / _ \\| '_ \\ / __| '_ ` _ \\ / _` |/ __/ __| \n"
-                       ";; | (_) | | | | (__| | | | | | (_| | (__\\__ \\ \n"
-                       ";;  \\___/|_| |_|\\___|_| |_| |_|\\__,_|\\___|___/ \n"
+                       ";;" (onc/colorify "  ___  " "OrangeRed") (onc/colorify "_ __   " "orange")   (onc/colorify "___ " "yellow")   (onc/colorify "_ __ ___  " "green") (onc/colorify " __ _  " "cyan") (onc/colorify "___"   "blue") (onc/colorify " ___  \n"   "DarkMagenta")
+                       ";;" (onc/colorify " / _ \\" "OrangeRed") (onc/colorify "| '_ \\" "orange")   (onc/colorify " / __|" "yellow") (onc/colorify " '_ ` _ \\" "green") (onc/colorify " / _` |" "cyan") (onc/colorify "/ __"  "blue") (onc/colorify "/ __| \n"   "DarkMagenta")
+                       ";;" (onc/colorify "| (_) "  "OrangeRed") (onc/colorify  "| | | | " "orange") (onc/colorify "(__| " "yellow")  (onc/colorify "| | | | |"  "green") (onc/colorify " (_| | " "cyan") (onc/colorify "(__"   "blue") (onc/colorify "\\__ \\ \n" "DarkMagenta")
+                       ";;" (onc/colorify " \\___/" "OrangeRed") (onc/colorify "|_| |_|" "orange")   (onc/colorify "\\___|" "yellow") (onc/colorify "_| |_| |_|" "green") (onc/colorify "\\__,_|" "cyan") (onc/colorify "\\___" "blue") (onc/colorify "|___/ \n"   "DarkMagenta")
                        ";;\n"
                        ";; This buffer is for text that is not saved, and for Lisp evaluation.\n"
                        ";; To create a file, visit it with \ o and enter text in its buffer.\n"
                        "\n"
                        "\n")))))
+
 
 ;; stfu emacs!!!
 (setq ring-bell-function 'ignore)
@@ -255,6 +261,11 @@
 ;; magit needs this
 (use-package with-editor
   :ensure t)
+
+
+(use-package font-lock+
+  :ensure t
+  :load-path "git-packages/font-lock+")
 
 
 ;;; General packages
