@@ -512,8 +512,8 @@
 ;; On-the-fly syntax checking
 (use-package flycheck
   :ensure t
-  :init (global-flycheck-mode t)
-  :diminish flycheck-mode)
+  :diminish flycheck-mode
+  :init (global-flycheck-mode t))
 
 
 ;; Show argument list in echo area
