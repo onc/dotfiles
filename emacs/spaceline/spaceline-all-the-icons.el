@@ -50,8 +50,8 @@
 (spaceline-define-segment
     ati-projectile "An `all-the-icons' segment for current `projectile' project"
     (concat
-     (propertize "|" 'face '(:height 1.1 :inherit))
-     " "
+     (propertize "" 'face '(:height 1.1 :inherit))
+     ""
      (if (and (fboundp 'projectile-project-name)
               (projectile-project-name))
          (propertize (format "%s" (concat (projectile-project-name) ))
@@ -91,6 +91,11 @@
       (propertize (format-mode-line "%b ") 'face '(:height 0.8 :inherit) 'display '(raise 0.1)))
     :tight t)
 
+(spaceline-define-segment
+    onc-ati-buffer-id "show buffer-name instead of the full path / path in the current project"
+    (propertize (s-trim (powerline-buffer-id)) 'face '(:height 0.8 :inherit) 'display '(raise 0.2))
+    :tight t)
+
 
 ;;----------------;;
 ;; Second Segment ;;
@@ -107,7 +112,7 @@
 
 (spaceline-define-segment
     ati-position "An `all-the-icons' segment for the Row and Column of the current point"
-    (propertize (format-mode-line "%l:%c") 'face `(:height 0.9 :inherit) 'display '(raise 0.1)))
+    (propertize (format-mode-line "%l:%c") 'face `(:height 0.9 :inherit) 'display '(raise 0.1)) :tight t)
 
 (spaceline-define-segment
     ati-region-info "An `all-the-icons' segment for the currently marked region"
@@ -212,7 +217,6 @@
 ;;---------------------;;
 (spaceline-define-segment
     ati-perspeen "Show the current perspeen workspace"
-
     (let* ((full-string))
       (mapc (lambda (ws)
               (let* ((name (perspeen-ws-struct-name ws))
@@ -220,13 +224,38 @@
                      (prop-name))
 
                 (if (equal name (perspeen-ws-struct-name perspeen-current-ws))
-                    (setq prop-name (propertize string-name 'face `(:foreground "DarkGoldenrod2")))
-                  (setq prop-name string-name))
+                    (setq prop-name (propertize string-name 'face `(:height 0.9 :foreground ,(face-attribute 'spaceline-flycheck-error :foreground)) 'display `(raise 0.1)))
+                  (setq prop-name (propertize string-name 'face `(:height 0.9 :inherit) 'display `(raise 0.1))))
 
-                (setq full-string (append full-string (list prop-name)))))
+                (setq full-string (append full-string (list (s-trim prop-name))))))
             perspeen-ws-list)
+      full-string) :tight t)
 
-      full-string))
+(spaceline-define-segment
+    ati-minor-modes "Show minor modes"
+    (-filter
+     (lambda (k) (and k (not (string= k "")) (not (string-prefix-p "Projectile" k))))
+     (mapcar (lambda (mm)
+               (let* ((displayp (and (boundp (car mm))
+                                     (symbol-value (car mm))))
+                      (lighter (when displayp
+                                 (s-trim (format-mode-line (cadr mm)))))
+                      (displayp (and lighter (not (string= "" lighter)))))
+                 (when displayp
+                   (propertize
+                    lighter
+                    'mouse-face 'mode-line-highlight
+                    'help-echo (concat (symbol-name (car mm))
+                                       "\nmouse-1: Display minor mode menu"
+                                       "\nmouse-2: Show help for minor mode"
+                                       "\nmouse-3: Toggle minor mode")
+                    'local-map (let ((map (make-sparse-keymap)))
+                                 (define-key map [mode-line down-mouse-1] (powerline-mouse 'minor 'menu lighter))
+                                 (define-key map [mode-line mouse-2] (powerline-mouse 'minor 'help lighter))
+                                 (define-key map [mode-line down-mouse-3] (powerline-mouse 'minor 'menu lighter))
+                                 (define-key map [header-line down-mouse-3] (powerline-mouse 'minor 'menu lighter))
+                                 map) 'face `(:height 0.75 :inherit) 'display `(raise 0.2)))))
+             minor-mode-alist)) :tight t)
 
 (spaceline-define-segment
     ati-time "Time"
@@ -295,25 +324,22 @@ the directions of the separator."
  "ati"
  '(
    ((ati-modified ati-window-numbering ati-buffer-size) :face highlight-face :skip-alternate t)
-   ;; left-active-3
    ati-left-1-separator
-   ((ati-projectile ati-mode-icon ati-buffer-id) :face default-face)
+   ((ati-projectile ati-mode-icon onc-ati-buffer-id) :face default-face)
    ati-left-2-separator
-   ((ati-process ati-position ati-region-info) :face highlight-face :separator " | ")
+   ((ati-minor-modes ati-process ) :separator " | " :face highlight-face)
    ati-left-3-separator
    ati-left-inactive-separator
    ((ati-vc-icon ati-flycheck-status ati-package-updates purpose) :separator "  " :face other-face)
    ati-left-4-separator)
 
  '(
-   ati-right-1-separator
    ati-right-inactive-separator
+   ati-right-1-separator
    ((ati-perspeen) :separator " " :face default-face)
    ati-right-2-separator
-   ((ati-time) :separator " | " :face highlight-face)
+   ((ati-position ati-region-info) :face highlight-face :separator " | ")
    ))
-
-;; (setq mode-line-format '("%e" (:eval (spaceline-ml-main))))
 
 (provide 'spaceline-all-the-icons)
 ;;; spaceline-all-the-icons.el ends here
