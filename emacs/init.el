@@ -613,17 +613,25 @@
 
 
 ;; Pdf in Emacs
-(use-package pdf-tools
-  :commands (pdf-tools-install)
-  :mode (("\\.pdf\\'" . pdf-view-mode))
-  :bind (:map pdf-view-mode-map
-              ("C-w l" . evil-window-right)
-              ("C-w h" . evil-window-left)
-              ("j" . pdf-view-next-line-or-next-page)
-              ("k" . pdf-view-previous-line-or-previous-page)
-              ("l" . pdf-view-next-page-command)
-              ("h" . pdf-view-previous-page-command))
-  :config (add-hook 'pdf-view-mode-hook #'pdf-view-fit-page-to-window))
+;; (use-package pdf-tools
+;;   :commands (pdf-tools-install)
+;;   :mode (("\\.pdf\\'" . pdf-view-mode))
+;;   :bind (:map pdf-view-mode-map
+;;               ("C-w l" . evil-window-right)
+;;               ("C-w h" . evil-window-left)
+;;               ("j" . pdf-view-next-line-or-next-page)
+;;               ("k" . pdf-view-previous-line-or-previous-page)
+;;               ("l" . pdf-view-next-page-command)
+;;               ("h" . pdf-view-previous-page-command))
+;;   :config (add-hook 'pdf-view-mode-hook #'pdf-view-fit-page-to-window))
+
+(use-package doc-view
+  :ensure t
+  :bind (:map doc-view-mode-map
+              ("j" . doc-view-next-page)
+              ("<SPC>" . doc-view-next-page)
+              ("k" . doc-view-previous-page))
+  :init (add-hook 'doc-view-mode-hook #'doc-view-fit-page-to-window))
 
 
 ;; Ido-mode replacement
