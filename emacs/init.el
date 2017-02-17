@@ -444,7 +444,7 @@
   (evil-set-initial-state 'el-get-package-menu-mode 'emacs)
   (evil-set-initial-state 'ag-mode 'emacs)
   (evil-set-initial-state 'flycheck-error-list-mode 'emacs)
-  (evil-set-initial-state 'dired-mode 'emacs)
+  ;; (evil-set-initial-state 'dired-mode 'emacs)
   (evil-set-initial-state 'neotree-mode 'emacs)
   (evil-set-initial-state 'magit-popup-mode 'emacs)
   (evil-set-initial-state 'magit-mode 'emacs)
@@ -610,6 +610,15 @@
    deft-use-filter-string-for-filename t
    deft-recursive t
    deft-auto-save-interval 3.0))
+
+(use-package dired
+  :config
+  (evil-make-overriding-map dired-mode-map 'normal t)
+  (evil-define-key 'normal dired-mode-map
+    "j" 'evil-next-line
+    "k" 'evil-previous-line
+    "h" 'dired-up-directory
+    "l" 'dired-find-file))
 
 
 ;; Pdf in Emacs
