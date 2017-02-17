@@ -805,6 +805,7 @@
     (use-package spaceline-all-the-icons
       :load-path "spaceline"
       :config
+
       (use-package spaceline-colors
         :load-path "spaceline"
         :init (add-hook 'after-init-hook 'spaceline-update-faces)
@@ -812,7 +813,8 @@
 
         (validate-setq powerline-height 13)
         (setq-default powerline-default-separator 'nil)
-        (setq-default mode-line-format '("%e" (:eval (spaceline-ml-ati))))))))
+        (setq-default mode-line-format '("%e" (:eval (spaceline-ml-ati))))
+        (spaceline-helm-mode)))))
 
 (use-package atom-one-dark-theme
   :defer t
