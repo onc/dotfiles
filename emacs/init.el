@@ -1319,9 +1319,9 @@ marginparsep=7pt, marginparwidth=.6in}
 
   (defun onc/cmake-build ()
     (interactive)
-    (let* ((build-path-exists (dirvars-find-upwards "build"))
+    (let* ((build-path-exists (dirvars-find-upwards "debug"))
            (cmakelists-dir (file-name-directory (dirvars-find-upwards "CMakeLists.txt")))
-           (build-path (concat cmakelists-dir "build"))
+           (build-path (concat cmakelists-dir "debug"))
            )
       (if build-path-exists
           (compile (concat "make -k -C " build-path))
@@ -1335,7 +1335,7 @@ marginparsep=7pt, marginparwidth=.6in}
       (if (zerop
            (call-process "/bin/bash" nil t nil "-c"
                          (concat
-                          (concat "find " (dirvars-find-upwards "build")) " -executable -type f | grep -v CMake")))
+                          (concat "find " (dirvars-find-upwards "debug")) " -executable -type f | grep -v CMake")))
           (buffer-substring (point-min) (1- (point-max)))
         nil)))
 
