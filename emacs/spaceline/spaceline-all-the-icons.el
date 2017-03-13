@@ -217,19 +217,35 @@
 ;;---------------------;;
 (spaceline-define-segment
     ati-perspeen "Show the current perspeen workspace"
-    (let* ((full-string))
-      (mapc (lambda (ws)
-              (let* ((name (perspeen-ws-struct-name ws))
-                     (string-name (format "%s" name))
-                     (prop-name))
+    ;; (let* ((full-string))
+    ;;   (mapc (lambda (ws)
+    ;;           (let* ((name (perspeen-ws-struct-name ws))
+    ;;                  (string-name (format "%s" name))
+    ;;                  (prop-name))
 
-                (if (equal name (perspeen-ws-struct-name perspeen-current-ws))
-                    (setq prop-name (propertize string-name 'face `(:height 0.9 :foreground ,(face-attribute 'spaceline-flycheck-error :foreground)) 'display `(raise 0.1)))
-                  (setq prop-name (propertize string-name 'face `(:height 0.9 :inherit) 'display `(raise 0.1))))
+    ;;             (if (equal name (perspeen-ws-struct-name perspeen-current-ws))
+    ;;                 (setq prop-name (propertize string-name 'face `(:height 0.9 :foreground ,(face-attribute 'spaceline-flycheck-error :foreground)) 'display `(raise 0.1)))
+    ;;               (setq prop-name (propertize string-name 'face `(:height 0.9 :inherit) 'display `(raise 0.1))))
 
-                (setq full-string (append full-string (list (s-trim prop-name))))))
-            perspeen-ws-list)
-      full-string) :tight t)
+    ;;             (setq full-string (append full-string (list (s-trim prop-name))))))
+    ;;         perspeen-ws-list)
+    ;;   full-string)
+(let* ((full-string))
+  (let* ((index 1)
+         (ws-name-list
+
+          (mapcar (lambda (ws)
+                    (let* ((name (or (perspeen-ws-struct-name ws) "nil"))
+                           (label (format " %d:%s " index name)))
+                      (setq index (1+ index))
+                      (if (eq ws perspeen-current-ws)
+                          (setq prop-name (propertize label 'face `(:height 0.9 :foreground ,(face-attribute 'spaceline-flycheck-error :foreground)) 'display `(raise 0.1)))
+                        (setq prop-name (propertize label 'face `(:height 0.9 :inherit) 'display `(raise 0.1)))))
+                    (setq full-string (append full-string (list (s-trim prop-name)))))
+                  perspeen-ws-list))))
+  full-string)
+
+    :tight t)
 
 (spaceline-define-segment
     ati-minor-modes "Show minor modes"
