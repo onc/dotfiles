@@ -232,6 +232,22 @@
 ;; Set programm for urls
 (validate-setq browse-url-browser-function 'browse-url-chromium)
 
+;; Automatically compile and save init.el
+(defun byte-compile-init-files (file)
+  "Automatically compile FILE."
+  (interactive)
+  (save-restriction
+    ;; Suppress the warning when you setq an undefined variable.
+    (if (>= emacs-major-version 23)
+        (setq byte-compile-warnings '(not free-vars obsolete))
+      (setq byte-compile-warnings '(unresolved callargs redefine obsolete noruntime cl-warnings interactive-only)))
+    (byte-compile-file (expand-file-name file))))
+
+(add-hook 'after-save-hook
+          (function (lambda ()
+                      (if (string= (file-truename (expand-file-name "~/.emacs.d/init.el"))
+                                   (file-truename (buffer-file-name)))
+                          (byte-compile-init-files "~/.emacs.d/init.el")))))
 
 ;;; Packages
 ;;; --------
