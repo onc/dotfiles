@@ -92,7 +92,7 @@
             '(buffer-file-name "%f" (dired-directory dired-directory "%b"))))
 
 (defun onc/colorify (STRING COLOR)
-  "Helper-function apply COLOR to a STRING."
+  "Helper-function to colorize a STRING with a COLOR."
   (interactive)
   (propertize STRING 'font-lock-ignore t 'font-lock-face `(:foreground ,COLOR)))
 
@@ -1041,8 +1041,8 @@
   (validate-setq org-latex-listings 'minted)
   (validate-setq org-latex-minted-options
                  '(("frame" "lines")
-                   ("linenos")
-                   ("samepage")))
+                   ("linenos" "")
+                   ("samepage" "")))
 
   ;; add emacs lisp support for minted
   (validate-setq org-latex-custom-lang-environments '((emacs-lisp "common-lisp")))
@@ -1633,7 +1633,7 @@ This is done interactively and queries on every candidate."
 
 (defun onc/insert-alphabets-az (&optional useUppercase-p)
   "Insert letters a to z vertically.
-If `universal-argument' is called first, use CAPITAL letters.
+If USEUPPERCASE-P is set, use CAPITAL letters.
 Note: this command is similar to `rectangle-number-lines', starting at 65 or 97, and with a format of 「%c」."
   (interactive "P")
   (let ((startChar (if useUppercase-p 65 97 )))
@@ -1699,7 +1699,7 @@ Note: this command is similar to `rectangle-number-lines', starting at 65 or 97,
           (setenv "SSH_AGENT_PID" agent-pid)
           (list auth-sock agent-pid)
           (message (format "Using SSH agent %s via %s" agent-pid auth-sock)))
-      (message (format "No SSH agent environment file found: " agent-env-fn)))))
+      (message (format "No SSH agent environment file found: %s" agent-env-fn)))))
 
 (load-ssh-agent-env)
 
