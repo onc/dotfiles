@@ -250,6 +250,11 @@
                                    (file-truename (buffer-file-name)))
                           (byte-compile-init-files "~/.emacs.d/init.el")))))
 
+;; Byte-compile again who init.elc If it is older than init.el.
+(if (file-newer-than-file-p (expand-file-name "~/.emacs.d/init.el")
+                            (expand-file-name "~/.emacs.d/init.elc"))
+    (byte-compile-init-files "~/.emacs.d/init.el"))
+
 ;;; Packages
 ;;; --------
 
