@@ -399,7 +399,9 @@
               ("j" . evil-next-visual-line)
               ("k" . evil-previous-visual-line)
               ("gj" . evil-next-line)
-              ("gk" . evil-previous-line))
+              ("gk" . evil-previous-line)
+              ("C-u" . evil-scroll-up)
+              ("C-d" . evil-scroll-down))
   :init
   (evil-mode t)
 
