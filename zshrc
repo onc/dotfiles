@@ -141,5 +141,5 @@ alias dd_progress="sudo killall -USR1 dd"
 alias 😭='sudo $(fc -ln -1)'
 
 function ch-arch() {
-    docker run --rm -it -v $PWD:/app onc-arch
+    docker run --rm -it -v $PWD:/app march
 }
