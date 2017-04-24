@@ -537,7 +537,8 @@
 
 ;; Show argument list in echo area
 (use-package eldoc
-  :diminish eldoc-mode)
+  :diminish eldoc-mode
+  :init (add-hook 'ycmd-mode-hook 'ycmd-eldoc-setup))
 
 
 ;; Highlight matching delimiters
