@@ -611,7 +611,7 @@
 (use-package company-emoji
   :ensure t
   :init
-  (add-to-list 'company-backends 'company-emoji))
+  (add-to-list 'company-backends (company-mode/backend-with-yas 'company-emoji)))
 
 
 ;; Snippets
