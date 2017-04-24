@@ -18,7 +18,8 @@
 ;;; ---------
 
 ;; Path of this config for leader binding
-(defconst onc/init-el-path (expand-file-name "~/.emacs.d/init.el"))
+(defconst onc/init-el-path (file-truename (expand-file-name "~/.emacs.d/init.el")))
+
 ;; Path of themes
 (defconst onc/custom-theme-load-path (expand-file-name "~/.emacs.d/themes"))
 
