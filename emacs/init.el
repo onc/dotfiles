@@ -871,6 +871,8 @@
   (set-variable 'ycmd-server-command '("python2" "/Users/onze/Applications/ycmd/ycmd"))
   (set-variable 'ycmd-global-config (expand-file-name "~/Repos/dotfiles/ycmd/ycm_conf.py"))
 
+  (set-variable 'ycmd-extra-conf-whitelist '("~/Uni/*" "~/Repos/*"))
+
   (use-package flycheck-ycmd
     :commands (flycheck-ycmd-setup)
     :init (add-hook 'ycmd-mode-hook 'flycheck-ycmd-setup))
