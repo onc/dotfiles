@@ -442,6 +442,7 @@
     (define-key onc-window-map (kbd "o") 'delete-other-windows)
     (define-key onc-window-map (kbd "c") 'perspeen-create-ws)
     (define-key onc-window-map (kbd "n") 'perspeen-next-ws)
+    (define-key onc-window-map (kbd "p") 'perspeen-previous-ws)
     (define-key onc-window-map (kbd "r") 'perspeen-rename-ws)
     (define-key onc-window-map (kbd "d") 'perspeen-delete-ws))
 
