@@ -1381,7 +1381,11 @@ marginparsep=7pt, marginparwidth=.6in}
 
   (use-package company-cmake
     :ensure t
-    :config (add-to-list 'company-backends 'company-cmake)))
+    :config (add-to-list 'company-backends 'company-cmake))
+
+  (use-package modern-cpp-font-lock
+    :ensure t
+    :init (add-hook 'c++-mode-hook #'modern-c++-font-lock-mode)))
 
 
 ;;; Modes for other filetypes
