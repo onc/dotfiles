@@ -583,7 +583,17 @@
    company-minimum-prefix-length 2
    company-tooltip-limit 20)
 
-  (validate-setq company-backends (mapcar #'company-mode/backend-with-yas company-backends))
+  ;; remove unused backends
+  (validate-setq company-backends (delete 'company-semantic company-backends))
+  (validate-setq company-backends (delete 'company-eclim company-backends))
+  (validate-setq company-backends (delete 'company-xcode company-backends))
+  (validate-setq company-backends (delete 'company-clang company-backends))
+  (validate-setq company-backends (delete 'company-cmake company-backends))
+  (validate-setq company-backends (delete 'company-bbdb company-backends))
+  (validate-setq company-backends (delete 'company-oddmuse company-backends))
+
+  (validate-setq company-backends
+                 (mapcar #'company-mode/backend-with-yas company-backends))
 
   ;; Sort company candidates by statistics
   (use-package company-statistics
