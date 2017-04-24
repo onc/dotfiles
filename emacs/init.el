@@ -1278,10 +1278,14 @@ marginparsep=7pt, marginparwidth=.6in}
 ;; Haskell
 (use-package haskell-mode
   :mode "\\.hs\\'"
+  :bind (:map haskell-mode-map
+              ("C-c c" . haskell-process-load-file))
   :config
-  (use-package flycheck-haskell
-    :ensure t
-    :init (add-hook 'haskell-mode-hook #'flycheck-haskell-setup)))
+  (validate-setq haskell-interactive-popup-errors nil))
+
+(use-package flycheck-haskell
+  :ensure t
+  :init (add-hook 'haskell-mode-hook #'flycheck-haskell-setup))
 
 
 ;; Groovy
