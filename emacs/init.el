@@ -1379,7 +1379,7 @@ marginparsep=7pt, marginparwidth=.6in}
       (if (zerop
            (call-process "/bin/bash" nil t nil "-c"
                          (concat
-                          (concat "find " (dirvars-find-upwards "debug")) " -executable -type f | grep -v CMake")))
+                          (concat "find " (dirvars-find-upwards "debug")) " -perm +111 -type f | grep -v CMake")))
           (buffer-substring (point-min) (1- (point-max)))
         nil)))
 
