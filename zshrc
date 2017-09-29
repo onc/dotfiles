@@ -69,10 +69,12 @@ else
 fi
 
 # faster scrolling etc
-if hash xset 2>/dev/null; then
-    if [[ -z $SSH_CONNECTION ]]; then
-        # if xset and no ssh connection
-        xset r rate 400 75
+if [[ "$OSTYPE" == "linux-gnu" ]]; then 
+    if hash xset 2>/dev/null; then
+        if [[ -z $SSH_CONNECTION ]]; then
+            # if xset and no ssh connection
+            xset r rate 400 75
+        fi
     fi
 fi
 
