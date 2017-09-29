@@ -1,6 +1,6 @@
 $pdf_mode = 1;
 $pdflatex = 'pdflatex -8bit -etex -file-line-error -halt-on-error -synctex=1 %O %S';
-$pdf_previewer = 'open %S';
+$pdf_previewer = 'open -a skim %S';
 $pdf_update_method = 0;
 $clean_ext = "syntex.gz";
 add_cus_dep('glo', 'gls', 0, 'makeglo2gls');
