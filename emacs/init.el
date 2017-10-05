@@ -1301,6 +1301,11 @@ marginparsep=7pt, marginparwidth=.6in}
   :mode "\\.groovy\\'")
 
 
+;; support for R
+(use-package ess
+  :ensure t)
+
+
 ;; C/C++
 (use-package cc-mode
   :ensure t
