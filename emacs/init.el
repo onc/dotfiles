@@ -1265,12 +1265,21 @@ marginparsep=7pt, marginparwidth=.6in}
   (setq-default js2-global-externs '("exports" "module" "require" "setTimeout" "THREE"))
   (setq-default js2-basic-offset 2))
 
+
+(use-package rjsx-mode
+  :mode "\\.jsx\\'"
+  :config
+  (define-key rjsx-mode-map "<" nil)
+  (define-key rjsx-mode-map (kbd "C-d") nil))
+
+
 (use-package tern
   :defer t
   :init
   (add-hook 'js-mode-hook (lambda () (tern-mode t)))
   (add-hook 'js2-mode-hook (lambda () (tern-mode t)))
   (add-hook 'web-mode-hook (lambda () (tern-mode t)))
+  (add-hook 'rjsx-mode-hook (lambda () (tern-mode t)))
   :config
   (use-package company-tern
     :ensure t
