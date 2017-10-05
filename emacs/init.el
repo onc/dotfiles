@@ -1218,7 +1218,10 @@ marginparsep=7pt, marginparwidth=.6in}
 ;; Python
 (use-package python
   :mode ("\\.py\\'" . python-mode)
-  :interpreter ("python" . python-mode)
+  :interpreter ("python3" . python-mode)
+  :bind(:map
+        python-mode-map
+        ("C-c r" . onc/run-current-file))
   :config
   (use-package elpy
     :config
@@ -1553,7 +1556,7 @@ If the file is Emacs Lisp, run the byte compiled version if exist."
     ;; a keyed list of file suffix to comand-line program path/name
     (setq suffixMap
           '(("php" . "php")
-            ("py" . "python")
+            ("py" . "python3")
             ("rb" . "ruby")
             ("js" . "node")
             ("sh" . "bash")))
