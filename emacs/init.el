@@ -30,7 +30,7 @@
 (defconst onc/font-size 100)
 
 ;; Location of deft notes
-(defconst onc/deft-directory (expand-file-name "~/Dropbox/Notes"))
+(defconst onc/deft-directory (expand-file-name "~/Documents/Note"))
 
 ;; Clang paths
 (defconst onc/clang-format-command-path "/usr/local/bin/clang-format")
