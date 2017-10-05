@@ -24,7 +24,14 @@ alias i3conf="vim ~/.i3/config"
 # alias for alias using zsh_reload plugin
 alias so="src"
 
-alias sizes="du -mh --max-depth 1 . | sort -hr"
+
+if [[ "$OSTYPE" == "linux-gnu" ]]; then
+    # linux
+    alias sizes="du -mh --max-depth 1 . | sort -hr"
+elif [[ "$OSTYPE" == "darwin"* ]]; then
+    # Mac OSX
+    alias sizes="du -mh -d 1 . | gsort -hr"
+fi
 
 hash -d h=/mnt/hdd/
 
