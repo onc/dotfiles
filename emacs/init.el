@@ -327,6 +327,10 @@
   :init (fringe-mode '(4 . 0)))
 
 
+(use-package compile
+  :config (validate-setq compilation-scroll-output t))
+
+
 ;; Save recent files
 (use-package recentf
   :init(recentf-mode t)
