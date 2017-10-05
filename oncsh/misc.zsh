@@ -8,6 +8,12 @@ alias .....=' cd ../../../../'
 alias -- -=' cd -'
 alias ~=' cd ~'
 
+if ! [ -x "$(command -v colorls)" ]; then
+    alias ls=' ls'
+else
+    alias ls=' colorls'
+fi
+
 alias tmp='cd ~/tmp'
 alias hiwi='cd /mnt/hdd/Hiwi'
 
