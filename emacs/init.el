@@ -854,10 +854,15 @@
         (setq-default mode-line-format '("%e" (:eval (spaceline-ml-ati))))
         (spaceline-helm-mode)))))
 
+
 (use-package atom-one-dark-theme
   :defer t
   ;; :config (load-theme 'atom-one-dark t)
   )
+
+
+(use-package spacemacs-theme
+  :ensure t)
 
 
 ;; Better emacs package menu
