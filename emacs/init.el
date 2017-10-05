@@ -883,7 +883,7 @@
   :ensure t
   :init (add-hook 'c++-mode-hook #'ycmd-mode)
   :config
-  (set-variable 'ycmd-server-command '("python2" "/Users/onze/Applications/ycmd/ycmd"))
+  (set-variable 'ycmd-server-command '("python3" "/Users/onze/Applications/ycmd/ycmd"))
   (set-variable 'ycmd-global-config (expand-file-name "~/Repos/dotfiles/ycmd/ycm_conf.py"))
 
   (set-variable 'ycmd-extra-conf-whitelist '("~/Uni/*" "~/Repos/*"))
