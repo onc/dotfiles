@@ -370,11 +370,8 @@
   :ensure t
   :if (and (eq system-type 'darwin) (display-graphic-p))
   :config
-  (validate-setq exec-path-from-shell-variables
-                 '("RUST_SRC_PATH"
-                   "PATH"))
-
-  (exec-path-from-shell-initialize))
+  (exec-path-from-shell-initialize)
+  (exec-path-from-shell-copy-env "RUST_SRC_PATH"))
 
 
 ;; Edit files as root, through Tramp
