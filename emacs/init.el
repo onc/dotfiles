@@ -636,13 +636,13 @@
 
 ;; Terminal in emacs
 (use-package multi-term
-  :ensure t
+  :commands multi-term
   :config
   (setq multi-term-program "/bin/zsh"))
 
 ;; Notes
 (use-package deft
-  :ensure t
+  :commands deft
   :bind (([f6] . deft))
   :config
   (validate-setq
@@ -880,7 +880,7 @@
 
 ;; Code-comprehension server
 (use-package ycmd
-  :ensure t
+  :defer t
   :init (add-hook 'c++-mode-hook #'ycmd-mode)
   :config
   (set-variable 'ycmd-server-command '("python3" "/Users/onze/Applications/ycmd/ycmd"))
@@ -893,9 +893,11 @@
     :init (add-hook 'ycmd-mode-hook 'flycheck-ycmd-setup))
 
   (use-package company-ycmd
-    :ensure t
-    :init (company-ycmd-setup)
-    :config (add-to-list 'company-backends (company-mode/backend-with-yas 'company-ycmd))))
+    :commands (company-ycmd-setup)
+    :config (add-to-list 'company-backends (company-mode/backend-with-yas 'company-ycmd))
+    ;; :config (add-to-list 'company-backends 'company-ycmd)
+    ))
+
 
 
 ;; Restclient in Emacs
@@ -910,7 +912,7 @@
 
 ;; Dict.cc in Emacs
 (use-package dictcc
-  :ensure t
+  :commands dictcc
   :config
   (validate-setq dictcc-source-lang "de"
                  dictcc-destination-lang "en"))
@@ -1313,7 +1315,7 @@ marginparsep=7pt, marginparwidth=.6in}
   (validate-setq haskell-interactive-popup-errors nil))
 
 (use-package flycheck-haskell
-  :ensure t
+  :mode "\\.hs\\'"
   :init (add-hook 'haskell-mode-hook #'flycheck-haskell-setup))
 
 
@@ -1324,13 +1326,13 @@ marginparsep=7pt, marginparwidth=.6in}
 
 ;; support for R
 (use-package ess
-  :ensure t)
+  :mode "\\.r\\'")
 
 
 ;; C/C++
-(use-package cc-mode
-  :ensure t
-  :config (setq-default c-basic-offset 2))
+;; (use-package cc-mode
+;;   :ensure t
+;;   :config (setq-default c-basic-offset 2))
 
 (use-package c++-mode
   :mode (("\\.[hH]\\'" . c++-mode)
