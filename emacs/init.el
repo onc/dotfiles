@@ -1341,11 +1341,7 @@ marginparsep=7pt, marginparwidth=.6in}
 
 
 ;; C/C++
-;; (use-package cc-mode
-;;   :ensure t
-;;   :config (setq-default c-basic-offset 2))
-
-(use-package c++-mode
+(use-package cc-mode
   :mode (("\\.[hH]\\'" . c++-mode)
          ("\\.cpp\\'" . c++-mode)
          ("\\.hpp\\'" . c++-mode)
@@ -1425,8 +1421,8 @@ marginparsep=7pt, marginparwidth=.6in}
   (defun onc/cmake-run ()
     (interactive)
     (call-process (my-executable-path)))
-
   :config
+
   (use-package clang-format
     :commands (clang-format-buffer)
     :config
