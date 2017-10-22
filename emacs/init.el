@@ -1003,7 +1003,7 @@
   :init
   (dolist (hook '(text-mode-hook message-mode-hook))
     (add-hook hook 'turn-on-flyspell))
-  :diminish(flyspell-mode . "🙊")
+  :diminish(flyspell-mode . "spell")
   :config
   (cond
    ((executable-find "aspell")
