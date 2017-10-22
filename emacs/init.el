@@ -1304,6 +1304,13 @@ marginparsep=7pt, marginparwidth=.6in}
     :config (add-to-list 'company-backends 'company-tern)))
 
 
+;; Applescript
+(use-package apples-mode
+  :mode (("\\.scpt\\'" . apples-mode)
+         ("\\.scptd\\'" . apples-mode)
+         ("\\.AppleScript\\'" . apples-mode)))
+
+
 ;; GLSL
 (use-package glsl-mode
   :mode (("\\.vert\\'" . glsl-mode)
