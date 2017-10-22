@@ -313,15 +313,6 @@
                          desktop-load-locked-desktop t))
 
 
-;; OS X window support
-(use-package ns-win
-  :defer t
-  :if (eq system-type 'darwin)
-  :config
-  ;; Don't pop up new frames from the workspace
-  (validate-setq ns-pop-up-frames nil))
-
-
 ;; Reveal current buffer in finder
 (use-package reveal-in-osx-finder
   :bind (("C-c f J" . reveal-in-osx-finder)))
