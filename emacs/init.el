@@ -1227,11 +1227,13 @@ marginparsep=7pt, marginparwidth=.6in}
         python-mode-map
         ("C-c r" . onc/run-current-file))
   :config
+
   (use-package elpy
+    :ensure t
     :config
+    (elpy-enable)
     (validate-setq elpy-rpc-backend "jedi")
     (validate-setq elpy-modules (delq 'elpy-module-company elpy-modules))
-    (elpy-enable)
 
     (add-hook 'python-mode-hook
               (lambda ()
