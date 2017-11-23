@@ -827,15 +827,6 @@
   (setq moodle-destroyer-gradingfile-json-name "grading.ex.json"))
 
 
-;; Icon package
-(use-package all-the-icons
-  :ensure t
-  :config
-  (use-package all-the-icons-dired
-    :ensure t
-    :init (add-hook 'dired-mode-hook 'all-the-icons-dired-mode)))
-
-
 ;; Requirement of Spaceline
 (use-package powerline
   :ensure t
