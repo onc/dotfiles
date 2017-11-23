@@ -1273,6 +1273,17 @@ marginparsep=7pt, marginparwidth=.6in}
          ("\\.frag\\'" . glsl-mode)))
 
 
+;; Swift
+(use-package swift-mode
+  :mode "\\.swift\\'"
+  :config
+  (validate-setq swift-mode:basic-offset 2)
+
+  (use-package flycheck-swift
+    :mode "\\.swift\\'"
+    :init (add-hook 'swift-mode-hook 'flycheck-swift-setup)))
+
+
 ;; Haskell
 (use-package haskell-mode
   :mode "\\.hs\\'"
