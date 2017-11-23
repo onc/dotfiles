@@ -827,42 +827,6 @@
   (setq moodle-destroyer-gradingfile-json-name "grading.ex.json"))
 
 
-;; Requirement of Spaceline
-(use-package powerline
-  :ensure t
-  :config
-
-  ;; Mode line
-  (use-package spaceline-config
-    :ensure spaceline
-    :config
-
-    ;; Custom (iconized) spaceline theme
-    (use-package spaceline-all-the-icons
-      :load-path "spaceline"
-      :config
-
-      (use-package spaceline-colors
-        :load-path "spaceline"
-        :init (add-hook 'after-init-hook 'spaceline-update-faces)
-        :config (advice-add 'load-theme :after 'spaceline-update-faces)
-
-        (validate-setq powerline-height 13)
-        (setq-default powerline-default-separator 'nil)
-        (setq-default mode-line-format '("%e" (:eval (spaceline-ml-ati))))
-        (spaceline-helm-mode)))))
-
-
-(use-package atom-one-dark-theme
-  :defer t
-  ;; :config (load-theme 'atom-one-dark t)
-  )
-
-
-(use-package spacemacs-theme
-  :ensure t)
-
-
 ;; Better emacs package menu
 (use-package paradox
   :commands (paradox-list-packages)
