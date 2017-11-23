@@ -1304,7 +1304,35 @@ marginparsep=7pt, marginparwidth=.6in}
 
 ;; support for R
 (use-package ess
-  :mode "\\.r\\'")
+  :mode (("\\.[rR]$" . R-mode))
+  :init
+  (add-hook 'ess-mode-hook
+            '(lambda()
+               (font-lock-add-keywords
+                nil
+                '(
+                  ("\\<\\(if\\|for\\|function\\|return\\|$\\|@\\)\\>[\n[:blank:]]*(" 1
+                   font-lock-keyword-face) ; must go first to override highlighting below
+
+                  ("\\<\\([.A-Za-z][._A-Za-z0-9]*\\)[\n[:blank:]]*(" 1
+                   font-lock-function-name-face) ; highlight function names
+
+                  ("\\([(,]\\|[\n[:blank:]]*\\)\\([.A-Za-z][._A-Za-z0-9]*\\)[\n[:blank:]]*=[^=]"
+                   2 font-lock-reference-face)
+
+                  ;; highlight numbers
+                  ("\\(-?[0-9]*\\.?[0-9]*[eE]?-?[0-9]+[iL]?\\)" 1 font-lock-type-face)
+
+                  ;; highlight operators
+                  ("\\(\\$\\|\\@\\|\\!\\|\\%\\|\\^\\|\\&\\|\\*\\|\(\\|\)\\|\{\\|\}\\|\\[\\|\\]\\|\\-\\|\\+\\|\=\\|\\/\\|\<\\|\>\\|:\\)" 1 font-lock-builtin-face)
+
+                  ;; highlight S4 methods
+                  ("\\(setMethod\\|setGeneric\\|setGroupGeneric\\|setClass\\|setRefClass\\|setReplaceMethod\\)" 1 font-lock-reference-face)
+
+                  ;; highlight packages called through ::, :::
+                  ("\\(\\w+\\):\\{2,3\\}" 1 font-lock-constant-face)
+
+                  )))))
 
 
 ;; C/C++
