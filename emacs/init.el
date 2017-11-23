@@ -312,6 +312,12 @@
   :config (validate-setq desktop-auto-save-timeout 60
                          desktop-load-locked-desktop t))
 
+;; Simple
+(use-package simple
+  :defer t
+  :init
+  (validate-setq column-number-mode t))
+
 
 ;; Reveal current buffer in finder
 (use-package reveal-in-osx-finder
