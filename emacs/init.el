@@ -761,7 +761,11 @@
 ;; Projects in emacs
 (use-package projectile
   :ensure t
-  :init (projectile-mode t))
+  :config
+  (validate-setq projectile-mode-line
+                 '(:eval (format " Proj[(%s)]"
+                                 (projectile-project-name))))
+  (projectile-global-mode))
 
 
 ;; Show git modifications
