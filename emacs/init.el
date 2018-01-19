@@ -1259,6 +1259,23 @@ marginparsep=7pt, marginparwidth=.6in}
     :ensure t
     :config (add-to-list 'company-backends 'company-tern)))
 
+(use-package tide
+  :ensure t
+  :mode (("\\.ts\\'" . typescript-mode)
+         ("\\.tsx\\'" . typescript-mode))
+  :init
+  (progn
+    (defun setup-tide-mode ()
+      (interactive)
+      (tide-setup)
+      (flycheck-mode +1)
+      (setq flycheck-check-syntax-automatically '(save mode-enabled))
+      (company-mode +1))
+    (add-hook 'typescript-mode-hook #'setup-tide-mode)
+    (validate-setq company-tooltip-align-annotations t))
+  :config
+  (validate-setq typescript-indent-level 2))
+
 
 ;; Applescript
 (use-package apples-mode
