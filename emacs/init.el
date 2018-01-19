@@ -1188,6 +1188,7 @@ marginparsep=7pt, marginparwidth=.6in}
     :ensure t
     :config
     (elpy-enable)
+    (validate-setq elpy-rpc-python-command "python3")
     (validate-setq elpy-rpc-backend "jedi")
     (validate-setq elpy-modules (delq 'elpy-module-company elpy-modules))
 
@@ -1196,7 +1197,7 @@ marginparsep=7pt, marginparwidth=.6in}
                 (company-mode)
                 (add-to-list 'company-backends
                              (company-mode/backend-with-yas 'elpy-company-backend))))
-    (elpy-use-cpython)))
+    (elpy-use-cpython "/usr/local/bin/python3")))
 
 
 ;; Ruby
