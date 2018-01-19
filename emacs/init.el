@@ -1415,7 +1415,7 @@ marginparsep=7pt, marginparwidth=.6in}
            (build-path (concat cmakelists-dir "debug"))
            )
       (if build-path-exists
-          (compile (concat "make -k -C " build-path))
+          (compile (concat "make -j5 -k -C " build-path))
         ;; create build path and run cmake
         (make-directory build-path)
         (call-process "cmake" nil nil nil (concat "-B" build-path) (concat "-H" cmakelists-dir)))))
