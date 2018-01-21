@@ -1275,6 +1275,7 @@ pdfborder=0 0 0                       % no boxes on links
 
 ;; Elisp
 (use-package elisp-mode
+  :diminish (emacs-lisp-mode . "elisp")
   :interpreter ("emacs" . emacs-lisp-mode))
 
 
