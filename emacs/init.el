@@ -308,15 +308,14 @@
 ;; Save buffers
 (use-package desktop
   :init (desktop-save-mode t)
-  ;; Save desktop after one minute of idle
-  :config (validate-setq desktop-auto-save-timeout 60
-                         desktop-load-locked-desktop t))
+  :custom
+  (desktop-auto-save-timeout 60 "Save desktop after one minute of idle")
+  (desktop-load-locked-desktop t))
 
 ;; Simple
 (use-package simple
   :defer t
-  :init
-  (validate-setq column-number-mode t))
+  :custom (column-number-mode t))
 
 
 ;; Reveal current buffer in finder
@@ -326,51 +325,55 @@
 
 ;; Fringe mode (left and right borders stuff)
 (use-package fringe
-  :init (fringe-mode '(4 . 0)))
+  :commands fringe-mode
+  :config (fringe-mode '(4 . 0)))
 
 
 (use-package compile
-  :config (validate-setq compilation-scroll-output t))
+  :custom (compilation-scroll-output t))
 
 
 ;; Save recent files
 (use-package recentf
-  :init(recentf-mode t)
-  :config (validate-setq recentf-max-saved-items 1000))
+  :commands recentf-mode
+  :init (recentf-mode t)
+  :custom (recentf-max-saved-items 1000))
 
 
 ;; Undo with branching
 (use-package undo-tree
   :diminish undo-tree-mode
-  :config
-  (validate-setq undo-tree-auto-save-history nil)
-  (validate-setq undo-tree-history-directory-alist
-                 `(("." . ,(concat user-emacs-directory "undo"))))
-  (validate-setq undo-tree-visualizer-timestamps t
-                 undo-tree-visualizer-diff t)
-  (global-undo-tree-mode))
+  :commands global-undo-tree-mode
+  :init (global-undo-tree-mode t)
+  :custom
+  (undo-tree-auto-save-history nil)
+  (undo-tree-history-directory-alist `(("." . ,(concat user-emacs-directory "undo"))))
+  (undo-tree-visualizer-timestamps t undo-tree-visualizer-diff t))
 
 
 ;; Save position in files
 (use-package saveplace
-  :init(save-place-mode t)
-  :config (validate-setq save-place-file (expand-file-name "places" user-emacs-directory)))
+  :commands save-place-mode
+  :init (save-place-mode t)
+  :custom (save-place-file (expand-file-name "places" user-emacs-directory)))
 
 
 ;; Auto-revert of changed files
 (use-package autorevert
+  :commands global-auto-revert-mode
   :init (global-auto-revert-mode t))
 
 
 ;; Insert matching delimiters
 (use-package elec-pair
+  :commands electric-pair-mode
   :init (electric-pair-mode t))
 
 
 ;; Load shell env
 (use-package exec-path-from-shell
-  :ensure t
   :if (and (eq system-type 'darwin) (display-graphic-p))
+  :commands (exec-path-from-shell-initialize exec-path-from-shell-copy-env)
   :config
   (exec-path-from-shell-initialize)
   (exec-path-from-shell-copy-env "RUST_SRC_PATH"))
@@ -391,13 +394,21 @@
 (use-package fill-column-indicator
   :ensure t
   :init
-  (add-hook 'c-mode-common-hook #'fci-mode)
-  (add-hook 'mail-mode-hook #'fci-mode)
-  (add-hook 'js2-mode-hook #'fci-mode)
-  :config
-  (validate-setq fci-rule-width 1)
-  (validate-setq fci-rule-color "gray71")
-  (setq-default fill-column 80))
+  (add-hook 'c-mode-common-hook
+            (lambda ()
+              'fci-mode
+              (validate-setq fill-column 80)))
+  (add-hook 'js2-mode-hook
+            (lambda ()
+              'fci-mode
+              (validate-setq fill-column 100)))
+  (add-hook 'swift-mode-hook
+            (lambda ()
+              'fci-mode
+              (validate-setq fill-column 120)))
+  :custom
+  (fci-rule-width 1)
+  (fci-rule-color "gray71"))
 
 
 ;; Emacs + vim = <3
@@ -411,11 +422,13 @@
               ("gk" . evil-previous-line)
               ("C-u" . evil-scroll-up)
               ("C-d" . evil-scroll-down))
+  :custom (evil-move-cursor-back nil "make the cursor stay in place after exiting insert mode")
+  :hook (evil-normal-state . #'add-vim-bindings)
   :init
   (evil-mode t)
 
-  ;; save on double escape, works best with escape mapped to caps-lock.
-  (add-hook 'evil-normal-state-entry-hook #'add-vim-bindings)
+  ;; ;; save on double escape, works best with escape mapped to caps-lock.
+  ;; (add-hook 'evil-normal-state-entry-hook #'add-vim-bindings)
 
   :preface
   (defun copy-to-end-of-line ()
@@ -456,9 +469,6 @@
     (define-key onc-window-map (kbd "d") 'perspeen-delete-ws))
 
   :config
-  ;; make the cursor stay in place after exiting insert mode
-  (validate-setq evil-move-cursor-back nil)
-
   ;; from: https://lists.ourproject.org/pipermail/implementations-list/2014-September/002064.html
   (eval-after-load "evil-maps"
     '(dolist (map (list evil-motion-state-map
@@ -539,9 +549,10 @@
 
 ;; On-the-fly syntax checking
 (use-package flycheck
-  :ensure t
+  :commands (global-flycheck-mode flycheck-mode)
   :diminish flycheck-mode
-  :init (global-flycheck-mode t))
+  :init (global-flycheck-mode t)
+  :config (setq-default flycheck-disabled-checkers '(javascript-jshint)))
 
 
 ;; Show argument list in echo area
@@ -578,6 +589,12 @@
   :bind (:map company-active-map
               ("M-j" . company-select-next)
               ("M-k" . company-select-previous))
+  :custom
+  ;; no delay no autocomplete
+  (company-idle-delay 0)
+  (company-minimum-prefix-length 2)
+  (company-tooltip-limit 20)
+
   :preface
   ;; enable yasnippet everywhere
   (defvar company-mode/enable-yas t
@@ -592,28 +609,21 @@
 
   :init (global-company-mode t)
   :config
-  ;; no delay no autocomplete
-  (validate-setq
-   company-idle-delay 0
-   company-minimum-prefix-length 2
-   company-tooltip-limit 20)
-
   ;; remove unused backends
-  (validate-setq company-backends (delete 'company-semantic company-backends))
-  (validate-setq company-backends (delete 'company-eclim company-backends))
-  (validate-setq company-backends (delete 'company-xcode company-backends))
-  (validate-setq company-backends (delete 'company-clang company-backends))
-  (validate-setq company-backends (delete 'company-cmake company-backends))
-  (validate-setq company-backends (delete 'company-bbdb company-backends))
-  (validate-setq company-backends (delete 'company-oddmuse company-backends))
+  (delete 'company-semantic 'company-backends)
+  (delete 'company-eclim 'company-backends)
+  (delete 'company-xcode 'company-backends)
+  (delete 'company-clang 'company-backends)
+  (delete 'company-cmake 'company-backends)
+  (delete 'company-bbdb 'company-backends)
+  (delete 'company-oddmuse 'company-backends)
 
-  (validate-setq company-backends
-                 (mapcar #'company-mode/backend-with-yas company-backends))
+  ;; ('company-backends (mapcar #'company-mode/backend-with-yas 'company-backends))
 
   ;; Sort company candidates by statistics
   (use-package company-statistics
-    :ensure t
-    :config (company-statistics-mode)))
+    :commands company-statistics-mode
+    :init (company-statistics-mode t)))
 
 
 ;; Emojis completion like Github/Slack
@@ -636,22 +646,20 @@
 ;; Terminal in emacs
 (use-package multi-term
   :commands multi-term
-  :config
-  (setq multi-term-program "/bin/zsh"))
+  :custom (multi-term-program "/bin/zsh"))
 
 ;; Notes
 (use-package deft
   :commands deft
   :bind (([f6] . deft))
-  :config
-  (validate-setq
-   deft-directory onc/deft-directory
-   deft-extensions '("md" "org" "txt")
-   deft-default-extension "org"
-   deft-use-filename-as-title t
-   deft-use-filter-string-for-filename t
-   deft-recursive t
-   deft-auto-save-interval 3.0))
+  :custom
+  (deft-directory onc/deft-directory)
+  (deft-extensions '("md" "org" "txt"))
+  (deft-default-extension "org")
+  (deft-use-filename-as-title t)
+  (deft-use-filter-string-for-filename t)
+  (deft-recursive t)
+  (deft-auto-save-interval 3.0))
 
 (use-package dired
   :config
@@ -661,7 +669,6 @@
     "k" 'evil-previous-line
     "h" 'dired-up-directory
     "l" 'dired-find-file))
-
 
 ;; Pdf in Emacs
 ;; (use-package pdf-tools
@@ -698,23 +705,19 @@
          ("C-j" . helm-select-action)
          ("M-j" . helm-next-line)
          ("M-k" . helm-previous-line))
+  :custom
+  (helm-ff-skip-boring-files t)
+  (helm-mode-fuzzy-match t)
+  (helm-completion-in-region-fuzzy-match t)
+  (helm-ff-file-name-history-use-recentf t)
+  (helm-reuse-last-window-split-state t)
+  (helm-split-window-in-side-p t "Don't use full width of the frame")
   :config
   (require 'helm-config)
   (helm-mode +1)
 
   ;; Ignore .DS_Store files with helm mode
   (add-to-list 'helm-boring-file-regexp-list "\\.DS_Store$")
-  (validate-setq helm-ff-skip-boring-files t)
-
-  ;; Fuzzy matching
-  (validate-setq helm-mode-fuzzy-match t)
-  (validate-setq helm-completion-in-region-fuzzy-match t)
-
-  (validate-setq helm-ff-file-name-history-use-recentf t)
-
-  (validate-setq helm-reuse-last-window-split-state t)
-  ;; Don't use full width of the frame
-  (validate-setq helm-split-window-in-side-p t)
   (helm-autoresize-mode t)
 
   ;; Use ack instead of grep
@@ -743,8 +746,8 @@
     :init
     (add-hook 'rust-mode-hook 'rust-doc)
     (add-hook 'c++-mode-hook 'cc-doc)
-    :config
-    (validate-setq helm-dash-browser-func 'eww))
+    :custom
+    (helm-dash-browser-func 'eww))
 
   (use-package helm-swoop
     :ensure t
@@ -754,29 +757,23 @@
   (use-package helm-projectile
     :ensure t
     :init (helm-projectile-on)
-    :config
-    (validate-setq projectile-completion-system 'helm)))
+    :custom (projectile-completion-system 'helm)))
 
 
 ;; Projects in emacs
 (use-package projectile
-  :ensure t
-  :config
-  (validate-setq projectile-mode-line
-                 '(:eval (format " Proj[(%s)]"
-                                 (projectile-project-name))))
-  (projectile-global-mode))
+  :commands projectile-mode
+  :custom (projectile-mode-line '(:eval (format " Proj[(%s)]" (projectile-project-name))))
+  :init (projectile-mode t))
 
 
 ;; Show git modifications
 (use-package git-gutter
-  :ensure t
+  :commands global-git-gutter-mode
   :diminish git-gutter-mode
-  :init (global-git-gutter-mode +1)
+  :init (global-git-gutter-mode t)
+  :custom (git-gutter:hide-gutter t "hide if there are no changes")
   :config
-  ;; hide if there are no changes
-  (validate-setq git-gutter:hide-gutter t)
-
   (use-package git-gutter-fringe
     :ensure t
     :config
@@ -800,8 +797,8 @@
 (use-package magit
   :load-path "git-packages/magit/lisp"
   :commands (magit-status magit-log-all)
+  :custom (magit-diff-refine-hunk t)
   :config
-  (validate-setq magit-diff-refine-hunk t)
   (with-eval-after-load 'info
     (info-initialize)
     (add-to-list 'Info-directory-list "~/.emacs.d/git-packages/magit/Documentation"))
@@ -820,42 +817,72 @@
         ("C-c C-c" . moodle-destroyer-org-to-json))
   :commands (moodle-destroyer-json-to-org
              moodle-destroyer-org-to-json)
-  :config
-  ;; set custom name for org-mode gradingfile
-  (setq moodle-destroyer-gradingfile-org-name "grading.org")
-  ;; set custom name for exported json file
-  (setq moodle-destroyer-gradingfile-json-name "grading.ex.json"))
+  :custom
+  (moodle-destroyer-gradingfile-org-name "grading.org" "Set custom name for org-mode gradingfile")
+  (moodle-destroyer-gradingfile-json-name "grading.ex.json" "Set custom name for exported json file"))
 
 
 ;; Better emacs package menu
 (use-package paradox
   :commands (paradox-list-packages)
-  :config
-  (validate-setq paradox-automatically-star nil
-                 paradox-display-star-count nil
-                 paradox-execute-asynchronously t))
+  :custom
+  (paradox-automatically-star nil)
+  (paradox-display-star-count nil)
+  (paradox-execute-asynchronously t))
 
 
 ;; Code-comprehension server
 (use-package ycmd
-  :defer t
+  :commands ycmd-mode
   :init (add-hook 'c++-mode-hook #'ycmd-mode)
   :config
   (set-variable 'ycmd-server-command '("python3" "/Users/onze/Applications/ycmd/ycmd"))
   (set-variable 'ycmd-global-config (expand-file-name "~/Repos/dotfiles/ycmd/ycm_conf.py"))
-
   (set-variable 'ycmd-extra-conf-whitelist '("~/Uni/*" "~/Repos/*"))
 
   (use-package flycheck-ycmd
+    :after (ycmd flycheck)
     :commands (flycheck-ycmd-setup)
     :init (add-hook 'ycmd-mode-hook 'flycheck-ycmd-setup))
 
   (use-package company-ycmd
+    :after(ycmd company)
     :commands (company-ycmd-setup)
     :config (add-to-list 'company-backends (company-mode/backend-with-yas 'company-ycmd))
     ;; :config (add-to-list 'company-backends 'company-ycmd)
     ))
 
+
+(use-package prodigy
+  :commands (prodigy-define-tag prodigy-define-service)
+  :init
+  (prodigy-define-tag
+    :name 'flask
+    :env '(("LANG" "en_US.UTF-8")
+           ("LC_ALL" "en_US.UTF-8")))
+
+  (prodigy-define-service
+    :name "Scattervis flask"
+    :command "python3"
+    :args '("-m" "flask" "run")
+    :cwd "/Users/onze/Uni/Masterarbeit/scatterplot-vis-backend"
+    :stop-signal 'sigkill
+    :kill-process-buffer-on-stop t
+    :env '(("FLASK_APP" "scatterplotvis"))
+    :tags '(flask))
+
+  (prodigy-define-service
+    :name "Scatterplotvis gulp"
+    :command "npm"
+    :args '("start")
+    :cwd "/Users/onze/Uni/Masterarbeit/scatterplot-vis"
+    :stop-signal 'sigkill
+    :kill-process-buffer-on-stop t))
+
+
+;; manage system packages
+(use-package system-packages
+  :ensure t)
 
 
 ;; Restclient in Emacs
@@ -871,9 +898,9 @@
 ;; Dict.cc in Emacs
 (use-package dictcc
   :commands dictcc
-  :config
-  (validate-setq dictcc-source-lang "de"
-                 dictcc-destination-lang "en"))
+  :custom
+  (dictcc-source-lang "de")
+  (dictcc-destination-lang "en"))
 
 
 ;; Org-Mode
@@ -885,8 +912,16 @@
          :map org-mode-map
          ("M-j" . org-forward-heading-same-level)
          ("M-k" . org-backward-heading-same-level))
+  :custom
+  (org-time-clocksum-format '(:hours "%d" :require-hours t :minutes ":%02d" :require-minutes t))
+  (org-src-fontify-natively t "fontify code in code blocks")
+
+  (org-latex-packages-alist (quote (("" "color" t) ("" "minted" t) ("" "parskip" t))))
+
   :config
-  (setq org-time-clocksum-format '(:hours "%d" :require-hours t :minutes ":%02d" :require-minutes t))
+  ;; "remove 'inputenc' from default packages as it clashes with xelatex"
+  (validate-setq org-latex-default-packages-alist
+   (remove '("AUTO" "inputenc" t) org-latex-default-packages-alist))
 
   (org-babel-do-load-languages
    'org-babel-load-languages
@@ -898,20 +933,18 @@
      (sqlite . t)
      (perl . t)))
 
-  ;; fontify code in code blocks
-  (validate-setq org-src-fontify-natively t)
-
-  ;; (validate-setq org-agenda-files onc/org-agenda-file-location)
-
   (use-package org-clock
-    :config
-    (validate-setq org-clock-persist 'history)
-    (org-clock-persistence-insinuate))
+    :commands (org-clock-persistence-insinuate
+               org-clock-in
+               org-clock-out
+               org-clock-report)
+    :custom (org-clock-persist 'history)
+    :config (org-clock-persistence-insinuate))
 
   (use-package org-bullets
-    :ensure t
+    :commands org-bullets-mode
     :init (add-hook 'org-mode-hook (lambda () (org-bullets-mode 1)))
-    :config (validate-setq org-bullets-bullet-list '("●" "◼" "▶" "♦"))))
+    :custom (org-bullets-bullet-list '("●" "◼" "▶" "♦"))))
 
 
 ;; Global emacs bindings with prefix
@@ -984,12 +1017,10 @@
 ;; Spell checker
 (use-package ispell
   :defer t
+  :custom
+  (ispell-program-name (if (eq system-type 'darwin) (executable-find "aspell") (executable-find "hunspell")))
+  (ispell-dictionary "en_US")
   :config
-  (validate-setq
-   ispell-program-name (if (eq system-type 'darwin)
-                           (executable-find "aspell")
-                         (executable-find "hunspell"))
-   ispell-dictionary "en_US")
   (unless ispell-program-name
     (warn "No spell-checker available. Please install aspell or Hunspell")))
 
@@ -1004,31 +1035,21 @@
 ;; Latex
 (use-package ox-latex
   :defer t
-  :ensure nil
-  :config
-
-  ;; XeLaTeX customisations
-  ;; remove "inputenc" from default packages as it clashes with xelatex
-  (setf org-latex-default-packages-alist
-        (remove '("AUTO" "inputenc" t) org-latex-default-packages-alist))
-
-  (validate-setq org-latex-pdf-process
-                 '("xelatex --shell-escape -interaction nonstopmode -output-directory %o %f"
-                   "biber $(basename %b)"
-                   "xelatex --shell-escape -interaction nonstopmode -output-directory %o %f"
-                   "xelatex --shell-escape -interaction nonstopmode -output-directory %o %f"))
+  :custom
+  (org-latex-pdf-process
+   '("xelatex --shell-escape -interaction nonstopmode -output-directory %o %f"
+     "biber $(basename %b)"
+     "xelatex --shell-escape -interaction nonstopmode -output-directory %o %f"
+     "xelatex --shell-escape -interaction nonstopmode -output-directory %o %f"))
 
   ;; you have to install pygmentize to use minted
-  (validate-setq org-latex-packages-alist
-                 (quote (("" "color" t) ("" "minted" t) ("" "parskip" t))))
-  (validate-setq org-latex-listings 'minted)
-  (validate-setq org-latex-minted-options
-                 '(("frame" "lines")
-                   ("linenos" "")
-                   ("samepage" "")))
+  (org-latex-listings 'minted)
+  (org-latex-minted-options '(("frame" "lines") ("linenos" "") ("samepage" "")))
 
   ;; add emacs lisp support for minted
-  (validate-setq org-latex-custom-lang-environments '((emacs-lisp "common-lisp")))
+  (org-latex-custom-lang-environments '((emacs-lisp "common-lisp")))
+  :config
+
   (add-to-list 'org-latex-minted-langs '(elisp "common-lisp"))
 
   (add-to-list 'org-latex-classes
@@ -1163,8 +1184,7 @@ marginparsep=7pt, marginparwidth=.6in}
   (use-package racer
     :ensure t
     :init (add-hook 'rust-mode-hook #'racer-mode)
-    :config
-    (validate-setq racer-rust-src-path (getenv "RUST_SRC_PATH")))
+    :custom (racer-rust-src-path (getenv "RUST_SRC_PATH")))
 
   (use-package flycheck-rust
     :ensure t
@@ -1185,19 +1205,21 @@ marginparsep=7pt, marginparwidth=.6in}
   :config
 
   (use-package elpy
-    :ensure t
+    :commands elpy-enable
+    :custom
+    (elpy-rpc-python-command "python3")
+    (elpy-rpc-backend "jedi")
+    (elpy-use-cpython "/usr/local/bin/python3")
     :config
     (elpy-enable)
-    (validate-setq elpy-rpc-python-command "python3")
-    (validate-setq elpy-rpc-backend "jedi")
-    (validate-setq elpy-modules (delq 'elpy-module-company elpy-modules))
+
+    (delete 'elpy-module-company elpy-modules)
 
     (add-hook 'python-mode-hook
               (lambda ()
                 (company-mode)
                 (add-to-list 'company-backends
-                             (company-mode/backend-with-yas 'elpy-company-backend))))
-    (elpy-use-cpython "/usr/local/bin/python3")))
+                             (company-mode/backend-with-yas 'elpy-company-backend))))))
 
 
 ;; Ruby
@@ -1274,8 +1296,7 @@ marginparsep=7pt, marginparwidth=.6in}
       (company-mode +1))
     (add-hook 'typescript-mode-hook #'setup-tide-mode)
     (validate-setq company-tooltip-align-annotations t))
-  :config
-  (validate-setq typescript-indent-level 2))
+  :custom (typescript-indent-level 2))
 
 
 ;; Applescript
@@ -1294,8 +1315,7 @@ marginparsep=7pt, marginparwidth=.6in}
 ;; Swift
 (use-package swift-mode
   :mode "\\.swift\\'"
-  :config
-  (validate-setq swift-mode:basic-offset 2)
+  :custom (swift-mode:basic-offset 2))
 
   (use-package flycheck-swift
     :mode "\\.swift\\'"
@@ -1307,8 +1327,7 @@ marginparsep=7pt, marginparwidth=.6in}
   :mode "\\.hs\\'"
   :bind (:map haskell-mode-map
               ("C-c c" . haskell-process-load-file))
-  :config
-  (validate-setq haskell-interactive-popup-errors nil))
+  :custom (haskell-interactive-popup-errors nil))
 
 (use-package flycheck-haskell
   :mode "\\.hs\\'"
@@ -1438,8 +1457,7 @@ marginparsep=7pt, marginparwidth=.6in}
 
   (use-package clang-format
     :commands (clang-format-buffer)
-    :config
-    (validate-setq clang-format-executable onc/clang-format-command-path))
+    :custom (clang-format-executable onc/clang-format-command-path))
 
   (use-package company-cmake
     :ensure t
@@ -1508,10 +1526,10 @@ marginparsep=7pt, marginparwidth=.6in}
          ("\\.php\\'"   . web-mode)
          ("\\.jsp\\'"   . web-mode)
          ("\\.erb\\'"   . web-mode))
-  :config
-  (validate-setq web-mode-markup-indent-offset 2
-                 web-mode-css-indent-offset 2
-                 web-mode-code-indent-offset 2))
+  :custom
+  (web-mode-markup-indent-offset 2)
+  (web-mode-css-indent-offset 2)
+  (web-mode-code-indent-offset 2))
 
 
 ;; XML files
@@ -1519,9 +1537,9 @@ marginparsep=7pt, marginparwidth=.6in}
   :mode (("\\.xml\\'" . nxml-mode)
          ("\\.xslt\\'" . nxml-mode)
          ("\\.xsd\\'" . nxml-mode))
-  :config
-  (validate-setq nxml-child-indent 2
-                 nxml-attribute-indent 2))
+  :custom
+  (nxml-child-indent 2)
+  (nxml-attribute-indent 2))
 
 
 ;; Support for AsciiDoc
@@ -1537,7 +1555,7 @@ marginparsep=7pt, marginparwidth=.6in}
 ;; Json-files
 (use-package json-mode
   :mode "\\.json\\'"
-  :config (validate-setq js-indent-level 2))
+  :custom (js-indent-level 2))
 
 
 ;; Dockerfiles
