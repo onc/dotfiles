@@ -237,6 +237,7 @@
 
 ;; Set programm for urls
 (defun browse-url-default-macosx-browser (url &optional new-window)
+  "Open the given URL with safari.  Optional in a NEW-WINDOW."
   (interactive (browse-url-interactive-arg "URL: "))
   (if (and new-window (>= emacs-major-version 23))
       (ns-do-applescript
