@@ -609,8 +609,7 @@
 
   :preface
   ;; enable yasnippet everywhere
-  (defvar company-mode/enable-yas t
-    "Enable yasnippet for all backends.")
+  (defvar company-mode/enable-yas t "Enable yasnippet for all backends.")
   (defun company-mode/backend-with-yas (backend)
     (if (or
          (not company-mode/enable-yas)
@@ -1113,16 +1112,6 @@
 \\setromanfont{Source Sans Pro}
 \\setmonofont{Source Code Pro}[Scale=MatchLowercase]
 
-% \\linespread{1.05}                      % Palatino needs more leading (space between lines)
-% \\usepackage{setspace}
-% \\setstretch{1.4}
-% \\usepackage{microtype}
-
-% \\usepackage{framed}
-% \\usepackage{xcolor}
-% \\definecolor{shadecolor}{gray}{.95}
-% \\newenvironment{results}{\\begin{shaded}}{\\end{shaded}}
-
 % Default packages
 \\usepackage{multirow}                  % Table rows multiline
 \\usepackage{graphicx}
@@ -1175,8 +1164,7 @@ pdfborder=0 0 0                       % no boxes on links
 \\usepackage{fontspec}
 \\usepackage{graphicx}
 \\usepackage{geometry}
-\\geometry{a4paper, textwidth=6.5in, textheight=10in,
-marginparsep=7pt, marginparwidth=.6in}
+\\geometry{a4paper, textwidth=6.5in, textheight=10in, marginparsep=7pt, marginparwidth=.6in}
 \\pagestyle{empty}
 \\title{}"
                  ("\\section{%s}" . "\\section*{%s}")
@@ -1339,9 +1327,10 @@ marginparsep=7pt, marginparwidth=.6in}
   :mode "\\.swift\\'"
   :custom (swift-mode:basic-offset 2))
 
-  (use-package flycheck-swift
-    :mode "\\.swift\\'"
-    :init (add-hook 'swift-mode-hook 'flycheck-swift-setup)))
+(use-package flycheck-swift
+  :after (flycheck swift-mode)
+  :mode "\\.swift\\'"
+  :init (add-hook 'swift-mode-hook 'flycheck-swift-setup))
 
 
 ;; Haskell
