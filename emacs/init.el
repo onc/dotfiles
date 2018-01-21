@@ -236,7 +236,17 @@
                                     '(("\\<\\(FIXME\\|TODO\\|BUG\\|DONE\\)" 1 font-lock-warning-face t)))))
 
 ;; Set programm for urls
-(validate-setq browse-url-browser-function 'browse-url-chromium)
+(defun browse-url-default-macosx-browser (url &optional new-window)
+  (interactive (browse-url-interactive-arg "URL: "))
+  (if (and new-window (>= emacs-major-version 23))
+      (ns-do-applescript
+       (format (concat "tell application \"Safari\" to make document with properties {URL:\"%s\"}\n"
+                       "tell application \"Safari\" to activate") url))
+    (start-process (concat "open " url) nil "open" url)))
+
+(if (eq system-type 'darwin)
+    (validate-setq browse-url-browser-function 'browse-url-default-macosx-browser)
+  (validate-setq browse-url-browser-function 'browse-url-chromium))
 
 ;; Automatically compile and save init.el
 (defun byte-compile-init-files (file)
