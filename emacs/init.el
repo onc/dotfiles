@@ -24,7 +24,7 @@
 (defconst onc/custom-theme-load-path (expand-file-name "~/.emacs.d/themes"))
 
 ;; Font for emacs
-(defconst onc/font-family "Hack")
+(defconst onc/font-family "SF Mono")
 
 ;; Size of font
 (defconst onc/font-size 100)
