@@ -1783,38 +1783,6 @@ Note: this command is similar to `rectangle-number-lines', starting at 65 or 97,
   )
 
 
-;; SSH Setup
-(defun read-file (filename)
-  "Read the data from FILENAME and return it as a string."
-  (let ((real-filename (expand-file-name filename)))
-    (with-temp-buffer
-      (insert-file-contents real-filename)
-      (buffer-string))))
-
-(defun load-ssh-agent-env ()
-  "Read an SSH agent environment file and set the necessary environment variables."
-  (interactive)
-  (let ((agent-env-fn (concat (file-name-as-directory (getenv "HOME"))
-                              (file-name-as-directory ".ssh")
-                              "agent_env.sh")))
-    (if (file-readable-p agent-env-fn)
-        (let* ((ssh-data (read-file agent-env-fn))
-               (auth-sock (progn
-                            (string-match "SSH_AUTH_SOCK=\\(.*?\\)\n" ssh-data)
-                            (match-string 1 ssh-data)))
-               (agent-pid (progn
-                            (string-match "SSH_AGENT_PID=\\([0-9]*\\)?;" ssh-data)
-                            (match-string 1 ssh-data)))
-               )
-          (setenv "SSH_AUTH_SOCK" auth-sock)
-          (setenv "SSH_AGENT_PID" agent-pid)
-          (list auth-sock agent-pid)
-          (message (format "Using SSH agent %s via %s" agent-pid auth-sock)))
-      (message (format "No SSH agent environment file found: %s" agent-env-fn)))))
-
-(load-ssh-agent-env)
-
-
 ;; Adjust font in Emacs
 (defun onc/font-name-replace-size (font-name new-size)
   "Changing font size of FONT-NAME and set it to NEW-SIZE."
