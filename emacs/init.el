@@ -556,8 +556,9 @@
 
 ;; Workspaces in emacs
 (use-package perspeen
-  :load-path "git-packages/perspeen"
-  :config (perspeen-mode t))
+  :ensure t
+  :commands perspeen-mode
+  :init (perspeen-mode t))
 
 
 ;; On-the-fly syntax checking
