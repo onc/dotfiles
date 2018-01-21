@@ -269,10 +269,8 @@
 
 ;; Simple library for asynchronous processing
 (use-package async
-  :ensure t
   :defer t
-  :config
-  (require 'async-bytecomp))
+  :config (require 'async-bytecomp))
 
 
 ;; List library
@@ -301,12 +299,14 @@
 ;; Emacs in server-mode
 (use-package server
   :if (not noninteractive)
-  :init (server-mode)
+  :commands server-start
+  :init (server-start)
   :diminish server-buffer-clients)
 
 
 ;; Save buffers
 (use-package desktop
+  :commands desktop-save-mode
   :init (desktop-save-mode t)
   :custom
   (desktop-auto-save-timeout 60 "Save desktop after one minute of idle")
@@ -491,7 +491,9 @@
   (evil-set-initial-state 'calendar-mode 'emacs)
 
   (use-package evil-leader
-    :ensure t
+    :commands (global-evil-leader-mode
+               evil-leader/set-key
+               evil-leader/set-key-for-mode)
     :init (global-evil-leader-mode)
     :config
     (evil-leader/set-key
@@ -521,7 +523,7 @@
       'rust-mode "f" 'cargo-process-fmt))
 
   (use-package evil-search-highlight-persist
-    :ensure t
+    :commands global-evil-search-highlight-persist
     :init (global-evil-search-highlight-persist t)
     :config
     ;; Change highlight face of evil search
@@ -537,7 +539,7 @@
            ("<M-down>" . evil-numbers/dec-at-pt)))
 
   (use-package evil-surround
-    :ensure t
+    :commands global-evil-surround-mode
     :init (global-evil-surround-mode t)))
 
 
@@ -563,14 +565,14 @@
 
 ;; Highlight matching delimiters
 (use-package rainbow-delimiters
-  :ensure t
+  :commands rainbow-delimiters-mode
   :diminish rainbow-delimiters-mode
   :init (add-hook 'prog-mode-hook #'rainbow-delimiters-mode))
 
 
 ;; Show colors in code
 (use-package rainbow-mode
-  :ensure t
+  :commands rainbow-mode
   :diminish (rainbow-mode . "rbow")
   :init
   (dolist
@@ -584,7 +586,7 @@
 
 ;; Autocomplete
 (use-package company
-  :defer 10
+  :commands (global-company-mode company-mode)
   :diminish company-mode
   :bind (:map company-active-map
               ("M-j" . company-select-next)
@@ -635,7 +637,7 @@
 
 ;; Snippets
 (use-package yasnippet
-  :ensure t
+  :commands yas-global-mode
   :diminish yas-minor-mode
   :init (yas-global-mode t)
   :config
@@ -684,7 +686,7 @@
 ;;   :config (add-hook 'pdf-view-mode-hook #'pdf-view-fit-page-to-window))
 
 (use-package doc-view
-  :ensure t
+  :commands doc-view-fit-page-to-window
   :bind (:map doc-view-mode-map
               ("j" . doc-view-next-page)
               ("<SPC>" . doc-view-next-page)
@@ -694,6 +696,7 @@
 
 ;; Ido-mode replacement
 (use-package helm
+  :commands helm-autoresize-mode
   :diminish helm-mode
   :bind (("C-h C-h" . helm-apropos)
          ("M-x"     . helm-M-x)
@@ -755,7 +758,8 @@
            ("M-I" . helm-multi-swoop-projectile)))
 
   (use-package helm-projectile
-    :ensure t
+    :commands (helm-projectile-on
+               helm-projectile-switch-project)
     :init (helm-projectile-on)
     :custom (projectile-completion-system 'helm)))
 
@@ -805,6 +809,7 @@
 
   (use-package magit-gitflow
     :load-path "git-packages/magit-gitflow"
+    :commands turn-on-magit-gitflow
     :init
     (add-hook 'magit-mode-hook #'turn-on-magit-gitflow)))
 
@@ -905,6 +910,7 @@
 
 ;; Org-Mode
 (use-package org
+  :commands org-babel-do-load-languages
   :mode (("\\.org\\'" . org-mode)
          ("\\.org_archive\\'" . org-mode))
   :bind (("C-c a" . org-agenda)
@@ -949,6 +955,11 @@
 
 ;; Global emacs bindings with prefix
 (use-package hydra
+  :commands (hydra-default-pre
+             hydra-keyboard-quit
+             hydra--call-interactively-remap-maybe
+             hydra-show-hint
+             hydra-set-transient-map)
   :bind (("C-x m" . onc/common-functions/body))
   :config
   (defhydra onc/common-functions (:color teal)
@@ -1027,9 +1038,8 @@
 
 ;; Automatically infer dictionary
 (use-package auto-dictionary
-  :ensure t
-  :init
-  (add-hook 'flyspell-mode-hook #'auto-dictionary-mode))
+  :commands auto-dictionary-mode
+  :init (add-hook 'flyspell-mode-hook #'auto-dictionary-mode))
 
 
 ;; Latex
@@ -1173,8 +1183,9 @@ marginparsep=7pt, marginparwidth=.6in}
 (use-package rust-mode
   :mode "\\.rs\\'"
   :config
+
   (use-package cargo
-    :ensure t
+    :commands cargo-minor-mode
     :bind(:map
           rust-mode-map
           ("C-c c" . cargo-process-build)
@@ -1182,11 +1193,12 @@ marginparsep=7pt, marginparwidth=.6in}
     :init (add-hook 'rust-mode-hook #'cargo-minor-mode))
 
   (use-package racer
-    :ensure t
+    :commands racer-mode
     :init (add-hook 'rust-mode-hook #'racer-mode)
     :custom (racer-rust-src-path (getenv "RUST_SRC_PATH")))
 
   (use-package flycheck-rust
+    :commands flycheck-rust-setup
     :ensure t
     :init (add-hook 'rust-mode-hook #'flycheck-rust-setup))
 
@@ -1231,7 +1243,7 @@ marginparsep=7pt, marginparwidth=.6in}
         ("C-c r" . onc/run-current-file))
   :config
   (use-package robe
-    :ensure t
+    :commands robe-mode
     :init
     (add-hook 'ruby-mode-hook #'robe-mode)
     (add-to-list 'company-backends (company-mode/backend-with-yas 'company-robe)))
@@ -1240,7 +1252,7 @@ marginparsep=7pt, marginparwidth=.6in}
     :ensure t)
 
   (use-package inf-ruby
-    :ensure t
+    :commands (inf-ruby-minor-mode inf-ruby-auto-enter)
     :init
     (add-hook 'ruby-mode-hook #'inf-ruby-minor-mode)
     (add-hook 'compilation-filter-hook #'inf-ruby-auto-enter))
@@ -1271,7 +1283,7 @@ marginparsep=7pt, marginparwidth=.6in}
 
 
 (use-package tern
-  :defer t
+  :commands tern-mode
   :init
   (add-hook 'js-mode-hook (lambda () (tern-mode t)))
   (add-hook 'js2-mode-hook (lambda () (tern-mode t)))
@@ -1283,7 +1295,7 @@ marginparsep=7pt, marginparwidth=.6in}
     :config (add-to-list 'company-backends 'company-tern)))
 
 (use-package tide
-  :ensure t
+  :commands tide-setup
   :mode (("\\.ts\\'" . typescript-mode)
          ("\\.tsx\\'" . typescript-mode))
   :init
@@ -1330,6 +1342,7 @@ marginparsep=7pt, marginparwidth=.6in}
   :custom (haskell-interactive-popup-errors nil))
 
 (use-package flycheck-haskell
+  :commands flycheck-haskell-setup
   :mode "\\.hs\\'"
   :init (add-hook 'haskell-mode-hook #'flycheck-haskell-setup))
 
@@ -1464,7 +1477,7 @@ marginparsep=7pt, marginparwidth=.6in}
     :config (add-to-list 'company-backends 'company-cmake))
 
   (use-package modern-cpp-font-lock
-    :ensure t
+    :commands modern-c++-font-lock-mode
     :init (add-hook 'c++-mode-hook #'modern-c++-font-lock-mode)))
 
 
