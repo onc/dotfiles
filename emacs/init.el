@@ -293,11 +293,6 @@
   :ensure t)
 
 
-;; magit needs this
-(use-package with-editor
-  :ensure t)
-
-
 (use-package font-lock+
   :ensure t
   :load-path "git-packages/font-lock+")
@@ -744,7 +739,7 @@
 
 (use-package helm-dash
   :ensure t
-  :after (helm dash)
+  :after helm
   :preface
   (defun rust-doc ()
     (interactive)
@@ -806,9 +801,21 @@
   (add-hook 'focus-in-hook 'git-gutter:update-all-windows))
 
 
+;; Dependencies of magit
+(use-package with-editor
+  :ensure t)
+
+(use-package magit-popup
+  :ensure t)
+
+(use-package ghub
+  :ensure t)
+
+
 ;; Git support for emacs
 (use-package magit
-  :load-path "git-packages/magit/lisp"
+  :ensure t
+  :after (with-editor magit-popup ghub)
   :commands (magit-status magit-log-all)
   :custom (magit-diff-refine-hunk t)
   :config
@@ -817,7 +824,7 @@
     (add-to-list 'Info-directory-list "~/.emacs.d/git-packages/magit/Documentation")))
 
 (use-package magit-gitflow
-  :load-path "git-packages/magit-gitflow"
+  :ensure t
   :after magit
   :commands turn-on-magit-gitflow
   :init
