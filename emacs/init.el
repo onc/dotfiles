@@ -498,64 +498,70 @@
   (evil-set-initial-state 'magit-mode 'emacs)
   (evil-set-initial-state 'pdf-view-mode 'emacs)
   (evil-set-initial-state 'pdf-annot-list-mode 'emacs)
-  (evil-set-initial-state 'calendar-mode 'emacs)
+  (evil-set-initial-state 'calendar-mode 'emacs))
 
-  (use-package evil-leader
-    :commands (global-evil-leader-mode
-               evil-leader/set-key
-               evil-leader/set-key-for-mode)
-    :init (global-evil-leader-mode)
-    :config
-    (evil-leader/set-key
-      "f" 'onc/indent-whole-buffer
-      "init" (lambda () (interactive) (find-file onc/init-el-path))
-      "o" 'find-file
-      "e" 'eval-defun
-      "d" 'dictcc
-      "1" 'highlight-symbol-at-point
-      "0" 'highlight-symbol-remove-all
-      "gst" 'magit-status
-      "glg" 'magit-log-all
-      "ci" 'evilnc-comment-or-uncomment-lines
-      "cl" 'evilnc-quick-comment-or-uncomment-to-the-line
-      "ll" 'evilnc-quick-comment-or-uncomment-to-the-line
-      "cc" 'evilnc-copy-and-comment-lines
-      "cp" 'evilnc-comment-or-uncomment-paragraphs
-      "cr" 'comment-or-uncomment-region
-      "cv" 'evilnc-toggle-invert-comment-line-by-line
-      "a" 'align-regexp
-      "s" 'helm-projectile-ag)
+(use-package evil-leader
+  :after evil
+  :commands (global-evil-leader-mode
+             evil-leader/set-key
+             evil-leader/set-key-for-mode)
+  :init (global-evil-leader-mode)
+  :config
+  (evil-leader/set-key
+    "f" 'onc/indent-whole-buffer
+    "init" (lambda () (interactive) (find-file onc/init-el-path))
+    "o" 'find-file
+    "e" 'eval-defun
+    "d" 'dictcc
+    "1" 'highlight-symbol-at-point
+    "0" 'highlight-symbol-remove-all
+    "gst" 'magit-status
+    "glg" 'magit-log-all
+    "ci" 'evilnc-comment-or-uncomment-lines
+    "cl" 'evilnc-quick-comment-or-uncomment-to-the-line
+    "ll" 'evilnc-quick-comment-or-uncomment-to-the-line
+    "cc" 'evilnc-copy-and-comment-lines
+    "cp" 'evilnc-comment-or-uncomment-paragraphs
+    "cr" 'comment-or-uncomment-region
+    "cv" 'evilnc-toggle-invert-comment-line-by-line
+    "a" 'align-regexp
+    "s" 'helm-projectile-ag
+    "pf" 'helm-projectile-find-file)
 
-    (evil-leader/set-key-for-mode
-      'c++-mode "f" 'clang-format-buffer)
+  (evil-leader/set-key-for-mode
+    'c++-mode "f" 'clang-format-buffer)
 
-    (evil-leader/set-key-for-mode
-      'rust-mode "f" 'cargo-process-fmt))
+  (evil-leader/set-key-for-mode
+    'rust-mode "f" 'cargo-process-fmt))
 
-  (use-package evil-search-highlight-persist
-    :commands global-evil-search-highlight-persist
-    :init (global-evil-search-highlight-persist t)
-    :config
-    ;; Change highlight face of evil search
-    (set-face-foreground 'evil-search-highlight-persist-highlight-face "#ff00ff")
-    (set-face-background 'evil-search-highlight-persist-highlight-face "#ffffff"))
+(use-package evil-search-highlight-persist
+  :after evil
+  :commands global-evil-search-highlight-persist
+  :init (global-evil-search-highlight-persist t)
+  :config
+  ;; Change highlight face of evil search
+  (set-face-foreground 'evil-search-highlight-persist-highlight-face "#ff00ff")
+  (set-face-background 'evil-search-highlight-persist-highlight-face "#ffffff"))
 
-  (use-package evil-nerd-commenter
-    :ensure t)
+(use-package evil-nerd-commenter
+  :ensure t
+  :after evil)
 
-  (use-package evil-numbers
-    :ensure t
-    :bind (("<M-up>" . evil-numbers/inc-at-pt)
-           ("<M-down>" . evil-numbers/dec-at-pt)))
+(use-package evil-numbers
+  :ensure t
+  :after evil
+  :bind (("<M-up>" . evil-numbers/inc-at-pt)
+         ("<M-down>" . evil-numbers/dec-at-pt)))
 
-  (use-package evil-surround
-    :commands global-evil-surround-mode
-    :init (global-evil-surround-mode t)))
+(use-package evil-surround
+  :after evil
+  :commands global-evil-surround-mode
+  :init (global-evil-surround-mode t))
 
 
 ;; Workspaces in emacs
 (use-package perspeen
-  :ensure t
+  :load-path "git-packages/perspeen"
   :config (perspeen-mode t))
 
 
@@ -628,13 +634,15 @@
   (delete 'company-cmake 'company-backends)
   (delete 'company-bbdb 'company-backends)
   (delete 'company-oddmuse 'company-backends)
-
   ;; ('company-backends (mapcar #'company-mode/backend-with-yas 'company-backends))
+  )
 
-  ;; Sort company candidates by statistics
-  (use-package company-statistics
-    :commands company-statistics-mode
-    :init (company-statistics-mode t)))
+
+;; Sort company candidates by statistics
+(use-package company-statistics
+  :after company
+  :commands company-statistics-mode
+  :init (company-statistics-mode t))
 
 
 ;; Emojis completion like Github/Slack
@@ -740,37 +748,41 @@
   ;; Even better, use ag if it's available
   (when (executable-find "ag")
     (validate-setq helm-grep-default-command "ag --vimgrep -z %p %f"
-                   helm-grep-default-recurse-command "ag --vimgrep -z %p %f"))
+                   helm-grep-default-recurse-command "ag --vimgrep -z %p %f")))
 
-  (use-package helm-ag
-    :ensure t)
+(use-package helm-ag
+  :ensure t
+  :after helm)
 
-  (use-package helm-dash
-    :ensure t
-    :preface
-    (defun rust-doc ()
-      (interactive)
-      (setq-local helm-dash-docsets '("Rust")))
+(use-package helm-dash
+  :ensure t
+  :after (helm dash)
+  :preface
+  (defun rust-doc ()
+    (interactive)
+    (setq-local helm-dash-docsets '("Rust")))
 
-    (defun cc-doc ()
-      (interactive)
-      (setq-local helm-dash-docsets '("C\+\+")))
-    :init
-    (add-hook 'rust-mode-hook 'rust-doc)
-    (add-hook 'c++-mode-hook 'cc-doc)
-    :custom
-    (helm-dash-browser-func 'eww))
+  (defun cc-doc ()
+    (interactive)
+    (setq-local helm-dash-docsets '("C\+\+")))
+  :init
+  (add-hook 'rust-mode-hook 'rust-doc)
+  (add-hook 'c++-mode-hook 'cc-doc)
+  :custom
+  (helm-dash-browser-func 'eww))
 
-  (use-package helm-swoop
-    :ensure t
-    :bind (("M-i" . helm-swoop)
-           ("M-I" . helm-multi-swoop-projectile)))
+(use-package helm-swoop
+  :ensure t
+  :after helm
+  :bind (("M-i" . helm-swoop)
+         ("M-I" . helm-multi-swoop-projectile)))
 
-  (use-package helm-projectile
-    :commands (helm-projectile-on
-               helm-projectile-switch-project)
-    :init (helm-projectile-on)
-    :custom (projectile-completion-system 'helm)))
+(use-package helm-projectile
+  :after (helm projectile)
+  :commands (helm-projectile-on
+             helm-projectile-switch-project)
+  :init (helm-projectile-on)
+  :custom (projectile-completion-system 'helm))
 
 
 ;; Projects in emacs
@@ -814,13 +826,14 @@
   :config
   (with-eval-after-load 'info
     (info-initialize)
-    (add-to-list 'Info-directory-list "~/.emacs.d/git-packages/magit/Documentation"))
+    (add-to-list 'Info-directory-list "~/.emacs.d/git-packages/magit/Documentation")))
 
-  (use-package magit-gitflow
-    :load-path "git-packages/magit-gitflow"
-    :commands turn-on-magit-gitflow
-    :init
-    (add-hook 'magit-mode-hook #'turn-on-magit-gitflow)))
+(use-package magit-gitflow
+  :load-path "git-packages/magit-gitflow"
+  :after magit
+  :commands turn-on-magit-gitflow
+  :init
+  (add-hook 'magit-mode-hook #'turn-on-magit-gitflow))
 
 
 ;; Moodle-destroyer plugin
@@ -852,19 +865,17 @@
   :config
   (set-variable 'ycmd-server-command '("python3" "/Users/onze/Applications/ycmd/ycmd"))
   (set-variable 'ycmd-global-config (expand-file-name "~/Repos/dotfiles/ycmd/ycm_conf.py"))
-  (set-variable 'ycmd-extra-conf-whitelist '("~/Uni/*" "~/Repos/*"))
+  (set-variable 'ycmd-extra-conf-whitelist '("~/Uni/*" "~/Repos/*")))
 
-  (use-package flycheck-ycmd
-    :after (ycmd flycheck)
-    :commands (flycheck-ycmd-setup)
-    :init (add-hook 'ycmd-mode-hook 'flycheck-ycmd-setup))
+(use-package flycheck-ycmd
+  :after (ycmd flycheck)
+  :commands (flycheck-ycmd-setup)
+  :init (add-hook 'ycmd-mode-hook 'flycheck-ycmd-setup))
 
-  (use-package company-ycmd
-    :after(ycmd company)
-    :commands (company-ycmd-setup)
-    :config (add-to-list 'company-backends (company-mode/backend-with-yas 'company-ycmd))
-    ;; :config (add-to-list 'company-backends 'company-ycmd)
-    ))
+(use-package company-ycmd
+  :after(ycmd company)
+  :commands (company-ycmd-setup)
+  :config (add-to-list 'company-backends (company-mode/backend-with-yas 'company-ycmd)))
 
 
 (use-package prodigy
@@ -901,12 +912,12 @@
 
 ;; Restclient in Emacs
 (use-package restclient
-  :mode ("\\.rest\\'" . restclient-mode)
-  :config
+  :mode ("\\.rest\\'" . restclient-mode))
 
-  (use-package company-restclient
-    :ensure t
-    :config (add-to-list 'company-backends 'company-restclient)))
+(use-package company-restclient
+  :ensure t
+  :after (restclient company)
+  :config (add-to-list 'company-backends 'company-restclient))
 
 
 ;; Dict.cc in Emacs
@@ -936,7 +947,7 @@
   :config
   ;; "remove 'inputenc' from default packages as it clashes with xelatex"
   (validate-setq org-latex-default-packages-alist
-   (remove '("AUTO" "inputenc" t) org-latex-default-packages-alist))
+                 (remove '("AUTO" "inputenc" t) org-latex-default-packages-alist))
 
   (org-babel-do-load-languages
    'org-babel-load-languages
@@ -946,20 +957,22 @@
      (dot . t)
      (octave . t)
      (sqlite . t)
-     (perl . t)))
+     (perl . t))))
 
-  (use-package org-clock
-    :commands (org-clock-persistence-insinuate
-               org-clock-in
-               org-clock-out
-               org-clock-report)
-    :custom (org-clock-persist 'history)
-    :config (org-clock-persistence-insinuate))
+(use-package org-clock
+  :after org
+  :commands (org-clock-persistence-insinuate
+             org-clock-in
+             org-clock-out
+             org-clock-report)
+  :custom (org-clock-persist 'history)
+  :config (org-clock-persistence-insinuate))
 
-  (use-package org-bullets
-    :commands org-bullets-mode
-    :init (add-hook 'org-mode-hook (lambda () (org-bullets-mode 1)))
-    :custom (org-bullets-bullet-list '("●" "◼" "▶" "♦"))))
+(use-package org-bullets
+  :after org
+  :commands org-bullets-mode
+  :init (add-hook 'org-mode-hook (lambda () (org-bullets-mode 1)))
+  :custom (org-bullets-bullet-list '("●" "◼" "▶" "♦")))
 
 
 ;; Global emacs bindings with prefix
@@ -1179,30 +1192,33 @@ pdfborder=0 0 0                       % no boxes on links
 
 ;; Rust
 (use-package rust-mode
-  :mode "\\.rs\\'"
-  :config
+  :mode "\\.rs\\'")
 
-  (use-package cargo
-    :commands cargo-minor-mode
-    :bind(:map
-          rust-mode-map
-          ("C-c c" . cargo-process-build)
-          ("C-c x" . cargo-process-run))
-    :init (add-hook 'rust-mode-hook #'cargo-minor-mode))
+(use-package cargo
+  :after rust-mode
+  :commands cargo-minor-mode
+  :bind(:map
+        rust-mode-map
+        ("C-c c" . cargo-process-build)
+        ("C-c x" . cargo-process-run))
+  :init (add-hook 'rust-mode-hook #'cargo-minor-mode))
 
-  (use-package racer
-    :commands racer-mode
-    :init (add-hook 'rust-mode-hook #'racer-mode)
-    :custom (racer-rust-src-path (getenv "RUST_SRC_PATH")))
+(use-package racer
+  :after rust-mode
+  :commands racer-mode
+  :init (add-hook 'rust-mode-hook #'racer-mode)
+  :custom (racer-rust-src-path (getenv "RUST_SRC_PATH")))
 
-  (use-package flycheck-rust
-    :commands flycheck-rust-setup
-    :ensure t
-    :init (add-hook 'rust-mode-hook #'flycheck-rust-setup))
+(use-package flycheck-rust
+  :commands flycheck-rust-setup
+  :after (flycheck rust-mode)
+  :ensure t
+  :init (add-hook 'rust-mode-hook #'flycheck-rust-setup))
 
-  (use-package company-racer
-    :ensure t
-    :config (add-to-list 'company-backends 'company-racer)))
+(use-package company-racer
+  :after (company racer)
+  :ensure t
+  :config (add-to-list 'company-backends 'company-racer))
 
 
 ;; Python
@@ -1211,25 +1227,25 @@ pdfborder=0 0 0                       % no boxes on links
   :interpreter ("python3" . python-mode)
   :bind(:map
         python-mode-map
-        ("C-c r" . onc/run-current-file))
+        ("C-c r" . onc/run-current-file)))
+
+(use-package elpy
+  :after python-mode
+  :commands elpy-enable
+  :custom
+  (elpy-rpc-python-command "python3")
+  (elpy-rpc-backend "jedi")
+  (elpy-use-cpython "/usr/local/bin/python3")
   :config
+  (elpy-enable)
 
-  (use-package elpy
-    :commands elpy-enable
-    :custom
-    (elpy-rpc-python-command "python3")
-    (elpy-rpc-backend "jedi")
-    (elpy-use-cpython "/usr/local/bin/python3")
-    :config
-    (elpy-enable)
+  (delete 'elpy-module-company elpy-modules)
 
-    (delete 'elpy-module-company elpy-modules)
-
-    (add-hook 'python-mode-hook
-              (lambda ()
-                (company-mode)
-                (add-to-list 'company-backends
-                             (company-mode/backend-with-yas 'elpy-company-backend))))))
+  (add-hook 'python-mode-hook
+            (lambda ()
+              (company-mode)
+              (add-to-list 'company-backends
+                           (company-mode/backend-with-yas 'elpy-company-backend)))))
 
 
 ;; Ruby
@@ -1342,6 +1358,7 @@ pdfborder=0 0 0                       % no boxes on links
 
 (use-package flycheck-haskell
   :commands flycheck-haskell-setup
+  :after (flycheck haskell-mode)
   :mode "\\.hs\\'"
   :init (add-hook 'haskell-mode-hook #'flycheck-haskell-setup))
 
@@ -1464,20 +1481,22 @@ pdfborder=0 0 0                       % no boxes on links
 
   (defun onc/cmake-run ()
     (interactive)
-    (call-process (my-executable-path)))
-  :config
+    (call-process (my-executable-path))))
 
-  (use-package clang-format
-    :commands (clang-format-buffer)
-    :custom (clang-format-executable onc/clang-format-command-path))
+(use-package clang-format
+  :after cc-mode
+  :commands (clang-format-buffer)
+  :custom (clang-format-executable onc/clang-format-command-path))
 
-  (use-package company-cmake
-    :ensure t
-    :config (add-to-list 'company-backends 'company-cmake))
+(use-package company-cmake
+  :ensure t
+  :after (cc-mode company)
+  :config (add-to-list 'company-backends 'company-cmake))
 
-  (use-package modern-cpp-font-lock
-    :commands modern-c++-font-lock-mode
-    :init (add-hook 'c++-mode-hook #'modern-c++-font-lock-mode)))
+(use-package modern-cpp-font-lock
+  :after cc-mode
+  :commands modern-c++-font-lock-mode
+  :init (add-hook 'c++-mode-hook #'modern-c++-font-lock-mode))
 
 
 ;;; Modes for other filetypes
