@@ -283,6 +283,11 @@
   :defer t)
 
 
+;; String library
+(use-package s
+  :ensure t)
+
+
 ;; no idea where this comes from...
 (use-package unbound
   :ensure t)
@@ -381,6 +386,13 @@
 (use-package elec-pair
   :commands electric-pair-mode
   :init (electric-pair-mode t))
+
+
+(use-package origami
+  :ensure t
+  :after (dash s)
+  :commands global-origami-mode
+  :init (global-origami-mode t))
 
 
 ;; Load shell env
@@ -512,6 +524,7 @@
   :config
   (evil-leader/set-key
     "f" 'onc/indent-whole-buffer
+    "t" 'origami-toggle-node
     "init" (lambda () (interactive) (find-file onc/init-el-path))
     "o" 'find-file
     "e" 'eval-defun
