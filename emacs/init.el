@@ -229,12 +229,6 @@
 
 (validate-setq scroll-preserve-screen-position 'always)
 
-;; Highlight some keywords in prog-mode
-(add-hook 'prog-mode-hook
-          (lambda ()
-            (font-lock-add-keywords nil
-                                    '(("\\<\\(FIXME\\|TODO\\|BUG\\|DONE\\)" 1 font-lock-warning-face t)))))
-
 ;; Set programm for urls
 (defun browse-url-default-macosx-browser (url &optional new-window)
   "Open the given URL with safari.  Optional in a NEW-WINDOW."
@@ -317,6 +311,19 @@
   :custom
   (desktop-auto-save-timeout 60 "Save desktop after one minute of idle")
   (desktop-load-locked-desktop t))
+
+
+(use-package prog-mode
+  :preface
+  (defun onc/add-todo-marker ()
+    (interactive)
+    (font-lock-add-keywords
+     nil
+     '(("\\<\\(FIXME\\|TODO\\|BUG\\|DONE\\)" 1 font-lock-warning-face t))))
+  :init
+  ;; Highlight some keywords in prog-mode
+  (add-hook 'prog-mode-hook #'onc/add-todo-marker))
+
 
 ;; Simple
 (use-package simple
