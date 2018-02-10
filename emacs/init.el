@@ -19,6 +19,7 @@
 
 ;; Path of this config for leader binding
 (defconst onc/init-el-path (file-truename (expand-file-name "~/.emacs.d/init.el")))
+(defconst onc/init-el-compiled-path (file-truename (expand-file-name "~/.emacs.d/init.elc")))
 
 ;; Path of themes
 (defconst onc/custom-theme-load-path (expand-file-name "~/.emacs.d/themes"))
@@ -256,13 +257,12 @@
 
 (add-hook 'after-save-hook
           (function (lambda ()
-                      (if (string= (file-truename (expand-file-name "~/.emacs.d/init.el"))
+                      (if (string= (file-truename onc/init-el-path)
                                    (file-truename (buffer-file-name)))
-                          (byte-compile-init-files "~/.emacs.d/init.el")))))
+                          (byte-compile-init-files onc/init-el-path)))))
 
-;; Byte-compile again who init.elc If it is older than init.el.
-(if (file-newer-than-file-p (expand-file-name "~/.emacs.d/init.el")
-                            (expand-file-name "~/.emacs.d/init.elc"))
+;; Byte-compile if init.el, is newer than compiled version of it.
+(if (file-newer-than-file-p onc/init-el-path onc/init-el-compiled-path)
     (byte-compile-init-files "~/.emacs.d/init.el"))
 
 ;;; Packages
