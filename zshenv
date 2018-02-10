@@ -32,3 +32,7 @@ export PATH="${HOME}/.cabal/bin:${PATH}"
 
 # moodle
 export PATH="${HOME}/Applications/moodle-destroyer-tools:${PATH}"
+
+# new version of makeinfo
+export PATH="/usr/local/opt/texinfo/bin:${PATH}"
+
