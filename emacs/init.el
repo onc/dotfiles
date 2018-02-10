@@ -298,6 +298,11 @@
   :load-path "git-packages/font-lock+")
 
 
+;; addon for use-package to ensure system packages
+(use-package use-package-ensure-system-package
+  :ensure t)
+
+
 ;;; General packages
 ;;; ----------------
 
@@ -757,6 +762,7 @@
 
 (use-package helm-ag
   :ensure t
+  :ensure-system-package ag
   :after helm)
 
 (use-package helm-dash
@@ -1213,6 +1219,7 @@ pdfborder=0 0 0                       % no boxes on links
 
 (use-package cargo
   :after rust-mode
+  :ensure-system-package cargo
   :commands cargo-minor-mode
   :bind(:map
         rust-mode-map
@@ -1271,26 +1278,29 @@ pdfborder=0 0 0                       % no boxes on links
   :interpreter "ruby"
   :bind(:map
         ruby-mode-map
-        ("C-c r" . onc/run-current-file))
-  :config
-  (use-package robe
-    :commands robe-mode
-    :init
-    (add-hook 'ruby-mode-hook #'robe-mode)
-    (add-to-list 'company-backends (company-mode/backend-with-yas 'company-robe)))
+        ("C-c r" . onc/run-current-file)))
 
-  (use-package rubocop
-    :ensure t)
+(use-package robe
+  :commands robe-mode
+  :after ruby-mode
+  :init
+  (add-hook 'ruby-mode-hook #'robe-mode)
+  (add-to-list 'company-backends (company-mode/backend-with-yas 'company-robe)))
 
-  (use-package inf-ruby
-    :commands (inf-ruby-minor-mode inf-ruby-auto-enter)
-    :init
-    (add-hook 'ruby-mode-hook #'inf-ruby-minor-mode)
-    (add-hook 'compilation-filter-hook #'inf-ruby-auto-enter))
+(use-package rubocop
+  :ensure-system-package rubocop
+  :hook ruby-mode)
 
-  (use-package company-inf-ruby
-    :ensure t
-    :config (add-to-list 'company-backends 'company-inf-ruby)))
+(use-package inf-ruby
+  :commands (inf-ruby-minor-mode inf-ruby-auto-enter)
+  :after ruby-mode
+  :init
+  (add-hook 'ruby-mode-hook #'inf-ruby-minor-mode)
+  (add-hook 'compilation-filter-hook #'inf-ruby-auto-enter))
+
+(use-package company-inf-ruby
+  :after (inf-ruby company)
+  :config (add-to-list 'company-backends 'company-inf-ruby))
 
 
 ;; Elisp
@@ -1316,6 +1326,7 @@ pdfborder=0 0 0                       % no boxes on links
 
 (use-package tern
   :commands tern-mode
+  :ensure-system-package tern
   :init
   (add-hook 'js-mode-hook (lambda () (tern-mode t)))
   (add-hook 'js2-mode-hook (lambda () (tern-mode t)))
@@ -1503,6 +1514,7 @@ pdfborder=0 0 0                       % no boxes on links
 
 (use-package clang-format
   :after cc-mode
+  :ensure-system-package clang-format
   :commands (clang-format-buffer)
   :custom (clang-format-executable onc/clang-format-command-path))
 
