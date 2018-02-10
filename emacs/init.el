@@ -731,6 +731,8 @@
 
 ;; Ido-mode replacement
 (use-package helm
+  :ensure t
+  :after async
   :commands helm-autoresize-mode
   :diminish helm-mode
   :bind (("C-h C-h" . helm-apropos)
