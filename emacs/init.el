@@ -751,7 +751,7 @@
   (helm-completion-in-region-fuzzy-match t)
   (helm-ff-file-name-history-use-recentf t)
   (helm-reuse-last-window-split-state t)
-  (helm-split-window-in-side-p t "Don't use full width of the frame")
+  (helm-split-window-inside-p t "Don't use full width of the frame")
   :config
   (require 'helm-config)
   (helm-mode +1)
