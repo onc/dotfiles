@@ -424,19 +424,13 @@
 (use-package fill-column-indicator
   :ensure t
   :init
-  (add-hook 'c-mode-common-hook
-            (lambda ()
-              'fci-mode
-              (validate-setq fill-column 80)))
-  (add-hook 'js2-mode-hook
-            (lambda ()
-              'fci-mode
-              (validate-setq fill-column 100)))
-  (add-hook 'swift-mode-hook
-            (lambda ()
-              'fci-mode
-              (validate-setq fill-column 120)))
+  (add-hook 'c-mode-common-hook #'turn-on-fci-mode)
+  (add-hook 'js2-mode-hook #'turn-on-fci-mode)
+  (add-hook 'swift-mode-hook #'turn-on-fci-mode)
+  (add-hook 'python-mode-hook #'turn-on-fci-mode)
+  (add-hook 'typescript-mode-hook #'turn-on-fci-mode)
   :custom
+  (fill-column 80)
   (fci-rule-width 1)
   (fci-rule-color "gray71"))
 
