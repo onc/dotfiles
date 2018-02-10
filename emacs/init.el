@@ -683,6 +683,7 @@
   :commands multi-term
   :custom (multi-term-program "/bin/zsh"))
 
+
 ;; Notes
 (use-package deft
   :commands deft
@@ -695,6 +696,7 @@
   (deft-use-filter-string-for-filename t)
   (deft-recursive t)
   (deft-auto-save-interval 3.0))
+
 
 (use-package dired
   :config
@@ -907,6 +909,7 @@
   :config (add-to-list 'company-backends (company-mode/backend-with-yas 'company-ycmd)))
 
 
+;; Control system services (like webservers and stuff) from emacs
 (use-package prodigy
   :commands (prodigy-define-tag prodigy-define-service)
   :init
