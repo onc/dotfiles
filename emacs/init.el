@@ -712,6 +712,18 @@
     "l" 'dired-find-file))
 
 
+(use-package dash-at-point
+  :ensure t
+  :commands dash-at-point
+  :hook ((c++-mode . (lambda () (setq dash-at-point-docset "cpp")))
+         (ruby-mode . (lambda () (setq dash-at-point-docset "ruby")))
+         (cmake-mode . (lambda () (setq dash-at-point-docset "cmake")))
+         (python-mode . (lambda () (setq dash-at-point-docset "python3")))
+         (ess-mode . (lambda () (setq dash-at-point-docset "r")))
+         (rust-mode . (lambda () (setq dash-at-point-docset "rust"))))
+  :bind ("C-SPC" . dash-at-point))
+
+
 (use-package doc-view
   :commands doc-view-fit-page-to-window
   :bind (:map doc-view-mode-map
