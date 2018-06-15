@@ -1,4 +1,4 @@
-alias docker-com-clean="docker-compose stop && docker-compose rm"
+alias docker-com-clean="docker-compose stop && docker-compose rm && docker images -q | xargs docker rmi"
 alias docker-list="printf 'DOCKER: \n' && docker ps -a && printf '\nDOCKER-COMPOSE: \n' && docker-compose ps"
 alias dcps="docker-compose ps"
 alias dcg="docker-compose start"
