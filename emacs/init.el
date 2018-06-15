@@ -962,7 +962,7 @@
 (use-package company-restclient
   :ensure t
   :after (restclient company)
-  :config (add-to-list 'company-backends 'company-restclient))
+  :config (add-to-list 'company-backends (company-mode/backend-with-yas 'company-restclient)))
 
 
 ;; Dict.cc in Emacs
@@ -1141,7 +1141,7 @@
 (use-package company-racer
   :after (company racer)
   :ensure t
-  :config (add-to-list 'company-backends 'company-racer))
+  :config (add-to-list 'company-backends (company-mode/backend-with-yas 'company-racer)))
 
 
 ;; Python
@@ -1207,7 +1207,7 @@
 
 (use-package company-inf-ruby
   :after (inf-ruby company)
-  :config (add-to-list 'company-backends 'company-inf-ruby))
+  :config (add-to-list 'company-backends (company-mode/backend-with-yas 'company-inf-ruby)))
 
 
 ;; Elisp
@@ -1242,7 +1242,7 @@
   :config
   (use-package company-tern
     :ensure t
-    :config (add-to-list 'company-backends 'company-tern)))
+    :config (add-to-list 'company-backends (company-mode/backend-with-yas 'company-tern))))
 
 (use-package tide
   :commands tide-setup
@@ -1428,7 +1428,7 @@
 (use-package company-cmake
   :ensure t
   :after (cc-mode company)
-  :config (add-to-list 'company-backends 'company-cmake))
+  :config (add-to-list 'company-backends (company-mode/backend-with-yas 'company-cmake)))
 
 (use-package modern-cpp-font-lock
   :after cc-mode
