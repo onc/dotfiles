@@ -1,5 +1,4 @@
 # navigation
-alias ls=' ls'
 alias cd=' cd'
 alias ..=' cd ..'
 alias ...=' cd ../../'
