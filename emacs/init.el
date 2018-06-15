@@ -1596,6 +1596,10 @@ pdfborder=0 0 0                       % no boxes on links
               (add-hook 'after-save-hook 'org-tables-to-markdown  nil 'make-it-local))))
 
 
+(use-package rst-mode
+  :mode "\\.rst\\'")
+
+
 ;; Web-Mode for html, php and the like
 (use-package web-mode
   :mode (("\\.html?\\'" . web-mode)
