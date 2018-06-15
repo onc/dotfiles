@@ -810,6 +810,11 @@
   :custom (projectile-completion-system 'helm))
 
 
+(use-package helm-spotify-plus
+  :ensure t
+  :after (helm multi))
+
+
 ;; Projects in emacs
 (use-package projectile
   :commands projectile-mode
