@@ -9,17 +9,20 @@ else
     export EDITOR='vim'
 fi
 
-
 # Export paths
 export PATH="${HOME}/Applications:${PATH}"
+
 # Java
 export JAVA_HOME=$(/usr/libexec/java_home)
+
 # Ruby
 export GEM_HOME=$(ruby -e 'print Gem.user_dir')
 export PATH="`ruby -e 'print Gem.user_dir'`/bin:${PATH}"
+
 # Nodejs
 export NPM_PACKAGES="${HOME}/.npm"
 export PATH="${NPM_PACKAGES}/bin:${PATH}"
+
 # rust/cargo
 export PATH="${HOME}/.cargo/bin:${PATH}"
 export RUST_SRC_PATH="${HOME}/.multirust/toolchains/stable-x86_64-apple-darwin/lib/rustlib/src/rust/src"
