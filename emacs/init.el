@@ -1341,7 +1341,7 @@ pdfborder=0 0 0                       % no boxes on links
 
 (use-package tern
   :commands tern-mode
-  :ensure-system-package tern
+  :ensure-system-package (tern . "npm i -g tern")
   :init
   (add-hook 'js-mode-hook (lambda () (tern-mode t)))
   (add-hook 'js2-mode-hook (lambda () (tern-mode t)))
