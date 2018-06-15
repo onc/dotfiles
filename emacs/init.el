@@ -647,15 +647,12 @@
   :init (global-company-mode t)
   :config
   ;; remove unused backends
-  (delete 'company-semantic 'company-backends)
-  (delete 'company-eclim 'company-backends)
-  (delete 'company-xcode 'company-backends)
-  (delete 'company-clang 'company-backends)
-  (delete 'company-cmake 'company-backends)
-  (delete 'company-bbdb 'company-backends)
-  (delete 'company-oddmuse 'company-backends)
-  ;; ('company-backends (mapcar #'company-mode/backend-with-yas 'company-backends))
-  )
+  (delete 'company-semantic company-backends)
+  (delete 'company-eclim company-backends)
+  (delete 'company-xcode company-backends)
+  (delete 'company-clang company-backends)
+  (delete 'company-bbdb company-backends)
+  (delete 'company-oddmuse company-backends))
 
 
 ;; Sort company candidates by statistics
