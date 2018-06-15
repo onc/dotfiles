@@ -424,6 +424,11 @@
   :ensure t)
 
 
+;; Emacs Start Up Profiler
+(use-package esup
+  :commands esup)
+
+
 ;; Show column
 (use-package fill-column-indicator
   :ensure t
