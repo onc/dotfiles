@@ -314,6 +314,10 @@
   :diminish server-buffer-clients)
 
 
+(use-package one-themes
+  :ensure t)
+
+
 ;; Save buffers
 (use-package desktop
   :commands desktop-save-mode
