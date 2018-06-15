@@ -1287,6 +1287,14 @@ pdfborder=0 0 0                       % no boxes on links
                            (company-mode/backend-with-yas 'elpy-company-backend)))))
 
 
+(use-package flycheck-pycheckers
+  :ensure t
+  :config
+  (setq flycheck-pycheckers-checkers '(pyflakes flake8 pep8))
+  (with-eval-after-load 'flycheck
+            (add-hook 'flycheck-mode-hook #'flycheck-pycheckers-setup)))
+
+
 ;; Ruby
 (use-package ruby-mode
   :mode "\\.rb\\'"
