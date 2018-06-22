@@ -11,7 +11,7 @@ Take a look at my [base16-onc-scheme](https://github.com/onc/base16-onc-scheme) 
 
 I'm using [zsh](http://www.zsh.org/) with [on-my-zsh](https://github.com/robbyrussell/oh-my-zsh).
 
-![shell](https://github.com/onc/dotfiles/blob/master/screenshots/zsh.png)
+![shell](https://git.onze.io/onze/dotfiles/raw/branch/master/screenshots/zsh.png)
 
 My zsh-config can be found in `zshrc`.
 Besides `zshrc`, the `oncsh`-directory contains additional configuration, which are included in my `zshrc`.
@@ -27,7 +27,7 @@ I really like fzf and use it a lot for searching my history and jumping to frequ
 Before switching to Emacs i was using Vim for almost everything. My config works in terminal as well as `gvim`.
 I use [vim-plug](https://github.com/junegunn/vim-plug) for plugin-management.
 
-![vim_git-log](https://github.com/onc/dotfiles/blob/master/screenshots/vim_git-log.png)
+![vim_git-log](https://git.onze.io/onze/dotfiles/raw/branch/master/screenshots/vim_git-log.png)
 
 This is the `gitconfig` alias for the short log shown on the right:
 
@@ -41,7 +41,7 @@ This is the `gitconfig` alias for the short log shown on the right:
 Emacs is used now for almost all my typing related stuff.
 The configuration can be found in `emacs/init.el`.
 
-![emacs](https://github.com/onc/dotfiles/blob/master/screenshots/emacs.png)
+![emacs](https://git.onze.io/onze/dotfiles/raw/branch/master/screenshots/emacs.png)
 
 ### YouCompleteMe
 
