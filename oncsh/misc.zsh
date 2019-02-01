@@ -8,7 +8,11 @@ alias -- -=' cd -'
 alias ~=' cd ~'
 
 if ! [ -x "$(command -v colorls)" ]; then
-    alias ls=' ls'
+    if [[ `uname` == 'Darwin' ]]; then
+        alias ls=' gls --color  --group-directories-first'
+    else
+        alias ls=' ls'
+    fi
 else
     alias ls=' colorls'
 fi
