@@ -124,12 +124,6 @@ function use_clang() {
     export CXX="clang++"
 }
 
-# copy files from uni
-function cp_uni() {
-    scp co5@login.informatik.uni-ulm.de:/home/co5/.win7_profile/$1 $2
-}
-
-
 function gi() { 
     curl -L -s https://www.gitignore.io/api/$@
 }
