@@ -1,5 +1,9 @@
 # AVIT ZSH Theme
 
+eval _green='$FG[002]'
+eval _red='$FG[001]'
+eval _yellow='$FG[003]'
+
 PROMPT='
 $(_current_time) $(_user_host)${_current_dir} $(git_prompt_info) $(_ruby_version) $(virtualenv_prompt_info)
 $(_running_jobs) ~> '
@@ -8,12 +12,12 @@ PROMPT2='%{$fg[grey]%}◀%{$reset_color%} '
 
 RPROMPT='$(_vi_status)%{$(echotc UP 1)%}$(_git_time_since_commit) $(git_prompt_status) ${_return_status}%{$(echotc DO 1)%}'
 
-local _current_dir="%{$fg[blue]%}%3~%{$reset_color%} "
-local _return_status="%{$fg[red]%}%(?..⍉)%{$reset_color%}"
+local _current_dir="%{$_green%}%3~%{$reset_color%} "
+local _return_status="%{$_red%}%(?..⍉)%{$reset_color%}"
 local _hist_no="%{$fg[grey]%}%h%{$reset_color%}"
 
 function _current_time() {
-    echo "%{$fg[green]%}[%{$reset_color%}%T%{$fg[green]%}]%{$reset_color%}"
+    echo "%{$_green%}[%{$reset_color%}%T%{$_green%}]%{$reset_color%}"
 }
 
 function _user_host() {
@@ -23,14 +27,14 @@ function _user_host() {
     me="%n"
   fi
   if [[ -n $me ]]; then
-    echo "%{$fg[green]%}$me%{$reset_color%}:"
+    echo "%{$_green%}$me%{$reset_color%}:"
   fi
 }
 
 function _running_jobs() {
     jo=$(jobs -l | wc -l)
     if [[ $jo -gt 0 ]]; then
-        echo "%{$fg[red]%}$(jobs -l | wc -l)%{$reset_color%}"
+        echo "%{$_red%}$(jobs -l | wc -l)%{$reset_color%}"
     fi
 }
 
@@ -86,25 +90,25 @@ else
   CARETCOLOR="white"
 fi
 
-MODE_INDICATOR="%{$fg_bold[yellow]%}❮%{$reset_color%}%{$fg[yellow]%}❮❮%{$reset_color%}"
+MODE_INDICATOR="%{$fg_bold[yellow]%}❮%{$reset_color%}%{$_yellow%}❮❮%{$reset_color%}"
 
-ZSH_THEME_GIT_PROMPT_PREFIX="%{$fg[green]%}"
+ZSH_THEME_GIT_PROMPT_PREFIX="%{$_yellow%}"
 ZSH_THEME_GIT_PROMPT_SUFFIX="%{$reset_color%}"
 
-ZSH_THEME_GIT_PROMPT_DIRTY=" %{$fg[red]%}✗%{$reset_color%}"
-ZSH_THEME_GIT_PROMPT_CLEAN=" %{$fg[green]%}✔%{$reset_color%}"
-ZSH_THEME_GIT_PROMPT_ADDED="%{$fg[green]%}✚ "
-ZSH_THEME_GIT_PROMPT_MODIFIED="%{$fg[yellow]%}⚑ "
-ZSH_THEME_GIT_PROMPT_DELETED="%{$fg[red]%}✖ "
+ZSH_THEME_GIT_PROMPT_DIRTY=" %{$_red%}✗%{$reset_color%}"
+ZSH_THEME_GIT_PROMPT_CLEAN=" %{$_green%}✔%{$reset_color%}"
+ZSH_THEME_GIT_PROMPT_ADDED="%{$_green%}✚ "
+ZSH_THEME_GIT_PROMPT_MODIFIED="%{$_yellow%}⚑ "
+ZSH_THEME_GIT_PROMPT_DELETED="%{$_red%}✖ "
 ZSH_THEME_GIT_PROMPT_RENAMED="%{$fg[blue]%}▴ "
 ZSH_THEME_GIT_PROMPT_UNMERGED="%{$fg[cyan]%}§ "
-ZSH_THEME_GIT_PROMPT_UNTRACKED="%{$fg[yellow]%}◒ "
+ZSH_THEME_GIT_PROMPT_UNTRACKED="%{$_yellow%}◒ "
 
 # Colors vary depending on time lapsed.
-ZSH_THEME_GIT_TIME_SINCE_COMMIT_SHORT="%{$fg[green]%}"
-ZSH_THEME_GIT_TIME_SHORT_COMMIT_MEDIUM="%{$fg[yellow]%}"
-ZSH_THEME_GIT_TIME_SINCE_COMMIT_LONG="%{$fg[red]%}"
-ZSH_THEME_GIT_TIME_SINCE_COMMIT_NEUTRAL="%{$fg[yellow]%}"
+ZSH_THEME_GIT_TIME_SINCE_COMMIT_SHORT="%{$_green%}"
+ZSH_THEME_GIT_TIME_SHORT_COMMIT_MEDIUM="%{$_yellow%}"
+ZSH_THEME_GIT_TIME_SINCE_COMMIT_LONG="%{$_red%}"
+ZSH_THEME_GIT_TIME_SINCE_COMMIT_NEUTRAL="%{$_yellow%}"
 
 # LS colors, made with http://geoff.greer.fm/lscolors/
 export LSCOLORS="exfxcxdxbxegedabagacad"
