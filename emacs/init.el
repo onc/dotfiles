@@ -1326,10 +1326,10 @@
   :ensure t
   :mode "\\.vue\\'"
   :init
+  (add-hook 'mml-mode-hook 'turn-off-flyspell t)
   (add-hook 'mmm-mode-hook
           (lambda ()
-            (set-face-background 'mmm-default-submode-face "#212121")
-            ('turn-off-flyspell))))
+            (set-face-background 'mmm-default-submode-face "#212121"))))
 
 
 ;; Applescript
