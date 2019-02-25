@@ -1309,19 +1309,16 @@
     :config (add-to-list 'company-backends (company-mode/backend-with-yas 'company-tern))))
 
 (use-package tide
-  :commands tide-setup
+  :ensure t)
+
+(use-package typescript-mode
+  :ensure t
   :mode (("\\.ts\\'" . typescript-mode)
          ("\\.tsx\\'" . typescript-mode))
   :init
-  (progn
-    (defun setup-tide-mode ()
-      (interactive)
-      (tide-setup)
-      (flycheck-mode +1)
-      (setq flycheck-check-syntax-automatically '(save mode-enabled))
-      (company-mode +1))
-    (add-hook 'typescript-mode-hook #'setup-tide-mode)
-    (validate-setq company-tooltip-align-annotations t))
+  (add-hook 'typescript-mode-hook (lambda ()
+                                    (tide-setup)
+                                    (tide-mode t)))
   :custom (typescript-indent-level 2))
 
 
