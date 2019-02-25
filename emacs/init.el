@@ -1213,11 +1213,11 @@
   :interpreter ("python3" . python-mode)
   :bind(:map
         python-mode-map
-        ("C-c r" . onc/run-current-file)))
+        ("C-c r" . 'onc/run-current-file)))
+
 
 (use-package elpy
-  :after python-mode
-  :commands elpy-enable
+  :ensure t
   :custom
   (elpy-rpc-python-command "python3")
   (elpy-rpc-backend "jedi")
@@ -1225,7 +1225,8 @@
   :config
   (elpy-enable)
 
-  (delete 'elpy-module-company elpy-modules)
+  (setq elpy-modules (delq 'elpy-module-highlight-indentation elpy-modules))
+  (setq elpy-modules (delq 'elpy-module-company elpy-modules))
 
   (add-hook 'python-mode-hook
             (lambda ()
@@ -1237,9 +1238,9 @@
 (use-package flycheck-pycheckers
   :ensure t
   :config
-  (setq flycheck-pycheckers-checkers '(pyflakes flake8 pep8))
+  (setq flycheck-pycheckers-checkers '(pep8 flake8 pylint))
   (with-eval-after-load 'flycheck
-            (add-hook 'flycheck-mode-hook #'flycheck-pycheckers-setup)))
+    (add-hook 'flycheck-mode-hook #'flycheck-pycheckers-setup)))
 
 
 ;; Ruby
