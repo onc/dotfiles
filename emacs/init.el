@@ -350,7 +350,7 @@
 
 ;; Simple
 (use-package simple
-  :defer t
+  :commands (async-shell-command column-number-mode set-variable delete-trailing-whitespace shell-command)
   :custom (column-number-mode t))
 
 
