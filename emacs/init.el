@@ -285,7 +285,7 @@
 
 ;; List library
 (use-package dash
-  :defer t)
+  :commands -take)
 
 
 ;; String library
