@@ -47,6 +47,11 @@
 ;; https://bling.github.io/blog/2016/01/18/why-are-you-changing-gc-cons-threshold/
 ;; this also makes init.el load faster
 (setq gc-cons-threshold most-positive-fixnum)
+(setq gc-cons-percentage 0.6)
+
+;; (add-hook 'emacs-startup-hook
+;;           (setq gc-cons-threshold 800000)
+;;           (setq gc-cons-percentage 0.1))
 
 (defun my-minibuffer-setup-hook ()
   "Crank up the Garbage Collection threshold."
