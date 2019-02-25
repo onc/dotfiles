@@ -294,7 +294,6 @@
 
 
 (use-package font-lock+
-  :ensure t
   :load-path "git-packages/font-lock+")
 
 
