@@ -565,6 +565,9 @@
     'c++-mode "f" 'clang-format-buffer)
 
   (evil-leader/set-key-for-mode
+    'python-mode "f" 'elpy-format-code)
+
+  (evil-leader/set-key-for-mode
     'rust-mode "f" 'cargo-process-fmt))
 
 (use-package evil-search-highlight-persist
