@@ -894,7 +894,7 @@
 
 ;; Better emacs package menu
 (use-package paradox
-  :commands (paradox-list-packages)
+  :commands (paradox-list-packages paradox-upgrade-packages)
   :custom
   (paradox-automatically-star nil)
   (paradox-display-star-count nil)
