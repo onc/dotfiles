@@ -307,8 +307,13 @@
   :ensure t)
 
 
+(use-package multi
+  :ensure t)
+
+
 ;;; General packages
 ;;; ----------------
+
 
 ;; Emacs in server-mode
 (use-package server
