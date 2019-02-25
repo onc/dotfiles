@@ -1261,6 +1261,17 @@
   :custom (typescript-indent-level 2))
 
 
+;; Vue mode
+(use-package vue-mode
+  :ensure t
+  :mode "\\.vue\\'"
+  :init
+  (add-hook 'mmm-mode-hook
+          (lambda ()
+            (set-face-background 'mmm-default-submode-face "#212121")
+            ('turn-off-flyspell))))
+
+
 ;; Applescript
 (use-package apples-mode
   :mode (("\\.scpt\\'" . apples-mode)
