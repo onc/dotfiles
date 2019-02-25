@@ -336,16 +336,11 @@
   (desktop-load-locked-desktop t))
 
 
-(use-package prog-mode
-  :preface
-  (defun onc/add-todo-marker ()
-    (interactive)
-    (font-lock-add-keywords
-     nil
-     '(("\\<\\(FIXME\\|TODO\\|BUG\\|DONE\\)" 1 font-lock-warning-face t))))
-  :init
-  ;; Highlight some keywords in prog-mode
-  (add-hook 'prog-mode-hook #'onc/add-todo-marker))
+;; highlight FIXME, TODO and the like
+(use-package fic-mode
+  :diminish fic-mode
+  :commands turn-on-fic-mode
+  :config (add-hook 'prog-mode-hook 'turn-on-fic-mode))
 
 
 ;; Simple
