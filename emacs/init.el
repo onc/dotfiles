@@ -604,10 +604,11 @@
 
 ;; On-the-fly syntax checking
 (use-package flycheck
-  :commands (global-flycheck-mode flycheck-mode)
+  :ensure t
   :diminish flycheck-mode
   :init (global-flycheck-mode t)
-  :config (setq-default flycheck-disabled-checkers '(javascript-jshint)))
+  :config
+  (setq flycheck-check-syntax-automatically '(save mode-enabled)))
 
 
 ;; Show argument list in echo area
