@@ -985,6 +985,57 @@
   (dictcc-destination-lang "en"))
 
 
+;; LaTeX support
+(use-package auctex
+  :mode ("\\.tex\\'" . latex-mode)
+  :commands (latex-mode LaTeX-mode plain-tex-mode TeX-command-run-all)
+  :bind (("C-c c" . TeX-command-run-all))
+  :init
+  (progn
+    (setq TeX-auto-save t
+          TeX-parse-self t
+          TeX-PDF-mode t)
+    (setq-default TeX-master nil)
+
+    (setq TeX-view-program-list
+          '(("Preview.app" "open -a Preview.app %o")
+            ("Skim" "open -a Skim.app %o")
+            ("displayline" "displayline -g -b %n %o %b")
+            ("open" "open %o"))
+          TeX-view-program-selection
+          '((output-dvi "open")
+            (output-pdf "Skim")
+            (output-html "open")))
+
+    (add-hook 'LaTeX-mode-hook 'LaTeX-math-mode)))
+
+(use-package auctex-latexmk
+  :after auctex
+  :ensure t
+  :config
+  (progn
+    (auctex-latexmk-setup)
+    (yas-minor-mode -1)))
+
+(use-package cdlatex
+  :ensure t
+  :init
+  (progn
+    (add-hook 'LaTeX-mode-hook 'turn-on-cdlatex)
+    (add-hook 'latex-mode-hook 'turn-on-cdlatex)))
+
+(use-package company-auctex
+  :ensure t
+  :after (company auctex)
+  :config (company-auctex-init))
+
+(use-package reftex
+  :init
+  (progn
+    (add-hook 'LaTeX-mode-hook 'turn-on-reftex)
+    (setq reftex-plug-into-AUCTeX t)))
+
+
 ;; Org-Mode
 (use-package org
   :commands org-babel-do-load-languages
