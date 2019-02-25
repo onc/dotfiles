@@ -690,11 +690,14 @@
 (use-package yasnippet
   :commands yas-global-mode
   :diminish yas-minor-mode
+  :preface
+  (defvar onc/yas-disabled-modes '(tern-mode))
+
+  (defun onc/yas-disabled-modes-p (mode)
+    (memq mode onc/yas-disabled-modes))
   :init (yas-global-mode t)
   :config
-  ;; preserve tab-completion in ansi-term
-  (add-hook 'term-mode-hook (lambda()
-                              (setq yas-dont-activate t))))
+  (add-hook 'yas-dont-activate-functions (lambda () (onc/yas-disabled-modes-p major-mode))))
 
 ;; Terminal in emacs
 (use-package multi-term
