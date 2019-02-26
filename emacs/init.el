@@ -361,6 +361,7 @@
 
 
 (use-package compile
+  :commands compile
   :custom (compilation-scroll-output t))
 
 
