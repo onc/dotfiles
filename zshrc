@@ -92,6 +92,10 @@ if [ `uname` != 'Darwin' ]; then
     esac
 fi
 
+if which rbenv > /dev/null; then 
+    eval "$(rbenv init -)"; 
+fi
+
 source ~/.oncsh/misc.zsh
 source ~/.oncsh/fzf.zsh
 source ~/.oncsh/monitor.zsh
