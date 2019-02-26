@@ -892,6 +892,11 @@
   (add-hook 'magit-mode-hook #'turn-on-magit-gitflow))
 
 
+(use-package evil-magit
+  :ensure t
+  :after (magit evil))
+
+
 ;; Moodle-destroyer plugin
 (use-package moodle-destroyer
   :load-path "/Users/onze/Repos/moodle-destroyer.el/lisp"
