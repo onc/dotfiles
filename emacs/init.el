@@ -1058,10 +1058,6 @@
   (org-latex-packages-alist (quote (("" "color" t) ("" "minted" t) ("" "parskip" t))))
 
   :config
-  ;; "remove 'inputenc' from default packages as it clashes with xelatex"
-  (validate-setq org-latex-default-packages-alist
-                 (remove '("AUTO" "inputenc" t) org-latex-default-packages-alist))
-
   (org-babel-do-load-languages
    'org-babel-load-languages
    '((sh . t)
