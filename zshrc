@@ -114,3 +114,15 @@ alias 😭='sudo $(fc -ln -1)'
 function ch-arch() {
     docker run --rm -it -v $PWD:/app march
 }
+
+# attempt to fix history search with arrow keys
+autoload -U up-line-or-beginning-search
+autoload -U down-line-or-beginning-search
+zle -N up-line-or-beginning-search
+zle -N down-line-or-beginning-search
+# bindkey "^[[A" up-line-or-beginning-search # Up
+# bindkey "^[[B" down-line-or-beginning-search # Down
+
+# alternative (vim-like) binding for history search
+bindkey '^k' up-line-or-beginning-search # Up
+bindkey '^j' down-line-or-beginning-search # Down
