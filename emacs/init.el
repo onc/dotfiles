@@ -1217,6 +1217,11 @@
         ("C-c r" . 'onc/run-current-file)))
 
 
+(use-package auto-virtualenvwrapper
+  :ensure t
+  :init (add-hook 'python-mode-hook #'auto-virtualenvwrapper-activate))
+
+
 (use-package elpy
   :ensure t
   :custom
