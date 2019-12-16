@@ -1282,6 +1282,10 @@
 
 
 ;; Javascript
+(use-package js
+  :config
+  (setq js-switch-indent-offset 2))
+
 (use-package js2-mode
   :mode "\\.js\\'"
   :config
