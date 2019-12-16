@@ -716,6 +716,13 @@
   (deft-auto-save-interval 3.0))
 
 
+(use-package highlight-thing
+  :ensure t
+  :config
+  (global-highlight-thing-mode)
+  (setq highlight-thing-exclude-thing-under-point t))
+
+
 (use-package dired
   :config
   (evil-make-overriding-map dired-mode-map 'normal t)
