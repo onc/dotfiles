@@ -115,6 +115,8 @@ function ch-arch() {
     docker run --rm -it -v $PWD:/app march
 }
 
+export HOMEBREW_NO_ANALYTICS=1
+
 # attempt to fix history search with arrow keys
 autoload -U up-line-or-beginning-search
 autoload -U down-line-or-beginning-search
