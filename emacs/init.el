@@ -1493,6 +1493,7 @@
     (call-process (my-executable-path))))
 
 (use-package clang-format
+  :ensure t
   :after cc-mode
   :ensure-system-package clang-format
   :commands (clang-format-buffer)
