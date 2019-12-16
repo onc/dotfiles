@@ -1329,10 +1329,12 @@
 
 ;; Vue mode
 (use-package vue-mode
-  :ensure t
   :mode "\\.vue\\'"
   :init
-  (add-hook 'mml-mode-hook 'turn-off-flyspell t)
+  (setq mmm-js-mode-enter-hook (lambda () (setq syntax-ppss-table nil)))
+  (setq mmm-typescript-mode-enter-hook (lambda () (setq syntax-ppss-table nil)))
+
+  (add-hook 'mmm-mode-hook 'turn-off-flyspell t)
   (add-hook 'mmm-mode-hook
           (lambda ()
             (set-face-background 'mmm-default-submode-face "#212121"))))
