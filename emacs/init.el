@@ -402,13 +402,6 @@
   :init (electric-pair-mode t))
 
 
-(use-package origami
-  :ensure t
-  :after (dash s)
-  :commands global-origami-mode
-  :init (global-origami-mode t))
-
-
 ;; Load shell env
 (use-package exec-path-from-shell
   :if (and (eq system-type 'darwin) (display-graphic-p))
@@ -435,18 +428,18 @@
 
 
 ;; Show column
-(use-package fill-column-indicator
-  :ensure t
-  :init
-  (add-hook 'c-mode-common-hook #'turn-on-fci-mode)
-  (add-hook 'js2-mode-hook #'turn-on-fci-mode)
-  (add-hook 'swift-mode-hook #'turn-on-fci-mode)
-  (add-hook 'python-mode-hook #'turn-on-fci-mode)
-  (add-hook 'typescript-mode-hook #'turn-on-fci-mode)
-  :custom
-  (fill-column 80)
-  (fci-rule-width 1)
-  (fci-rule-color "gray71"))
+;; (use-package fill-column-indicator
+;;   :ensure t
+;;   :init
+;;   (add-hook 'c-mode-common-hook 'turn-on-fci-mode)
+;;   (add-hook 'js2-mode-hook 'turn-on-fci-mode)
+;;   (add-hook 'swift-mode-hook 'turn-on-fci-mode)
+;;   (add-hook 'python-mode-hook 'turn-on-fci-mode)
+;;   (add-hook 'typescript-mode-hook 'turn-on-fci-mode)
+;;   :custom
+;;   (fill-column 80)
+;;   (fci-rule-width 1)
+;;   (fci-rule-color "gray71"))
 
 
 ;; Emacs + vim = <3
@@ -905,16 +898,16 @@
 
 
 ;; Moodle-destroyer plugin
-(use-package moodle-destroyer
-  :load-path "/Users/onze/Repos/moodle-destroyer.el/lisp"
-  :bind(:map
-        moodle-destroyer-mode-map
-        ("C-c C-c" . moodle-destroyer-org-to-json))
-  :commands (moodle-destroyer-json-to-org
-             moodle-destroyer-org-to-json)
-  :custom
-  (moodle-destroyer-gradingfile-org-name "grading.org" "Set custom name for org-mode gradingfile")
-  (moodle-destroyer-gradingfile-json-name "grading.ex.json" "Set custom name for exported json file"))
+;; (use-package moodle-destroyer
+;;   :load-path "/Users/onze/Repos/moodle-destroyer.el/lisp"
+;;   :bind(:map
+;;         moodle-destroyer-mode-map
+;;         ("C-c C-c" . moodle-destroyer-org-to-json))
+;;   :commands (moodle-destroyer-json-to-org
+;;              moodle-destroyer-org-to-json)
+;;   :custom
+;;   (moodle-destroyer-gradingfile-org-name "grading.org" "Set custom name for org-mode gradingfile")
+;;   (moodle-destroyer-gradingfile-json-name "grading.ex.json" "Set custom name for exported json file"))
 
 
 ;; Better emacs package menu
@@ -1580,8 +1573,8 @@
               (add-hook 'after-save-hook 'org-tables-to-markdown  nil 'make-it-local))))
 
 
-(use-package rst-mode
-  :mode "\\.rst\\'")
+;; (use-package rst-mode
+;;   :mode "\\.rst\\'")
 
 
 ;; Web-Mode for html, php and the like
