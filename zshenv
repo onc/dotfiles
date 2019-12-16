@@ -11,6 +11,7 @@ fi
 
 # Export paths
 export PATH="${HOME}/Applications:${PATH}"
+export PATH="/usr/local/sbin:$PATH"
 
 # Java
 export JAVA_HOME=$(/usr/libexec/java_home)
