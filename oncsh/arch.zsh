@@ -1,17 +1,15 @@
-alias yi="yaourt"
+alias yi="yay"
 # remove ALL orphaned packages
-alias yro="yaourt -Qdt"
-# clean package
-alias yc="yaourt -Scc"
+alias yro="yay -Qdt"
 # update all packages
-alias yu="yaourt -Syua"
+alias yu="yay -Syua"
 # update pacman
 alias pacu="sudo pacman -Syu"
 
-alias yclean="yaourt -Qdt && yaourt -Scc"
+alias yclean="yay -Qdt && yay -Scc"
 
 # List all files installed by a given package
-alias paclf="yaourt -Ql"
+alias paclf="yay -Ql"
 # Mark one or more installed packages as explicitly installed
 alias pacexpl="pacman -D --asexp"
 # Mark one or more installed packages as non explicitly installed
