@@ -31,7 +31,7 @@
 (defconst onc/font-size 100)
 
 ;; Location of deft notes
-(defconst onc/deft-directory (expand-file-name "~/Documents/Note"))
+(defconst onc/deft-directory (expand-file-name "~/Documents/Notes"))
 
 ;; Clang paths
 (defconst onc/clang-format-command-path "/usr/local/bin/clang-format")
@@ -190,7 +190,7 @@
 
 ;; Validation of setq and stuff
 (use-package validate
-  :ensure t)
+  :commands (validate-value validate-setq))
 
 
 ;;; Files
@@ -235,40 +235,29 @@
 
 (validate-setq scroll-preserve-screen-position 'always)
 
-;; Set programm for urls
-(defun browse-url-default-macosx-browser (url &optional new-window)
-  "Open the given URL with safari.  Optional in a NEW-WINDOW."
-  (interactive (browse-url-interactive-arg "URL: "))
-  (if (and new-window (>= emacs-major-version 23))
-      (ns-do-applescript
-       (format (concat "tell application \"Safari\" to make document with properties {URL:\"%s\"}\n"
-                       "tell application \"Safari\" to activate") url))
-    (start-process (concat "open " url) nil "open" url)))
-
-(if (eq system-type 'darwin)
-    (validate-setq browse-url-browser-function 'browse-url-default-macosx-browser)
-  (validate-setq browse-url-browser-function 'browse-url-chromium))
+;; set browser for opening urls
+(validate-setq browse-url-browser-function 'browse-url-chromium)
 
 ;; Automatically compile and save init.el
-(defun byte-compile-init-files (file)
-  "Automatically compile FILE."
-  (interactive)
-  (save-restriction
-    ;; Suppress the warning when you setq an undefined variable.
-    (if (>= emacs-major-version 23)
-        (setq byte-compile-warnings '(not free-vars obsolete))
-      (setq byte-compile-warnings '(unresolved callargs redefine obsolete noruntime cl-warnings interactive-only)))
-    (byte-compile-file (expand-file-name file))))
+;; (defun byte-compile-init-files (file)
+;;   "Automatically compile FILE."
+;;   (interactive)
+;;   (save-restriction
+;;     ;; Suppress the warning when you setq an undefined variable.
+;;     (if (>= emacs-major-version 23)
+;;         (setq byte-compile-warnings '(not free-vars obsolete))
+;;       (setq byte-compile-warnings '(unresolved callargs redefine obsolete noruntime cl-warnings interactive-only)))
+;;     (byte-compile-file (expand-file-name file))))
 
-(add-hook 'after-save-hook
-          (function (lambda ()
-                      (if (string= (file-truename onc/init-el-path)
-                                   (file-truename (buffer-file-name)))
-                          (byte-compile-init-files onc/init-el-path)))))
+;; (add-hook 'after-save-hook
+;;           (function (lambda ()
+;;                       (if (string= (file-truename onc/init-el-path)
+;;                                    (file-truename (buffer-file-name)))
+;;                           (byte-compile-init-files onc/init-el-path)))))
 
 ;; Byte-compile if init.el, is newer than compiled version of it.
-(if (file-newer-than-file-p onc/init-el-path onc/init-el-compiled-path)
-    (byte-compile-init-files "~/.emacs.d/init.el"))
+;; (if (file-newer-than-file-p onc/init-el-path onc/init-el-compiled-path)
+;;     (byte-compile-init-files onc/init-el-path))
 
 ;;; Packages
 ;;; --------
@@ -445,6 +434,7 @@
 ;; Emacs + vim = <3
 (use-package evil
   :ensure t
+  :commands (evil-yank evil-set-initial-state evil-make-overriding-map evil-delay)
   :bind (:map evil-normal-state-map
               ("Y" . copy-to-end-of-line)
               ("j" . evil-next-visual-line)
@@ -548,7 +538,9 @@
     "cv" 'evilnc-toggle-invert-comment-line-by-line
     "a" 'align-regexp
     "s" 'helm-projectile-ag
-    "pf" 'helm-projectile-find-file)
+    "m" 'helm-spotify-plus
+    "pf" 'helm-projectile-find-file
+    "po" 'helm-projectile-switch-project)
 
   (evil-leader/set-key-for-mode
     'c++-mode "f" 'clang-format-buffer)
@@ -639,6 +631,7 @@
   (company-idle-delay 0)
   (company-minimum-prefix-length 2)
   (company-tooltip-limit 20)
+  (company-tooltip-align-annotations t)
 
   :preface
   ;; enable yasnippet everywhere
@@ -1043,7 +1036,7 @@
 
 ;; Org-Mode
 (use-package org
-  :commands org-babel-do-load-languages
+  :commands (org-babel-do-load-languages orgtbl-mode)
   :mode (("\\.org\\'" . org-mode)
          ("\\.org_archive\\'" . org-mode))
   :bind (("C-c a" . org-agenda)
@@ -1060,7 +1053,7 @@
   :config
   (org-babel-do-load-languages
    'org-babel-load-languages
-   '((sh . t)
+   '((shell . t)
      (python . t)
      (ruby . t)
      (dot . t)
@@ -1255,7 +1248,7 @@
   :interpreter "ruby"
   :bind(:map
         ruby-mode-map
-        ("C-c r" . onc/run-current-file)))
+        ("C-c r" . 'onc/run-current-file)))
 
 (use-package robe
   :commands robe-mode
@@ -1438,9 +1431,16 @@
   ;; -------------------------------------------------
   ;; build a cmakeproject
   ;; -------------------------------------------------
+  (defgroup onc/cc nil
+    "Personal options for cc-mode"
+    :prefix "onc-cc"
+    :tag "onc-cc"
+    :group 'config)
+
   (defcustom dirvars-chase-remote nil
     "Whether dirvars looks upward if in a remote filesystem."
-    :type 'boolean)
+    :type 'boolean
+    :group 'onc/cc)
 
   (defun dirvars-find-upwards (file-name)
     "Find a file in the current directory or one of its parents.

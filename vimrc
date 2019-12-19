@@ -70,7 +70,7 @@ set scrolloff=5
 " folding
 set foldmethod=marker
 " set antialias
-set antialias
+" set antialias
 " use tabs
 set switchbuf=usetab
 " make Vim run moar smooth
@@ -149,6 +149,14 @@ autocmd FileType c setlocal foldmethod=syntax
 " =============================================================================
 " {{{ EXTENDED SETTINGS
 " =============================================================================
+" True color in neovim wasn't added until 0.1.5
+if has('nvim-0.1.5')
+    set termguicolors
+endif
+
+if has('nvim')
+    set guicursor=n-v-c:block-Cursor/lCursor-blinkon0,i-ci:ver25-Cursor/lCursor,r-cr:hor20-Cursor/lCursor
+endif
 
 " ######## COLORSCHEMES #######################################################
 let g:gui_dark_colorscheme = "base16-monokai"
@@ -188,7 +196,9 @@ set undolevels=1000
 set undoreload=10000 
 set undodir=~/.vim/undodir//
 
-set viminfo+=n~/.vim/viminfo
+if !has('nvim')
+  set viminfo+=n~/.vim/viminfo
+endif
 
 " ######## FILETYPE SETTINGS ##################################################
 " dont conceal latex commands like textit
@@ -282,7 +292,7 @@ Plug 'jistr/vim-nerdtree-tabs'
 " ctrlp
 Plug 'kien/ctrlp.vim'
 " Autocomplete
-" Plug 'Valloric/YouCompleteMe'
+Plug 'Valloric/YouCompleteMe'
 " Tern for Vim - JS
 Plug 'marijnh/tern_for_vim', { 'for': 'javascript' }
 " Latex-Plugin
@@ -456,7 +466,7 @@ if has("gui_running")
     set guioptions-=r
     set guioptions-=L
     " font
-    set guifont=Droid\ Sans\ Mono\ for\ Powerline\ 9
+    set guifont=Knack\ Nerd\ Font\ Mono\ Regular:h9
     " set guifont=Monaco\ for\ Powerline\ 9
 
     execute "colorscheme ".g:gui_dark_colorscheme

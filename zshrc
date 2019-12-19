@@ -1,3 +1,20 @@
+# if [[ "$OSTYPE" == "linux-gnu" ]]; then
+#     # ...
+# elif [[ "$OSTYPE" == "darwin"* ]]; then
+#     # Mac OSX
+# elif [[ "$OSTYPE" == "cygwin" ]]; then
+#     # POSIX compatibility layer and Linux environment emulation for Windows
+# elif [[ "$OSTYPE" == "msys" ]]; then
+#     # Lightweight shell and GNU utilities compiled for Windows (part of MinGW)
+# elif [[ "$OSTYPE" == "win32" ]]; then
+#     # I'm not sure this can happen.
+# elif [[ "$OSTYPE" == "freebsd"* ]]; then
+#     # ...
+# else
+#     # Unknown.
+# fi
+
+ #
 # Path to your oh-my-zsh configuration.
 ZSH=$HOME/.oh-my-zsh
 
@@ -114,6 +131,14 @@ alias 😭='sudo $(fc -ln -1)'
 function ch-arch() {
     docker run --rm -it -v $PWD:/app march
 }
+export PATH="/usr/local/opt/qt/bin:$PATH"
+
+function extract-mail() {
+    grep -i -o '[A-Z0-9._%+-]\+@[A-Z0-9.-]\+\.[A-Z]\{2,4\}' $1 | uniq
+}
+
+# added by travis gem
+[ -f /Users/onze/.travis/travis.sh ] && source /Users/onze/.travis/travis.sh
 
 export HOMEBREW_NO_ANALYTICS=1
 
@@ -128,3 +153,42 @@ zle -N down-line-or-beginning-search
 # alternative (vim-like) binding for history search
 bindkey '^k' up-line-or-beginning-search # Up
 bindkey '^j' down-line-or-beginning-search # Down
+
+
+#! /bin/zsh
+# A script to make using 256 colors in zsh less painful.
+# P.C. Shyamshankar <sykora@lucentbeing.com>
+# Copied from https://github.com/sykora/etc/blob/master/zsh/functions/spectrum/
+
+typeset -AHg FX FG BG
+
+FX=(
+    reset     "%{[00m%}"
+    bold      "%{[01m%}" no-bold      "%{[22m%}"
+    italic    "%{[03m%}" no-italic    "%{[23m%}"
+    underline "%{[04m%}" no-underline "%{[24m%}"
+    blink     "%{[05m%}" no-blink     "%{[25m%}"
+    reverse   "%{[07m%}" no-reverse   "%{[27m%}"
+)
+
+for color in {000..255}; do
+    FG[$color]="%{[38;5;${color}m%}"
+    BG[$color]="%{[48;5;${color}m%}"
+done
+
+
+ZSH_SPECTRUM_TEXT=${ZSH_SPECTRUM_TEXT:-Arma virumque cano Troiae qui primus ab oris}
+
+# Show all 256 colors with color number
+function spectrum_ls() {
+  for code in {000..255}; do
+    print -P -- "$code: %{$FG[$code]%}$ZSH_SPECTRUM_TEXT%{$reset_color%}"
+  done
+}
+
+# Show all 256 colors where the background is set to specific color
+function spectrum_bls() {
+  for code in {000..255}; do
+    print -P -- "$code: %{$BG[$code]%}$ZSH_SPECTRUM_TEXT%{$reset_color%}"
+  done
+}
