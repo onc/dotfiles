@@ -13,6 +13,9 @@ fi
 export PATH="${HOME}/Applications:${PATH}"
 export PATH="/usr/local/sbin:$PATH"
 
+# Python
+#export PATH="$(python3 -m site --user-base)/bin:${PATH}"
+
 # Java
 export JAVA_HOME=$(/usr/libexec/java_home)
 
