@@ -328,8 +328,8 @@
 ;; highlight FIXME, TODO and the like
 (use-package fic-mode
   :diminish fic-mode
-  :commands turn-on-fic-mode
-  :config (add-hook 'prog-mode-hook 'turn-on-fic-mode))
+  :commands fic-mode
+  :init (add-hook 'prog-mode-hook #'fic-mode))
 
 
 ;; Simple
@@ -587,7 +587,20 @@
 (use-package flycheck
   :ensure t
   :diminish flycheck-mode
-  :init (global-flycheck-mode t)
+  :init
+  (defun onc/use-eslint-from-node-modules ()
+    (let ((root (locate-dominating-file
+                 (or (buffer-file-name) default-directory)
+                 (lambda (dir)
+                   (let ((eslint (expand-file-name "node_modules/eslint/bin/eslint.js" dir)))
+                     (and eslint (file-executable-p eslint)))))))
+      (when root
+        (let ((eslint (expand-file-name "node_modules/eslint/bin/eslint.js" root)))
+          (setq-local flycheck-javascript-eslint-executable eslint)))))
+
+  (add-hook 'flycheck-mode-hook 'onc/use-eslint-from-node-modules)
+
+  (global-flycheck-mode t)
   :config
   (setq flycheck-check-syntax-automatically '(save mode-enabled)))
 
@@ -902,7 +915,7 @@
   :config
   (set-variable 'ycmd-server-command '("python3" "/Users/onze/Applications/ycmd/ycmd"))
   (set-variable 'ycmd-global-config (expand-file-name "~/Repos/dotfiles/ycmd/ycm_conf.py"))
-  (set-variable 'ycmd-extra-conf-whitelist '("~/Uni/*" "~/Repos/*")))
+  (set-variable 'ycmd-extra-conf-whitelist '("~/Work/*" "~/Repos/*" "~/Students/*")))
 
 (use-package flycheck-ycmd
   :after (ycmd flycheck)
@@ -1108,8 +1121,9 @@
             (setq args (append args '("--run-together" "--run-together-limit=5" "--run-together-min=2"))))))
       args))
   :init
-  (dolist (hook '(text-mode-hook message-mode-hook))
-    (add-hook hook 'turn-on-flyspell))
+  (add-hook 'text-mode-hook #'flyspell-mode)
+  (add-hook 'prog-mode-hook #'flyspell-prog-mode)
+
   :diminish(flyspell-mode . "spell")
   :config
   (cond
@@ -1192,23 +1206,21 @@
         python-mode-map
         ("C-c r" . 'onc/run-current-file)))
 
-
 (use-package auto-virtualenvwrapper
   :ensure t
   :init (add-hook 'python-mode-hook #'auto-virtualenvwrapper-activate))
 
+(use-package company-jedi
+  :ensure t)
 
 (use-package elpy
   :ensure t
-  :custom
-  (elpy-rpc-python-command "python3")
-  (elpy-rpc-backend "jedi")
-  (elpy-use-cpython "/usr/local/bin/python3")
   :config
   (elpy-enable)
+  (setq elpy-rpc-virtualenv-path 'current)
 
-  (setq elpy-modules (delq 'elpy-module-highlight-indentation elpy-modules))
-  (setq elpy-modules (delq 'elpy-module-company elpy-modules))
+  ;; (setq elpy-modules (delq 'elpy-module-highlight-indentation elpy-modules))
+  ;; (setq elpy-modules (delq 'elpy-module-company elpy-modules))
 
   (add-hook 'python-mode-hook
             (lambda ()
@@ -1299,7 +1311,6 @@
   :ensure t)
 
 (use-package typescript-mode
-  :ensure t
   :mode (("\\.ts\\'" . typescript-mode)
          ("\\.tsx\\'" . typescript-mode))
   :init
@@ -1607,6 +1618,25 @@
 
 ;;; Onc Functions
 ;;; -------------
+(defun onc/strip-html()
+  "Remove HTML tags from the current buffer, 
+   (this will affect the whole buffer regardless of the restrictions in effect)."
+  (interactive "*")
+  (save-excursion
+    (save-restriction
+      (widen)
+      (goto-char (point-min))
+      (while (re-search-forward "<[^<]*>" (point-max) t)
+        (replace-match "\\1"))
+      (goto-char (point-min))
+      (replace-string "&copy;" "(c)")
+      (goto-char (point-min))
+      (replace-string "&amp;" "&")
+      (goto-char (point-min))
+      (replace-string "&lt;" "<")
+      (goto-char (point-min))
+      (replace-string "&gt;" ">")
+      (goto-char (point-min)))))
 
 (defun onc/kill-this-buffer-if-not-modified ()
   "Kill current buffer, even if it has been modified."
@@ -1618,9 +1648,9 @@
   "Delete trailing whitespace, indent and untabify whole buffer."
   (interactive)
   (save-excursion
-    (delete-trailing-whitespace)
     (indent-region (point-min) (point-max) nil)
-    (untabify (point-min) (point-max))))
+    (untabify (point-min) (point-max))
+    (delete-trailing-whitespace)))
 
 
 (defun onc/run-current-file ()
