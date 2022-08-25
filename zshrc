@@ -47,6 +47,10 @@ fi
 if [ -f ~/.fzf.zsh ]; then
     source ~/.fzf.zsh
     source ~/.oncsh/fzf.zsh
+elif [ -f /usr/share/fzf/key-bindings.zsh ]; then
+    source /usr/share/fzf/key-bindings.zsh
+    source /usr/share/fzf/completion.zsh
+    source ~/.oncsh/fzf.zsh
 fi
 
 # Do not use /etc/hosts for host completions
