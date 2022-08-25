@@ -28,8 +28,8 @@ REPORTTIME=10
 
 # plugins
 plugins=(git git-flow-avh svn tmux tmuxinator man colored-man-pages 
-         colorize themes z sudo npm cp bgnotify zsh_reload docker 
-         docker-compose brew rbenv virtualenv pip)
+         colorize themes z sudo npm cp bgnotify docker 
+         docker-compose brew rbenv virtualenv pip pyenv)
 
 # Disable repeating command before result of command
 DISABLE_AUTO_TITLE="true"
@@ -113,6 +113,10 @@ if which rbenv > /dev/null; then
     eval "$(rbenv init -)"; 
 fi
 
+if which pyenv > /dev/null; then 
+    eval "$(pyenv init -)"
+fi
+
 source ~/.oncsh/misc.zsh
 source ~/.oncsh/fzf.zsh
 source ~/.oncsh/monitor.zsh
@@ -131,7 +135,6 @@ alias 😭='sudo $(fc -ln -1)'
 function ch-arch() {
     docker run --rm -it -v $PWD:/app march
 }
-export PATH="/usr/local/opt/qt/bin:$PATH"
 
 function extract-mail() {
     grep -i -o '[A-Z0-9._%+-]\+@[A-Z0-9.-]\+\.[A-Z]\{2,4\}' $1 | uniq

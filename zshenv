@@ -14,10 +14,10 @@ export PATH="${HOME}/Applications:${PATH}"
 export PATH="/usr/local/sbin:$PATH"
 
 # Python
-#export PATH="$(python3 -m site --user-base)/bin:${PATH}"
+export PATH="$(python3 -m site --user-base)/bin:${PATH}"
 
 # Java
-export JAVA_HOME=$(/usr/libexec/java_home)
+# export JAVA_HOME=$(/usr/libexec/java_home)
 
 # Ruby
 export GEM_HOME=$(ruby -e 'print Gem.user_dir')
@@ -28,20 +28,14 @@ export NPM_PACKAGES="${HOME}/.npm"
 export PATH="${NPM_PACKAGES}/bin:${PATH}"
 
 # rust/cargo
-export PATH="${HOME}/.cargo/bin:${PATH}"
-export RUST_SRC_PATH="${HOME}/.multirust/toolchains/stable-x86_64-apple-darwin/lib/rustlib/src/rust/src"
+# export PATH="${HOME}/.cargo/bin:${PATH}"
+# export RUST_SRC_PATH="${HOME}/.multirust/toolchains/stable-x86_64-apple-darwin/lib/rustlib/src/rust/src"
 
 # ghc
 export PATH="${HOME}/.cabal/bin:${PATH}"
 
-# moodle
-export PATH="${HOME}/Applications/moodle-destroyer-tools:${PATH}"
-
-# new version of makeinfo
-export PATH="/usr/local/opt/texinfo/bin:${PATH}"
-
 # go
-export GOPATH="${HOME}/Repos/go"
-export GOROOT="/usr/local/opt/go/libexec"
-export PATH=$PATH:$GOPATH/bin
-export PATH=$PATH:$GOROOT/bin
+# export GOPATH="${HOME}/Repos/go"
+# export GOROOT="/usr/local/opt/go/libexec"
+# export PATH=$PATH:$GOPATH/bin
+# export PATH=$PATH:$GOROOT/bin
