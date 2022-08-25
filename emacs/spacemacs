@@ -30,7 +30,8 @@ values."
    dotspacemacs-configuration-layer-path '()
    ;; List of configuration layers to load.
    dotspacemacs-configuration-layers
-   '(octave
+   '(
+     octave
      html
      nginx
      yaml
@@ -62,7 +63,6 @@ values."
                       version-control-diff-side 'left)
      onc-vim
      onc-helm
-     ;; onc-vue
      )
    ;; List of additional packages that will be installed without being
    ;; wrapped in a layer. If you need some configuration for these
@@ -428,7 +428,7 @@ you should place your code here."
  '(helm-reuse-last-window-split-state t t)
  '(helm-split-window-inside-p t t)
  '(package-selected-packages
-   '())
+   '(powerline nginx-mode tagedit slim-mode sass-mode pug-mode helm-css-scss haml-mode emmet-mode company-web web-completion-data org-plus-contrib csv-mode git-gutter-fringe+ git-gutter-fringe fringe-helper git-gutter+ git-gutter diff-hl rvm ruby-tools ruby-test-mode rubocop rspec-mode robe rbenv rake minitest chruby bundler inf-ruby ess-smart-equals ess-R-data-view ctable ess julia-mode rainbow-delimiters highlight-thing yapfify pyvenv pytest pyenv-mode py-isort pip-requirements live-py-mode hy-mode helm-pydoc cython-mode company-anaconda anaconda-mode pythonic f xterm-color shell-pop multi-term eshell-z eshell-prompt-extras esh-help web-beautify livid-mode skewer-mode simple-httpd js2-refactor multiple-cursors js-doc coffee-mode \(base16-onc-dark\ :location\ local\)-theme highlight-symbol unfill mwim yaml-mode web-mode scss-mode dockerfile-mode cmake-mode adoc-mode markup-faces json-mode json-snatcher json-reformat company-tern dash-functional rainbow-mode perspeen vue-mode edit-indirect ssass-mode vue-html-mode tide typescript-mode tern rjsx-mode js2-mode evil-surround evil-search-highlight-persist highlight evil-nerd-commenter evil-leader smeargle orgit org-projectile org-category-capture org-present org-pomodoro alert log4e gntp org-mime org-download mmm-mode markdown-toc s markdown-mode magit-gitflow magit-popup htmlize helm-gitignore request helm-company helm-c-yasnippet gnuplot gitignore-mode gitconfig-mode gitattributes-mode git-timemachine git-messenger git-link gh-md fuzzy flyspell-correct-helm flyspell-correct flycheck-pos-tip pos-tip flycheck evil-magit magit git-commit with-editor transient dash company-statistics company auto-yasnippet yasnippet auto-dictionary ac-ispell auto-complete which-key use-package pcre2el macrostep hydra lv helm-themes helm-swoop helm-projectile projectile pkg-info epl helm-mode-manager helm-make helm-flx flx helm-descbinds helm-ag exec-path-from-shell evil-visualstar evil-escape evil goto-chg undo-tree elisp-slime-nav diminish bind-map bind-key auto-compile packed ace-window ace-jump-helm-line helm avy helm-core popup async))
  '(web-mode-code-indent-offset 2 t)
  '(web-mode-css-indent-offset 2 t)
  '(web-mode-markup-indent-offset 2 t))
