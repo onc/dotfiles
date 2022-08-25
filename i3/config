@@ -23,28 +23,12 @@ set $font pango:Source Code Pro, Font Awesome 7
 # ===========================================================================================
 # terminal
 bindsym $mod+t exec --no-startup-id urxvt
-# bindsym $mod+t exec xfce4-terminal
 # launcher
-# bindsym $mod+space exec --no-startup-id kupfer
-# gvim
-bindsym $mod+v exec --no-startup-id gvim
-# emacs
-bindsym $mod+x exec --no-startup-id emacs
-# dolphin
-# https://wiki.archlinux.org/index.php/Qt#Native_KDE_look_for_Qt_apps_under_environments_other_than_KDE
-bindsym $mod+e exec --no-startup-id XDG_CURRENT_DESKTOP="KDE" dolphin
-# chromium
-bindsym $mod+c exec --no-startup-id chromium
 # close window
 bindsym $mod+q kill
 # lock screen and mute sound
 bindsym $alt+ctrl+l exec amixer -q sset Master mute; exec playerctl stop; exec xscreensaver-command -lock;
 bindsym XF86ScreenSaver exec amixer -q sset Master mute; exec playerctl stop; exec xscreensaver-command -lock;
-#bindsym $alt+ctrl+l exec amixer -q sset Master mute; exec playerctl stop; exec i3lock -i ~/.i3/back.png;
-# bindsym $alt+ctrl+l exec amixer -q sset Master mute; exec --no-startup-id slimlock;
-# bindsym $alt+ctrl+l exec amixer -q sset Master mute; exec --no-startup-id dm-tool lock;
-# open sysguard
-bindsym ctrl+Escape exec --no-startup-id ksysguard
 
 bindsym $mod+space exec rofi -show run
 bindsym $mod+shift+space exec rofi -show i3
@@ -58,18 +42,11 @@ bindsym XF86AudioNext exec playerctl next
 bindsym XF86AudioPrev exec playerctl previous
 bindsym XF86AudioStop exec playerctl stop
 bindsym XF86AudioPlay exec playerctl play-pause
-# Touchpad
-bindsym XF86TouchpadToggle exec /mnt/hdd/dotfiles/touch-toggle.sh;
 # Screenshot
 bindsym Print exec scrot '%Y-%m-%d-%T_$wx$h_scrot.png' -e 'mv $f ~/Pictures/screenshots/'
 
 bindsym $alt+Shift+s sticky enable
 
-# new random wallpaper
-bindsym $alt+ctrl+Shift+w exec --no-startup-id "/mnt/hdd/dotfiles/change-wallpaper.py /mnt/hdd/Pictures/wall"
-
-# reload the configuration file
-bindsym $mod+Shift+c exec "/home/onze/Applications/i3-functions reload"
 # exit i3
 bindsym $mod+Shift+e exec --no-startup-id "i3-nagbar -t warning -m 'You pressed the exit shortcut. Do you really want to exit i3? This will end your X session.' -b 'Yes, exit i3' 'i3-msg exit'"
 # }}}
@@ -197,14 +174,10 @@ bindsym $mod+r mode "resize"
 # ===========================================================================================
 # STARTUP {{{
 # ===========================================================================================
-# exec xcompmgr -c -f -n
-exec --no-startup-id compton --config ~/.i3/compton.conf -b
-exec --no-startup-id feh --bg-fill ~/.i3/back.png
-# exec --no-startup-id conky
+exec --no-startup-id picom --config ~/.config/i3/picom.conf &
+exec --no-startup-id feh --bg-fill ~/Pictures/wallpaper/wallpaper.jpg
 exec --no-startup-id unclutter
-
 exec --no-startup-id /usr/bin/xscreensaver -no-splash &
-
 exec --no-startup-id dex -a
 # }}}
 
@@ -213,12 +186,12 @@ exec --no-startup-id dex -a
 # ===========================================================================================
 # primary monitor
 bar {
-  output LVDS-0
+  output HDMI-0
   position top
-  status_command python ~/.i3/i3status_primary.py
+  status_command python ~/.config/i3/i3status_primary.py
   font $font
   workspace_buttons yes
-  tray_output LVDS-0
+  tray_output HDMI-0
   separator_symbol " "
   colors {
     separator #E0E0E0
@@ -235,11 +208,13 @@ bar {
   output DP-0
   output DP-3
   output VGA-0
+  output DVI-D-0
+  output DP-0.8
   position top
   mode hide
   modifier $mod
   hidden_state hide
-  status_command python ~/.i3/i3status_secondary.py
+  status_command python ~/.config/i3/i3status_secondary.py
   font $font
   workspace_buttons yes
   tray_output primary
@@ -261,6 +236,7 @@ bar {
 # ===========================================================================================
 # floating windows
 for_window [class="(?i)keepassx"] floating enable
+for_window [class="(?i)nautilus"] floating enable
 for_window [class="(?i)dolphin"] floating enable
 for_window [class="(?i)pidgin"] floating enable
 for_window [class="(?i)ksysguard"] floating enable
