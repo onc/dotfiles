@@ -87,7 +87,7 @@ set ttimeoutlen=10
 set colorcolumn=80
 
 " ######## LANG ###############################################################
-set spelllang=de,en
+set spelllang=en
 
 " ######## FILESYSTEM #########################################################
 " fu swapfiles
@@ -131,10 +131,6 @@ autocmd Bufread,BufNewFile *.tex set filetype=tex
 " Vim interprets .md as 'modula2'
 autocmd Bufread,BufNewFile *.md set filetype=markdown 
 autocmd Bufread,BufNewFile *.mail set filetype=mail 
-
-" spell in tex
-autocmd FileType tex setlocal spell
-autocmd BufNewFile,BufRead *.tex setlocal spell
 
 " javascript
 autocmd FileType javascript setlocal shiftwidth=2 tabstop=2 expandtab
@@ -291,8 +287,6 @@ Plug 'scrooloose/nerdcommenter'
 Plug 'jistr/vim-nerdtree-tabs'
 " ctrlp
 Plug 'kien/ctrlp.vim'
-" Autocomplete
-Plug 'Valloric/YouCompleteMe'
 " Tern for Vim - JS
 Plug 'marijnh/tern_for_vim', { 'for': 'javascript' }
 " Latex-Plugin
