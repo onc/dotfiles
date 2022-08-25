@@ -1,16 +1,3 @@
 source "https://rubygems.org"
 
-gem 'asciidoctor'
-gem 'rubocop'
-gem 'rails'
-gem 'thyme'
-gem 'neovim'
-gem 'travis'
 gem 'jekyll'
-gem 'exifr'
-gem 'mini_magick'
-gem 'jekyll-minimagick'
-gem 'teamocil'
-gem 'sequel'
-gem 'pg'
-gem 'sqlite3'
