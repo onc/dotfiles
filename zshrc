@@ -1,20 +1,3 @@
-# if [[ "$OSTYPE" == "linux-gnu" ]]; then
-#     # ...
-# elif [[ "$OSTYPE" == "darwin"* ]]; then
-#     # Mac OSX
-# elif [[ "$OSTYPE" == "cygwin" ]]; then
-#     # POSIX compatibility layer and Linux environment emulation for Windows
-# elif [[ "$OSTYPE" == "msys" ]]; then
-#     # Lightweight shell and GNU utilities compiled for Windows (part of MinGW)
-# elif [[ "$OSTYPE" == "win32" ]]; then
-#     # I'm not sure this can happen.
-# elif [[ "$OSTYPE" == "freebsd"* ]]; then
-#     # ...
-# else
-#     # Unknown.
-# fi
-
- #
 # Path to your oh-my-zsh configuration.
 ZSH=$HOME/.oh-my-zsh
 
@@ -27,8 +10,8 @@ COMPLETION_WAITING_DOTS="false"
 REPORTTIME=10
 
 # plugins
-plugins=(git git-flow-avh svn tmux tmuxinator man colored-man-pages 
-         colorize themes z sudo npm cp bgnotify docker 
+plugins=(git git-flow-avh svn tmux man colored-man-pages
+         colorize sudo npm cp bgnotify docker
          docker-compose brew rbenv virtualenv pip pyenv)
 
 # Disable repeating command before result of command
@@ -51,7 +34,7 @@ export CLICOLOR=1
 export DISABLE_AUTO_TITLE=true
 
 # faster scrolling etc
-if [[ "$OSTYPE" == "linux-gnu" ]]; then 
+if [[ "$OSTYPE" == "linux-gnu" ]]; then
     if hash xset 2>/dev/null; then
         if [[ -z $SSH_CONNECTION ]]; then
             # if xset and no ssh connection
@@ -63,6 +46,7 @@ fi
 # fuzzy-finder
 if [ -f ~/.fzf.zsh ]; then
     source ~/.fzf.zsh
+    source ~/.oncsh/fzf.zsh
 fi
 
 # Do not use /etc/hosts for host completions
@@ -77,60 +61,24 @@ hosts=(
 )
 zstyle ':completion:*:hosts' hosts $hosts
 
-# teamocil autocompletion
-compctl -g '~/.teamocil/*(:t:r)' teamocil
-
 # ignore ls und cd in history
-setopt SHARE_HISTORY        # import new commands from history file and append immediately to it
-setopt NO_CASE_GLOB         # set ignore case for ls etc
-setopt COMPLETE_IN_WORD     # more extensive tab completion
+setopt SHARE_HISTORY # import new commands from history file and append immediately to it
+setopt NO_CASE_GLOB # set ignore case for ls etc
+setopt COMPLETE_IN_WORD # more extensive tab completion
 setopt HIST_IGNORE_ALL_DUPS # ignore duplicates
-setopt HIST_IGNORE_SPACE    # ignore entries which begin with a space
-setopt EXTENDED_GLOB        # activate extended globbing
-setopt LIST_PACKED          # try to make the completion list smaller (occupying  less  lines)
+setopt HIST_IGNORE_SPACE # ignore entries which begin with a space
+setopt EXTENDED_GLOB # activate extended globbing
+setopt LIST_PACKED # try to make the completion list smaller (occupying  less  lines)
 
-if [ `uname` != 'Darwin' ]; then
-    # get systeminformation
-    DISTRO=$(lsb_release -ds | awk '{print $1}' | sed 's/\"//g')
-    
-    if [ "$DISTRO" = "Ubuntu" ]; then
-        . /home/onze/Applications/z/z.sh
-    fi
-    
-    case "$DISTRO" in
-        "Arch")
-            source ~/.oncsh/arch.zsh
-            ;;
-        "Ubuntu")
-            source ~/.oncsh/ubuntu.zsh
-            ;;
-        *)
-            ;;
-    esac
+if which rbenv > /dev/null; then
+    eval "$(rbenv init -)";
 fi
 
-if which rbenv > /dev/null; then 
-    eval "$(rbenv init -)"; 
-fi
-
-if which pyenv > /dev/null; then 
+if which pyenv > /dev/null; then
     eval "$(pyenv init -)"
 fi
 
 source ~/.oncsh/misc.zsh
-source ~/.oncsh/fzf.zsh
-source ~/.oncsh/monitor.zsh
-source ~/.oncsh/touchpad.zsh
-source ~/.oncsh/cpu.zsh
-source ~/.oncsh/h.zsh
-source ~/.oncsh/docker.zsh
-
-alias webshare='python2 -c "import SimpleHTTPServer;SimpleHTTPServer.test()"'
-alias pyserver="python -m SimpleHTTPServer"
-
-alias dd_progress="sudo killall -USR1 dd"
-
-alias 😭='sudo $(fc -ln -1)'
 
 function ch-arch() {
     docker run --rm -it -v $PWD:/app march
@@ -157,12 +105,9 @@ zle -N down-line-or-beginning-search
 bindkey '^k' up-line-or-beginning-search # Up
 bindkey '^j' down-line-or-beginning-search # Down
 
-
-#! /bin/zsh
 # A script to make using 256 colors in zsh less painful.
 # P.C. Shyamshankar <sykora@lucentbeing.com>
 # Copied from https://github.com/sykora/etc/blob/master/zsh/functions/spectrum/
-
 typeset -AHg FX FG BG
 
 FX=(
