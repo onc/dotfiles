@@ -67,10 +67,10 @@ set showmatch
 set wildmenu
 " min 5 zeilen unten und oben platz
 set scrolloff=5
-" folding
-set foldmethod=marker
+" disable folding
+set nofoldenable 
 " set antialias
-" set antialias
+set antialias 
 " use tabs
 set switchbuf=usetab
 " make Vim run moar smooth
