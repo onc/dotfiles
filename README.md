@@ -4,7 +4,7 @@ My dotfiles. I used these on both, macOS and ArchLinux.
 
 ## Colors
 
-I'm using [base16-builder](https://github.com/base16-builder/base16-builder) with a modified version of the google-theme. 
+I'm using [base16-builder](https://github.com/base16-builder/base16-builder) with a modified version of the google-theme.
 Take a look at my [base16-onc-scheme](https://github.com/onc/base16-onc-scheme) repo for the scheme-file.
 
 ## Zsh
