@@ -4,7 +4,7 @@ Xcursor.theme: breeze_cursors
 
 !rofi.key-run: SuperL+space
 !rofi.key-i2: SuperL+shift+space
-rofi.font: Source Code Pro for Powerline, Font Awesome 10 
+rofi.font: Source Code Pro for Powerline, Font Awesome 10
 rofi.fuzzy: true
 
 ! colors
@@ -25,7 +25,7 @@ rofi.color-active: #212121, #FF9100, #212121, #FF9100, #212121
 rofi.color-window: #212121, #FAFAFA
 
 rofi.sidebar-mode: true
-rofi.modi: run,window,workspaces:/home/onze/Applications/i3_switch_workspaces.sh,i3:/home/onze/Applications/i3-functions,vbox:/home/onze/Applications/vbctrl.sh
+rofi.modi: run,window
 
 ! keybindings
 rofi.kb-mode-next: Alt+j
@@ -64,8 +64,6 @@ Xft.rgba:                       rgb
 Xft.dpi:                        96
 
 URxvt*scrollBar:                false
-URxvt*transparent:              true
-URxvt*shading:                  30
 URxvt*saveLines:                0
 URxvt*termName:                 screen-256color
 URxvt.perl-ext-common:          default,matcher,selection-to-clipboard,clipboard,url-select,keyboard-select
