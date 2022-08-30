@@ -7,7 +7,7 @@
 ;;; Code:
 
 (defconst onc-vim-packages
-  '(evil evil-leader evil-search-highlight-persist evil-nerd-commenter evil-surround))
+  '(evil evil-leader evil-search-highlight-persist))
 
 (defun onc/indent-whole-buffer ()
   "Delete trailing whitespace, indent and untabify whole buffer."
@@ -46,14 +46,6 @@
 
 (defun onc-vim/init-evil-search-highlight-persist ()
   (use-package evil-search-highlight-persist
-    :ensure t))
-
-(defun onc-vim/init-evil-nerd-commenter ()
-  (use-package evil-nerd-commenter
-    :ensure t))
-
-(defun onc-vim/init-evil-surround ()
-  (use-package evil-surround
     :ensure t))
 
 (defun onc-vim/post-init-evil ()
