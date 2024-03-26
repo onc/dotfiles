@@ -45,9 +45,9 @@ git-browse() {
 # change branch using fzf
 git-interactive-change-branch() {
     local branches branch
-    branches=$(git branch) &&
+    branches=$(git branch -a) &&
         branch=$(echo "$branches" | fzf-tmux +s +m) &&
-        git checkout $(echo "$branch" | sed "s/.* //")
+        git switch $(echo "$branch" | sed "s/.* //")
 }
 
 # select gitignore.io configs using fzf
