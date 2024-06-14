@@ -52,7 +52,11 @@
         (url-retrieve-synchronously
          "https://raw.githubusercontent.com/radian-software/straight.el/develop/install.el"
          'silent 'inhibit-cookies)
-      (goto-char (point-max))
+      (goto-char (point-max))(defun onc/font-name-replace-size (font-name new-size)
+                               "Changing font size of FONT-NAME and set it to NEW-SIZE."
+                               (let ((parts (split-string font-name "-")))
+                                 (setcar (nthcdr 7 parts) (format "%d" new-size))
+                                 (mapconcat 'identity parts "-")))
       (eval-print-last-sexp)))
   (load bootstrap-file nil 'nomessage))
 
@@ -124,14 +128,14 @@
             (with-current-buffer "*scratch*"
               (goto-char (point-min))
               (insert (concat
-                       ";;\n"
-                       ";;" (onc/colorify "  ___  " "OrangeRed") (onc/colorify "_ __   " "orange")   (onc/colorify "___ " "yellow")   (onc/colorify "_ __ ___  " "green") (onc/colorify " __ _  " "cyan") (onc/colorify "___"   "blue") (onc/colorify " ___  \n"   "DarkMagenta")
-                       ";;" (onc/colorify " / _ \\" "OrangeRed") (onc/colorify "| '_ \\" "orange")   (onc/colorify " / __|" "yellow") (onc/colorify " '_ ` _ \\" "green") (onc/colorify " / _` |" "cyan") (onc/colorify "/ __"  "blue") (onc/colorify "/ __| \n"   "DarkMagenta")
-                       ";;" (onc/colorify "| (_) "  "OrangeRed") (onc/colorify  "| | | | " "orange") (onc/colorify "(__| " "yellow")  (onc/colorify "| | | | |"  "green") (onc/colorify " (_| | " "cyan") (onc/colorify "(__"   "blue") (onc/colorify "\\__ \\ \n" "DarkMagenta")
-                       ";;" (onc/colorify " \\___/" "OrangeRed") (onc/colorify "|_| |_|" "orange")   (onc/colorify "\\___|" "yellow") (onc/colorify "_| |_| |_|" "green") (onc/colorify "\\__,_|" "cyan") (onc/colorify "\\___" "blue") (onc/colorify "|___/ \n"   "DarkMagenta")
-                       ";;\n"
-                       ";; This buffer is for text that is not saved, and for Lisp evaluation.\n"
-                       ";; To create a file, visit it with \ o and enter text in its buffer.\n"
+                       "\n"
+                       "               " (onc/colorify "  ___  " "OrangeRed") (onc/colorify "_ __   " "orange")   (onc/colorify "___ " "yellow")   (onc/colorify "_ __ ___  " "green") (onc/colorify " __ _  " "cyan") (onc/colorify "___"   "blue") (onc/colorify " ___  \n"   "DarkMagenta")
+                       "               " (onc/colorify " / _ \\" "OrangeRed") (onc/colorify "| '_ \\" "orange")   (onc/colorify " / __|" "yellow") (onc/colorify " '_ ` _ \\" "green") (onc/colorify " / _` |" "cyan") (onc/colorify "/ __"  "blue") (onc/colorify "/ __| \n"   "DarkMagenta")
+                       "               " (onc/colorify "| (_) "  "OrangeRed") (onc/colorify "| | | | " "orange")  (onc/colorify "(__| " "yellow")  (onc/colorify "| | | | |"  "green") (onc/colorify " (_| | " "cyan") (onc/colorify "(__"   "blue") (onc/colorify "\\__ \\ \n" "DarkMagenta")
+                       "               " (onc/colorify " \\___/" "OrangeRed") (onc/colorify "|_| |_|" "orange")   (onc/colorify "\\___|" "yellow") (onc/colorify "_| |_| |_|" "green") (onc/colorify "\\__,_|" "cyan") (onc/colorify "\\___" "blue") (onc/colorify "|___/ \n"   "DarkMagenta")
+                       "\n"
+                       "   This buffer is for text that is not saved, and for Lisp evaluation.\n"
+                       "     To create a file, visit it with \ o and enter text in its buffer.\n"
                        "\n"
                        "\n")))))
 
@@ -225,6 +229,7 @@
 
 (validate-setq scroll-preserve-screen-position 'always)
 
+(set-default 'truncate-lines t)
 
 ;;; Dependencies/ Libraries
 ;;; -----------------------
@@ -255,13 +260,19 @@
   :straight t)
 
 
+;; hide minor modes in modeline
+(use-package diminish
+  :straight t)
+
 ;;; General packages
 ;;; ----------------
 
 ;; modeline
 (use-package doom-modeline
   :straight t
-  :hook (after-init . doom-modeline-mode))
+  :hook (after-init . doom-modeline-mode)
+  :custom
+  (doom-modeline-minor-modes t))
 
 (use-package nerd-icons
   :straight t
@@ -274,6 +285,12 @@
 (use-package all-the-icons
   :straight t
   :if (display-graphic-p))
+
+(use-package eldoc
+  :diminish eldoc-mode)
+
+(use-package hi-lock
+  :diminish hi-lock-mode)
 
 ;; Emacs in server-mode
 (use-package server
@@ -313,16 +330,16 @@
   :custom (save-place-file (expand-file-name "places" user-emacs-directory)))
 
 
-;; Undo with branching
-(use-package undo-tree
+;; Undo 
+(use-package undo-fu
+  :straight t)
+
+(use-package undo-fu-session
   :straight t
-  :diminish undo-tree-mode
-  :commands global-undo-tree-mode
-  :init (global-undo-tree-mode t)
-  :custom
-  (undo-tree-auto-save-history nil)
-  (undo-tree-history-directory-alist `(("." . ,(concat user-emacs-directory "undo"))))
-  (undo-tree-visualizer-timestamps t undo-tree-visualizer-diff t))
+  :commands undo-fu-session-global-mode
+  :init (undo-fu-session-global-mode)
+  :config
+  (validate-setq undo-fu-session-incompatible-files '("/COMMIT_EDITMSG\\'" "/git-rebase-todo\\'")))
 
 
 ;; Auto-revert of changed files
@@ -364,6 +381,21 @@
   :straight t)
 
 
+(use-package perspeen
+  :straight t
+  :config
+  (perspeen-mode)
+  (custom-set-faces
+   '(perspeen-selected-face ((t (:inherit mode-line :foreground "#A6E22E")))))
+
+  ;; remove background as indicator of selected workspace
+  ;;(face-remap-add-relative 'perspeen-selected-face '(:background default))
+  ;; (set-face-attribute 'perspeen-selected-face nil :foreground "green" :background 'default)
+  ;; (set-face-background 'perspeen-selected-face default)
+  ;; (set-face-foreground 'perspeen-selected-face "green")
+  )
+
+
 (use-package company
   :straight t
   :commands (global-company-mode company-mode)
@@ -401,13 +433,20 @@
               ("gk" . evil-previous-line)
               ("C-u" . evil-scroll-up)
               ("C-d" . evil-scroll-down))
-  :custom (evil-move-cursor-back nil "make the cursor stay in place after exiting insert mode")
+  :custom
+  (evil-move-cursor-back nil "make the cursor stay in place after exiting insert mode")
+  (evil-undo-system 'undo-fu)
   :hook (evil-normal-state . #'add-vim-bindings)
   :init
   (evil-mode t)
 
-  ;; ;; save on double escape, works best with escape mapped to caps-lock.
-  ;; (add-hook 'evil-normal-state-entry-hook #'add-vim-bindings)
+  ;; prevent accidential C-z pressed to switch to emacs keybindings, e.g. when trying to press C-x
+  (keymap-unset evil-emacs-state-map "C-z")
+  (keymap-unset evil-motion-state-map "C-z")
+  (keymap-unset evil-insert-state-map "C-z")
+
+  ;; save on double escape, works best with escape mapped to caps-lock.
+  (add-hook 'evil-normal-state-entry-hook #'add-vim-bindings)
 
   :preface
   (defun copy-to-end-of-line ()
@@ -448,6 +487,7 @@
     (define-key onc-window-map (kbd "d") 'perspeen-delete-ws))
 
   :config
+
   ;; from: https://lists.ourproject.org/pipermail/implementations-list/2014-September/002064.html
   (eval-after-load "evil-maps"
     '(dolist (map (list evil-motion-state-map
@@ -483,7 +523,6 @@
     "t" 'treemacs
     "init" (lambda () (interactive) (find-file onc/init-el-path))
     "e" 'eval-defun
-    "d" 'dictcc
     "1" 'highlight-symbol-at-point
     "0" 'highlight-symbol-remove-all
     "gst" 'magit-status
@@ -499,6 +538,9 @@
     "s" 'helm-projectile-ag
     "pf" 'helm-projectile-find-file
     "po" 'helm-projectile-switch-project)
+
+  (evil-leader/set-key-for-mode
+    'python-mode "d" 'lsp-ui-peek-find-definitions)
 
   (evil-leader/set-key-for-mode
     'c++-mode "f" 'clang-format-buffer)
@@ -542,7 +584,7 @@
 (use-package rainbow-mode
   :straight t
   :commands rainbow-mode
-  :diminish (rainbow-mode . "rbow")
+  :diminish rainbow-mode
   :init
   (dolist
       (hook '(css-mode-hook
@@ -555,6 +597,7 @@
 
 (use-package highlight-thing
   :straight t
+  :diminish highlight-thing-mode
   :custom (highlight-thing-exclude-thing-under-point t)
   :config (global-highlight-thing-mode))
 
@@ -576,7 +619,7 @@
      Buffers                       Other
 ------------------------------------------------------------------------------------------
   _i_: indent buffer %(onc/where-is-first 'onze-indent-whole-buffer)         _p_: switch project %(onc/where-is-first 'helm-projectile-switch-project)
-  _r_: rename buffer and file    _s_: projectile ag %(onc/where-is-first 'helm-projectile-ag) 
+  _r_: rename buffer and file    _s_: projectile ag %(onc/where-is-first 'helm-projectile-ag)
                                _c_: emacs config
 "
     ("i" onc/indent-whole-buffer        nil)
@@ -609,6 +652,7 @@
   (helm-ff-file-name-history-use-recentf t)
   (helm-reuse-last-window-split-state t)
   (helm-split-window-inside-p t "Don't use full width of the frame")
+  (helm-move-to-line-cycle-in-source nil)
   :config
   (helm-mode +1)
 
@@ -708,6 +752,7 @@
   (treemacs-follow-mode t)
   (treemacs-resize-icons 14)
   (treemacs-fringe-indicator-mode 'always)
+
   (when treemacs-python-executable
     (treemacs-git-commit-diff-mode t))
 
@@ -716,7 +761,22 @@
     (`(t . t)
      (treemacs-git-mode 'deferred))
     (`(t . _)
-     (treemacs-git-mode 'simple))))
+     (treemacs-git-mode 'simple)))
+
+  ;; dont use bold fonts in treemacs
+  (dolist (face '(treemacs-root-face
+                  treemacs-git-unmodified-face
+                  treemacs-git-modified-face
+                  treemacs-git-renamed-face
+                  treemacs-git-ignored-face
+                  treemacs-git-untracked-face
+                  treemacs-git-added-face
+                  treemacs-git-conflict-face
+                  treemacs-directory-face
+                  treemacs-directory-collapsed-face
+                  treemacs-file-face
+                  treemacs-tags-face))
+    (set-face-attribute face nil :weight 'normal)))
 
 (use-package treemacs-nerd-icons
   :straight t
@@ -803,7 +863,8 @@
 (use-package yaml-mode
   :straight t
   :mode (("\\.yml\\'" . yaml-mode)
-         ("\\.yaml\\'" . yaml-mode)))
+         ("\\.yaml\\'" . yaml-mode)
+         ("\\.yaml.j2\\'" . yaml-mode)))
 
 
 (use-package markdown-mode
@@ -826,6 +887,12 @@
 (use-package terraform-mode
   :straight t
   :hook (terraform-mode . outline-minor-mode))
+
+
+(use-package csv-mode
+  :straight t
+  :mode "\\.csv\\'"
+  :hook (csv-mode . csv-align-mode))
 
 
 ;;; Onc Functions
@@ -943,6 +1010,40 @@ chars.
 This is a convenience function for `my-where-is'."
   (interactive)
   (onc/where-is definition 0 length))
+
+(defun onc/font-name-replace-size (font-name new-size)
+  "Changing font size of FONT-NAME and set it to NEW-SIZE."
+  (let ((parts (split-string font-name "-")))
+    (setcar (nthcdr 7 parts) (format "%d" new-size))
+    (mapconcat 'identity parts "-")))
+
+(defun onc/increment-default-font-height (delta)
+  "Adjust the default font height by DELTA on every frame.
+Emacs will keep the pixel size of the frame approximately the
+same.  DELTA should be a multiple of 10, to match the units used
+by the :height face attribute."
+  (let* ((new-height (+ (face-attribute 'default :height) delta))
+         (new-point-height (/ new-height 10)))
+    (dolist (f (frame-list))
+      (with-selected-frame f
+        ;; Latest 'set-frame-font supports a "frames" arg, but
+        ;; we cater to Emacs 23 by looping instead.
+        (set-frame-font (onc/font-name-replace-size
+                         (face-font 'default)
+                         new-point-height)
+                        t)))
+    (set-face-attribute 'default nil :height new-height)
+    (message "default font size is now %d" new-point-height)))
+
+(defun onc/increase-default-font-height ()
+  "Increate the font height."
+  (interactive)
+  (onc/increment-default-font-height 10))
+
+(defun onc/decrease-default-font-height ()
+  "Decrease the font height."
+  (interactive)
+  (onc/increment-default-font-height -10))
 
 
 (custom-set-variables
