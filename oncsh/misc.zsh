@@ -40,7 +40,23 @@ alias -g T="| tail"
 
 # git
 unalias glg
-alias glg='git lg'
+alias glg=' git lg'
+
+unalias gst
+alias gst=' git status'
+
+unalias gp
+alias gp=' git push'
+
+unalias gaa
+alias gaa=' git add --all'
+
+unalias gc
+alias gc=' git commit --verbose'
+
+alias gisb='git-interactive-change-branch'
+
+alias git=' git'
 
 # LaTeX
 alias xetexmk-pdf="latexmk -c -pdf -gg -xelatex -pvc -bibtex"

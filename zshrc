@@ -4,15 +4,38 @@ ZSH=$HOME/.oh-my-zsh
 # Set name of the theme to load.
 ZSH_THEME="onze"
 
+# plugins
+plugins=(
+    bgnotify
+    brew
+    colored-man-pages
+    colorize
+    cp
+    databricks
+    direnv
+    docker
+    docker-compose
+    git
+    git-flow-avh
+    man
+    npm
+    pip
+    pyenv
+    rbenv
+    sudo
+    svn
+    tmux
+    tmuxinator
+    virtualenv
+    zsh-autosuggestions
+    zsh-github-copilot
+)
+
+
 # Uncomment following line if you want red dots to be displayed while waiting for completion
 COMPLETION_WAITING_DOTS="false"
 
 REPORTTIME=10
-
-# plugins
-plugins=(git git-flow-avh svn tmux man colored-man-pages
-         colorize sudo npm cp bgnotify docker
-         docker-compose brew rbenv virtualenv pip pyenv)
 
 # Disable repeating command before result of command
 DISABLE_AUTO_TITLE="true"
@@ -24,46 +47,12 @@ source $ZSH/oh-my-zsh.sh
 #======================================================================================
 # USER CONFIGURATION
 #======================================================================================
+export EDITOR='vim'
+export CLICOLOR=1
+
 HISTFILE=~/.zsh_history
 HISTSIZE=10000
 SAVEHIST=10000
-
-export CLICOLOR=1
-
-# for tmuxinator
-export DISABLE_AUTO_TITLE=true
-
-# faster scrolling etc
-if [[ "$OSTYPE" == "linux-gnu" ]]; then
-    if hash xset 2>/dev/null; then
-        if [[ -z $SSH_CONNECTION ]]; then
-            # if xset and no ssh connection
-            xset r rate 400 75
-        fi
-    fi
-fi
-
-# fuzzy-finder
-if [ -f ~/.fzf.zsh ]; then
-    source ~/.fzf.zsh
-    source ~/.oncsh/fzf.zsh
-elif [ -f /usr/share/fzf/key-bindings.zsh ]; then
-    source /usr/share/fzf/key-bindings.zsh
-    source /usr/share/fzf/completion.zsh
-    source ~/.oncsh/fzf.zsh
-fi
-
-# Do not use /etc/hosts for host completions
-# This is quite useful when /etc/hosts contains thousands of hosts to block
-[ -r ~/.ssh/known_hosts ] && _ssh_hosts=(${${${${(f)"$(<$HOME/.ssh/known_hosts)"}:#[\|]*}%%\ *}%%,*}) || _ssh_hosts=()
-[ -r ~/.ssh/config ] && _ssh_config=($(cat ~/.ssh/config | sed -ne 's/Host[=\t ]//p')) || _ssh_config=()
-hosts=(
-    "$_ssh_hosts[@]"
-    "$_ssh_config[@]"
-    "$HOST"
-    localhost
-)
-zstyle ':completion:*:hosts' hosts $hosts
 
 # ignore ls und cd in history
 setopt SHARE_HISTORY # import new commands from history file and append immediately to it
@@ -74,30 +63,32 @@ setopt HIST_IGNORE_SPACE # ignore entries which begin with a space
 setopt EXTENDED_GLOB # activate extended globbing
 setopt LIST_PACKED # try to make the completion list smaller (occupying  less  lines)
 
-if which rbenv > /dev/null; then
-    eval "$(rbenv init -)";
-fi
+export KUBECONFIG='$HOME/.kube/config'
 
-if which pyenv > /dev/null; then
-    eval "$(pyenv init -)"
-fi
-
-source ~/.oncsh/misc.zsh
-
-function ch-arch() {
-    docker run --rm -it -v $PWD:/app march
-}
-
-function extract-mail() {
-    grep -i -o '[A-Z0-9._%+-]\+@[A-Z0-9.-]\+\.[A-Z]\{2,4\}' $1 | uniq
-}
-
-# added by travis gem
-[ -f /Users/onze/.travis/travis.sh ] && source /Users/onze/.travis/travis.sh
-
+export HOMEBREW_NO_AUTO_UPDATE
 export HOMEBREW_NO_ANALYTICS=1
 
+if [ -f ~/.dotfiles/oncsh/misc.zsh ]; then
+    source ~/.dotfiles/oncsh/misc.zsh
+fi
+
+#======================================================================================
+# Do not use /etc/hosts for host completions
+# This is quite useful when /etc/hosts contains thousands of hosts to block
+#======================================================================================
+[ -r ~/.ssh/known_hosts ] && _ssh_hosts=(${${${${(f)"$(<$HOME/.ssh/known_hosts)"}:#[\|]*}%%\ *}%%,*}) || _ssh_hosts=()
+[ -r ~/.ssh/config ] && _ssh_config=($(cat ~/.ssh/config | sed -ne 's/Host[=\t ]//p')) || _ssh_config=()
+hosts=(
+    "$_ssh_hosts[@]"
+    "$_ssh_config[@]"
+    "$HOST"
+    localhost
+)
+zstyle ':completion:*:hosts' hosts $hosts
+
+#======================================================================================
 # attempt to fix history search with arrow keys
+#======================================================================================
 autoload -U up-line-or-beginning-search
 autoload -U down-line-or-beginning-search
 zle -N up-line-or-beginning-search
@@ -109,9 +100,11 @@ zle -N down-line-or-beginning-search
 bindkey '^k' up-line-or-beginning-search # Up
 bindkey '^j' down-line-or-beginning-search # Down
 
+#======================================================================================
 # A script to make using 256 colors in zsh less painful.
 # P.C. Shyamshankar <sykora@lucentbeing.com>
 # Copied from https://github.com/sykora/etc/blob/master/zsh/functions/spectrum/
+#======================================================================================
 typeset -AHg FX FG BG
 
 FX=(
@@ -127,7 +120,6 @@ for color in {000..255}; do
     FG[$color]="%{[38;5;${color}m%}"
     BG[$color]="%{[48;5;${color}m%}"
 done
-
 
 ZSH_SPECTRUM_TEXT=${ZSH_SPECTRUM_TEXT:-Arma virumque cano Troiae qui primus ab oris}
 
@@ -160,3 +152,58 @@ then
   fi
   PS1='$ '
 fi
+
+#======================================================================================
+# autosuggest
+#======================================================================================
+export ZSH_AUTOSUGGEST_HIGHLIGHT_STYLE="fg=black"
+export ZSH_AUTOSUGGEST_STRATEGY=(history completion)
+
+bindkey '^ ' autosuggest-accept
+
+#======================================================================================
+# github copilot in shell
+#======================================================================================
+bindkey -ar '^[|' zsh_gh_copilot_explain  # bind Alt+shift+\ to explain
+bindkey -ar '^[\' zsh_gh_copilot_suggest  # bind Alt+\ to suggest
+
+#======================================================================================
+# pyenv
+#======================================================================================
+if which pyenv > /dev/null; then
+	eval "$(pyenv init --path)"
+	eval "$(pyenv virtualenv-init -)"
+fi
+
+#======================================================================================
+# rbenv
+#======================================================================================
+if which rbenv > /dev/null; then
+    eval "$(rbenv init -)";
+fi
+
+#======================================================================================
+# terraform
+#======================================================================================
+autoload -U +X bashcompinit && bashcompinit
+complete -o nospace -C /usr/bin/terraform terraform
+
+# fzf
+if [ -f ~/.dotfiles/oncsh/fzf.zsh ]; then
+    source ~/.dotfiles/oncsh/fzf.zsh
+fi
+
+if [ -f /usr/share/doc/fzf/examples/key-bindings.zsh ]; then
+    source /usr/share/doc/fzf/examples/key-bindings.zsh
+fi
+
+if [ -f /usr/share/doc/fzf/examples/completion.zsh ]; then
+    source /usr/share/doc/fzf/examples/completion.zsh
+fi
+
+function ch-arch() {
+    docker run --rm -it -v $PWD:/app march
+}
+
+# install python autocompletion packages
+alias pycompleters-install='pip install "python-lsp-server[rope,pyflakes,pydocstyle,pylint,autopep8]" python-lsp-black pylsp-rope pylsp-mypy python-lsp-isort python-lsp-black ruff-lsp'
