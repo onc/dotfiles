@@ -16,8 +16,19 @@ export PATH="/usr/local/sbin:$PATH"
 # Python
 export PATH="$(python3 -m site --user-base)/bin:${PATH}"
 
+# poetry
+export PATH="$HOME/.local/bin:$PATH"
+
 # Java
-# export JAVA_HOME=$(/usr/libexec/java_home)
+
+# Apache Spark requires it
+export JAVA_HOME=/usr/lib/jvm/java-11-openjdk-amd64
+export JAVA_OPTS=--add-opens=java.base/java.nio=ALL-UNNAMED
+
+# certificate so that databricks command works
+if [ -f /etc/ssl/certs/ca-certificates.crt ]; then
+    export REQUESTS_CA_BUNDLE=/etc/ssl/certs/ca-certificates.crt
+fi
 
 # Ruby
 export GEM_HOME=$(ruby -e 'print Gem.user_dir')
