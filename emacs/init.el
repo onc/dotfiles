@@ -330,7 +330,7 @@
   :custom (save-place-file (expand-file-name "places" user-emacs-directory)))
 
 
-;; Undo 
+;; Undo
 (use-package undo-fu
   :straight t)
 
@@ -546,7 +546,7 @@
     'c++-mode "f" 'clang-format-buffer)
 
   (evil-leader/set-key-for-mode
-    'python-mode "f" 'elpy-format-code)
+    'python-mode "f" 'lsp-format-buffer)
 
   (evil-leader/set-key-for-mode
     'rust-mode "f" 'cargo-process-fmt))
@@ -599,7 +599,11 @@
   :straight t
   :diminish highlight-thing-mode
   :custom (highlight-thing-exclude-thing-under-point t)
-  :config (global-highlight-thing-mode))
+  :config
+  (global-highlight-thing-mode)
+
+  (custom-set-faces
+   '(highlight-thing ((t (:background "#49483E" :foreground "#A6E22E"))))))
 
 
 ;; Global emacs bindings with prefix
@@ -752,6 +756,7 @@
   (treemacs-follow-mode t)
   (treemacs-resize-icons 14)
   (treemacs-fringe-indicator-mode 'always)
+  (treemacs-hide-gitignored-files-mode t)
 
   (when treemacs-python-executable
     (treemacs-git-commit-diff-mode t))
@@ -828,9 +833,11 @@
 (use-package envrc
   :straight t
   :after exec-path-from-shell
-  :config
-  (envrc-global-mode))
+  :hook (after-init . envrc-global-mode))
 
+(use-package copilot
+  :straight (:host github :repo "copilot-emacs/copilot.el" :files ("*.el"))
+  :ensure t)
 
 ;;; Language support
 ;;; ----------------
@@ -878,6 +885,22 @@
               (add-hook 'after-save-hook 'org-tables-to-markdown  nil 'make-it-local))))
 
 
+(use-package jupyter
+  :straight t)
+
+
+(use-package org
+  :straight t
+  :config
+  ;; (advice-remove #'org-babel-do-load-languages #'ignore)
+  (advice-add 'org-babel-eval :around #'envrc-propagate-environment)
+  (org-babel-do-load-languages
+   'org-babel-load-languages
+   '((emacs-lisp . t)
+     (python     . t)
+     (jupyter    . t))))
+
+
 (use-package json-mode
   :straight t
   :mode "\\.json\\'"
@@ -894,6 +917,10 @@
   :mode "\\.csv\\'"
   :hook (csv-mode . csv-align-mode))
 
+
+(use-package dockerfile-mode
+  :straight t
+  :mode "\\Dockerfile")
 
 ;;; Onc Functions
 ;;; -------------
