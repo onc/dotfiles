@@ -101,6 +101,12 @@ bindkey '^k' up-line-or-beginning-search # Up
 bindkey '^j' down-line-or-beginning-search # Down
 
 #======================================================================================
+# github copilot in shell
+#======================================================================================
+bindkey '^[|' zsh_gh_copilot_explain  # bind Alt+shift+\ to explain
+bindkey '^J' zsh_gh_copilot_suggest  # bind Alt+\ to suggest
+
+#======================================================================================
 # A script to make using 256 colors in zsh less painful.
 # P.C. Shyamshankar <sykora@lucentbeing.com>
 # Copied from https://github.com/sykora/etc/blob/master/zsh/functions/spectrum/
@@ -162,12 +168,6 @@ export ZSH_AUTOSUGGEST_STRATEGY=(history completion)
 bindkey '^ ' autosuggest-accept
 
 #======================================================================================
-# github copilot in shell
-#======================================================================================
-bindkey -ar '^[|' zsh_gh_copilot_explain  # bind Alt+shift+\ to explain
-bindkey -ar '^[\' zsh_gh_copilot_suggest  # bind Alt+\ to suggest
-
-#======================================================================================
 # pyenv
 #======================================================================================
 if which pyenv > /dev/null; then
@@ -207,3 +207,4 @@ function ch-arch() {
 
 # install python autocompletion packages
 alias pycompleters-install='pip install "python-lsp-server[rope,pyflakes,pydocstyle,pylint,autopep8]" python-lsp-black pylsp-rope pylsp-mypy python-lsp-isort python-lsp-black ruff-lsp'
+export PATH="$PATH:/opt/mssql-tools18/bin"
