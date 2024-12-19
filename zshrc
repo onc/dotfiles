@@ -1,3 +1,6 @@
+# -*- mode: sh; coding: utf-8; -*-
+# vim:set filetype=sh fileencoding=utf-8:
+
 # Path to your oh-my-zsh configuration.
 ZSH=$HOME/.oh-my-zsh
 
@@ -11,7 +14,6 @@ plugins=(
     colored-man-pages
     colorize
     cp
-    databricks
     direnv
     docker
     docker-compose
@@ -47,9 +49,6 @@ source $ZSH/oh-my-zsh.sh
 #======================================================================================
 # USER CONFIGURATION
 #======================================================================================
-export EDITOR='vim'
-export CLICOLOR=1
-
 HISTFILE=~/.zsh_history
 HISTSIZE=10000
 SAVEHIST=10000
@@ -62,11 +61,6 @@ setopt HIST_IGNORE_ALL_DUPS # ignore duplicates
 setopt HIST_IGNORE_SPACE # ignore entries which begin with a space
 setopt EXTENDED_GLOB # activate extended globbing
 setopt LIST_PACKED # try to make the completion list smaller (occupying  less  lines)
-
-export KUBECONFIG='$HOME/.kube/config'
-
-export HOMEBREW_NO_AUTO_UPDATE
-export HOMEBREW_NO_ANALYTICS=1
 
 if [ -f ~/.dotfiles/oncsh/misc.zsh ]; then
     source ~/.dotfiles/oncsh/misc.zsh
@@ -162,25 +156,10 @@ fi
 #======================================================================================
 # autosuggest
 #======================================================================================
-export ZSH_AUTOSUGGEST_HIGHLIGHT_STYLE="fg=black"
+export ZSH_AUTOSUGGEST_HIGHLIGHT_STYLE="fg=244"
 export ZSH_AUTOSUGGEST_STRATEGY=(history completion)
 
 bindkey '^ ' autosuggest-accept
-
-#======================================================================================
-# pyenv
-#======================================================================================
-if which pyenv > /dev/null; then
-	eval "$(pyenv init --path)"
-	eval "$(pyenv virtualenv-init -)"
-fi
-
-#======================================================================================
-# rbenv
-#======================================================================================
-if which rbenv > /dev/null; then
-    eval "$(rbenv init -)";
-fi
 
 #======================================================================================
 # terraform
@@ -188,17 +167,17 @@ fi
 autoload -U +X bashcompinit && bashcompinit
 complete -o nospace -C /usr/bin/terraform terraform
 
-# fzf
-if [ -f ~/.dotfiles/oncsh/fzf.zsh ]; then
-    source ~/.dotfiles/oncsh/fzf.zsh
+# Set up fzf key bindings and fuzzy completion
+if command -v fzf > /dev/null; then
+    source <(fzf --zsh)
+
+    if [ -f ~/.dotfiles/oncsh/fzf.zsh ]; then
+        source ~/.dotfiles/oncsh/fzf.zsh
+    fi
 fi
 
-if [ -f /usr/share/doc/fzf/examples/key-bindings.zsh ]; then
-    source /usr/share/doc/fzf/examples/key-bindings.zsh
-fi
-
-if [ -f /usr/share/doc/fzf/examples/completion.zsh ]; then
-    source /usr/share/doc/fzf/examples/completion.zsh
+if command -v direnv > /dev/null; then 
+    eval "$(direnv hook zsh)"
 fi
 
 function ch-arch() {
@@ -207,4 +186,10 @@ function ch-arch() {
 
 # install python autocompletion packages
 alias pycompleters-install='pip install "python-lsp-server[rope,pyflakes,pydocstyle,pylint,autopep8]" python-lsp-black pylsp-rope pylsp-mypy python-lsp-isort python-lsp-black ruff-lsp'
-export PATH="$PATH:/opt/mssql-tools18/bin"
+
+# make tab-completion work for databricks cli
+fpath=($(brew --prefix)/share/zsh/site-functions $fpath)
+
+### MANAGED BY RANCHER DESKTOP START (DO NOT EDIT)
+export PATH="/Users/ldcvac1/.rd/bin:$PATH"
+### MANAGED BY RANCHER DESKTOP END (DO NOT EDIT)
