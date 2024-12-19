@@ -24,7 +24,7 @@
 (defconst onc/custom-theme-load-path (expand-file-name "~/.emacs.d/themes"))
 
 ;; Font for emacs
-(defconst onc/font-family "SauceCodePro NF")
+(defconst onc/font-family "SF Mono")
 
 ;; Size of font
 (defconst onc/font-size 100)
@@ -39,7 +39,6 @@
 (add-to-list 'package-archives '("melpa" . "https://melpa.org/packages/") t)
 (package-initialize)
 
-;; bootstrap straight.el
 (defvar bootstrap-version)
 (let ((bootstrap-file
        (expand-file-name
@@ -52,15 +51,21 @@
         (url-retrieve-synchronously
          "https://raw.githubusercontent.com/radian-software/straight.el/develop/install.el"
          'silent 'inhibit-cookies)
-      (goto-char (point-max))(defun onc/font-name-replace-size (font-name new-size)
-                               "Changing font size of FONT-NAME and set it to NEW-SIZE."
-                               (let ((parts (split-string font-name "-")))
-                                 (setcar (nthcdr 7 parts) (format "%d" new-size))
-                                 (mapconcat 'identity parts "-")))
+      (goto-char (point-max))
       (eval-print-last-sexp)))
   (load bootstrap-file nil 'nomessage))
 
 (straight-use-package 'use-package)
+
+(use-package system-packages
+  :straight t
+  :init
+  (setq system-packages-use-sudo nil)
+  (when (eq system-type 'darwin)
+    (setq system-packages-package-manager 'brew)))
+
+(use-package use-package-ensure-system-package 
+  :straight t)
 
 ;; Validation of setq and stuff
 (use-package validate
@@ -251,11 +256,6 @@
   :straight t)
 
 
-;; addon for use-package to ensure system packages
-(use-package use-package-ensure-system-package
-  :straight t)
-
-
 (use-package multi
   :straight t)
 
@@ -264,8 +264,16 @@
 (use-package diminish
   :straight t)
 
-;;; General packages
-;;; ----------------
+;; General packages
+;; ----------------
+
+;; keep packages up-to-date
+(use-package auto-package-update
+  :straight t
+  :config
+  (setq auto-package-update-delete-old-versions t)
+  (setq auto-package-update-hide-results t)
+  (auto-package-update-maybe))
 
 ;; modeline
 (use-package doom-modeline
@@ -677,7 +685,7 @@
 (use-package helm-ag
   :straight t
   :ensure-system-package ag
-  :after helm)
+  :after (helm exec-path-from-shell))
 
 
 (use-package helm-swoop
@@ -821,12 +829,6 @@
   :commands (lsp-ui-mode)
   :config
   (lsp-ui-mode))
-
-(use-package lsp-treemacs
-  :ensure t
-  :commands lsp-treemacs-errors-list
-  :config
-  (lsp-treemacs-sync-mode 1))
 
 ;; helper to load python venvs
 ;; https://slinkp.com/python-emacs-lsp-20231229.html
