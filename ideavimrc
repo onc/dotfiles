@@ -2,3 +2,4 @@
 nnoremap <space> :
 
 set clipboard=unnamed
+set clipboard^=ideaput
