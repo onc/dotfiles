@@ -68,9 +68,7 @@ if [ -f ~/.dotfiles/oncsh/misc.zsh ]; then
     source ~/.dotfiles/oncsh/misc.zsh
 fi
 
-if [ -f ~/.dotfiles/oncsh/helpers.zsh ]; then
-    source ~/.dotfiles/oncsh/helpers.zsh
-fi
+source ~/.oncsh/misc.zsh
 
 if command -v fzf > /dev/null; then
     source <(fzf --zsh)
@@ -107,7 +105,6 @@ export ZSH_AUTOSUGGEST_HIGHLIGHT_STYLE="fg=244"
 export ZSH_AUTOSUGGEST_STRATEGY=(history completion)
 
 bindkey '^ ' autosuggest-accept
-
 #======================================================================================
 # terraform
 #======================================================================================
@@ -126,3 +123,5 @@ fi
 #======================================================================================
 # make tab-completion work for databricks cli
 fpath=($(brew --prefix)/share/zsh/site-functions $fpath)
+
+alias icloud=" cd /Users/onze/Library/Mobile Documents/com~apple~CloudDocs"
