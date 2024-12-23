@@ -1,3 +1,6 @@
-python=/usr/bin/python
-prefix=/Users/onze/.npm
+# -*- mode: sh; coding: utf-8; -*-
+# vim:set filetype=sh fileencoding=utf-8:
+
+prefix=~/.npm
+cafile=~/.ssl/bundleCA.pem
 progress=false

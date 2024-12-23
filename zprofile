@@ -41,9 +41,6 @@ if [ OS_TYPE="macOS" ]; then
     export JAVA_TOOL_OPTIONS="-Djavax.net.ssl.trustStoreType=KeychainStore"
 fi
 
-# kubernetes
-# export KUBECONFIG="$HOME/.kube/config"
-
 # rancher
 if [ OS_TYPE="macOS" ]; then
     [[ -d $HOME/.rd/bin ]] && export PATH="$HOME/.rd/bin:$PATH"
@@ -64,6 +61,14 @@ fi
 
 export KUBECONFIG="$HOME/.kube/config"
 
+# Nodejs
+export NPM_PACKAGES="${HOME}/.npm"
+if [ -d $NPM_PACKAGES/bin ]; then
+    export PATH="$NPM_PACKAGES/bin:$PATH"
+    # Tell Node about these packages
+    export NODE_PATH="$NPM_PACKAGES/lib/node_modules:$NODE_PATH"
+fi
+
 # Ruby
 # export GEM_HOME=$(ruby -e 'print Gem.user_dir')
 # export PATH="`ruby -e 'print Gem.user_dir'`/bin:${PATH}"
@@ -71,10 +76,6 @@ export KUBECONFIG="$HOME/.kube/config"
 # if which rbenv > /dev/null; then
 #     eval "$(rbenv init -)";
 # fi
-
-# Nodejs
-# export NPM_PACKAGES="${HOME}/.npm"
-# export PATH="${NPM_PACKAGES}/bin:${PATH}"
 
 # rust/cargo
 # export PATH="${HOME}/.cargo/bin:${PATH}"

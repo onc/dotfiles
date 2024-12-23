@@ -1,83 +1,29 @@
-# navigation
-alias cd=' cd'
-alias ..=' cd ..'
-alias ...=' cd ../../'
-alias ....=' cd ../../../'
-alias .....=' cd ../../../../'
-alias -- -=' cd -'
-alias ~=' cd ~'
+# -*- mode: sh; coding: utf-8; -*-
+# vim:set filetype=sh fileencoding=utf-8:
 
-if ! [ -x "$(command -v colorls)" ]; then
-    if [[ `uname` == 'Darwin' ]]; then
-        alias ls=' gls --color  --group-directories-first'
-    else
-        alias ls=' ls'
-    fi
-else
-    alias ls=' colorls'
+function ch-arch() {
+    docker run --rm -it -v $PWD:/app march
+}
+
+function gi() {
+    curl -L -s https://www.gitignore.io/api/$@
+}
+
+# Remote terminal session like emacs tramp mode
+# Ensures we are not using a fancy two-line prompt for example
+if [[ "$TERM" == "dumb" ]]
+then
+  unsetopt zle
+  unsetopt prompt_cr
+  unsetopt prompt_subst
+  if whence -w precmd >/dev/null; then
+      unfunction precmd
+  fi
+  if whence -w preexec >/dev/null; then
+      unfunction preexec
+  fi
+  PS1='$ '
 fi
-
-# shortcuts for apps
-alias v="vim"
-alias t="tmux"
-alias mux="tmuxinator"
-
-if [[ "$OSTYPE" == "linux-gnu" ]]; then
-    # linux
-    alias sizes="du -mh --max-depth 1 . | sort -hr"
-elif [[ "$OSTYPE" == "darwin"* ]]; then
-    # Mac OSX
-    alias sizes="du -mh -d 1 . | gsort -hr"
-fi
-
-# Global Aliases
-alias -g G="| grep"
-alias -g L="| less"
-alias -g NUL="> /dev/null 2>&1"
-alias -g CNT="| wc -l"
-alias -g H="| head"
-alias -g T="| tail"
-
-# git
-unalias glg
-alias glg=' git lg'
-
-unalias gst
-alias gst=' git status'
-
-unalias gp
-alias gp=' git push'
-
-unalias gaa
-alias gaa=' git add --all'
-
-unalias gc
-alias gc=' git commit --verbose'
-
-alias gisb='git-interactive-change-branch'
-
-alias git=' git'
-
-# LaTeX
-alias xetexmk-pdf="latexmk -c -pdf -gg -xelatex -pvc -bibtex"
-alias latexmk-pdf="latexmk -c -pdf -gg -pvc -bibtex"
-
-# Youtube-dl
-alias youtube-dl-mp3="youtube-dl -x --audio-format mp3"
-alias youtube-best="youtube-dl -f bestvideo+bestaudio"
-
-# 7z with all cores, arguments: output-file input-dir/file
-alias 7z8core="7za a -r -t7z -m0=LZMA2 -mmt=4"
-
-# show the progress of a running dd command
-alias dd_progress="sudo killall -USR1 dd"
-
-# SVN aliases
-alias sst="svn status"
-alias sad="svn add"
-alias scom="svn commit -m"
-
-alias jmake="make -j5"
 
 # ls after every cd
 function chpwd() {
@@ -98,7 +44,3 @@ auto-ls () {
 }
 zle -N accept-line auto-ls
 zle -N other-widget auto-ls
-
-function gi() {
-    curl -L -s https://www.gitignore.io/api/$@
-}
