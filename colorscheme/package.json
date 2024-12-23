@@ -1,0 +1,15 @@
+{
+  "name": "colorscheme",
+  "version": "1.0.0",
+  "main": "sonokai.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "build": "themer -c src/sonokai.ts -t vim -t iterm -t emacs -o gen"
+  },
+  "author": "",
+  "license": "ISC",
+  "description": "",
+  "dependencies": {
+    "themer": "^6.7.1"
+  }
+}
