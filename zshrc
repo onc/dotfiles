@@ -33,7 +33,6 @@ plugins=(
     zsh-github-copilot
 )
 
-
 # Uncomment following line if you want red dots to be displayed while waiting for completion
 COMPLETION_WAITING_DOTS="false"
 
