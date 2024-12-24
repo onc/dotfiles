@@ -2,22 +2,22 @@
 # vim:set filetype=sh fileencoding=utf-8:
 
 # navigation
-alias cd=' cd'
-alias ..=' cd ..'
-alias ...=' cd ../../'
-alias ....=' cd ../../../'
-alias .....=' cd ../../../../'
-alias -- -=' cd -'
-alias ~=' cd ~'
+alias cd=" cd"
+alias ..=" cd .."
+alias ...=" cd ../../"
+alias ....=" cd ../../../"
+alias .....=" cd ../../../../"
+alias -- -=" cd -"
+alias ~=" cd ~"
 
-if ! [ -x "$(command -v colorls)" ]; then
-    if [[ `uname` == 'Darwin' ]]; then
-        alias ls=' gls --color  --group-directories-first'
+if ! command -v colorls > /dev/null; then
+    if [ OS_TYPE="macOS" ] && [ -x "$(command -v gls > /dev/null)" ]; then
+        alias ls=" gls --color  --group-directories-first"
     else
-        alias ls=' ls'
+        alias ls=" ls"
     fi
 else
-    alias ls=' colorls'
+    alias ls=" colorls"
 fi
 
 # shortcuts for apps
@@ -25,10 +25,9 @@ alias v="vim"
 alias t="tmux"
 alias mux="tmuxinator"
 
-if [[ "$OSTYPE" == "linux-gnu" ]]; then
-    # linux
+if [ OS_TYPE="ubuntu" ]; then
     alias sizes="du -mh --max-depth 1 . | sort -hr"
-elif [[ "$OSTYPE" == "darwin"* ]]; then
+elif [ OS_TYPE="macOS" ]; then
     # Mac OSX
     alias sizes="du -mh -d 1 . | gsort -hr"
 fi
@@ -43,23 +42,23 @@ alias -g T="| tail"
 
 # git
 unalias glg
-alias glg=' git lg'
+alias glg=" git lg"
 
 unalias gst
-alias gst=' git status'
+alias gst=" git status"
 
 unalias gp
-alias gp=' git push'
+alias gp=" git push"
 
 unalias gaa
-alias gaa=' git add --all'
+alias gaa=" git add --all"
 
 unalias gc
-alias gc=' git commit --verbose'
+alias gc=" git commit --verbose"
 
-alias gisb='git-interactive-change-branch'
+alias gisb="git-interactive-change-branch"
 
-alias git=' git'
+alias git=" git"
 
 # LaTeX
 alias xetexmk-pdf="latexmk -c -pdf -gg -xelatex -pvc -bibtex"
@@ -84,3 +83,5 @@ alias jmake="make -j5"
 
 # install python autocompletion packages
 alias pycompleters-install='pip install "python-lsp-server[rope,pyflakes,pydocstyle,pylint,autopep8]" python-lsp-black pylsp-rope pylsp-mypy python-lsp-isort python-lsp-black ruff-lsp'
+
+alias icloud=" cd /Users/onze/Library/Mobile Documents/com~apple~CloudDocs"

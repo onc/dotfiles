@@ -19,12 +19,12 @@ fi
 
 # Homebrew. Must go first so something like pyenv can be found.
 if [ OS_TYPE="macOS" ]; then
-    if [ -f /opt/homebrew/bin/brew ]; then
+    if command -v brew > /dev/null; then
         export HOMEBREW_NO_ANALYTICS=1
         export HOMEBREW_AUTO_UPDATE_SECS=604800 # 1 week
         export HOMEBREW_NO_ENV_HINTS=1
 
-        eval "$(/opt/homebrew/bin/brew shellenv)"
+        eval "$(brew shellenv)"
     fi
 fi
 

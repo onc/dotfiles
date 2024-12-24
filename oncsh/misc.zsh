@@ -51,9 +51,6 @@ alias youtube-best="youtube-dl -f bestvideo+bestaudio"
 # 7z with all cores, arguments: output-file input-dir/file
 alias 7z8core="7za a -r -t7z -m0=LZMA2 -mmt=4"
 
-# show the progress of a running dd command
-alias dd_progress="sudo killall -USR1 dd"
-
 # SVN aliases
 alias sst="svn status"
 alias sad="svn add"

@@ -30,8 +30,12 @@ plugins=(
     tmuxinator
     virtualenv
     zsh-autosuggestions
-    zsh-github-copilot
+    # zsh-github-copilot
 )
+
+if [ OS_TYPE="macOS" ]; then
+    plugins=(macos $plugins)
+fi
 
 # Uncomment following line if you want red dots to be displayed while waiting for completion
 COMPLETION_WAITING_DOTS="false"
@@ -42,6 +46,7 @@ REPORTTIME=10
 DISABLE_AUTO_TITLE="true"
 
 fpath=($ZSH/custom/completions $fpath)
+fpath=($(brew --prefix)/share/zsh/site-functions $fpath)
 
 source $ZSH/oh-my-zsh.sh
 
@@ -60,15 +65,9 @@ setopt HIST_IGNORE_SPACE # ignore entries which begin with a space
 setopt EXTENDED_GLOB # activate extended globbing
 setopt LIST_PACKED # try to make the completion list smaller (occupying  less  lines)
 
-if [ -f ~/.dotfiles/oncsh/aliases.zsh ]; then
-    source ~/.dotfiles/oncsh/aliases.zsh
-fi
-
-if [ -f ~/.dotfiles/oncsh/misc.zsh ]; then
-    source ~/.dotfiles/oncsh/misc.zsh
-fi
-
-source ~/.oncsh/misc.zsh
+[[ -f ~/.dotfiles/oncsh/aliases.zsh ]] && source ~/.dotfiles/oncsh/aliases.zsh
+[[ -f ~/.dotfiles/oncsh/misc.zsh ]] && source ~/.dotfiles/oncsh/misc.zsh
+[[ -f ~/.dotfiles/oncsh/helpers.zsh ]] && source ~/.dotfiles/oncsh/helpers.zsh
 
 if command -v fzf > /dev/null; then
     source <(fzf --zsh)
@@ -89,14 +88,14 @@ zle -N down-line-or-beginning-search
 # bindkey "^[[B" down-line-or-beginning-search # Down
 
 # alternative (vim-like) binding for history search
-bindkey '^k' up-line-or-beginning-search # Up
-bindkey '^j' down-line-or-beginning-search # Down
+bindkey "^k" up-line-or-beginning-search # Up
+bindkey "^j" down-line-or-beginning-search # Down
 
 #======================================================================================
 # github copilot in shell
 #======================================================================================
-bindkey '^[|' zsh_gh_copilot_explain  # bind Alt+shift+\ to explain
-bindkey '^J' zsh_gh_copilot_suggest  # bind Alt+\ to suggest
+bindkey "^[|" zsh_gh_copilot_explain  # bind Alt+shift+\ to explain
+bindkey "^J" zsh_gh_copilot_suggest  # bind Alt+\ to suggest
 
 #======================================================================================
 # autosuggest
@@ -104,7 +103,7 @@ bindkey '^J' zsh_gh_copilot_suggest  # bind Alt+\ to suggest
 export ZSH_AUTOSUGGEST_HIGHLIGHT_STYLE="fg=244"
 export ZSH_AUTOSUGGEST_STRATEGY=(history completion)
 
-bindkey '^ ' autosuggest-accept
+bindkey "^ " autosuggest-accept
 #======================================================================================
 # terraform
 #======================================================================================
@@ -117,11 +116,3 @@ complete -o nospace -C /usr/bin/terraform terraform
 if command -v direnv > /dev/null; then 
     eval "$(direnv hook zsh)"
 fi
-
-#======================================================================================
-# Databricks CLI
-#======================================================================================
-# make tab-completion work for databricks cli
-fpath=($(brew --prefix)/share/zsh/site-functions $fpath)
-
-alias icloud=" cd /Users/onze/Library/Mobile Documents/com~apple~CloudDocs"
