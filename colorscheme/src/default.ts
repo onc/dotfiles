@@ -17,6 +17,7 @@ const main = async () => {
       mkdirSync(exportDir, { recursive: true });
     }
 
+    console.log("Writing file", file.path);
     writeFileSync(file.path, file.content);
   }
 }
