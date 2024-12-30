@@ -1,6 +1,6 @@
 import type { ColorSet } from "themer";
 
-const myColorSet: ColorSet = {
+const sonokai: ColorSet = {
   // Color sets should provide a human-readable name.
   name: "onc-sonokai",
 
@@ -42,4 +42,4 @@ const myColorSet: ColorSet = {
   },
 };
 
-export default myColorSet;
+export default sonokai;
