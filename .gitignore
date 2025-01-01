@@ -1,3 +1,6 @@
+colorscheme/themes/*
+!colorscheme/themes/.gitkeep
+
 # Ignore the macOS .DS_Store
 .DS_Store
 

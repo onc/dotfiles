@@ -1,24 +1,26 @@
 import themer from "themer";
 import { writeFileSync, existsSync, mkdirSync } from "node:fs";
-import { dirname } from "path";
+import { dirname, join } from "path";
 import sonokai from "./sonokai.js";
+import onc from "./onc.js";
 
 
 const main = async () => {
   const files = themer(
-    [sonokai],
+    [sonokai, onc],
     ["vim", "iterm", "emacs"],
     { wallpaperSizes: [{ w: 1440, h: 900 }] }
   );
 
   for await (const file of files) {
-    const exportDir = dirname(file.path);
+    const exportDir =  join('themes', dirname(file.path));
+    
     if (!existsSync(exportDir)) {
       mkdirSync(exportDir, { recursive: true });
     }
 
     console.log("Writing file", file.path);
-    writeFileSync(file.path, file.content);
+    writeFileSync(join('themes', file.path), file.content);
   }
 }
 

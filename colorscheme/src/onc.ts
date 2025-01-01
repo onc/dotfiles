@@ -2,27 +2,42 @@ import type { ColorSet } from "themer";
 
 const sonokai: ColorSet = {
   // Color sets should provide a human-readable name.
-  name: "onc-sonokai",
+  name: "onc",
 
   // Color sets can define a dark variant, a light variant, or both.
   // Each variant provides two or eight shades and eight accent colors in hex format.
   variants: {
     // In a dark variant, shade0 should be the darkest and shade7 should be
     // the lightest.
-    // Note: you can define shades 1 through 6 yourself, or you can omit
-    // them; if omitted, they will be calculated automatically by
-    // interpolating between shade0 and shade7.
+    //
+    // base00: "#212121"
+    // base01: "#424242"
+    // base02: "#616161"
+    // base03: "#757575"
+    // base04: "#9E9E9E"
+    // base05: "#EEEEEE"
+    // base06: "#F5F5F5"
+    // base07: "#FAFAFA"
+    // base08: "#FF1744"
+    // base09: "#00B0FF"
+    // base0A: "#D500F9"
+    // base0B: "#1DE9B6"
+    // base0C: "#18FFFF"
+    // base0D: "#FF9100"
+    // base0E: "#FFEA00"
+    // base0F: "#8D6E63"
+    // 
     dark: {
-      shade0: "#2C2E34",
-      shade7: "#E2E2E3",
-      accent0: "#FC5D7C",
-      accent1: "#F39660",
-      accent2: "#E7C664",
-      accent3: "#9ED072",
-      accent4: "#8ACEA9",
-      accent5: "#76CCE0",
-      accent6: "#B39DF3",
-      accent7: "#BAA6F4",
+      shade0: "#212121",
+      shade7: "#FAFAFA",
+      accent0: "#FF1744",
+      accent1: "#FF9100",
+      accent2: "#FFEA00",
+      accent3: "#1DE9B6",
+      accent4: "#18FFFF",
+      accent5: "#00B0FF",
+      accent6: "#FAFAFA",
+      accent7: "#D500F9",
     },
 
     // In a light variant, shade7 should be the darkest and shade0 should be
