@@ -1,5 +1,0 @@
-" space fuer comandmode
-nnoremap <space> :
-
-set clipboard=unnamed
-set clipboard^=ideaput

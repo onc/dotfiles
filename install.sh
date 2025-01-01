@@ -17,7 +17,7 @@ function symlink_dotfile() {
 
 function setup_macos() {
     if ! command -v brew > /dev/null; then
-        echo "brew not found. Please intall brew first!"
+        echo "brew not found. Please install brew first!"
         exit 1
     fi
 
