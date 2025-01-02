@@ -51,6 +51,10 @@ git-interactive-change-branch() {
 }
 
 # select gitignore.io configs using fzf
+function gi() {
+    curl -L -s https://www.gitignore.io/api/$@
+}
+
 function gifzf() {
     local list=$(gi list | tr , '\n' | fzf --multi | tr '\n' , | sed 's/,$//' )
     gi $list

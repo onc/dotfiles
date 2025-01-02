@@ -64,6 +64,9 @@ alias git=" git"
 alias xetexmk-pdf="latexmk -c -pdf -gg -xelatex -pvc -bibtex"
 alias latexmk-pdf="latexmk -c -pdf -gg -pvc -bibtex"
 
+# reduce pdf file size
+alias pdf-reduce-file-size="gs -sDEVICE=pdfwrite -dCompatibilityLevel=1.2 -r200 -dPrinted=false -dNOPAUSE -dQUIET -dBATCH -sOutputFile="
+
 # Youtube-dl
 alias youtube-dl-mp3="youtube-dl -x --audio-format mp3"
 alias youtube-best="youtube-dl -f bestvideo+bestaudio"

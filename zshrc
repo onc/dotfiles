@@ -5,37 +5,33 @@
 ZSH=$HOME/.oh-my-zsh
 
 # Set name of the theme to load.
-ZSH_THEME="onze"
+ZSH_THEME="robbyrussell"
 
 # plugins
 plugins=(
-    bgnotify
-    brew
     colored-man-pages
     colorize
     cp
-    direnv
-    docker
-    docker-compose
     git
     git-flow-avh
     man
     npm
     pip
-    pyenv
-    rbenv
     sudo
     svn
-    tmux
-    tmuxinator
     virtualenv
-    zsh-autosuggestions
-    # zsh-github-copilot
 )
 
-if [ OS_TYPE="macOS" ]; then
-    plugins=(macos $plugins)
-fi
+[[ OS_TYPE="macOS" ]] && plugins=($plugins macos)
+command -v brew > /dev/null && plugins=($plugins brew)
+command -v docker > /dev/null && plugins=($plugins docker docker-compose)
+command -v direnv > /dev/null && plugins=($plugins direnv)
+command -v pyenv > /dev/null && plugins=($plugins pyenv)
+command -v rbenv > /dev/null && plugins=($plugins rbenv)
+command -v tmux > /dev/null && plugins=($plugins tmux)
+command -v > tmuxinator /dev/null && plugins=($plugins tmuxinator)
+[[ -d $ZSH/custom/plugins/zsh-autosuggestions ]] && plugins=($plugins zsh-autosuggestions)
+
 
 # Uncomment following line if you want red dots to be displayed while waiting for completion
 COMPLETION_WAITING_DOTS="false"
@@ -104,6 +100,7 @@ export ZSH_AUTOSUGGEST_HIGHLIGHT_STYLE="fg=244"
 export ZSH_AUTOSUGGEST_STRATEGY=(history completion)
 
 bindkey "^ " autosuggest-accept
+
 #======================================================================================
 # terraform
 #======================================================================================
