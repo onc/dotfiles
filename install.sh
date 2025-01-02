@@ -42,9 +42,9 @@ else
     OS_TYPE="" 
 fi
 
-symlink_dotfile "zshrc"
-symlink_dotfile "zprofile"
-symlink_dotfile "vimrc"
-symlink_dotfile "tmux.conf"
-symlink_dotfile "npmrc"
 symlink_dotfile "curlrc"
+symlink_dotfile "npmrc"
+symlink_dotfile "tmux.conf"
+symlink_dotfile "vimrc"
+symlink_dotfile "zprofile"
+symlink_dotfile "zshrc"
