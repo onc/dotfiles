@@ -1,118 +1,128 @@
-# -*- mode: sh; coding: utf-8; -*-
-# vim:set filetype=sh fileencoding=utf-8:
+#
+# Executes commands at the start of an interactive session.
+#
+# Authors:
+#   Sorin Ionescu <sorin.ionescu@gmail.com>
+#
 
-# Path to your oh-my-zsh configuration.
-ZSH=$HOME/.oh-my-zsh
-
-# Set name of the theme to load.
-ZSH_THEME="onze"
-
-# plugins
-plugins=(
-    bgnotify
-    brew
-    colored-man-pages
-    colorize
-    cp
-    direnv
-    docker
-    docker-compose
-    git
-    git-flow-avh
-    man
-    npm
-    pip
-    pyenv
-    rbenv
-    sudo
-    svn
-    tmux
-    tmuxinator
-    virtualenv
-    zsh-autosuggestions
-    # zsh-github-copilot
-)
-
-if [ OS_TYPE="macOS" ]; then
-    plugins=(macos $plugins)
+# Source Prezto.
+if [[ -s "${ZDOTDIR:-$HOME}/.zprezto/init.zsh" ]]; then
+  source "${ZDOTDIR:-$HOME}/.zprezto/init.zsh"
 fi
 
-# Uncomment following line if you want red dots to be displayed while waiting for completion
-COMPLETION_WAITING_DOTS="false"
-
-REPORTTIME=10
-
-# Disable repeating command before result of command
-DISABLE_AUTO_TITLE="true"
-
-fpath=($ZSH/custom/completions $fpath)
-fpath=($(brew --prefix)/share/zsh/site-functions $fpath)
-
-source $ZSH/oh-my-zsh.sh
+# Customize to your needs...
 
 #======================================================================================
-# USER CONFIGURATION
+# Aliases
 #======================================================================================
-HISTFILE=~/.zsh_history
-HISTSIZE=10000
-SAVEHIST=10000
 
-setopt SHARE_HISTORY # import new commands from history file and append immediately to it
-setopt NO_CASE_GLOB # set ignore case for ls etc
-setopt COMPLETE_IN_WORD # more extensive tab completion
-setopt HIST_IGNORE_ALL_DUPS # ignore duplicates
-setopt HIST_IGNORE_SPACE # ignore entries which begin with a space
-setopt EXTENDED_GLOB # activate extended globbing
-setopt LIST_PACKED # try to make the completion list smaller (occupying  less  lines)
+if [[ is-linux ]]; then
+    alias sizes="du -mh --max-depth 1 . | sort -hr"
+elif [[ is-darwin ]]; then
+    # Mac OSX
+    alias sizes="du -mh -d 1 . | gsort -hr"
+fi
 
-[[ -f ~/.dotfiles/oncsh/aliases.zsh ]] && source ~/.dotfiles/oncsh/aliases.zsh
-[[ -f ~/.dotfiles/oncsh/misc.zsh ]] && source ~/.dotfiles/oncsh/misc.zsh
-[[ -f ~/.dotfiles/oncsh/helpers.zsh ]] && source ~/.dotfiles/oncsh/helpers.zsh
+# git
+alias git=" git"
+alias glg=" git lg"
+alias gst=" git status"
+alias gp=" git push"
+alias gaa=" git add --all"
+alias gc=" git commit --verbose"
+alias gisb=" git-interactive-change-branch"
+
+# LaTeX
+alias xetexmk-pdf="latexmk -c -pdf -gg -xelatex -pvc -bibtex"
+alias latexmk-pdf="latexmk -c -pdf -gg -pvc -bibtex"
+
+# Youtube-dl
+alias youtube-dl-mp3="youtube-dl -x --audio-format mp3"
+alias youtube-best="youtube-dl -f bestvideo+bestaudio"
+
+# 7z with all cores, arguments: output-file input-dir/file
+alias 7z8core="7za a -r -t7z -m0=LZMA2 -mmt=4"
+
+# show the progress of a running dd command
+alias dd_progress="sudo killall -USR1 dd"
+
+# SVN aliases
+alias sst=" svn status"
+alias sad=" svn add"
+alias scom=" svn commit -m"
+
+alias jmake="make -j5"
+
+# install python autocompletion packages
+alias pycompleters-install='pip install "python-lsp-server[rope,pyflakes,pydocstyle,pylint,autopep8]" python-lsp-black pylsp-rope pylsp-mypy python-lsp-isort python-lsp-black ruff-lsp'
+
+alias icloud=" cd /Users/onze/Library/Mobile Documents/com~apple~CloudDocs"
+
+#======================================================================================
+# Keybindings
+#======================================================================================
+bindkey "^ " autosuggest-accept
+
+#======================================================================================
+# Direnv
+#======================================================================================
+if command -v direnv > /dev/null; then 
+    eval "$(direnv hook zsh)"
+fi
+
+#======================================================================================
+# FZF
+#======================================================================================
 
 if command -v fzf > /dev/null; then
     source <(fzf --zsh)
 
-    if [ -f ~/.dotfiles/oncsh/fzf.zsh ]; then
-        source ~/.dotfiles/oncsh/fzf.zsh
-    fi
-fi
-
-#======================================================================================
-# attempt to fix history search with arrow keys
-#======================================================================================
-autoload -U up-line-or-beginning-search
-autoload -U down-line-or-beginning-search
-zle -N up-line-or-beginning-search
-zle -N down-line-or-beginning-search
-# bindkey "^[[A" up-line-or-beginning-search # Up
-# bindkey "^[[B" down-line-or-beginning-search # Down
-
-# alternative (vim-like) binding for history search
-bindkey "^k" up-line-or-beginning-search # Up
-bindkey "^j" down-line-or-beginning-search # Down
-
-#======================================================================================
-# github copilot in shell
-#======================================================================================
-bindkey "^[|" zsh_gh_copilot_explain  # bind Alt+shift+\ to explain
-bindkey "^J" zsh_gh_copilot_suggest  # bind Alt+\ to suggest
-
-#======================================================================================
-# autosuggest
-#======================================================================================
-export ZSH_AUTOSUGGEST_HIGHLIGHT_STYLE="fg=244"
-export ZSH_AUTOSUGGEST_STRATEGY=(history completion)
-
-bindkey "^ " autosuggest-accept
-#======================================================================================
-# terraform
-#======================================================================================
-autoload -U +X bashcompinit && bashcompinit
-complete -o nospace -C /usr/bin/terraform terraform
-
-#======================================================================================
-# direnv
-#======================================================================================
-if command -v direnv > /dev/null; then 
-    eval "$(direnv hook zsh)"
+    export FZF_DEFAULT_COMMAND='rg --files --hidden --follow --glob "!.git/*"'
+    export FZF_DEFAULT_OPTS='
+        --extended
+        --reverse
+        --tac
+        --tiebreak=length
+        --color fg:252,bg:235,hl:112,fg+:252,bg+:235,hl+:161
+        --color info:144,prompt:123,spinner:135,pointer:161,marker:118
+    '
+    export FZF_TMUX=1
+    export FZF_TMUX_HEIGHT=40
+    export FZF_CTRL_R_OPTS="$FZF_DEFAULT_OPTS"
+    
+    # search git history
+    git-browse() {
+        local out shas sha q k
+        while out=$(
+                git log --graph --color=always \
+                    --format="%C(auto)%h%d %s %C(black)%C(bold)%cr" "$@" |
+                    fzf --ansi --multi --no-sort --reverse --query="$q" \
+                        --print-query --expect=ctrl-d --toggle-sort=\`); do
+            q=$(head -1 <<< "$out")
+            k=$(head -2 <<< "$out" | tail -1)
+            shas=$(sed '1,2d;s/^[^a-z0-9]*//;/^$/d' <<< "$out" | awk '{print $1}')
+            [ -z "$shas" ] && continue
+            if [ "$k" = ctrl-d ]; then
+                git diff --color=always $shas | less -R
+            else
+                for sha in $shas; do
+                    git show --color=always $sha | less -R
+                done
+            fi
+        done
+    }
+    
+    # change branch using fzf
+    git-interactive-change-branch() {
+        local branches branch
+        branches=$(git branch -a) &&
+            branch=$(echo "$branches" | fzf-tmux +s +m) &&
+            git switch $(echo "$branch" | sed "s/.* //")
+    }
+    
+    # select gitignore.io configs using fzf
+    gifzf() {
+        local list=$(gi list | tr , '\n' | fzf --multi | tr '\n' , | sed 's/,$//' )
+        gi $list
+    }
 fi
