@@ -23,8 +23,10 @@ elif [[ is-darwin ]]; then
     alias sizes="du -mh -d 1 . | gsort -hr"
 fi
 
-alias ls=' eza'
-alias la=' eza -lag'
+if command -v eza > /dev/null; then
+    alias ls=' eza'
+    alias la=' eza -lag'
+fi
 
 # git
 alias git=" git"
