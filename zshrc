@@ -6,8 +6,8 @@
 #
 
 # Source Prezto.
-if [[ -s "${ZDOTDIR:-$HOME}/.zprezto/init.zsh" ]]; then
-  source "${ZDOTDIR:-$HOME}/.zprezto/init.zsh"
+if [[ -s "${ZDOTDIR:-$HOME}/.dotfiles/prezto/init.zsh" ]]; then
+  source "${ZDOTDIR:-$HOME}/.dotfiles/prezto/init.zsh"
 fi
 
 # Customize to your needs...
@@ -22,6 +22,9 @@ elif [[ is-darwin ]]; then
     # Mac OSX
     alias sizes="du -mh -d 1 . | gsort -hr"
 fi
+
+alias ls=' eza'
+alias la=' eza -lag'
 
 # git
 alias git=" git"
@@ -73,11 +76,9 @@ fi
 #======================================================================================
 # FZF
 #======================================================================================
-
 if command -v fzf > /dev/null; then
     source <(fzf --zsh)
 
-    export FZF_DEFAULT_COMMAND='rg --files --hidden --follow --glob "!.git/*"'
     export FZF_DEFAULT_OPTS='
         --extended
         --reverse
@@ -88,7 +89,10 @@ if command -v fzf > /dev/null; then
     '
     export FZF_TMUX=1
     export FZF_TMUX_HEIGHT=40
-    export FZF_CTRL_R_OPTS="$FZF_DEFAULT_OPTS"
+
+    if command -v rg > /dev/null; then
+        export FZF_CTRL_T_COMMAND="rg --files --hidden --follow --glob '!.git/*'"
+    fi
     
     # search git history
     git-browse() {
@@ -126,3 +130,23 @@ if command -v fzf > /dev/null; then
         gi $list
     }
 fi
+
+# ls after every cd
+function chpwd() {
+    emulate -L zsh
+    ls
+}
+
+# ls on enter
+auto-ls () {
+    if [[ $#BUFFER -eq 0 ]]; then
+        echo ""
+        ls
+        echo -e "\n"
+        zle redisplay
+    else
+        zle .$WIDGET
+    fi
+}
+zle -N accept-line auto-ls
+zle -N other-widget auto-ls

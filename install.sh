@@ -15,36 +15,16 @@ function symlink_dotfile() {
     ln -s $DIR/$file_name ~/.$file_name
 }
 
-function setup_macos() {
-    if ! command -v brew > /dev/null; then
-        echo "brew not found. Please intall brew first!"
-        exit 1
-    fi
-
-    if ! command -v git > /dev/null; then
-        brew install git
-    fi
-}
-
-function setup_ubuntu() {
-    if ! command -v git > /dev/null; then
-        sudo apt install git
-    fi
-}
-
-if [ $(uname) == "Darwin" ]; then
-    OS_TYPE="macOS" 
-    setup_macos
-elif command -v apt > /dev/null; then
-    OS_TYPE="ubuntu" 
-    setup_ubuntu
-else
-    OS_TYPE="" 
-fi
-
-symlink_dotfile "zshrc"
-symlink_dotfile "zprofile"
-symlink_dotfile "vimrc"
-symlink_dotfile "tmux.conf"
-symlink_dotfile "npmrc"
 symlink_dotfile "curlrc"
+symlink_dotfile "install.sh"
+symlink_dotfile "latexmkrc"
+symlink_dotfile "npmrc"
+symlink_dotfile "tmux.conf"
+symlink_dotfile "vimrc"
+symlink_dotfile "zlogin"
+symlink_dotfile "zlogout"
+symlink_dotfile "zpreztorc"
+symlink_dotfile "zprofile"
+symlink_dotfile "zshenv"
+symlink_dotfile "zshrc"
+
