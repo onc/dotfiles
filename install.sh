@@ -16,7 +16,6 @@ function symlink_dotfile() {
 }
 
 symlink_dotfile "curlrc"
-symlink_dotfile "install.sh"
 symlink_dotfile "latexmkrc"
 symlink_dotfile "npmrc"
 symlink_dotfile "tmux.conf"
@@ -27,4 +26,3 @@ symlink_dotfile "zpreztorc"
 symlink_dotfile "zprofile"
 symlink_dotfile "zshenv"
 symlink_dotfile "zshrc"
-
