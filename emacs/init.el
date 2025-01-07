@@ -24,7 +24,7 @@
 (defconst onc/custom-theme-load-path (expand-file-name "~/.emacs.d/themes"))
 
 ;; Font for emacs
-(defconst onc/font-family "SF Mono")
+(defconst onc/font-family "Liga SFMono Nerd Font")
 
 ;; Size of font
 (defconst onc/font-size 100)
@@ -115,7 +115,7 @@
 
 (add-to-list 'custom-theme-load-path onc/custom-theme-load-path)
 ;; (load-theme 'base16-onc-dark 'no-confirm)
-(load-theme 'monokai t)
+(load-theme 'themer-onc-dark t)
 
 ;; Show system name and full file path in emacs frame title
 (validate-setq frame-title-format
