@@ -33,6 +33,7 @@ alias git=" git"
 alias glg=" git lg"
 alias gst=" git status"
 alias gp=" git push"
+alias ga=' git add'
 alias gaa=" git add --all"
 alias gc=" git commit --verbose"
 alias gisb=" git-interactive-change-branch"
