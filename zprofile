@@ -71,3 +71,10 @@ fi
 if [[ -z "$LESSOPEN" ]] && (( $#commands[(i)lesspipe(|.sh)] )); then
   export LESSOPEN="| /usr/bin/env $commands[(i)lesspipe(|.sh)] %s 2>&-"
 fi
+
+
+if [[ -d /opt/homebrew/opt/openjdk@17 ]]; then
+    export JAVA_HOME=/opt/homebrew/opt/openjdk@17
+    export PATH="$JAVA_HOME/bin:$PATH"
+    export JAVA_TOOL_OPTIONS="-Djavax.net.ssl.trustStoreType=KeychainStore"
+fi
