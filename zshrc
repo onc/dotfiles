@@ -25,7 +25,7 @@ fi
 
 if command -v eza > /dev/null; then
     alias ls=' eza'
-    alias la=' eza -lag'
+    alias la=' eza -lag --icons'
 fi
 
 # git
