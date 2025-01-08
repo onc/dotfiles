@@ -1,3 +1,5 @@
+# -*- mode: sh; coding: utf-8; -*-
+# vim:set filetype=sh fileencoding=utf-8:
 #
 # Executes commands at login pre-zshrc.
 #
