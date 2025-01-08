@@ -31,7 +31,6 @@ if command -v eza > /dev/null; then
 fi
 
 # git
-alias git=" git"
 alias glg=" git lg"
 alias gst=" git status"
 alias gp=" git push"
