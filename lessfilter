@@ -1,0 +1,27 @@
+#! /usr/bin/env sh
+# -*- mode: sh; coding: utf-8; -*-
+# vim:set filetype=sh fileencoding=utf-8:
+
+mime=$(file -bL --mime-type "$1")
+category=${mime%%/*}
+kind=${mime##*/}
+if [ -d "$1" ]; then
+    if command -v eza 2>&1 >/dev/null; then
+        eza --color=always -h --no-permissions --octal-permissions --git --icons --tree -L 2 "$1"
+    else
+        # fallback to normal ls
+        ls "$1"
+    fi
+# elif [ "$category" = image ]; then
+#     chafa -c 240 -s 80x25 "$1"
+#     exiftool "$1"
+# elif [ "$kind" = vnd.openxmlformats-officedocument.spreadsheetml.sheet ] || \
+#     [ "$kind" = vnd.ms-excel ]; then
+#     in2csv "$1" | xsv table | bat -ltsv --color=always
+elif [ "$category" = text ]; then
+    bat --color=always "$1"
+else
+    lesspipe.sh "$1" | bat --color=always
+fi
+
+# lesspipe.sh doesn't use eza, bat and chafa, it use ls and exiftool. so we create a lessfilter.
