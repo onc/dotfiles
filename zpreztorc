@@ -265,25 +265,21 @@ zstyle ':prezto:module:python:virtualenv' auto-switch 'yes'
 # behavior.
 # zstyle ':prezto:module:utility' safe-ops 'yes'
 
-
 #
 # fzf-tab
 #
-# disable sort when completing `git checkout`
-zstyle ':completion:*:git-checkout:*' sort false
 
-# set descriptions format to enable group support
-# NOTE: don't use escape sequences (like '%F{red}%d%f') here, fzf-tab will ignore them
-zstyle ':completion:*:descriptions' format '[%d]'
+# Default preview. Uses lessfilter to show directory and file contents.
+zstyle ':fzf-tab:complete:*:*' fzf-preview 'less ${(Q)realpath}'
 
-# set list-colors to enable filename colorizing
-zstyle ':completion:*' list-colors "${(s.:.)LS_COLORS}"
+zstyle ':fzf-tab:complete:git-checkout:*' fzf-preview \
+    'case "$group" in
+        "file") git diff $word | delta ;;
+        "recent commit object name") git show --color=always $word | delta ;;
+        *) git log --color=always $word ;;
+    esac'
 
-# preview directory's content with eza when completing cd
-zstyle ':fzf-tab:complete:cd:*' fzf-preview 'eza -1 --color=always $realpath'
-
-# force zsh not to show completion menu, which allows fzf-tab to capture the unambiguous prefix
-zstyle ':completion:*' menu no
+zstyle ':fzf-tab:complete:git-(add|diff|restore):*' fzf-preview 'git diff --color=always $word'
 
 # switch group using `<` and `>`
 zstyle ':fzf-tab:*' switch-group '<' '>'

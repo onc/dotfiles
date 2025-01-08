@@ -75,9 +75,21 @@ if [[ -z "$LESSOPEN" ]] && (( $#commands[(i)lesspipe(|.sh)] )); then
   export LESSOPEN='| ~/.lessfilter %s 2>&-'
 fi
 
+#
+# Java
+#
 
 if [[ -d /opt/homebrew/opt/openjdk@17 ]]; then
     export JAVA_HOME=/opt/homebrew/opt/openjdk@17
     export PATH="$JAVA_HOME/bin:$PATH"
     export JAVA_TOOL_OPTIONS="-Djavax.net.ssl.trustStoreType=KeychainStore"
+fi
+
+if [[ -d $HOME/.rd/bin ]]; then
+    export PATH="$HOME/.rd/bin:$PATH"
+    # see: https://testcontainers-python.readthedocs.io/en/latest/#configuration
+    # https://docs.rancherdesktop.io/how-to-guides/using-testcontainers/
+    export DOCKER_HOST=unix://$HOME/.rd/docker.sock
+    export TESTCONTAINERS_DOCKER_SOCKET_OVERRIDE=/var/run/docker.sock
+    export TESTCONTAINERS_HOST_OVERRIDE=$(rdctl shell ip a show vznat | awk '/inet / {sub("/.*",""); print $2}')
 fi

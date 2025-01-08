@@ -35,9 +35,10 @@ alias git=" git"
 alias glg=" git lg"
 alias gst=" git status"
 alias gp=" git push"
-alias ga=' git add'
+alias ga=" git add"
 alias gaa=" git add --all"
 alias gc=" git commit --verbose"
+alias gco=" git checkout"
 alias gisb=" git-interactive-change-branch"
 
 # LaTeX
@@ -155,3 +156,19 @@ auto-ls () {
 }
 zle -N accept-line auto-ls
 zle -N other-widget auto-ls
+
+# set descriptions format to enable group support
+# NOTE: don't use escape sequences (like '%F{red}%d%f') here, fzf-tab will ignore them
+zstyle -d ':completion:*' format
+# zstyle ':completion:*:descriptions' format '[%d]'
+zstyle ':completion:*:descriptions' format '[%d]'
+
+# force zsh not to show completion menu, which allows fzf-tab to capture the unambiguous prefix
+zstyle ':completion:*' menu no
+
+# disable sort when completing `git checkout`
+zstyle ':completion:*:git-checkout:*' sort false
+
+# When completing file paths, use '/' to accept and continue.
+# Useful for traversing down directories.
+zstyle ':completion::*:(cd|ls|eza|vim|nvim|cat|bat|less)::*' fzf-completion-keybindings  /:accept:'repeat-fzf-completion'
