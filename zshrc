@@ -14,6 +14,9 @@ fi
 
 # Customize to your needs...
 
+# Add homebrew completions to fpath
+fpath+=$(brew --prefix)/share/zsh/site-functions
+
 #======================================================================================
 # Aliases
 #======================================================================================

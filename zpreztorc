@@ -33,19 +33,18 @@ zstyle ':prezto:load' pmodule-dirs $HOME/.dotfiles/zprezto-contrib
 # The order matters.
 zstyle ':prezto:load' pmodule \
   'environment' \
+  'helper' \
+  'spectrum' \
+  'utility' \
+  'history' \
+  'directory' \
+  'history-substring-search' \
+  'editor' \
   'autosuggestions' \
   'git' \
   'homebrew' \
   'python' \
-  'helper' \
-  'terminal' \
-  'editor' \
-  'history' \
-  'directory' \
-  'spectrum' \
-  'utility' \
   'completion' \
-  'history-substring-search' \
   'prompt' \
   'fzf-tab'
 
@@ -268,6 +267,10 @@ zstyle ':prezto:module:python:virtualenv' auto-switch 'yes'
 #
 # fzf-tab
 #
+
+# disable or override preview for command options and subcommands
+zstyle ':fzf-tab:complete:*:options' fzf-preview 
+zstyle ':fzf-tab:complete:*:argument-1' fzf-preview
 
 # Default preview. Uses lessfilter to show directory and file contents.
 zstyle ':fzf-tab:complete:*:*' fzf-preview 'less ${(Q)realpath}'
