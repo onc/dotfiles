@@ -1,3 +1,6 @@
 [submodule "zprezto-contrib/fzf-tab"]
 	path = zprezto-contrib/fzf-tab
 	url = https://github.com/Aloxaf/fzf-tab
+[submodule "prezto"]
+	path = prezto
+	url = https://github.com/onc/prezto.git

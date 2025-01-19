@@ -29,8 +29,8 @@ elif [[ is-darwin ]]; then
 fi
 
 if command -v eza > /dev/null; then
-    alias ls=' eza'
-    alias la=' eza -lag --icons'
+    alias ls=" eza"
+    alias la=" eza -lag --icons"
 fi
 
 # git
@@ -79,6 +79,13 @@ bindkey "^ " autosuggest-accept
 #======================================================================================
 if command -v direnv > /dev/null; then 
     eval "$(direnv hook zsh)"
+fi
+
+#======================================================================================
+# zoxide
+#======================================================================================
+if command -v zoxide > /dev/null; then
+    eval "$(zoxide init --cmd cd zsh)"
 fi
 
 #======================================================================================
@@ -158,6 +165,10 @@ auto-ls () {
 }
 zle -N accept-line auto-ls
 zle -N other-widget auto-ls
+
+#======================================================================================
+# Completions
+#======================================================================================
 
 # set descriptions format to enable group support
 # NOTE: don't use escape sequences (like '%F{red}%d%f') here, fzf-tab will ignore them
