@@ -7,15 +7,15 @@
 #   Sorin Ionescu <sorin.ionescu@gmail.com>
 #
 
+# Add homebrew completions to fpath
+if command -v brew > /dev/null; then
+    fpath+=$(brew --prefix)/share/zsh/site-functions
+fi
+
 # Source Prezto.
 if [[ -s "${ZDOTDIR:-$HOME}/.dotfiles/prezto/init.zsh" ]]; then
   source "${ZDOTDIR:-$HOME}/.dotfiles/prezto/init.zsh"
 fi
-
-# Customize to your needs...
-
-# Add homebrew completions to fpath
-fpath+=$(brew --prefix)/share/zsh/site-functions
 
 #======================================================================================
 # Aliases

@@ -87,11 +87,13 @@ fi
 # Java
 #
 
-if [[ -d $(brew --prefix)/opt/openjdk@17 ]]; then
-    export JAVA_HOME=$(brew --prefix)/opt/openjdk@17
-    if [[ "$OSTYPE" == darwin* ]]; then
-        export JAVA_TOOL_OPTIONS="-Djavax.net.ssl.trustStoreType=KeychainStore"
-        export SPARK_LOCAL_HOSTNAME="localhost"
+if command -v brew > /dev/null; then
+    if [[ -d $(brew --prefix)/opt/openjdk@17 ]]; then
+        export JAVA_HOME=$(brew --prefix)/opt/openjdk@17
+        if [[ "$OSTYPE" == darwin* ]]; then
+            export JAVA_TOOL_OPTIONS="-Djavax.net.ssl.trustStoreType=KeychainStore"
+            export SPARK_LOCAL_HOSTNAME="localhost"
+        fi
     fi
 elif [[ -d /usr/lib/jvm/java-11-openjdk-amd64 ]]; then
     export JAVA_HOME=/usr/lib/jvm/java-11-openjdk-amd64
