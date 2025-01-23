@@ -25,7 +25,6 @@ if is-linux; then
     echo "linux"
     alias sizes="du -mh --max-depth 1 . | sort -hr"
 elif is-darwin; then
-    echo "macos"
     # Mac OSX
     alias sizes="du -mh -d 1 . | gsort -hr"
 fi
