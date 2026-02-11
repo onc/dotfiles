@@ -76,11 +76,34 @@ if [[ -z "$LESSOPEN" ]] && (( $#commands[(i)lesspipe(|.sh)] )); then
 fi
 
 #
+# Setting XDG Home
+#
+
+# Should be $HOME/.config on linux by default.
+# This is a fix for some apps, e.g. lazygit. See: https://github.com/jesseduffield/lazygit/blob/master/docs/Config.md 
+if [[ "$OSTYPE" == darwin* ]]; then
+  export XDG_CONFIG_HOME="$HOME/.config"
+fi
+
+# 
+# Sience homebrew hints
+#
+
+if command -v brew > /dev/null; then
+  export HOMEBREW_NO_ENV_HINTS=1
+fi
+
+#
 # Export certificate bundle file
 #
 
 if [ -f /etc/ssl/certs/ca-certificates.crt ]; then
     export REQUESTS_CA_BUNDLE=/etc/ssl/certs/ca-certificates.crt
+fi
+
+if [ -d $HOME/.ssl ]; then
+    export SSL_CERT_FILE="$HOME/.ssl/allCAbundle.pem"
+    export REQUESTS_CA_BUNDLE="$SSL_CERT_FILE"
 fi
 
 #
@@ -116,18 +139,9 @@ fi
 
 if [[ -d $HOME/.rd/bin ]]; then
     export PATH="$HOME/.rd/bin:$PATH"
-    # presence of docker.sock indicates that rancher is running. Otherwise, the rdctl shell commands below, will not
-    # work and through errors.
-    if [[ -e $HOME/.rd/docker.sock ]]; then
-        # see: https://testcontainers-python.readthedocs.io/en/latest/#configuration
-        # https://docs.rancherdesktop.io/how-to-guides/using-testcontainers/
-        visualization_type=$(rdctl list-settings | jq -r '.experimental.virtualMachine.type')
-        if [[ $visualization_type == vz ]]; then
-            export DOCKER_HOST=unix://$HOME/.rd/docker.sock
-            export TESTCONTAINERS_DOCKER_SOCKET_OVERRIDE=/var/run/docker.sock
-            export TESTCONTAINERS_HOST_OVERRIDE=$(rdctl shell ip a show vznat | awk '/inet / {sub("/.*",""); print $2}')
-        elif [[ $visualization_type == qemu ]]; then
-            export TESTCONTAINERS_HOST_OVERRIDE=$(rdctl shell ip a show rd0 | awk '/inet / {sub("/.*",""); print $2}')
-        fi
-    fi
+
+    export DOCKER_HOST=unix://$HOME/.rd/docker.sock
+    export TESTCONTAINERS_DOCKER_SOCKET_OVERRIDE=/var/run/docker.sock
+    # from: https://github.com/rancher-sandbox/rancher-desktop/issues/2609#issuecomment-2639766889
+    export TESTCONTAINERS_HOST_OVERRIDE=$(ifconfig $(route -n get 0.0.0.0 | grep -F interface | cut -d: -f2) | awk '/inet / {print $2}')
 fi

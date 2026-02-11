@@ -4,3 +4,9 @@
 [submodule "prezto"]
 	path = prezto
 	url = https://github.com/onc/prezto.git
+[submodule "zprezto-contrib/zsh-you-should-use"]
+	path = zprezto-contrib/zsh-you-should-use
+	url = https://github.com/MichaelAquilina/zsh-you-should-use.git
+[submodule "zprezto-contrib/zsh-github-copilot"]
+	path = zprezto-contrib/zsh-github-copilot
+	url = git@github.com:loiccoyle/zsh-github-copilot.git

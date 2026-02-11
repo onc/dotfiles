@@ -161,7 +161,7 @@ endif
 let g:gui_dark_colorscheme = "base16-monokai"
 let g:gui_light_colorscheme = "solarized"
 
-let g:term_dark_colorscheme = "Tomorrow-Night"
+let g:term_dark_colorscheme = "ThemerOnc"
 let g:term_light_colorscheme = "solarized"
 
 " ######## MUTE VIM ###########################################################

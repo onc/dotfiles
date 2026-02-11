@@ -46,7 +46,9 @@ zstyle ':prezto:load' pmodule \
   'python' \
   'completion' \
   'prompt' \
-  'fzf-tab'
+  'fzf-tab' \
+  'zsh-you-should-use' \
+  'zsh-github-copilot'
 
 #
 # Autosuggestions

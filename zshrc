@@ -30,19 +30,18 @@ elif is-darwin; then
 fi
 
 if command -v eza > /dev/null; then
-    alias ls=" eza"
-    alias la=" eza -lag --icons"
+    alias ls="eza"
+    alias la="eza -lag --icons"
 fi
 
 # git
-alias glg=" git lg"
-alias gst=" git status"
-alias gp=" git push"
-alias ga=" git add"
-alias gaa=" git add --all"
-alias gc=" git commit --verbose"
-alias gco=" git checkout"
-alias gisb=" git-interactive-change-branch"
+alias glg="git lg"
+alias gst="git status"
+alias gp="git push"
+alias ga="git add"
+alias gaa="git add --all"
+alias gc="git commit --verbose"
+alias gco="git checkout"
 
 # LaTeX
 alias xetexmk-pdf="latexmk -c -pdf -gg -xelatex -pvc -bibtex"
@@ -59,21 +58,81 @@ alias 7z8core="7za a -r -t7z -m0=LZMA2 -mmt=4"
 alias dd_progress="sudo killall -USR1 dd"
 
 # SVN aliases
-alias sst=" svn status"
-alias sad=" svn add"
-alias scom=" svn commit -m"
+alias sst="svn status"
+alias sad="svn add"
+alias scom="svn commit -m"
 
 alias jmake="make -j5"
+
+if command -v lazygit > /dev/null; then
+    alias lg="lazygit"
+fi
+
+if command -v brew > /dev/null; then
+    alias bubo="brew update && brew outdated"
+    alias bubc="brew upgrade && brew cleanup"
+fi
 
 # install python autocompletion packages
 alias pycompleters-install='pip install "python-lsp-server[rope,pyflakes,pydocstyle,pylint,autopep8]" python-lsp-black pylsp-rope pylsp-mypy python-lsp-isort python-lsp-black ruff-lsp'
 
-alias icloud=" cd /Users/onze/Library/Mobile Documents/com~apple~CloudDocs"
+alias icloud="cd /Users/onze/Library/Mobile Documents/com~apple~CloudDocs"
+
+alias gvim="neovide 2>&1 &"
+
+alias private-gpt="/Users/ldcvac1/Downloads/private-gpt/.direnv/python-3.12/bin/python /Users/ldcvac1/Downloads/private-gpt/private_gpt.py"
 
 #======================================================================================
 # Keybindings
 #======================================================================================
 bindkey "^ " autosuggest-accept
+bindkey "^p" zsh_gh_copilot_suggest  # bind Option+\ to suggest
+
+#======================================================================================
+# Other helpful tweaks
+#======================================================================================
+
+# ls after every cd
+chpwd() {
+    emulate -L zsh
+    eval "ls"
+
+}
+
+magic-enter() {
+    # Check if the buffer is empty
+    if [[ -z "$BUFFER" ]]; then
+        # Insert "ls" into the command line
+        BUFFER="ls"
+        
+        # Execute the command (this respects aliases like eza)
+        zle .accept-line
+    else
+        # If the user typed something else, just execute it
+        zle .accept-line
+    fi
+}
+
+# Register the widget
+zle -N magic-enter
+
+# Bind Enter key to it
+bindkey "^M" magic-enter
+
+
+# # ls on enter
+# auto_ls() {
+#     if [[ $#BUFFER -eq 0 ]]; then
+#         echo ""
+#         ls
+#         echo -e "\n"
+#         zle redisplay
+#     else
+#         zle .$WIDGET
+#     fi
+# }
+# zle -N accept-line auto_ls
+# zle -N other-widget auto_ls
 
 #======================================================================================
 # Direnv
@@ -100,7 +159,6 @@ if command -v fzf > /dev/null; then
         --reverse
         --tac
         --tiebreak=length
-        --color fg:252,bg:235,hl:112,fg+:252,bg+:235,hl+:161
         --color info:144,prompt:123,spinner:135,pointer:161,marker:118
     '
     export FZF_TMUX=1
@@ -110,62 +168,13 @@ if command -v fzf > /dev/null; then
         export FZF_CTRL_T_COMMAND="rg --files --hidden --follow --glob '!.git/*'"
     fi
     
-    # search git history
-    git-browse() {
-        local out shas sha q k
-        while out=$(
-                git log --graph --color=always \
-                    --format="%C(auto)%h%d %s %C(black)%C(bold)%cr" "$@" |
-                    fzf --ansi --multi --no-sort --reverse --query="$q" \
-                        --print-query --expect=ctrl-d --toggle-sort=\`); do
-            q=$(head -1 <<< "$out")
-            k=$(head -2 <<< "$out" | tail -1)
-            shas=$(sed '1,2d;s/^[^a-z0-9]*//;/^$/d' <<< "$out" | awk '{print $1}')
-            [ -z "$shas" ] && continue
-            if [ "$k" = ctrl-d ]; then
-                git diff --color=always $shas | less -R
-            else
-                for sha in $shas; do
-                    git show --color=always $sha | less -R
-                done
-            fi
-        done
-    }
-    
     # change branch using fzf
-    git-interactive-change-branch() {
-        local branches branch
-        branches=$(git branch -a) &&
-            branch=$(echo "$branches" | fzf-tmux +s +m) &&
-            git switch $(echo "$branch" | sed "s/.* //")
-    }
-    
-    # select gitignore.io configs using fzf
-    gifzf() {
-        local list=$(gi list | tr , '\n' | fzf --multi | tr '\n' , | sed 's/,$//' )
-        gi $list
+    gisb() {
+        local branches=$(git branch -a)
+        local branch=$(echo "$branches" | fzf-tmux +s +m)
+        git switch $(echo "$branch" | sed "s/.* //")
     }
 fi
-
-# ls after every cd
-function chpwd() {
-    emulate -L zsh
-    ls
-}
-
-# ls on enter
-auto-ls () {
-    if [[ $#BUFFER -eq 0 ]]; then
-        echo ""
-        ls
-        echo -e "\n"
-        zle redisplay
-    else
-        zle .$WIDGET
-    fi
-}
-zle -N accept-line auto-ls
-zle -N other-widget auto-ls
 
 #======================================================================================
 # Completions
@@ -186,3 +195,8 @@ zstyle ':completion:*:git-checkout:*' sort false
 # When completing file paths, use '/' to accept and continue.
 # Useful for traversing down directories.
 zstyle ':completion::*:(cd|ls|eza|vim|nvim|cat|bat|less)::*' fzf-completion-keybindings  /:accept:'repeat-fzf-completion'
+
+#======================================================================================
+# zsh-you-should-use
+#======================================================================================
+export YSU_MESSAGE_POSITION="after"
